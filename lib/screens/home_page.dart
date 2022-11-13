@@ -1,7 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/widgets/activities_types.dart';
+import 'package:schedulemanager/widgets/custom_button.dart';
+import 'package:schedulemanager/widgets/map_preview.dart';
 
 import '../constants/constants.dart';
 import '../utils/text_styles.dart';
@@ -27,6 +32,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: accent,
+        child: const Icon(Icons.add),
+        onPressed: () {},
+      ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -132,7 +142,117 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               SizedBox(height: resp.hp(5)),
-              const ActivitiesTypes()
+              const ActivitiesTypes(),
+              SizedBox(height: resp.hp(5)),
+              ...List.generate(
+                DateTime(DateTime.now().year, DateTime.now().month + 1, 0).day,
+                (index) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            children: [
+                              Text(
+                                '${index + 1}',
+                                style: TextStyles.w500(25),
+                              ),
+                              Text(
+                                DateFormat('EEEE')
+                                    .format(DateTime(DateTime.now().year,
+                                        DateTime.now().month, index + 1))
+                                    .substring(0, 3),
+                                style: TextStyles.w500(14),
+                              ),
+                              Text(
+                                DateFormat('MMMM')
+                                    .format(DateTime.now())
+                                    .substring(0, 3),
+                                style: TextStyles.w500(14),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: resp.wp(5)),
+                        Expanded(
+                          flex: 10,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    'Hour: ',
+                                    style: TextStyles.w400(12, lightGrey),
+                                  ),
+                                  Text(
+                                    '11:00 - 11:30',
+                                    style: TextStyles.w400(
+                                      12,
+                                      lightGrey,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  const Icon(
+                                    Icons.more_horiz_rounded,
+                                    color: lightGrey,
+                                  )
+                                ],
+                              ),
+                              SizedBox(height: resp.hp(1)),
+                              Text(
+                                'Bussiness meeting with Samasdasdasda',
+                                style: TextStyles.w700(18),
+                                textAlign: TextAlign.start,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              SizedBox(height: resp.hp(1)),
+                              Text(
+                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
+                                style: TextStyles.w300(12, grey),
+                                textAlign: TextAlign.start,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              if (Random().nextInt(100) < 50) ...[
+                                SizedBox(height: resp.hp(2)),
+                                Text(
+                                  'Location:',
+                                  style: TextStyles.w600(14),
+                                ),
+                                SizedBox(height: resp.hp(1)),
+                                const MapPreview(),
+                              ],
+                              SizedBox(height: resp.hp(2)),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Spacer(),
+                        CustomButton(
+                          text: 'Details',
+                          color: accent,
+                          height: resp.hp(4),
+                          width: resp.wp(15),
+                          style: TextStyles.w600(12, Colors.white),
+                          onTap: () => Navigator.pushNamed(
+                              context, 'activitiesDetailsPage'),
+                        )
+                      ],
+                    ),
+                    const Divider()
+                  ],
+                ),
+              )
             ],
           ),
         ),

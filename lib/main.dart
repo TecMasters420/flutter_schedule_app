@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:schedulemanager/screens/activities_details_page.dart';
 import 'package:schedulemanager/screens/home_page.dart';
 import 'package:schedulemanager/screens/initial_information_page.dart';
 import 'package:schedulemanager/screens/login_page.dart';
@@ -29,12 +30,13 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Schedule Manager',
         debugShowCheckedModeBanner: false,
-        home: const InitialInformationPage(),
+        home: const LoginPage(),
         routes: {
           'initialInformationPage': (context) => const InitialInformationPage(),
           'loginPage': (context) => const LoginPage(),
           'homePage': (context) => const HomePage(),
           'registerPage': (context) => const RegisterPage(),
+          'activitiesDetailsPage': (context) => const ActivitiesDetailsPage()
         },
       ),
     );
