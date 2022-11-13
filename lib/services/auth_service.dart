@@ -44,6 +44,7 @@ class AuthService with ChangeNotifier {
         password: password,
       );
       _user = userCredential.user!;
+      print('logged');
       notifyListeners();
       onCompleteCallback();
     } on FirebaseAuthException catch (e) {

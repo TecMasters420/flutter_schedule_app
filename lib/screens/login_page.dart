@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:schedulemanager/models/user_model.dart';
@@ -22,15 +21,18 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+    // User? user = FirebaseAuth.instance.currentUser;
+    // if (user != null) {
+    //   Navigator.pushReplacementNamed(context, 'homePage');
+    // }
     _user = UserModel();
     super.initState();
   }
 
-  void _showSnackbar(
-      final BuildContext context, final String code, final String type) {
+  void _showSnackbar(final String code, final String type) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration: const Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 1000),
         backgroundColor: type == 'error' ? Colors.red[200] : Colors.green[200],
         content: Text('Message: $code'),
       ),
@@ -41,11 +43,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     final AuthService auth = Provider.of<AuthService>(context);
-
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      Navigator.pushReplacementNamed(context, 'homePage');
-    }
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -63,18 +60,18 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(),
-                const FlutterLogo(
-                  size: 150,
+                FlutterLogo(
+                  size: resp.hp(20),
                 ),
                 SizedBox(height: resp.hp(2.5)),
                 Text(
                   'Login',
-                  style: TextStyles.w500(30),
+                  style: TextStyles.w500(resp.dp(4)),
                 ),
                 SizedBox(height: resp.hp(1)),
                 Text(
                   'aliquam consectetur et tincidunt praesent enim massa pellentesque velit odio neque',
-                  style: TextStyles.w200(12, Colors.grey[600]!),
+                  style: TextStyles.w400(resp.dp(1.5), Colors.grey[600]!),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: resp.hp(2.5)),
@@ -105,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextButton(
                       child: Text(
                         'Recovery password',
-                        style: TextStyles.w400(12, accent),
+                        style: TextStyles.w400(resp.dp(1.5), accent),
                       ),
                       onPressed: () {},
                     )
@@ -115,30 +112,30 @@ class _LoginPageState extends State<LoginPage> {
                 CustomButton(
                   color: tempAccent,
                   height: resp.hp(5),
-                  style: TextStyles.w800(16, Colors.white),
+                  style: TextStyles.w800(resp.dp(1.75), Colors.white),
                   width: resp.wp(30),
                   text: 'Login',
                   onTap: () async => await auth.login(
                     _user.email!,
                     _user.password!,
-                    () {
-                      _showSnackbar(context, 'Logged!', 'Logged');
-                      Navigator.pushReplacementNamed(context, 'homePage');
+                    () async {
+                      _showSnackbar('Logged!', 'Logged');
+                      await Navigator.pushReplacementNamed(context, 'homePage');
                     },
-                    (errorCode) => _showSnackbar(context, errorCode, 'error'),
+                    (errorCode) => _showSnackbar(errorCode, 'error'),
                   ),
                 ),
                 SizedBox(height: resp.hp(1)),
                 Text(
                   'Or',
-                  style: TextStyles.w200(12, Colors.grey[600]!),
+                  style: TextStyles.w200(resp.dp(1.5), Colors.grey[600]!),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: resp.hp(1)),
                 CustomButton(
                   color: Colors.grey[50]!,
                   height: resp.hp(5),
-                  style: TextStyles.w400(14),
+                  style: TextStyles.w400(resp.dp(1.75)),
                   width: resp.wp(30),
                   text: 'Google',
                   prefixWidget: Image.asset(
@@ -149,10 +146,10 @@ class _LoginPageState extends State<LoginPage> {
                   onTap: () async {
                     await auth.googleLogin(
                       () {
-                        _showSnackbar(context, 'Logged!', 'Logged');
+                        _showSnackbar('Logged!', 'Logged');
                         Navigator.pushReplacementNamed(context, 'homePage');
                       },
-                      (errorCode) => _showSnackbar(context, errorCode, 'error'),
+                      (errorCode) => _showSnackbar(errorCode, 'error'),
                     );
                   },
                 ),
@@ -162,12 +159,12 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Text(
                       "Don't have an account yet?",
-                      style: TextStyles.w400(12, grey),
+                      style: TextStyles.w400(resp.dp(1.5), grey),
                     ),
                     TextButton(
                       child: Text(
                         'Sign Up',
-                        style: TextStyles.w500(12, accent),
+                        style: TextStyles.w500(resp.dp(1.5), accent),
                       ),
                       onPressed: () =>
                           Navigator.pushNamed(context, 'registerPage'),

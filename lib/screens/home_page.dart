@@ -20,11 +20,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late final PageController _pageController;
+  // late final PageController _pageController;
 
   @override
   void initState() {
-    _pageController = PageController(initialPage: 0);
+    // _pageController = PageController(initialPage: 0);
     super.initState();
   }
 
@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> {
             left: 32,
             right: 32,
             top: 80,
+            bottom: 80,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,35 +54,44 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: resp.hp(1)),
               Text(
                 'A great day to get better',
-                style: TextStyles.w400(14, lightGrey),
+                style: TextStyles.w400(resp.dp(1.5), lightGrey),
               ),
               SizedBox(height: resp.hp(5)),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     'My daily activities',
-                    style: TextStyles.w500(20),
+                    style: TextStyles.w500(resp.dp(2)),
                   ),
                   const Spacer(),
                   Flexible(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      decoration: BoxDecoration(
-                        color: lightGrey.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.add, color: accent),
-                          SizedBox(width: resp.wp(1)),
-                          Text(
-                            'Add',
-                            style: TextStyles.w500(14),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          constraints: const BoxConstraints(maxWidth: 70),
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          decoration: BoxDecoration(
+                            color: lightGrey.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ],
-                      ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.add, color: accent, size: resp.dp(1)),
+                              SizedBox(width: resp.wp(1)),
+                              Text(
+                                'Add',
+                                style: TextStyles.w500(resp.dp(1.15)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -113,7 +123,8 @@ class _HomePageState extends State<HomePage> {
                                 flex: 3,
                                 child: Text(
                                   "Excellent, you're almost done with your activities! ;)",
-                                  style: TextStyles.w800(18, Colors.white),
+                                  style: TextStyles.w800(
+                                      resp.dp(1.75), Colors.white),
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -121,13 +132,14 @@ class _HomePageState extends State<HomePage> {
                               Expanded(
                                 flex: 2,
                                 child: CircularPercentIndicator(
-                                  radius: 60,
+                                  radius: resp.hp(6.5),
                                   lineWidth: 13.0,
                                   animation: true,
                                   percent: 0.9,
                                   center: Text(
                                     '90%',
-                                    style: TextStyles.w800(18, Colors.white),
+                                    style: TextStyles.w800(
+                                        resp.dp(2.5), Colors.white),
                                   ),
                                   progressColor: tempAccent,
                                   backgroundColor: lightGrey,
@@ -169,20 +181,20 @@ class _HomePageState extends State<HomePage> {
                               ),
                               Text(
                                 '${index + 1}',
-                                style: TextStyles.w500(25),
+                                style: TextStyles.w500(resp.dp(1.75)),
                               ),
                               Text(
                                 DateFormat('EEEE')
                                     .format(DateTime(DateTime.now().year,
                                         DateTime.now().month, index + 1))
                                     .substring(0, 3),
-                                style: TextStyles.w500(14),
+                                style: TextStyles.w500(resp.dp(1.75)),
                               ),
                               Text(
                                 DateFormat('MMMM')
                                     .format(DateTime.now())
                                     .substring(0, 3),
-                                style: TextStyles.w500(14),
+                                style: TextStyles.w500(resp.dp(1.75)),
                               ),
                             ],
                           ),
@@ -198,26 +210,28 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   Text(
                                     'Hour: ',
-                                    style: TextStyles.w400(12, lightGrey),
+                                    style: TextStyles.w500(
+                                        resp.dp(1.15), lightGrey),
                                   ),
                                   Text(
                                     '11:00 - 11:30',
-                                    style: TextStyles.w400(
-                                      12,
+                                    style: TextStyles.w500(
+                                      resp.dp(1.15),
                                       lightGrey,
                                     ),
                                   ),
                                   const Spacer(),
-                                  const Icon(
+                                  Icon(
                                     Icons.more_horiz_rounded,
                                     color: lightGrey,
+                                    size: resp.dp(2.25),
                                   )
                                 ],
                               ),
                               SizedBox(height: resp.hp(1)),
                               Text(
                                 'Bussiness meeting with Samasdasdasda',
-                                style: TextStyles.w700(18),
+                                style: TextStyles.w700(resp.dp(1.75)),
                                 textAlign: TextAlign.start,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -225,7 +239,7 @@ class _HomePageState extends State<HomePage> {
                               SizedBox(height: resp.hp(1)),
                               Text(
                                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
-                                style: TextStyles.w300(12, grey),
+                                style: TextStyles.w400(resp.dp(1.25), grey),
                                 textAlign: TextAlign.start,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
@@ -234,18 +248,20 @@ class _HomePageState extends State<HomePage> {
                                 SizedBox(height: resp.hp(2)),
                                 Text(
                                   'Location: South Portland',
-                                  style: TextStyles.w600(14),
+                                  style: TextStyles.w600(resp.dp(1.5)),
                                 ),
                                 SizedBox(height: resp.hp(0.5)),
                                 Row(
                                   children: [
                                     Text(
                                       'Time to arrive: ',
-                                      style: TextStyles.w400(12, grey),
+                                      style:
+                                          TextStyles.w400(resp.dp(1.25), grey),
                                     ),
                                     Text(
                                       '92 min',
-                                      style: TextStyles.w400(12, grey),
+                                      style:
+                                          TextStyles.w400(resp.dp(1.25), grey),
                                     ),
                                   ],
                                 ),
@@ -253,41 +269,46 @@ class _HomePageState extends State<HomePage> {
                                 const MapPreview(),
                               ],
                               SizedBox(height: resp.hp(2)),
+                              Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Time left: ',
+                                        style: TextStyles.w400(
+                                            resp.dp(1.25), grey),
+                                      ),
+                                      Text(
+                                        '1 day',
+                                        style: TextStyles.w400(
+                                            resp.dp(1.25), grey),
+                                      ),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  CustomButton(
+                                    constraints:
+                                        const BoxConstraints(maxWidth: 150),
+                                    text: 'Details',
+                                    color: accent,
+                                    height: resp.hp(4),
+                                    width: resp.wp(15),
+                                    style: TextStyles.w600(
+                                        resp.dp(1.15), Colors.white),
+                                    onTap: () => Navigator.pushNamed(
+                                        context, 'activitiesDetailsPage'),
+                                  )
+                                ],
+                              ),
                             ],
                           ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              'Time left: ',
-                              style: TextStyles.w400(12, grey),
-                            ),
-                            Text(
-                              '1 day',
-                              style: TextStyles.w400(12, grey),
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        CustomButton(
-                          text: 'Details',
-                          color: accent,
-                          height: resp.hp(4),
-                          width: resp.wp(15),
-                          style: TextStyles.w600(12, Colors.white),
-                          onTap: () => Navigator.pushNamed(
-                              context, 'activitiesDetailsPage'),
                         )
                       ],
                     ),
                     SizedBox(height: resp.hp(1)),
                     Divider(
                       color: lightGrey.withOpacity(0.15),
-                      height: 5,
+                      height: resp.dp(2),
                     )
                   ],
                 ),

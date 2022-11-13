@@ -20,7 +20,7 @@ class ActivitiesDetailsPage extends StatelessWidget {
           width: 70,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: Colors.blue.withOpacity(0.75),
+            color: tempAccent.withOpacity(0.75),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Text(
@@ -46,11 +46,8 @@ class ActivitiesDetailsPage extends StatelessWidget {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.only(
-            top: 80,
-            right: 35,
-            left: 35,
-          ),
+          padding:
+              const EdgeInsets.only(top: 50, right: 35, left: 35, bottom: 80),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -65,19 +62,19 @@ class ActivitiesDetailsPage extends StatelessWidget {
               SizedBox(height: resp.hp(2.5)),
               Center(
                 child: Text(
-                  'Uber car rentals assistant',
+                  'Uber car rentals assistant.',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyles.w700(25),
-                  textAlign: TextAlign.justify,
+                  style: TextStyles.w700(resp.dp(3)),
+                  textAlign: TextAlign.center,
                 ),
               ),
               SizedBox(height: resp.hp(2.5)),
               Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                 maxLines: 20,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyles.w400(14),
+                style: TextStyles.w500(resp.dp(1.35)),
                 textAlign: TextAlign.justify,
               ),
               SizedBox(height: resp.hp(5)),
@@ -95,6 +92,7 @@ class ActivitiesDetailsPage extends StatelessWidget {
                             child: Icon(
                               e.key,
                               color: grey,
+                              size: resp.dp(2.5),
                             ),
                           ),
                         ),
@@ -107,7 +105,7 @@ class ActivitiesDetailsPage extends StatelessWidget {
                               ...e.value.keys.map(
                                 (e) => Text(
                                   e,
-                                  style: TextStyles.w600(16),
+                                  style: TextStyles.w600(resp.dp(1.5)),
                                 ),
                               ),
                               SizedBox(height: resp.hp(1)),
@@ -126,7 +124,6 @@ class ActivitiesDetailsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: resp.hp(5)),
             ],
           ),
         ),

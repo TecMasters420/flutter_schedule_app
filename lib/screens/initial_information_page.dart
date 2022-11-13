@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:schedulemanager/constants/constants.dart';
-import 'package:schedulemanager/services/reminder_service.dart';
 import 'package:schedulemanager/utils/text_styles.dart';
 import 'package:schedulemanager/widgets/custom_button.dart';
 import 'package:schedulemanager/widgets/login_page_information.dart';
@@ -74,7 +73,8 @@ class _InitialInformationPageState extends State<InitialInformationPage> {
                             CustomButton(
                               color: tempAccent,
                               height: resp.hp(5),
-                              style: TextStyles.w800(16, Colors.white),
+                              style:
+                                  TextStyles.w800(resp.dp(1.25), Colors.white),
                               width: resp.wp(40),
                               text: 'Join',
                               onTap: () => Navigator.pushReplacementNamed(

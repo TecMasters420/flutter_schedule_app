@@ -8,22 +8,24 @@ class CustomButton extends StatelessWidget {
   final double width;
   final String text;
   final Widget? prefixWidget;
-  const CustomButton({
-    super.key,
-    required this.text,
-    required this.color,
-    required this.height,
-    required this.width,
-    required this.onTap,
-    required this.style,
-    this.prefixWidget,
-  });
+  final BoxConstraints? constraints;
+  const CustomButton(
+      {super.key,
+      required this.text,
+      required this.color,
+      required this.height,
+      required this.width,
+      required this.onTap,
+      required this.style,
+      this.prefixWidget,
+      this.constraints});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        constraints: constraints ?? const BoxConstraints(),
         height: height,
         width: width,
         alignment: Alignment.center,

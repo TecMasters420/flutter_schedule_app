@@ -29,7 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
       final BuildContext context, final String code, final String type) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration: const Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 1000),
         backgroundColor: type == 'error' ? Colors.red[200] : Colors.green[200],
         content: Text('Message: $code'),
       ),

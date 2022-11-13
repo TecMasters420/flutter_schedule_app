@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/utils/text_styles.dart';
 
 import '../constants/constants.dart';
@@ -9,6 +10,7 @@ class ActivitiesTypes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ResponsiveUtil resp = ResponsiveUtil.of(context);
     return Row(
       children: [
         ...List.generate(
@@ -18,7 +20,9 @@ class ActivitiesTypes extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 _types[x],
-                style: x == 0 ? TextStyles.w600(16) : TextStyles.w400(16, grey),
+                style: x == 0
+                    ? TextStyles.w700(resp.dp(1.75))
+                    : TextStyles.w600(resp.dp(1.55), grey),
                 textAlign: TextAlign.center,
               ),
             ),
