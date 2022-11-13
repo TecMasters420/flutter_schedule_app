@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedule_app/screens/home_page.dart';
 import 'package:schedule_app/screens/initial_information_page.dart';
 import 'package:schedule_app/screens/login_page.dart';
 
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'initialInformationPage': (context) => const InitialInformationPage(),
         'loginPage': (context) => const LoginPage(),
+        'homePage': (context) => const HomePage(),
       },
     );
   }

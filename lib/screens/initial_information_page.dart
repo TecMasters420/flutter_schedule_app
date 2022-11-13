@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:schedule_app/constants/constants.dart';
 import 'package:schedule_app/utils/responsive_util.dart';
 import 'package:schedule_app/widgets/dot_indicator.dart';
-import 'package:schedule_app/widgets/join_button.dart';
+import 'package:schedule_app/widgets/custom_button.dart';
 import 'package:schedule_app/widgets/login_page_information.dart';
 
 class InitialInformationPage extends StatefulWidget {
@@ -39,6 +39,7 @@ class _InitialInformationPageState extends State<InitialInformationPage> {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: accent,
       body: Stack(
         children: [
@@ -62,7 +63,15 @@ class _InitialInformationPageState extends State<InitialInformationPage> {
                   title: 'New Scheduling and routing options',
                   description:
                       'We also updated the format of podcasts and rewards.',
-                  extraWidget: isFinalElement ? const JoinButton() : null,
+                  extraWidget: !isFinalElement
+                      ? null
+                      : CustomButton(
+                          text: 'Join',
+                          onTap: () => Navigator.pushReplacementNamed(
+                            context,
+                            'loginPage',
+                          ),
+                        ),
                 );
               },
             ),
