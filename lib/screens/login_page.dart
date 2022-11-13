@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/models/user_model.dart';
+import 'package:schedulemanager/services/auth_service.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/utils/text_styles.dart';
 import 'package:schedulemanager/widgets/custom_button.dart';
@@ -6,8 +8,32 @@ import 'package:schedulemanager/widgets/custom_form_field.dart';
 
 import '../constants/constants.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  late final UserModel _user;
+
+  @override
+  void initState() {
+    _user = UserModel();
+    super.initState();
+  }
+
+  void _showSnackbar(
+      final BuildContext context, final String code, final String type) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(milliseconds: 250),
+        backgroundColor: type == 'error' ? Colors.red[200] : Colors.green[200],
+        content: Text('Message: $code'),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +69,26 @@ class LoginPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: resp.hp(2.5)),
-                const CustomFormField(
+                CustomFormField(
                   labelText: 'Email',
                   hintText: 'email@gmail.com',
                   icon: Icons.alternate_email_rounded,
+                  onChanged: (value) {
+                    setState(() {
+                      _user.email = value;
+                    });
+                  },
                 ),
-                SizedBox(height: resp.hp(5)),
-                const CustomFormField(
+                SizedBox(height: resp.hp(2.5)),
+                CustomFormField(
                   labelText: 'Password',
                   hintText: '*******',
                   icon: Icons.lock_outline_rounded,
+                  onChanged: (value) {
+                    setState(() {
+                      _user.password = value;
+                    });
+                  },
                 ),
                 Row(
                   children: [
@@ -73,8 +109,15 @@ class LoginPage extends StatelessWidget {
                   style: TextStyles.w800(16, Colors.white),
                   width: resp.wp(30),
                   text: 'Login',
-                  onTap: (() =>
-                      Navigator.pushReplacementNamed(context, 'homePage')),
+                  onTap: () => AuthService().login(
+                    _user.email!,
+                    _user.password!,
+                    () {
+                      _showSnackbar(context, 'Logged!', 'Logged');
+                      Navigator.pushReplacementNamed(context, 'homePage');
+                    },
+                    (errorCode) => _showSnackbar(context, errorCode, 'error'),
+                  ),
                 ),
                 SizedBox(height: resp.hp(1)),
                 Text(
@@ -94,6 +137,8 @@ class LoginPage extends StatelessWidget {
                     height: resp.hp(5),
                     width: resp.wp(5),
                   ),
+                  // onTap: () => AuthService()
+                  //     .createUser('franciscojrdzrdz@gmail.com', 'franktest'),
                   onTap: (() =>
                       Navigator.pushReplacementNamed(context, 'homePage')),
                 ),

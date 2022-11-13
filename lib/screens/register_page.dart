@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/models/user_model.dart';
+import 'package:schedulemanager/services/auth_service.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/utils/text_styles.dart';
 import 'package:schedulemanager/widgets/custom_button.dart';
@@ -6,8 +8,32 @@ import 'package:schedulemanager/widgets/custom_form_field.dart';
 
 import '../constants/constants.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  late final UserModel _user;
+
+  @override
+  void initState() {
+    _user = UserModel();
+    super.initState();
+  }
+
+  void _showSnackbar(
+      final BuildContext context, final String code, final String type) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(milliseconds: 250),
+        backgroundColor: type == 'error' ? Colors.red[200] : Colors.green[200],
+        content: Text('Message: $code'),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,22 +68,33 @@ class RegisterPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: resp.hp(2.5)),
-                const CustomFormField(
+                CustomFormField(
                   labelText: 'Name',
                   hintText: 'Francisco Rodríguez',
                   icon: Icons.person_outline_rounded,
+                  onChanged: (value) {},
                 ),
                 SizedBox(height: resp.hp(2.5)),
-                const CustomFormField(
+                CustomFormField(
                   labelText: 'Email',
                   hintText: 'email@gmail.com',
                   icon: Icons.alternate_email_rounded,
+                  onChanged: (value) {
+                    setState(() {
+                      _user.email = value;
+                    });
+                  },
                 ),
                 SizedBox(height: resp.hp(2.5)),
-                const CustomFormField(
+                CustomFormField(
                   labelText: 'Password',
                   hintText: '*******',
                   icon: Icons.lock_outline_rounded,
+                  onChanged: (value) {
+                    setState(() {
+                      _user.password = value;
+                    });
+                  },
                 ),
                 SizedBox(height: resp.hp(2.5)),
                 CustomButton(
@@ -66,8 +103,15 @@ class RegisterPage extends StatelessWidget {
                   style: TextStyles.w800(16, Colors.white),
                   width: resp.wp(30),
                   text: 'Register',
-                  onTap: (() =>
-                      Navigator.pushReplacementNamed(context, 'loginPage')),
+                  onTap: () => AuthService().createUser(
+                    _user.email!,
+                    _user.password!,
+                    () {
+                      _showSnackbar(context, 'Registered!', 'Registered');
+                      Navigator.pushReplacementNamed(context, 'loginPage');
+                    },
+                    (errorCode) => _showSnackbar(context, errorCode, 'error'),
+                  ),
                 ),
               ],
             ),

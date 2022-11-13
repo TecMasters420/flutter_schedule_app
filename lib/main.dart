@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/screens/activities_details.dart';
 import 'package:schedulemanager/screens/home_page.dart';
 import 'package:schedulemanager/screens/initial_information_page.dart';
 import 'package:schedulemanager/screens/login_page.dart';
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Schedule Manager',
       debugShowCheckedModeBanner: false,
-      home: const InitialInformationPage(),
+      home: const LoginPage(),
       routes: {
         'initialInformationPage': (context) => const InitialInformationPage(),
         'loginPage': (context) => const LoginPage(),

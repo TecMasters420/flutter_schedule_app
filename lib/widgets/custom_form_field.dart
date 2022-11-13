@@ -4,6 +4,7 @@ import 'package:schedulemanager/utils/text_styles.dart';
 import '../constants/constants.dart';
 
 class CustomFormField extends StatelessWidget {
+  final Function(String value) onChanged;
   final String labelText;
   final String hintText;
   final IconData icon;
@@ -12,11 +13,13 @@ class CustomFormField extends StatelessWidget {
     required this.labelText,
     required this.hintText,
     required this.icon,
+    required this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
