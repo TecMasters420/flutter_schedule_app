@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:schedulemanager/screens/activities_details_page.dart';
-import 'package:schedulemanager/screens/home_page.dart';
-import 'package:schedulemanager/screens/initial_information_page.dart';
-import 'package:schedulemanager/screens/login_page.dart';
+import 'package:schedulemanager/screens/activities_details_page/activities_details_page.dart';
+import 'package:schedulemanager/screens/home_page/home_page.dart';
+import 'package:schedulemanager/screens/initial_page/initial_information_page.dart';
+import 'package:schedulemanager/screens/login_page/login_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:schedulemanager/screens/register_page.dart';
+import 'package:schedulemanager/screens/register_page/register_page.dart';
 import 'package:schedulemanager/services/auth_service.dart';
 import 'firebase_options.dart';
 

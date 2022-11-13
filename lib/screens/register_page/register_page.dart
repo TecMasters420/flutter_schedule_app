@@ -7,7 +7,7 @@ import 'package:schedulemanager/utils/text_styles.dart';
 import 'package:schedulemanager/widgets/custom_button.dart';
 import 'package:schedulemanager/widgets/custom_form_field.dart';
 
-import '../constants/constants.dart';
+import '../../constants/constants.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

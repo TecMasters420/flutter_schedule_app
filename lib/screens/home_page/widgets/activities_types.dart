@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/utils/text_styles.dart';
 
-import '../constants/constants.dart';
+import '../../../constants/constants.dart';
 
 class ActivitiesTypes extends StatelessWidget {
   static const List<String> _types = ['Next', 'Not completed', 'Canceled'];

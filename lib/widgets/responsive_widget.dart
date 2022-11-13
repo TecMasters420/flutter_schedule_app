@@ -23,7 +23,6 @@ class ResponsiveWidget extends StatelessWidget {
             : device == DeviceType.desktop
                 ? desktopWidget
                 : phoneWidget;
-    print(device);
     return currentWidget ?? const Text('No responsive widget.');
   }
 }

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:schedulemanager/constants/constants.dart';
 import 'package:schedulemanager/utils/text_styles.dart';
 import 'package:schedulemanager/widgets/custom_button.dart';
-import 'package:schedulemanager/widgets/login_page_information.dart';
 
-import '../utils/responsive_util.dart';
-import '../widgets/dot_indicator.dart';
+import 'widgets/widgets.dart';
+import '../../utils/responsive_util.dart';
 
 class InitialInformationPage extends StatefulWidget {
   const InitialInformationPage({super.key});

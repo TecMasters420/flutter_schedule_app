@@ -3,7 +3,7 @@ import 'package:schedulemanager/constants/constants.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/widgets/map_preview.dart';
 
-import '../utils/text_styles.dart';
+import '../../utils/text_styles.dart';
 
 class ActivitiesDetailsPage extends StatelessWidget {
   static final Map<IconData, Map<String, List<Widget>>> _bodyElements = {

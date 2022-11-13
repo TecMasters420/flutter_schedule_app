@@ -10,12 +10,11 @@ class HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            FlutterLogo(
-              size: resp.dp(5),
-            ),
+            FlutterLogo(size: resp.dp(5)),
             const Spacer(),
             const Icon(Icons.notifications_none_rounded)
           ],
@@ -35,6 +34,11 @@ class HomeHeader extends StatelessWidget {
             ),
           ],
         ),
+        Text(
+          'A great day to get better',
+          style: TextStyles.w400(resp.dp(1.5), lightGrey),
+        ),
+        SizedBox(height: resp.hp(5)),
       ],
     );
   }
