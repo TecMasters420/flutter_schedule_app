@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
-import 'package:schedulemanager/widgets/reminders_stream.dart';
+import 'package:schedulemanager/widgets/activities_types.dart';
 
 import '../constants/constants.dart';
 import '../utils/text_styles.dart';
@@ -31,8 +31,8 @@ class _HomePageState extends State<HomePage> {
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.only(
-            left: 20,
-            right: 20,
+            left: 32,
+            right: 32,
             top: 80,
           ),
           child: Column(
@@ -40,13 +40,6 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const HomeHeader(),
-              SizedBox(height: resp.hp(2.5)),
-              Row(
-                children: [
-                  Text('Hello, ', style: TextStyles.w400(42)),
-                  Text('Francisco!', style: TextStyles.w400(42, lightGrey)),
-                ],
-              ),
               SizedBox(height: resp.hp(1)),
               Text(
                 'A great day to get better',
@@ -93,10 +86,11 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context, index) {
                     return Container(
                       decoration: BoxDecoration(
-                        color: Colors.green[200],
+                        color: accent,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: ClipRRect(
+                        clipBehavior: Clip.none,
                         borderRadius: BorderRadius.circular(30),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -125,8 +119,8 @@ class _HomePageState extends State<HomePage> {
                                     '90%',
                                     style: TextStyles.w800(18, Colors.white),
                                   ),
-                                  progressColor: Colors.white,
-                                  backgroundColor: Colors.green[100]!,
+                                  progressColor: tempAccent,
+                                  backgroundColor: lightGrey,
                                 ),
                               ),
                             ],
@@ -138,27 +132,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               SizedBox(height: resp.hp(5)),
-              Row(
-                children: [
-                  const Spacer(),
-                  Text(
-                    'Next',
-                    style: TextStyles.w600(16),
-                  ),
-                  const Spacer(),
-                  Text(
-                    'Not completed',
-                    style: TextStyles.w400(16, grey),
-                  ),
-                  const Spacer(),
-                  Text(
-                    'Canceled',
-                    style: TextStyles.w400(16, grey),
-                  ),
-                  const Spacer(),
-                ],
-              ),
-              RemindersStream()
+              const ActivitiesTypes()
             ],
           ),
         ),

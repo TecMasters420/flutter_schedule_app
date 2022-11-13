@@ -12,6 +12,7 @@ class TextStyles {
     final Color color,
   ) {
     return _base.copyWith(
+      fontFamily: 'OpenSans',
       fontSize: size,
       fontWeight: weight,
       color: color,
