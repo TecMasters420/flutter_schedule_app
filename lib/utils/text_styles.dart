@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_app/constants/constants.dart';
+import 'package:schedulemanager/constants/constants.dart';
 
 class TextStyles {
   static TextStyle get _base => const TextStyle(

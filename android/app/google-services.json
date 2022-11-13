@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "760990865871",
+    "project_id": "schedule-manager-ab373",
+    "storage_bucket": "schedule-manager-ab373.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760990865871:android:5fac5f4853be22f14d1aba",
+        "android_client_info": {
+          "package_name": "com.schedulemanager.tec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760990865871-1rb9vei5ktm1i6js7tuepmpsrjpf8nus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8cY1IqBdYz63_dATJNyz_4CvqdbEHwBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760990865871-1rb9vei5ktm1i6js7tuepmpsrjpf8nus.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

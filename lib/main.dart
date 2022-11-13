@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_app/screens/home_page.dart';
-import 'package:schedule_app/screens/initial_information_page.dart';
-import 'package:schedule_app/screens/login_page.dart';
+import 'package:schedulemanager/screens/home_page.dart';
+import 'package:schedulemanager/screens/initial_information_page.dart';
+import 'package:schedulemanager/screens/login_page.dart';
 
-void main() => runApp(const MyApp());
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

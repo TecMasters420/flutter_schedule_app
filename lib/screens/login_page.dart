@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_app/constants/constants.dart';
-import 'package:schedule_app/utils/responsive_util.dart';
-import 'package:schedule_app/utils/text_styles.dart';
-import 'package:schedule_app/widgets/custom_button.dart';
-import 'package:schedule_app/widgets/custom_form_field.dart';
+import 'package:schedulemanager/utils/responsive_util.dart';
+import 'package:schedulemanager/utils/text_styles.dart';
+import 'package:schedulemanager/widgets/custom_button.dart';
+import 'package:schedulemanager/widgets/custom_form_field.dart';
+
+import '../constants/constants.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -73,6 +74,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 const Spacer(),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "Don't have an account yet? ",
