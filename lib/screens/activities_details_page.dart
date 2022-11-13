@@ -38,6 +38,11 @@ class ActivitiesDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: accent,
+        child: const Icon(Icons.edit),
+        onPressed: () {},
+      ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -52,6 +57,7 @@ class ActivitiesDetailsPage extends StatelessWidget {
             children: [
               IconButton(
                 icon: const Icon(Icons.arrow_back_ios_rounded),
+                splashRadius: 20,
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -119,7 +125,8 @@ class ActivitiesDetailsPage extends StatelessWidget {
                     SizedBox(height: resp.wp(5)),
                   ],
                 ),
-              )
+              ),
+              SizedBox(height: resp.hp(5)),
             ],
           ),
         ),

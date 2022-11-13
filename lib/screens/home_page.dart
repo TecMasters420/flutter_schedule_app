@@ -150,14 +150,23 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    SizedBox(height: resp.hp(2)),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
-                          flex: 1,
+                          flex: 2,
                           child: Column(
                             children: [
+                              Container(
+                                height: 5,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: colors[
+                                      Random().nextInt(colors.length - 1)],
+                                ),
+                              ),
                               Text(
                                 '${index + 1}',
                                 style: TextStyles.w500(25),
@@ -182,6 +191,7 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           flex: 10,
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
@@ -223,10 +233,23 @@ class _HomePageState extends State<HomePage> {
                               if (Random().nextInt(100) < 50) ...[
                                 SizedBox(height: resp.hp(2)),
                                 Text(
-                                  'Location:',
+                                  'Location: South Portland',
                                   style: TextStyles.w600(14),
                                 ),
-                                SizedBox(height: resp.hp(1)),
+                                SizedBox(height: resp.hp(0.5)),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Time to arrive: ',
+                                      style: TextStyles.w400(12, grey),
+                                    ),
+                                    Text(
+                                      '92 min',
+                                      style: TextStyles.w400(12, grey),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: resp.hp(2)),
                                 const MapPreview(),
                               ],
                               SizedBox(height: resp.hp(2)),
@@ -237,6 +260,18 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Row(
                       children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Time left: ',
+                              style: TextStyles.w400(12, grey),
+                            ),
+                            Text(
+                              '1 day',
+                              style: TextStyles.w400(12, grey),
+                            ),
+                          ],
+                        ),
                         const Spacer(),
                         CustomButton(
                           text: 'Details',
@@ -249,7 +284,11 @@ class _HomePageState extends State<HomePage> {
                         )
                       ],
                     ),
-                    const Divider()
+                    SizedBox(height: resp.hp(1)),
+                    Divider(
+                      color: lightGrey.withOpacity(0.15),
+                      height: 5,
+                    )
                   ],
                 ),
               )
