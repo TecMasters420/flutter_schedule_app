@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
+import 'package:schedulemanager/widgets/reminders_stream.dart';
 
 import '../constants/constants.dart';
 import '../utils/text_styles.dart';
@@ -156,7 +157,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const Spacer(),
                 ],
-              )
+              ),
+              RemindersStream()
             ],
           ),
         ),

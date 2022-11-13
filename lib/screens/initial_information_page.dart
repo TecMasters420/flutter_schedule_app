@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:schedulemanager/constants/constants.dart';
+import 'package:schedulemanager/services/reminder_service.dart';
+import 'package:schedulemanager/utils/text_styles.dart';
 import 'package:schedulemanager/widgets/custom_button.dart';
 import 'package:schedulemanager/widgets/login_page_information.dart';
 
@@ -66,12 +68,21 @@ class _InitialInformationPageState extends State<InitialInformationPage> {
                       'We also updated the format of podcasts and rewards.',
                   extraWidget: !isFinalElement
                       ? null
-                      : CustomButton(
-                          text: 'Join',
-                          onTap: () => Navigator.pushReplacementNamed(
-                            context,
-                            'loginPage',
-                          ),
+                      : Column(
+                          children: [
+                            SizedBox(height: resp.hp(1)),
+                            CustomButton(
+                              color: tempAccent,
+                              height: resp.hp(5),
+                              style: TextStyles.w800(16, Colors.white),
+                              width: resp.wp(40),
+                              text: 'Join',
+                              onTap: () => Navigator.pushReplacementNamed(
+                                context,
+                                'loginPage',
+                              ),
+                            ),
+                          ],
                         ),
                 );
               },

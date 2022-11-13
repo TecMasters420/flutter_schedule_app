@@ -33,8 +33,8 @@ class LoginPage extends StatelessWidget {
                 ),
                 SizedBox(height: resp.hp(2.5)),
                 Text(
-                  'Hello Again!',
-                  style: TextStyles.w500(20),
+                  'Login',
+                  style: TextStyles.w500(30),
                 ),
                 SizedBox(height: resp.hp(1)),
                 Text(
@@ -68,7 +68,32 @@ class LoginPage extends StatelessWidget {
                 ),
                 SizedBox(height: resp.hp(2.5)),
                 CustomButton(
+                  color: tempAccent,
+                  height: resp.hp(5),
+                  style: TextStyles.w800(16, Colors.white),
+                  width: resp.wp(30),
                   text: 'Login',
+                  onTap: (() =>
+                      Navigator.pushReplacementNamed(context, 'homePage')),
+                ),
+                SizedBox(height: resp.hp(1)),
+                Text(
+                  'Or',
+                  style: TextStyles.w200(12, Colors.grey[600]!),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: resp.hp(1)),
+                CustomButton(
+                  color: Colors.grey[50]!,
+                  height: resp.hp(5),
+                  style: TextStyles.w400(14),
+                  width: resp.wp(30),
+                  text: 'Google',
+                  prefixWidget: Image.asset(
+                    'assets/images/google.png',
+                    height: resp.hp(5),
+                    width: resp.wp(5),
+                  ),
                   onTap: (() =>
                       Navigator.pushReplacementNamed(context, 'homePage')),
                 ),
@@ -77,7 +102,7 @@ class LoginPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don't have an account yet? ",
+                      "Don't have an account yet?",
                       style: TextStyles.w400(12, grey),
                     ),
                     TextButton(
@@ -85,7 +110,8 @@ class LoginPage extends StatelessWidget {
                         'Sign Up',
                         style: TextStyles.w500(12, accent),
                       ),
-                      onPressed: () {},
+                      onPressed: () =>
+                          Navigator.pushNamed(context, 'registerPage'),
                     )
                   ],
                 ),

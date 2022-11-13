@@ -4,6 +4,7 @@ import 'package:schedulemanager/screens/initial_information_page.dart';
 import 'package:schedulemanager/screens/login_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:schedulemanager/screens/register_page.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         'initialInformationPage': (context) => const InitialInformationPage(),
         'loginPage': (context) => const LoginPage(),
         'homePage': (context) => const HomePage(),
+        'registerPage': (context) => const RegisterPage(),
       },
     );
   }
