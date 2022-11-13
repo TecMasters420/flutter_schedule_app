@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:schedulemanager/models/user_model.dart';
 import 'package:schedulemanager/services/auth_service.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
@@ -38,6 +40,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final AuthService auth = Provider.of<AuthService>(context);
+
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      Navigator.pushReplacementNamed(context, 'homePage');
+    }
+
     return Scaffold(
       backgroundColor: backgroundColor,
       body: SingleChildScrollView(
@@ -109,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyles.w800(16, Colors.white),
                   width: resp.wp(30),
                   text: 'Login',
-                  onTap: () => AuthService().login(
+                  onTap: () async => await auth.login(
                     _user.email!,
                     _user.password!,
                     () {
@@ -137,10 +146,15 @@ class _LoginPageState extends State<LoginPage> {
                     height: resp.hp(5),
                     width: resp.wp(5),
                   ),
-                  // onTap: () => AuthService()
-                  //     .createUser('franciscojrdzrdz@gmail.com', 'franktest'),
-                  onTap: (() =>
-                      Navigator.pushReplacementNamed(context, 'homePage')),
+                  onTap: () async {
+                    await auth.googleLogin(
+                      () {
+                        _showSnackbar(context, 'Logged!', 'Logged');
+                        Navigator.pushReplacementNamed(context, 'homePage');
+                      },
+                      (errorCode) => _showSnackbar(context, errorCode, 'error'),
+                    );
+                  },
                 ),
                 const Spacer(),
                 Row(

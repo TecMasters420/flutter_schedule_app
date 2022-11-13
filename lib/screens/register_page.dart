@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:schedulemanager/models/user_model.dart';
 import 'package:schedulemanager/services/auth_service.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
@@ -38,6 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final AuthService auth = Provider.of<AuthService>(context);
     return Scaffold(
       backgroundColor: backgroundColor,
       body: SingleChildScrollView(
@@ -103,7 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   style: TextStyles.w800(16, Colors.white),
                   width: resp.wp(30),
                   text: 'Register',
-                  onTap: () => AuthService().createUser(
+                  onTap: () async => await auth.createUser(
                     _user.email!,
                     _user.password!,
                     () {

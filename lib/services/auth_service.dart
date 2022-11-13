@@ -1,13 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class AuthService {
+class AuthService with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  late final User user;
+  late final User _user;
 
-  AuthService();
+  bool userIsLogged() => _auth.currentUser != null;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  void createUser(
+  User get user => _user;
+
+  Future<void> createUser(
     final String email,
     final String password,
     final VoidCallback onCompleteCallback,
@@ -18,7 +22,8 @@ class AuthService {
         email: email,
         password: password,
       );
-      user = res.user!;
+      _user = res.user!;
+      notifyListeners();
       onCompleteCallback();
     } on FirebaseAuthException catch (e) {
       String code = e.code.replaceAll('-', ' ');
@@ -27,7 +32,7 @@ class AuthService {
     }
   }
 
-  void login(
+  Future<void> login(
     final String email,
     final String password,
     final VoidCallback onCompleteCallback,
@@ -38,7 +43,27 @@ class AuthService {
         email: email,
         password: password,
       );
-      user = userCredential.user!;
+      _user = userCredential.user!;
+      notifyListeners();
+      onCompleteCallback();
+    } on FirebaseAuthException catch (e) {
+      String code = e.code.replaceAll('-', ' ');
+      code = code[0].toUpperCase() + code.substring(1);
+      onErrorCallback(code);
+    }
+  }
+
+  Future<void> googleLogin(
+    final VoidCallback onCompleteCallback,
+    final Function(String errorCode) onErrorCallback,
+  ) async {
+    try {
+      final googleUser = await _googleSignIn.signIn();
+      final googleAuth = await googleUser!.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+      final user = await _auth.signInWithCredential(credential);
+      _user = user.user!;
       onCompleteCallback();
     } on FirebaseAuthException catch (e) {
       String code = e.code.replaceAll('-', ' ');

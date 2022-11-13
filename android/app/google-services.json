@@ -29,6 +29,13 @@
             {
               "client_id": "760990865871-1rb9vei5ktm1i6js7tuepmpsrjpf8nus.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "760990865871-f0f01dd2ep2ikgkanvvdu6ctb9dm7e2a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.scheduleApp"
+              }
             }
           ]
         }
