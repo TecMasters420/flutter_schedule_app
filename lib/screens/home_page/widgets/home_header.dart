@@ -17,7 +17,7 @@ class HomeHeader extends StatelessWidget {
           children: [
             const Icon(Icons.notifications_none_rounded, color: black),
             const Spacer(),
-            UserProfilePicture(size: resp.dp(5))
+            UserProfilePicture(size: resp.dp(2))
           ],
         ),
         SizedBox(height: resp.hp(2.5)),

@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     'My daily activities',
@@ -67,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              SizedBox(height: resp.hp(1)),
+              SizedBox(height: resp.hp(2)),
               SizedBox(
                 height: resp.hp(25),
                 width: resp.width,
