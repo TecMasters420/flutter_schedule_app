@@ -4,6 +4,7 @@ import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/widgets/map_preview.dart';
 
 import '../../utils/text_styles.dart';
+import '../../widgets/custom_back_button.dart';
 
 class ActivitiesDetailsPage extends StatelessWidget {
   static final Map<IconData, Map<String, List<Widget>>> _bodyElements = {
@@ -52,13 +53,7 @@ class ActivitiesDetailsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back_ios_rounded),
-                splashRadius: 20,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
+              const CustomBackButton(),
               SizedBox(height: resp.hp(2.5)),
               Center(
                 child: Text(

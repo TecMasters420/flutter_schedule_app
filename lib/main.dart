@@ -7,6 +7,7 @@ import 'package:schedulemanager/screens/login_page/login_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:schedulemanager/screens/register_page/register_page.dart';
+import 'package:schedulemanager/screens/reminders_page/reminders_page.dart';
 import 'package:schedulemanager/services/auth_service.dart';
 import 'firebase_options.dart';
 
@@ -36,7 +37,8 @@ class MyApp extends StatelessWidget {
           'loginPage': (context) => const LoginPage(),
           'homePage': (context) => const HomePage(),
           'registerPage': (context) => const RegisterPage(),
-          'activitiesDetailsPage': (context) => const ActivitiesDetailsPage()
+          'activitiesDetailsPage': (context) => const ActivitiesDetailsPage(),
+          'remindersPage': (context) => const RemindersPage(),
         },
       ),
     );

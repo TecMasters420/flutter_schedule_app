@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:schedulemanager/constants/constants.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/utils/text_styles.dart';
+import 'package:schedulemanager/widgets/user_profile_picture.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
@@ -14,9 +15,9 @@ class HomeHeader extends StatelessWidget {
       children: [
         Row(
           children: [
-            FlutterLogo(size: resp.dp(5)),
+            const Icon(Icons.notifications_none_rounded, color: black),
             const Spacer(),
-            const Icon(Icons.notifications_none_rounded)
+            UserProfilePicture(size: resp.dp(5))
           ],
         ),
         SizedBox(height: resp.hp(2.5)),

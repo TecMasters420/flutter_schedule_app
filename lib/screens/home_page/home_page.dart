@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
+import 'package:schedulemanager/widgets/custom_button.dart';
 
 import '../../constants/constants.dart';
 import '../../utils/text_styles.dart';
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.only(
             left: 32,
             right: 32,
-            top: 80,
+            top: 50,
             bottom: 80,
           ),
           child: Column(
@@ -50,36 +51,23 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const Spacer(),
                   Flexible(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          constraints: const BoxConstraints(maxWidth: 70),
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          decoration: BoxDecoration(
-                            color: lightGrey.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.add, color: accent, size: resp.dp(1)),
-                              SizedBox(width: resp.wp(1)),
-                              Text(
-                                'Add',
-                                style: TextStyles.w500(resp.dp(1.15)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                    child: CustomButton(
+                      color: lightGrey.withOpacity(0.1),
+                      text: 'Add',
+                      height: resp.hp(3.5),
+                      style: TextStyles.w500(resp.dp(1.15)),
+                      width: resp.wp(20),
+                      constraints: const BoxConstraints(maxWidth: 70),
+                      prefixWidget:
+                          Icon(Icons.add, size: resp.dp(2), color: accent),
+                      onTap: () {
+                        Navigator.pushNamed(context, 'remindersPage');
+                      },
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: resp.hp(2.5)),
+              SizedBox(height: resp.hp(1)),
               SizedBox(
                 height: resp.hp(25),
                 width: resp.width,
@@ -121,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                                     TextStyles.w800(resp.dp(2.5), Colors.white),
                               ),
                               progressColor: tempAccent,
-                              backgroundColor: lightGrey,
+                              backgroundColor: Colors.white,
                             ),
                           ),
                         ],
