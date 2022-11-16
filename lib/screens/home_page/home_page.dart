@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/widgets/custom_button.dart';
 
 import '../../constants/constants.dart';
+import '../../providers/activities_provider.dart';
 import '../../utils/text_styles.dart';
 import 'widgets/widgets.dart';
 
@@ -23,7 +25,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    print('Homepage singleton ${resp.hashCode}');
+    final ActivitiesProvider activities =
+        Provider.of<ActivitiesProvider>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -120,11 +123,20 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: resp.hp(5)),
                   const ActivitiesTypes(),
                   SizedBox(height: resp.hp(5)),
-                  ...List.generate(
-                    DateTime(DateTime.now().year, DateTime.now().month + 1, 0)
-                        .day,
-                    (index) => ActivityHomeContainer(index: index),
-                  )
+                  if (activities.remindersCount != 0) ...[
+                    ...List.generate(
+                      // DateTime(DateTime.now().year, DateTime.now().month + 1, 0)
+                      //     .day,
+                      activities.remindersCount,
+                      (index) => ActivityHomeContainer(index: index),
+                    )
+                  ] else
+                    Center(
+                      child: Text(
+                        'No Activities',
+                        style: TextStyles.w500(resp.dp(1.5), lightGrey),
+                      ),
+                    ),
                 ],
               ),
             ),

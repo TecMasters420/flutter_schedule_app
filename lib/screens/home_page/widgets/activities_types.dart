@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:schedulemanager/providers/activities_provider.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/utils/text_styles.dart';
 
@@ -6,34 +10,45 @@ import '../../../constants/constants.dart';
 
 class ActivitiesTypes extends StatefulWidget {
   static const List<String> _types = ['Next', 'Not completed', 'Canceled'];
-  const ActivitiesTypes({super.key});
+  const ActivitiesTypes({
+    super.key,
+  });
 
   @override
   State<ActivitiesTypes> createState() => _ActivitiesTypesState();
 }
 
 class _ActivitiesTypesState extends State<ActivitiesTypes> {
-  late int _selectedType;
+  late Map<String, int> _typesWithReminders;
 
   @override
   void initState() {
     super.initState();
-    _selectedType = 1;
+    _initTypesWithReminders();
+  }
+
+  void _initTypesWithReminders() {
+    _typesWithReminders = {};
+    for (final String type in ActivitiesTypes._types) {
+      _typesWithReminders.addAll({type: Random().nextInt(10)});
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final ActivitiesProvider activities =
+        Provider.of<ActivitiesProvider>(context);
     return Row(
       children: [
         ...List.generate(
-          ActivitiesTypes._types.length,
+          _typesWithReminders.length,
           (x) => Expanded(
             child: GestureDetector(
               onTap: () {
-                setState(() {
-                  _selectedType = x;
-                });
+                activities.newActivitieTypeSelected(
+                    x, _typesWithReminders.values.elementAt(x));
+                // });
               },
               child: Container(
                 alignment: Alignment.center,
@@ -47,9 +62,9 @@ class _ActivitiesTypesState extends State<ActivitiesTypes> {
                     );
                   },
                   child: Text(
-                    key: Key('${x == _selectedType}'),
-                    ActivitiesTypes._types[x],
-                    style: x == _selectedType
+                    key: Key('${x == {activities.selectedTypeIndex}}'),
+                    _typesWithReminders.keys.elementAt(x),
+                    style: x == activities.selectedTypeIndex
                         ? TextStyles.w700(resp.dp(1.55))
                         : TextStyles.w600(resp.dp(1.55), grey),
                     textAlign: TextAlign.center,

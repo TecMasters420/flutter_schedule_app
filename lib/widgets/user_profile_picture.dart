@@ -9,9 +9,14 @@ class UserProfilePicture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-      radius: size,
-      child: Image.asset('assets/images/user.png'),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, 'userProfilePage');
+      },
+      child: CircleAvatar(
+        radius: size,
+        child: Image.asset('assets/images/user.png'),
+      ),
     );
   }
 }
