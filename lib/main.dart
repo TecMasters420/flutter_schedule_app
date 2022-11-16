@@ -7,6 +7,7 @@ import 'package:schedulemanager/screens/initial_page/initial_information_page.da
 import 'package:schedulemanager/screens/login_page/login_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:schedulemanager/screens/map_page/map_page.dart';
 import 'package:schedulemanager/screens/register_page/register_page.dart';
 import 'package:schedulemanager/screens/reminders_page/reminders_page.dart';
 import 'package:schedulemanager/screens/user_profile_page/user_profile_page.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
           'activitiesDetailsPage': (context) => const ActivitiesDetailsPage(),
           'remindersPage': (context) => const RemindersPage(),
           'userProfilePage': (context) => const UserProfilePage(),
+          'mapPage': (context) => const MapPage(),
         },
       ),
     );
