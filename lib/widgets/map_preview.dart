@@ -5,13 +5,16 @@ class MapPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Image.asset(
-        'assets/images/testMap.png',
-        height: 150,
-        width: 500,
-        fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, 'mapPage'),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Image.asset(
+          'assets/images/testMap.png',
+          height: 150,
+          width: 500,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

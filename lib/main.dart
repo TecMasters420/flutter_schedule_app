@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:schedulemanager/providers/activities_provider.dart';
 import 'package:schedulemanager/screens/activities_details_page/activities_details_page.dart';
@@ -12,10 +13,10 @@ import 'package:schedulemanager/screens/register_page/register_page.dart';
 import 'package:schedulemanager/screens/reminders_page/reminders_page.dart';
 import 'package:schedulemanager/screens/user_profile_page/user_profile_page.dart';
 import 'package:schedulemanager/services/auth_service.dart';
-import 'package:schedulemanager/utils/responsive_util.dart';
 import 'firebase_options.dart';
 
 void main() async {
+  await dotenv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

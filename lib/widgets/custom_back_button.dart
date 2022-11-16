@@ -8,6 +8,7 @@ class CustomBackButton extends StatelessWidget {
     return IconButton(
       icon: const Icon(Icons.arrow_back_ios_rounded),
       splashRadius: 20,
+      alignment: Alignment.centerLeft,
       padding: EdgeInsets.zero,
       onPressed: () {
         Navigator.pop(context);
