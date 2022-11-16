@@ -32,6 +32,10 @@ class _ActivitiesTypesState extends State<ActivitiesTypes> {
     for (final String type in ActivitiesTypes._types) {
       _typesWithReminders.addAll({type: Random().nextInt(10)});
     }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<ActivitiesProvider>(context, listen: false)
+          .newActivitieTypeSelected(0, _typesWithReminders.values.elementAt(0));
+    });
   }
 
   @override
@@ -46,9 +50,10 @@ class _ActivitiesTypesState extends State<ActivitiesTypes> {
           (x) => Expanded(
             child: GestureDetector(
               onTap: () {
-                activities.newActivitieTypeSelected(
-                    x, _typesWithReminders.values.elementAt(x));
-                // });
+                if (activities.selectedTypeIndex != x) {
+                  activities.newActivitieTypeSelected(
+                      x, _typesWithReminders.values.elementAt(x));
+                }
               },
               child: Container(
                 alignment: Alignment.center,
