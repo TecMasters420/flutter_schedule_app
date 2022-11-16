@@ -21,40 +21,67 @@ class RemindersPage extends StatefulWidget {
 }
 
 class _RemindersPageState extends State<RemindersPage> {
-  static const int _containers = 10;
-
   List<Size?>? _infoContainersSize;
-  late final List<GlobalKey> _infoContainerKey;
+
+  late List<GlobalKey> _infoContainerKey;
+  late Map<int, int> _remindersPerDay;
+  late int _monthDays;
+  late int _selectedDay;
+  late int _lastContainerChecked;
+  late int _remindersCountInSelectedDay;
 
   @override
   void initState() {
     super.initState();
-    _infoContainersSize = List.generate(_containers, (index) => null);
-    _infoContainerKey = List.generate(_containers, (index) => GlobalKey());
+    _selectedDay = 0;
+    _monthDays = _getDays(DateTime.now());
+    _remindersCountInSelectedDay = _getRemindersCount();
+    _clearKeyAndSize();
   }
+
+  void _clearKeyAndSize() {
+    _lastContainerChecked = 0;
+    _infoContainersSize =
+        List.generate(_remindersCountInSelectedDay, (index) => null);
+    _infoContainerKey =
+        List.generate(_remindersCountInSelectedDay, (index) => GlobalKey());
+  }
+
+  int _getDays(final DateTime date) {
+    final int days = DateTime(date.year, date.month + 1, 1)
+        .difference(DateTime(date.year, date.month, 1))
+        .inDays;
+
+    _remindersPerDay = {};
+    for (int x = 0; x <= days; x++) {
+      _remindersPerDay.addAll({x: Random().nextInt(10)});
+    }
+    return days;
+  }
+
+  int _getRemindersCount() => _remindersPerDay.values.elementAt(_selectedDay);
 
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-
-    final DateTime now = DateTime.now();
-    final int days = DateTime(now.year, now.month + 1, 1)
-        .difference(DateTime(now.year, now.month, 1))
-        .inDays;
+    _remindersCountInSelectedDay = _getRemindersCount();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      for (int x = 0; x < _containers; x++) {
-        if (_infoContainerKey[x].currentContext != null &&
-            _infoContainersSize![x] == null) {
+      while (_lastContainerChecked < _remindersCountInSelectedDay) {
+        if (_infoContainerKey[_lastContainerChecked].currentContext != null &&
+            _infoContainersSize![_lastContainerChecked] == null) {
           final RenderObject? renderBoxRed =
-              _infoContainerKey[x].currentContext?.findRenderObject();
+              _infoContainerKey[_lastContainerChecked]
+                  .currentContext
+                  ?.findRenderObject();
           if (renderBoxRed != null) {
             final sizeRed = renderBoxRed.paintBounds;
             setState(() {
-              _infoContainersSize![x] = sizeRed.size;
+              _infoContainersSize![_lastContainerChecked] = sizeRed.size;
             });
           }
         }
+        _lastContainerChecked++;
       }
     });
 
@@ -97,121 +124,143 @@ class _RemindersPageState extends State<RemindersPage> {
                     style: TextStyles.w700(resp.dp(2), black),
                   ),
                   ScrolleableDaysList(
-                    days: days,
-                    onSelectedNewDay: (newDay) {},
+                    days: _monthDays,
+                    onSelectedNewDay: (newDay) {
+                      if (newDay == _selectedDay) return;
+                      setState(() {
+                        _selectedDay = newDay;
+                        _remindersCountInSelectedDay = _getRemindersCount();
+                        _clearKeyAndSize();
+                      });
+                    },
                   ),
                   SizedBox(height: resp.hp(2)),
                   Text(
-                    'Reminders',
+                    '$_remindersCountInSelectedDay Reminders',
                     style: TextStyles.w700(resp.dp(2), black),
                   ),
-                  ...List.generate(_containers, (x) {
-                    final Color containerColor =
-                        colors[Random().nextInt(colors.length - 1)];
-                    return Column(
-                      children: [
-                        SizedBox(height: resp.hp(3)),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
+                  SizedBox(height: resp.hp(3)),
+                  if (_remindersCountInSelectedDay != 0) ...[
+                    ...List.generate(
+                      _remindersPerDay.values.elementAt(_selectedDay),
+                      (x) {
+                        final Color containerColor =
+                            colors[Random().nextInt(colors.length - 1)];
+                        return Column(
                           children: [
-                            Expanded(
-                              flex: 5,
-                              child: ReminderHour(
-                                hours: const ['09:00', '09:30'],
-                                fontSize: resp.dp(1.25),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 400),
-                                height: _infoContainersSize![x] != null
-                                    ? _infoContainersSize![x]?.height
-                                    : 0,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(100),
-                                      bottomLeft: Radius.circular(100)),
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [
-                                      containerColor,
-                                      containerColor.withOpacity(0.7),
-                                    ],
+                            if (x != 0) SizedBox(height: resp.hp(3)),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Expanded(
+                                  flex: 5,
+                                  child: ReminderHour(
+                                    hours: const ['09:00', '09:30'],
+                                    fontSize: resp.dp(1.25),
                                   ),
                                 ),
-                              ),
-                            ),
-                            // Two expanded
-                            Expanded(
-                              flex: 30,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: Column(
-                                  key: _infoContainerKey[x],
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Sprint Planing Period 02 in Okt 2021',
-                                      style: TextStyles.w600(
-                                        resp.dp(1.75),
+                                Expanded(
+                                  flex: 1,
+                                  child: AnimatedContainer(
+                                    duration: const Duration(milliseconds: 400),
+                                    height: _infoContainersSize![x] != null &&
+                                            _lastContainerChecked ==
+                                                _infoContainerKey.length
+                                        ? _infoContainersSize![x]?.height
+                                        : 0,
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(100),
+                                          bottomLeft: Radius.circular(100)),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        colors: [
+                                          containerColor,
+                                          containerColor.withOpacity(0.7),
+                                        ],
                                       ),
-                                      textAlign: TextAlign.start,
                                     ),
-                                    SizedBox(height: resp.hp(0.5)),
-                                    Text(
-                                      'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..',
-                                      style: TextStyles.w400(
-                                        resp.dp(1.25),
-                                        lightGrey,
-                                      ),
-                                      textAlign: TextAlign.start,
-                                    ),
-                                    SizedBox(height: resp.hp(0.5)),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.access_time_rounded,
-                                          size: resp.dp(1.75),
-                                          color: lightGrey,
-                                        ),
-                                        SizedBox(width: resp.wp(1)),
-                                        Text(
-                                          'Time: 09:00 - 09:00',
-                                          style: TextStyles.w400(
-                                              resp.dp(1), lightGrey),
-                                          textAlign: TextAlign.start,
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(height: resp.hp(0.5)),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.location_on_outlined,
-                                          size: resp.dp(1.75),
-                                          color: lightGrey,
-                                        ),
-                                        SizedBox(width: resp.wp(1)),
-                                        Text(
-                                          'Location: Tijuana, BC.',
-                                          style: TextStyles.w400(
-                                              resp.dp(1), lightGrey),
-                                          textAlign: TextAlign.start,
-                                        )
-                                      ],
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            )
+                                // Two expanded
+                                Expanded(
+                                  flex: 30,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 20),
+                                    child: Column(
+                                      key: _infoContainerKey[x],
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Sprint Planing Period 02 in Okt 2021',
+                                          style: TextStyles.w600(
+                                            resp.dp(1.75),
+                                          ),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                        SizedBox(height: resp.hp(0.5)),
+                                        Text(
+                                          'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..',
+                                          style: TextStyles.w400(
+                                            resp.dp(1.25),
+                                            lightGrey,
+                                          ),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                        SizedBox(height: resp.hp(0.5)),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.access_time_rounded,
+                                              size: resp.dp(1.75),
+                                              color: lightGrey,
+                                            ),
+                                            SizedBox(width: resp.wp(1)),
+                                            Text(
+                                              'Time: 09:00 - 09:00',
+                                              style: TextStyles.w400(
+                                                  resp.dp(1), lightGrey),
+                                              textAlign: TextAlign.start,
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(height: resp.hp(0.5)),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.location_on_outlined,
+                                              size: resp.dp(1.75),
+                                              color: lightGrey,
+                                            ),
+                                            SizedBox(width: resp.wp(1)),
+                                            Text(
+                                              'Location: Tijuana, BC.',
+                                              style: TextStyles.w400(
+                                                  resp.dp(1), lightGrey),
+                                              textAlign: TextAlign.start,
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ],
-                        ),
-                      ],
-                    );
-                  }),
+                        );
+                      },
+                    ),
+                  ] else
+                    Center(
+                      child: Text(
+                        'No reminders',
+                        style: TextStyles.w500(resp.dp(2), lightGrey),
+                      ),
+                    ),
                   SizedBox(height: resp.hp(1)),
                 ],
               ),

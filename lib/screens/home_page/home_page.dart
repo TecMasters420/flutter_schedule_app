@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    print('Homepage singleton ${resp.hashCode}');
     return Scaffold(
       body: Stack(
         children: [

@@ -9,6 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:schedulemanager/screens/register_page/register_page.dart';
 import 'package:schedulemanager/screens/reminders_page/reminders_page.dart';
 import 'package:schedulemanager/services/auth_service.dart';
+import 'package:schedulemanager/utils/responsive_util.dart';
 import 'firebase_options.dart';
 
 void main() async {
