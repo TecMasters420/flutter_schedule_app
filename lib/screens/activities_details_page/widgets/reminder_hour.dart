@@ -18,11 +18,16 @@ class ReminderHour extends StatelessWidget {
       children: [
         ...List.generate(
           hours.length,
-          (x) => Text(
-            hours[x],
-            style: TextStyles.w400(fontSize, lightGrey),
+          (x) => Column(
+            children: [
+              Text(
+                hours[x],
+                style: TextStyles.w400(fontSize, lightGrey),
+              ),
+              if (x < hours.length - 1) const Divider(),
+            ],
           ),
-        )
+        ),
       ],
     );
   }

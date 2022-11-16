@@ -10,6 +10,7 @@ import 'package:schedulemanager/widgets/user_profile_picture.dart';
 
 import '../../constants/constants.dart';
 import '../../utils/text_styles.dart';
+import '../home_page/widgets/expandible_bottom_container.dart';
 import 'widgets/widgets.dart';
 
 class RemindersPage extends StatefulWidget {
@@ -77,7 +78,7 @@ class _RemindersPageState extends State<RemindersPage> {
                     children: [
                       const CustomBackButton(),
                       const Spacer(),
-                      UserProfilePicture(size: resp.dp(5))
+                      UserProfilePicture(size: resp.dp(2.5))
                     ],
                   ),
                   SizedBox(height: resp.hp(2.5)),
@@ -224,25 +225,12 @@ class _RemindersPageState extends State<RemindersPage> {
                 right: 32,
                 bottom: 20,
               ),
-              child: Container(
-                height: 80,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(20),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     blurRadius: 200,
-                  //     offset: const Offset(0, 46),
-                  //     color: Colors.black.withOpacity(0.05),
-                  //   )
-                  // ],
-                ),
-                child: Icon(
-                  Icons.add,
-                  size: resp.dp(3),
-                  color: black,
-                ),
+              child: ExpandibleBottomContainer(
+                initialHeight: resp.hp(6),
+                finalHeight: resp.hp(50),
+                initialWidth: resp.wp(13),
+                finalWidth: resp.width,
+                iconSize: resp.dp(3),
               ),
             ),
           )
