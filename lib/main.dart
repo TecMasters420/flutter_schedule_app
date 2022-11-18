@@ -13,6 +13,7 @@ import 'package:schedulemanager/screens/register_page/register_page.dart';
 import 'package:schedulemanager/screens/reminders_page/reminders_page.dart';
 import 'package:schedulemanager/screens/user_profile_page/user_profile_page.dart';
 import 'package:schedulemanager/services/auth_service.dart';
+import 'package:schedulemanager/services/initial_announcements_service.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -32,6 +33,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthService>(create: (context) => AuthService()),
+        ChangeNotifierProvider<InitialAnnouncementsService>(
+            create: (context) => InitialAnnouncementsService()),
         ChangeNotifierProvider<ActivitiesProvider>(
             create: (context) => ActivitiesProvider()),
       ],

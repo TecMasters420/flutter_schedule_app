@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:schedulemanager/constants/constants.dart';
+import 'package:schedulemanager/models/initial_announcement_model.dart';
+import 'package:schedulemanager/services/initial_announcements_service.dart';
 import 'package:schedulemanager/utils/text_styles.dart';
 import 'package:schedulemanager/widgets/custom_button.dart';
 
@@ -14,8 +17,6 @@ class InitialInformationPage extends StatefulWidget {
 }
 
 class _InitialInformationPageState extends State<InitialInformationPage> {
-  static const int _elements = 4;
-
   late final PageController _pageController;
 
   int _currentPage = 0;
@@ -38,6 +39,9 @@ class _InitialInformationPageState extends State<InitialInformationPage> {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final InitialAnnouncementsService announcesService =
+        Provider.of<InitialAnnouncementsService>(context);
+    final int announcesQuantity = announcesService.announces.length;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -50,39 +54,63 @@ class _InitialInformationPageState extends State<InitialInformationPage> {
             child: PageView.builder(
               physics: const BouncingScrollPhysics(),
               controller: _pageController,
-              itemCount: _elements,
+              itemCount: announcesQuantity + 1,
               itemBuilder: (context, x) {
-                final bool isFinalElement = x == _elements - 1;
+                final bool isFinalElement = x >= announcesQuantity;
+                final InitialAnnouncementModel announce = !isFinalElement
+                    ? announcesService.announces[x]
+                    : const InitialAnnouncementModel(
+                        title: 'Welcome!',
+                        subtitle: 'Press button to join!',
+                        imageUrl: '',
+                      );
                 final double scale = (x - _pageProgress).abs() < 0.2 ? 1 : 0.9;
                 final double opacity =
                     (x - _pageProgress).abs() < 0.2 ? 1 : 0.25;
 
-                return LoginPageInformation(
-                  withImage: !isFinalElement,
-                  scale: scale,
-                  opacity: opacity,
-                  title: 'New Scheduling and routing options',
-                  description:
-                      'We also updated the format of podcasts and rewards.',
-                  extraWidget: !isFinalElement
-                      ? null
-                      : Column(
-                          children: [
-                            SizedBox(height: resp.hp(1)),
-                            CustomButton(
-                              color: tempAccent,
-                              height: resp.hp(5),
-                              style: TextStyles.w800(resp.sp14, Colors.white),
-                              width: resp.wp(40),
-                              text: 'Join',
-                              onTap: () => Navigator.pushReplacementNamed(
-                                context,
-                                'loginPage',
+                return announcesService.isLoaded
+                    ? LoginPageInformation(
+                        withImage: !isFinalElement,
+                        scale: scale,
+                        opacity: opacity,
+                        imageUrl: announce.imageUrl,
+                        title: announce.title,
+                        description: announce.subtitle,
+                        extraWidget: !isFinalElement
+                            ? null
+                            : Column(
+                                children: [
+                                  SizedBox(height: resp.hp(1)),
+                                  CustomButton(
+                                    color: tempAccent,
+                                    height: resp.hp(5),
+                                    style: TextStyles.w800(
+                                        resp.sp14, Colors.white),
+                                    width: resp.wp(40),
+                                    text: 'Join',
+                                    onTap: () => Navigator.pushReplacementNamed(
+                                      context,
+                                      'loginPage',
+                                    ),
+                                  ),
+                                ],
                               ),
+                      )
+                    : Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                            SizedBox(height: resp.hp(2)),
+                            Text(
+                              'Loading announcements',
+                              style: TextStyles.w800(resp.sp16, Colors.white),
                             ),
                           ],
                         ),
-                );
+                      );
               },
             ),
           ),
@@ -91,9 +119,9 @@ class _InitialInformationPageState extends State<InitialInformationPage> {
             top: resp.hp(95),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(_elements, (x) {
+              children: List.generate(announcesQuantity + 1, (x) {
                 final bool isCurrentPage = x == _currentPage;
-                final bool isFinalElement = x == _elements - 1;
+                final bool isFinalElement = x == announcesQuantity;
 
                 return DotIndicator(
                   isFinalElement: isFinalElement,

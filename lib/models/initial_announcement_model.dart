@@ -21,9 +21,9 @@ class InitialAnnouncementModel {
 
   factory InitialAnnouncementModel.fromMap(Map<String, dynamic> map) {
     return InitialAnnouncementModel(
-      title: map['title'],
-      subtitle: map['subtitle'],
-      imageUrl: map['imageUrl'],
+      title: map['title'] ?? '',
+      subtitle: map['subtitle'] ?? '',
+      imageUrl: map['imageUrl'] ?? '',
     );
   }
 

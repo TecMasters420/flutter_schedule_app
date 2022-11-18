@@ -9,17 +9,18 @@ class LoginPageInformation extends StatelessWidget {
   final double opacity;
   final String title;
   final String description;
+  final String? imageUrl;
   final bool withImage;
   final Widget? extraWidget;
-  const LoginPageInformation({
-    super.key,
-    required this.scale,
-    required this.opacity,
-    required this.title,
-    required this.description,
-    required this.withImage,
-    this.extraWidget,
-  });
+  const LoginPageInformation(
+      {super.key,
+      required this.scale,
+      required this.opacity,
+      required this.title,
+      required this.description,
+      required this.withImage,
+      this.extraWidget,
+      this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +45,14 @@ class LoginPageInformation extends StatelessWidget {
                     color: tempAccent,
                     borderRadius: BorderRadius.circular(20),
                   ),
+                  child: withImage && imageUrl != null && imageUrl != ''
+                      ? imageUrl!.contains('assets/images')
+                          ? Image.asset(imageUrl!)
+                          : Image.network(imageUrl!)
+                      : SizedBox(
+                          height: resp.hp(65),
+                          width: double.infinity,
+                        ),
                 ),
               ),
 
