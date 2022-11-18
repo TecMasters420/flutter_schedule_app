@@ -4,12 +4,17 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  late final User _user;
+  late final User? _user;
 
-  bool userIsLogged() => _auth.currentUser != null;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  User get user => _user;
+  bool get userIsLogged => _auth.currentUser != null;
+  User? get user => _user;
+
+  String getErrorMessage(final String errorCode) {
+    String message = errorCode.replaceAll('-', ' ');
+    return message[0].toUpperCase() + message.substring(1);
+  }
 
   Future<void> createUser(
     final String email,
@@ -26,9 +31,7 @@ class AuthService with ChangeNotifier {
       notifyListeners();
       onCompleteCallback();
     } on FirebaseAuthException catch (e) {
-      String code = e.code.replaceAll('-', ' ');
-      code = code[0].toUpperCase() + code.substring(1);
-      onErrorCallback(code);
+      onErrorCallback(getErrorMessage(e.code));
     }
   }
 
@@ -44,13 +47,10 @@ class AuthService with ChangeNotifier {
         password: password,
       );
       _user = userCredential.user!;
-      print('logged');
       notifyListeners();
       onCompleteCallback();
     } on FirebaseAuthException catch (e) {
-      String code = e.code.replaceAll('-', ' ');
-      code = code[0].toUpperCase() + code.substring(1);
-      onErrorCallback(code);
+      onErrorCallback(getErrorMessage(e.code));
     }
   }
 
@@ -67,9 +67,7 @@ class AuthService with ChangeNotifier {
       _user = user.user!;
       onCompleteCallback();
     } on FirebaseAuthException catch (e) {
-      String code = e.code.replaceAll('-', ' ');
-      code = code[0].toUpperCase() + code.substring(1);
-      onErrorCallback(code);
+      onErrorCallback(getErrorMessage(e.code));
     }
   }
 }

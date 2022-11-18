@@ -60,7 +60,7 @@ class ActivitiesDetailsPage extends StatelessWidget {
                   'Uber car rentals assistant.',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyles.w700(resp.dp(3)),
+                  style: TextStyles.w700(resp.sp30),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -69,7 +69,7 @@ class ActivitiesDetailsPage extends StatelessWidget {
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                 maxLines: 20,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyles.w500(resp.dp(1.35)),
+                style: TextStyles.w500(resp.sp14),
                 textAlign: TextAlign.justify,
               ),
               SizedBox(height: resp.hp(5)),
@@ -87,7 +87,7 @@ class ActivitiesDetailsPage extends StatelessWidget {
                             child: Icon(
                               e.key,
                               color: grey,
-                              size: resp.dp(2.5),
+                              size: resp.sp20,
                             ),
                           ),
                         ),
@@ -100,7 +100,7 @@ class ActivitiesDetailsPage extends StatelessWidget {
                               ...e.value.keys.map(
                                 (e) => Text(
                                   e,
-                                  style: TextStyles.w600(resp.dp(1.5)),
+                                  style: TextStyles.w500(resp.sp14),
                                 ),
                               ),
                               SizedBox(height: resp.hp(1)),

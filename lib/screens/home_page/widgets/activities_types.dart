@@ -67,11 +67,11 @@ class _ActivitiesTypesState extends State<ActivitiesTypes> {
                     );
                   },
                   child: Text(
-                    key: Key('${x == {activities.selectedTypeIndex}}'),
+                    key: Key('${x == activities.selectedTypeIndex}'),
                     _typesWithReminders.keys.elementAt(x),
                     style: x == activities.selectedTypeIndex
-                        ? TextStyles.w700(resp.dp(1.55))
-                        : TextStyles.w600(resp.dp(1.55), grey),
+                        ? TextStyles.w700(resp.sp16)
+                        : TextStyles.w600(resp.sp16, grey),
                     textAlign: TextAlign.center,
                   ),
                 ),

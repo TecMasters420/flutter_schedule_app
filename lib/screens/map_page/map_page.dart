@@ -149,7 +149,7 @@ class _MapPageState extends State<MapPage> {
                         SizedBox(height: resp.hp(1.5)),
                         Text(
                           'Title',
-                          style: TextStyles.w500(resp.dp(1.25), lightGrey),
+                          style: TextStyles.w500(resp.sp14, lightGrey),
                           textAlign: TextAlign.start,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -157,7 +157,7 @@ class _MapPageState extends State<MapPage> {
                         SizedBox(height: resp.hp(0.5)),
                         Text(
                           'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...',
-                          style: TextStyles.w700(resp.dp(1.3)),
+                          style: TextStyles.w700(resp.sp14),
                           textAlign: TextAlign.start,
                           maxLines: 4,
                           overflow: TextOverflow.ellipsis,
@@ -165,7 +165,7 @@ class _MapPageState extends State<MapPage> {
                         SizedBox(height: resp.hp(1.5)),
                         Text(
                           'Location',
-                          style: TextStyles.w500(resp.dp(1.25), lightGrey),
+                          style: TextStyles.w500(resp.sp14, lightGrey),
                           textAlign: TextAlign.start,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -173,17 +173,17 @@ class _MapPageState extends State<MapPage> {
                         SizedBox(height: resp.hp(0.5)),
                         Text(
                           'South Portland',
-                          style: TextStyles.w700(resp.dp(1.3)),
+                          style: TextStyles.w700(resp.sp14),
                         ),
                         SizedBox(height: resp.hp(1.5)),
                         Text(
                           'Time to arrive: ',
-                          style: TextStyles.w400(resp.dp(1.25), grey),
+                          style: TextStyles.w400(resp.sp14, grey),
                         ),
                         SizedBox(height: resp.hp(0.5)),
                         Text(
                           '92 min',
-                          style: TextStyles.w700(resp.dp(1.25)),
+                          style: TextStyles.w700(resp.sp14),
                         ),
                       ],
                     ),

@@ -62,8 +62,8 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
                             .substring(0, 3)
                             .toUpperCase(),
                         style: isSelected
-                            ? TextStyles.w700(resp.dp(1.75))
-                            : TextStyles.w500(resp.dp(1.75), lightGrey),
+                            ? TextStyles.w700(resp.sp16)
+                            : TextStyles.w500(resp.sp16, lightGrey),
                       ),
                       SizedBox(height: resp.hp(0.5)),
                       Flexible(
@@ -77,7 +77,7 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
                           ),
                           child: Text(
                             (index + 1).toString(),
-                            style: TextStyles.w500(resp.dp(1.75),
+                            style: TextStyles.w500(resp.sp16,
                                 isSelected ? Colors.white : lightGrey),
                           ),
                         ),

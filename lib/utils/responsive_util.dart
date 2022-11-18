@@ -13,6 +13,13 @@ class ResponsiveUtil {
   double get width => _width;
   DeviceType get device => _device;
 
+  // Font sizes
+  double get sp40 => dp(4.0); // Big titles
+  double get sp30 => dp(3.0); // Middle titles
+  double get sp20 => dp(2.0); // Page titles
+  double get sp16 => dp(1.6); // Data titles
+  double get sp14 => dp(1.4); // Body
+
   factory ResponsiveUtil.of(final BuildContext context) {
     final size = MediaQuery.of(context).size;
     _resp._height = size.height;

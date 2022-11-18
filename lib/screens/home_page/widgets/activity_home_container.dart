@@ -5,11 +5,20 @@ import 'package:intl/intl.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/utils/text_styles.dart';
 import 'package:schedulemanager/widgets/custom_button.dart';
+import 'package:schedulemanager/widgets/tags_list.dart';
 
 import '../../../constants/constants.dart';
 import '../../../widgets/map_preview.dart';
 
 class ActivityHomeContainer extends StatelessWidget {
+  static const List<String> _types = [
+    'Project',
+    'Meeting',
+    'Shot Dribbble',
+    'Standup',
+    'Sprint'
+  ];
+
   final int index;
   const ActivityHomeContainer({
     super.key,
@@ -42,18 +51,18 @@ class ActivityHomeContainer extends StatelessWidget {
                   ),
                   Text(
                     '${index + 1}',
-                    style: TextStyles.w500(resp.dp(1.75)),
+                    style: TextStyles.w500(resp.sp16),
                   ),
                   Text(
                     DateFormat('EEEE')
                         .format(DateTime(DateTime.now().year,
                             DateTime.now().month, index + 1))
                         .substring(0, 3),
-                    style: TextStyles.w500(resp.dp(1.75)),
+                    style: TextStyles.w500(resp.sp16),
                   ),
                   Text(
                     DateFormat('MMMM').format(DateTime.now()).substring(0, 3),
-                    style: TextStyles.w500(resp.dp(1.75)),
+                    style: TextStyles.w500(resp.sp16),
                   ),
                 ],
               ),
@@ -69,12 +78,12 @@ class ActivityHomeContainer extends StatelessWidget {
                     children: [
                       Text(
                         'Hour: ',
-                        style: TextStyles.w500(resp.dp(1.15), lightGrey),
+                        style: TextStyles.w500(resp.sp14, lightGrey),
                       ),
                       Text(
                         '11:00 - 11:30',
                         style: TextStyles.w500(
-                          resp.dp(1.15),
+                          resp.sp14,
                           lightGrey,
                         ),
                       ),
@@ -89,7 +98,7 @@ class ActivityHomeContainer extends StatelessWidget {
                   SizedBox(height: resp.hp(1)),
                   Text(
                     'Bussiness meeting with Samasdasdasda',
-                    style: TextStyles.w700(resp.dp(1.75)),
+                    style: TextStyles.w700(resp.sp16),
                     textAlign: TextAlign.start,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -97,29 +106,29 @@ class ActivityHomeContainer extends StatelessWidget {
                   SizedBox(height: resp.hp(1)),
                   Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
-                    style: TextStyles.w400(resp.dp(1.25), grey),
+                    style: TextStyles.w400(resp.sp14, grey),
                     textAlign: TextAlign.start,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: resp.hp(1)),
+                  TagsList(
+                    tagsList: _types,
+                    maxTagsToShow: 3,
+                    style: TextStyles.w500(
+                      resp.dp(1),
+                    ),
                   ),
                   if (Random().nextInt(100) < 50) ...[
                     SizedBox(height: resp.hp(2)),
                     Text(
                       'Location: South Portland',
-                      style: TextStyles.w600(resp.dp(1.5)),
+                      style: TextStyles.w600(resp.sp14),
                     ),
                     SizedBox(height: resp.hp(0.5)),
-                    Row(
-                      children: [
-                        Text(
-                          'Time to arrive: ',
-                          style: TextStyles.w400(resp.dp(1.25), grey),
-                        ),
-                        Text(
-                          '92 min',
-                          style: TextStyles.w400(resp.dp(1.25), grey),
-                        ),
-                      ],
+                    Text(
+                      'Time to arrive: 92 min',
+                      style: TextStyles.w600(resp.sp14),
                     ),
                     SizedBox(height: resp.hp(2)),
                     const MapPreview(),
@@ -131,11 +140,11 @@ class ActivityHomeContainer extends StatelessWidget {
                         children: [
                           Text(
                             'Time left: ',
-                            style: TextStyles.w400(resp.dp(1.25), grey),
+                            style: TextStyles.w400(resp.sp14, grey),
                           ),
                           Text(
                             '1 day',
-                            style: TextStyles.w400(resp.dp(1.25), grey),
+                            style: TextStyles.w400(resp.sp14, grey),
                           ),
                         ],
                       ),
@@ -146,7 +155,7 @@ class ActivityHomeContainer extends StatelessWidget {
                         color: accent,
                         height: resp.hp(4),
                         width: resp.wp(15),
-                        style: TextStyles.w600(resp.dp(1.15), Colors.white),
+                        style: TextStyles.w600(resp.sp14, Colors.white),
                         onTap: () => Navigator.pushNamed(
                             context, 'activitiesDetailsPage'),
                       )
@@ -160,7 +169,8 @@ class ActivityHomeContainer extends StatelessWidget {
         SizedBox(height: resp.hp(1)),
         Divider(
           color: lightGrey.withOpacity(0.15),
-          height: resp.dp(2),
+          height: resp.hp(1),
+          thickness: 0.5,
         )
       ],
     );

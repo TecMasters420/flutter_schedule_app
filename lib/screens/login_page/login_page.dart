@@ -66,12 +66,12 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: resp.hp(2.5)),
                 Text(
                   'Login',
-                  style: TextStyles.w500(resp.dp(4)),
+                  style: TextStyles.w500(resp.sp40),
                 ),
                 SizedBox(height: resp.hp(1)),
                 Text(
                   'aliquam consectetur et tincidunt praesent enim massa pellentesque velit odio neque',
-                  style: TextStyles.w400(resp.dp(1.5), Colors.grey[600]!),
+                  style: TextStyles.w400(resp.sp16, Colors.grey[600]!),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: resp.hp(2.5)),
@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextButton(
                       child: Text(
                         'Recovery password',
-                        style: TextStyles.w400(resp.dp(1.5), accent),
+                        style: TextStyles.w400(resp.sp16, accent),
                       ),
                       onPressed: () {},
                     )
@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                 CustomButton(
                   color: tempAccent,
                   height: resp.hp(5),
-                  style: TextStyles.w800(resp.dp(1.75), Colors.white),
+                  style: TextStyles.w800(resp.sp16, Colors.white),
                   width: resp.wp(30),
                   text: 'Login',
                   onTap: () async => await auth.login(
@@ -128,14 +128,14 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: resp.hp(1)),
                 Text(
                   'Or',
-                  style: TextStyles.w200(resp.dp(1.5), Colors.grey[600]!),
+                  style: TextStyles.w200(resp.sp16, Colors.grey[600]!),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: resp.hp(1)),
                 CustomButton(
                   color: Colors.grey[50]!,
                   height: resp.hp(5),
-                  style: TextStyles.w400(resp.dp(1.75)),
+                  style: TextStyles.w400(resp.sp16),
                   width: resp.wp(30),
                   text: 'Google',
                   prefixWidget: Image.asset(
@@ -159,12 +159,12 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Text(
                       "Don't have an account yet?",
-                      style: TextStyles.w400(resp.dp(1.5), grey),
+                      style: TextStyles.w400(resp.sp16, grey),
                     ),
                     TextButton(
                       child: Text(
                         'Sign Up',
-                        style: TextStyles.w500(resp.dp(1.5), accent),
+                        style: TextStyles.w500(resp.sp16, accent),
                       ),
                       onPressed: () =>
                           Navigator.pushNamed(context, 'registerPage'),

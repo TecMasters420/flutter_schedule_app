@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:schedulemanager/services/auth_service.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/widgets/custom_button.dart';
 
@@ -27,6 +28,7 @@ class _HomePageState extends State<HomePage> {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     final ActivitiesProvider activities =
         Provider.of<ActivitiesProvider>(context);
+    final AuthService auth = Provider.of<AuthService>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -40,34 +42,14 @@ class _HomePageState extends State<HomePage> {
                 bottom: 80,
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const HomeHeader(),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'My daily activities',
-                        style: TextStyles.w500(resp.dp(2)),
-                      ),
-                      const Spacer(),
-                      Flexible(
-                        child: CustomButton(
-                          color: lightGrey.withOpacity(0.1),
-                          text: 'Add',
-                          height: resp.hp(3.5),
-                          style: TextStyles.w500(resp.dp(1.15)),
-                          width: resp.wp(20),
-                          constraints: const BoxConstraints(maxWidth: 70),
-                          prefixWidget:
-                              Icon(Icons.add, size: resp.dp(2), color: accent),
-                          onTap: () {
-                            Navigator.pushNamed(context, 'remindersPage');
-                          },
-                        ),
-                      ),
-                    ],
+                  // const HomeHeader(),
+                  Text('Hello ${auth.user!.displayName ?? 'NoName'}!',
+                      style: TextStyles.w400(resp.sp16, lightGrey)),
+                  Text(
+                    'My daily activities',
+                    style: TextStyles.w700(resp.sp30),
                   ),
                   SizedBox(height: resp.hp(2)),
                   SizedBox(
@@ -93,7 +75,9 @@ class _HomePageState extends State<HomePage> {
                                 child: Text(
                                   "Excellent, you're almost done with your activities! ;)",
                                   style: TextStyles.w800(
-                                      resp.dp(1.75), Colors.white),
+                                    resp.sp16,
+                                    Colors.white,
+                                  ),
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -108,7 +92,9 @@ class _HomePageState extends State<HomePage> {
                                   center: Text(
                                     '90%',
                                     style: TextStyles.w800(
-                                        resp.dp(2.5), Colors.white),
+                                      resp.sp16,
+                                      Colors.white,
+                                    ),
                                   ),
                                   progressColor: tempAccent,
                                   backgroundColor: Colors.white,
@@ -122,7 +108,36 @@ class _HomePageState extends State<HomePage> {
                   ),
                   SizedBox(height: resp.hp(5)),
                   const ActivitiesTypes(),
-                  SizedBox(height: resp.hp(5)),
+                  SizedBox(height: resp.hp(1)),
+                  Divider(
+                    color: lightGrey.withOpacity(0.15),
+                    height: resp.hp(1),
+                    thickness: 0.5,
+                  ),
+                  SizedBox(height: resp.hp(1)),
+                  Row(
+                    children: [
+                      Text(
+                        '${activities.remindersCount} Reminders',
+                        style: TextStyles.w700(resp.sp16, black),
+                      ),
+                      const Spacer(),
+                      CustomButton(
+                        color: lightGrey.withOpacity(0.2),
+                        text: 'Add',
+                        height: resp.hp(4),
+                        style: TextStyles.w500(resp.sp16),
+                        width: double.infinity,
+                        constraints: const BoxConstraints(maxWidth: 70),
+                        prefixWidget:
+                            Icon(Icons.add, size: resp.sp20, color: accent),
+                        onTap: () {
+                          Navigator.pushNamed(context, 'remindersPage');
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: resp.hp(2.5)),
                   if (activities.remindersCount != 0) ...[
                     ...List.generate(
                       // DateTime(DateTime.now().year, DateTime.now().month + 1, 0)
@@ -134,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                     Center(
                       child: Text(
                         'No Activities',
-                        style: TextStyles.w500(resp.dp(1.5), lightGrey),
+                        style: TextStyles.w500(resp.sp14, lightGrey),
                       ),
                     ),
                 ],

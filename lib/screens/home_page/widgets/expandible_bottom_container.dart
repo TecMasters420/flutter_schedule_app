@@ -8,6 +8,8 @@ import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/utils/text_styles.dart';
 import 'package:schedulemanager/widgets/custom_form_field.dart';
 
+import '../../../widgets/tags_list.dart';
+
 class ExpandibleBottomContainer extends StatefulWidget {
   final double finalHeight;
   final double finalWidth;
@@ -162,7 +164,7 @@ class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer> {
                                 alignment: Alignment.topLeft,
                                 child: Text(
                                   'Create a new reminder',
-                                  style: TextStyles.w700(resp.dp(1.5)),
+                                  style: TextStyles.w700(resp.sp16),
                                 ),
                               ),
                               const Align(
@@ -177,7 +179,7 @@ class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer> {
                           SizedBox(height: resp.hp(1.5)),
                           Text(
                             'Title',
-                            style: TextStyles.w600(resp.dp(1.25)),
+                            style: TextStyles.w600(resp.sp14),
                           ),
                           SizedBox(height: resp.hp(1.5)),
                           CustomFormField(
@@ -189,7 +191,7 @@ class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer> {
                           SizedBox(height: resp.hp(1.5)),
                           Text(
                             'Description',
-                            style: TextStyles.w600(resp.dp(1.25)),
+                            style: TextStyles.w600(resp.sp14),
                           ),
                           SizedBox(height: resp.hp(1.5)),
                           CustomFormField(
@@ -201,38 +203,19 @@ class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer> {
                           SizedBox(height: resp.hp(1.5)),
                           Text(
                             'Tag',
-                            style: TextStyles.w600(resp.dp(1.25)),
+                            style: TextStyles.w600(resp.sp14),
                           ),
                           SizedBox(height: resp.hp(1.5)),
-                          Wrap(
-                            children: List.generate(
-                              _coloredTypes.length,
-                              (index) => Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 5,
-                                  horizontal: 3,
-                                ),
-                                child: Chip(
-                                  // backgroundColor:
-                                  //     _coloredTypes.values.elementAt(index),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  label: Text(
-                                    _coloredTypes.keys.elementAt(index),
-                                    style: TextStyles.w500(
-                                      resp.dp(1),
-                                      // Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                          TagsList(
+                            tagsList: _types,
+                            style: TextStyles.w500(
+                              resp.dp(1),
                             ),
                           ),
                           SizedBox(height: resp.hp(1.5)),
                           Text(
                             'Date',
-                            style: TextStyles.w600(resp.dp(1.25)),
+                            style: TextStyles.w600(resp.sp14),
                           ),
                           SizedBox(height: resp.hp(1.5)),
                           Row(
@@ -248,7 +231,7 @@ class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer> {
                                   DateTime.now().toUtc(),
                                 ),
                                 style: TextStyles.w300(
-                                  resp.dp(1.25),
+                                  resp.sp14,
                                   lightGrey,
                                 ),
                               ),
@@ -257,7 +240,7 @@ class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer> {
                           SizedBox(height: resp.hp(1.5)),
                           Text(
                             'Duration',
-                            style: TextStyles.w600(resp.dp(1.25)),
+                            style: TextStyles.w600(resp.sp14),
                           ),
                           SizedBox(height: resp.hp(1.5)),
                           Row(
@@ -270,7 +253,7 @@ class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer> {
                               Text(
                                 '10:00 - 11:00',
                                 style: TextStyles.w300(
-                                  resp.dp(1.25),
+                                  resp.sp14,
                                   lightGrey,
                                 ),
                               ),
@@ -279,7 +262,7 @@ class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer> {
                           SizedBox(height: resp.hp(1.5)),
                           Text(
                             'Location',
-                            style: TextStyles.w600(resp.dp(1.25)),
+                            style: TextStyles.w600(resp.sp14),
                           ),
                           SizedBox(height: resp.hp(1.5)),
                           Row(
@@ -292,7 +275,7 @@ class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer> {
                               Text(
                                 'Tijuana, BC',
                                 style: TextStyles.w300(
-                                  resp.dp(1.25),
+                                  resp.sp14,
                                   lightGrey,
                                 ),
                               ),

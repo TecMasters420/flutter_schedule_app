@@ -72,8 +72,7 @@ class _InitialInformationPageState extends State<InitialInformationPage> {
                             CustomButton(
                               color: tempAccent,
                               height: resp.hp(5),
-                              style:
-                                  TextStyles.w800(resp.dp(1.25), Colors.white),
+                              style: TextStyles.w800(resp.sp14, Colors.white),
                               width: resp.wp(40),
                               text: 'Join',
                               onTap: () => Navigator.pushReplacementNamed(

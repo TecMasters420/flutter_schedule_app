@@ -105,23 +105,22 @@ class _RemindersPageState extends State<RemindersPage> {
                     children: [
                       const CustomBackButton(),
                       const Spacer(),
-                      UserProfilePicture(size: resp.dp(2.5))
+                      UserProfilePicture(size: resp.sp20)
                     ],
                   ),
                   SizedBox(height: resp.hp(2.5)),
-                  Text('Today',
-                      style: TextStyles.w400(resp.dp(1.5), lightGrey)),
+                  Text('Today', style: TextStyles.w400(resp.sp16, lightGrey)),
                   SizedBox(height: resp.hp(0.5)),
                   Text(
                     DateFormat(DateFormat.YEAR_MONTH_DAY, 'en_US').format(
                       DateTime.now().toUtc(),
                     ),
-                    style: TextStyles.w700(resp.dp(2.5), black),
+                    style: TextStyles.w700(resp.sp20, black),
                   ),
                   SizedBox(height: resp.hp(5)),
                   Text(
                     'Today Schedule',
-                    style: TextStyles.w700(resp.dp(2), black),
+                    style: TextStyles.w700(resp.sp20, black),
                   ),
                   ScrolleableDaysList(
                     days: _monthDays,
@@ -137,7 +136,7 @@ class _RemindersPageState extends State<RemindersPage> {
                   SizedBox(height: resp.hp(2)),
                   Text(
                     '$_remindersCountInSelectedDay Reminders',
-                    style: TextStyles.w700(resp.dp(2), black),
+                    style: TextStyles.w700(resp.sp20, black),
                   ),
                   SizedBox(height: resp.hp(3)),
                   if (_remindersCountInSelectedDay != 0) ...[
@@ -157,7 +156,7 @@ class _RemindersPageState extends State<RemindersPage> {
                                   flex: 5,
                                   child: ReminderHour(
                                     hours: const ['09:00', '09:30'],
-                                    fontSize: resp.dp(1.25),
+                                    fontSize: resp.sp14,
                                   ),
                                 ),
                                 Expanded(
@@ -197,7 +196,7 @@ class _RemindersPageState extends State<RemindersPage> {
                                         Text(
                                           'Sprint Planing Period 02 in Okt 2021',
                                           style: TextStyles.w600(
-                                            resp.dp(1.75),
+                                            resp.sp16,
                                           ),
                                           textAlign: TextAlign.start,
                                         ),
@@ -205,7 +204,7 @@ class _RemindersPageState extends State<RemindersPage> {
                                         Text(
                                           'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..',
                                           style: TextStyles.w400(
-                                            resp.dp(1.25),
+                                            resp.sp14,
                                             lightGrey,
                                           ),
                                           textAlign: TextAlign.start,
@@ -215,7 +214,7 @@ class _RemindersPageState extends State<RemindersPage> {
                                           children: [
                                             Icon(
                                               Icons.access_time_rounded,
-                                              size: resp.dp(1.75),
+                                              size: resp.sp16,
                                               color: lightGrey,
                                             ),
                                             SizedBox(width: resp.wp(1)),
@@ -232,7 +231,7 @@ class _RemindersPageState extends State<RemindersPage> {
                                           children: [
                                             Icon(
                                               Icons.location_on_outlined,
-                                              size: resp.dp(1.75),
+                                              size: resp.sp16,
                                               color: lightGrey,
                                             ),
                                             SizedBox(width: resp.wp(1)),
@@ -258,7 +257,7 @@ class _RemindersPageState extends State<RemindersPage> {
                     Center(
                       child: Text(
                         'No reminders',
-                        style: TextStyles.w500(resp.dp(2), lightGrey),
+                        style: TextStyles.w500(resp.sp20, lightGrey),
                       ),
                     ),
                   SizedBox(height: resp.hp(1)),
@@ -276,7 +275,7 @@ class _RemindersPageState extends State<RemindersPage> {
               ),
               child: ExpandibleBottomContainer(
                 initialHeight: resp.hp(6),
-                finalHeight: resp.hp(50),
+                finalHeight: resp.hp(75),
                 initialWidth: resp.wp(13),
                 finalWidth: resp.width,
                 iconSize: resp.dp(3),

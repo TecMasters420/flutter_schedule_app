@@ -17,7 +17,7 @@ class HomeHeader extends StatelessWidget {
           children: [
             const Icon(Icons.notifications_none_rounded, color: black),
             const Spacer(),
-            UserProfilePicture(size: resp.dp(2))
+            UserProfilePicture(size: resp.sp20)
           ],
         ),
         SizedBox(height: resp.hp(2.5)),
@@ -25,19 +25,19 @@ class HomeHeader extends StatelessWidget {
           children: [
             Text(
               'Hello, ',
-              style: TextStyles.w400(resp.dp(4)),
+              style: TextStyles.w400(resp.sp40),
               overflow: TextOverflow.ellipsis,
             ),
             Text(
               'Francisco!',
-              style: TextStyles.w400(resp.dp(4), lightGrey),
+              style: TextStyles.w400(resp.sp40, lightGrey),
               overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
         Text(
           'A great day to get better',
-          style: TextStyles.w400(resp.dp(1.5), lightGrey),
+          style: TextStyles.w400(resp.sp16, lightGrey),
         ),
         SizedBox(height: resp.hp(5)),
       ],
