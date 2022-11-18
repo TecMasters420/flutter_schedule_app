@@ -6,6 +6,7 @@ class Reminder {
   final Map<String, dynamic> duration;
   final dynamic location;
   final String title;
+  final int userId;
 
   const Reminder({
     required this.date,
@@ -13,6 +14,7 @@ class Reminder {
     required this.duration,
     required this.location,
     required this.title,
+    required this.userId,
   });
 
   factory Reminder.fromJson(final Map<String, dynamic> json) {
@@ -22,6 +24,7 @@ class Reminder {
       duration: json['duration'],
       location: json['location'],
       title: json['title'],
+      userId: json['userId'],
     );
   }
 }
