@@ -3,6 +3,7 @@ import 'package:schedulemanager/utils/responsive_util.dart';
 
 import '../../../constants/constants.dart';
 import '../../../utils/text_styles.dart';
+import '../../../widgets/custom_circular_progress.dart';
 
 class LoginPageInformation extends StatelessWidget {
   final double scale;
@@ -48,7 +49,14 @@ class LoginPageInformation extends StatelessWidget {
                   child: withImage && imageUrl != null && imageUrl != ''
                       ? imageUrl!.contains('assets/images')
                           ? Image.asset(imageUrl!)
-                          : Image.network(imageUrl!)
+                          : Image.network(
+                              imageUrl!,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return const CustomCircularProgress();
+                              },
+                            )
                       : SizedBox(
                           height: resp.hp(65),
                           width: double.infinity,

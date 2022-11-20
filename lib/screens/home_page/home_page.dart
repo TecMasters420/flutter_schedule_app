@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:schedulemanager/screens/home_page/widgets/reminder_date_data.dart';
 import 'package:schedulemanager/services/auth_service.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/widgets/custom_button.dart';
@@ -8,6 +11,7 @@ import 'package:schedulemanager/widgets/custom_button.dart';
 import '../../constants/constants.dart';
 import '../../providers/activities_provider.dart';
 import '../../utils/text_styles.dart';
+import '../../widgets/reminder_information.dart';
 import 'widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,6 +22,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  static const _maxRemindersToShow = 2;
+
   @override
   void initState() {
     super.initState();
@@ -140,10 +146,16 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: resp.hp(2.5)),
                   if (activities.remindersCount != 0) ...[
                     ...List.generate(
-                      // DateTime(DateTime.now().year, DateTime.now().month + 1, 0)
-                      //     .day,
                       activities.remindersCount,
-                      (index) => ActivityHomeContainer(index: index),
+                      (index) => ReminderContainer(
+                        index: index,
+                        leftWidget: ReminderDateData(index: index),
+                        middleWidget: const SizedBox(),
+                        rightWidget: ReminderInformation(
+                          showHourInTop: true,
+                          containData: Random().nextBool(),
+                        ),
+                      ),
                     )
                   ] else
                     Center(

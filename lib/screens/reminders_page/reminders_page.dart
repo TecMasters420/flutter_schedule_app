@@ -3,9 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
-import 'package:schedulemanager/screens/activities_details_page/widgets/reminder_hour.dart';
+import 'package:schedulemanager/screens/reminder_details_page/widgets/reminder_hour.dart';
+import 'package:schedulemanager/widgets/reminder_container.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/widgets/custom_back_button.dart';
+import 'package:schedulemanager/widgets/reminder_information.dart';
 import 'package:schedulemanager/widgets/user_profile_picture.dart';
 
 import '../../constants/constants.dart';
@@ -21,30 +23,31 @@ class RemindersPage extends StatefulWidget {
 }
 
 class _RemindersPageState extends State<RemindersPage> {
-  List<Size?>? _infoContainersSize;
-
-  late List<GlobalKey> _infoContainerKey;
   late Map<int, int> _remindersPerDay;
   late int _monthDays;
   late int _selectedDay;
-  late int _lastContainerChecked;
   late int _remindersCountInSelectedDay;
+
+  late bool _containersHeightIsGen;
+  late List<GlobalKey> _keys;
+  late List<Size?> _sizes;
+  late List<bool> _tempContainData;
 
   @override
   void initState() {
     super.initState();
     _selectedDay = 0;
     _monthDays = _getDays(DateTime.now());
-    _remindersCountInSelectedDay = _getRemindersCount();
+    _remindersCountInSelectedDay = _getRemindersCount;
+    _tempContainData = List.generate(
+        _remindersCountInSelectedDay, (index) => Random().nextBool());
     _clearKeyAndSize();
   }
 
   void _clearKeyAndSize() {
-    _lastContainerChecked = 0;
-    _infoContainersSize =
-        List.generate(_remindersCountInSelectedDay, (index) => null);
-    _infoContainerKey =
-        List.generate(_remindersCountInSelectedDay, (index) => GlobalKey());
+    _containersHeightIsGen = false;
+    _sizes = List.generate(_remindersCountInSelectedDay, (index) => null);
+    _keys = List.generate(_remindersCountInSelectedDay, (index) => GlobalKey());
   }
 
   int _getDays(final DateTime date) {
@@ -59,30 +62,23 @@ class _RemindersPageState extends State<RemindersPage> {
     return days;
   }
 
-  int _getRemindersCount() => _remindersPerDay.values.elementAt(_selectedDay);
+  int get _getRemindersCount => _remindersPerDay.values.elementAt(_selectedDay);
 
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    _remindersCountInSelectedDay = _getRemindersCount();
 
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      while (_lastContainerChecked < _remindersCountInSelectedDay) {
-        if (_infoContainerKey[_lastContainerChecked].currentContext != null &&
-            _infoContainersSize![_lastContainerChecked] == null) {
-          final RenderObject? renderBoxRed =
-              _infoContainerKey[_lastContainerChecked]
-                  .currentContext
-                  ?.findRenderObject();
-          if (renderBoxRed != null) {
-            final sizeRed = renderBoxRed.paintBounds;
-            setState(() {
-              _infoContainersSize![_lastContainerChecked] = sizeRed.size;
-            });
-          }
-        }
-        _lastContainerChecked++;
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (_containersHeightIsGen) return;
+      for (int x = 0; x < _keys.length; x++) {
+        final RenderObject? renderBoxRed =
+            _keys[x].currentContext?.findRenderObject();
+        final sizeRed = renderBoxRed!.paintBounds;
+        _sizes[x] = sizeRed.size;
       }
+      setState(() {
+        _containersHeightIsGen = true;
+      });
     });
 
     return Scaffold(
@@ -128,7 +124,7 @@ class _RemindersPageState extends State<RemindersPage> {
                       if (newDay == _selectedDay) return;
                       setState(() {
                         _selectedDay = newDay;
-                        _remindersCountInSelectedDay = _getRemindersCount();
+                        _remindersCountInSelectedDay = _getRemindersCount;
                         _clearKeyAndSize();
                       });
                     },
@@ -139,117 +135,34 @@ class _RemindersPageState extends State<RemindersPage> {
                     style: TextStyles.w700(resp.sp20, black),
                   ),
                   SizedBox(height: resp.hp(3)),
-                  if (_remindersCountInSelectedDay != 0) ...[
+                  if (_getRemindersCount != 0) ...[
                     ...List.generate(
-                      _remindersPerDay.values.elementAt(_selectedDay),
+                      _getRemindersCount,
                       (x) {
                         final Color containerColor =
                             colors[Random().nextInt(colors.length - 1)];
-                        return Column(
-                          children: [
-                            if (x != 0) SizedBox(height: resp.hp(3)),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Expanded(
-                                  flex: 5,
-                                  child: ReminderHour(
-                                    hours: const ['09:00', '09:30'],
-                                    fontSize: resp.sp14,
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: AnimatedContainer(
-                                    duration: const Duration(milliseconds: 400),
-                                    height: _infoContainersSize![x] != null &&
-                                            _lastContainerChecked ==
-                                                _infoContainerKey.length
-                                        ? _infoContainersSize![x]?.height
-                                        : 0,
-                                    decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(100),
-                                          bottomLeft: Radius.circular(100)),
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        colors: [
-                                          containerColor,
-                                          containerColor.withOpacity(0.7),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                // Two expanded
-                                Expanded(
-                                  flex: 30,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 20),
-                                    child: Column(
-                                      key: _infoContainerKey[x],
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Sprint Planing Period 02 in Okt 2021',
-                                          style: TextStyles.w600(
-                                            resp.sp16,
-                                          ),
-                                          textAlign: TextAlign.start,
-                                        ),
-                                        SizedBox(height: resp.hp(0.5)),
-                                        Text(
-                                          'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..',
-                                          style: TextStyles.w400(
-                                            resp.sp14,
-                                            lightGrey,
-                                          ),
-                                          textAlign: TextAlign.start,
-                                        ),
-                                        SizedBox(height: resp.hp(0.5)),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.access_time_rounded,
-                                              size: resp.sp16,
-                                              color: lightGrey,
-                                            ),
-                                            SizedBox(width: resp.wp(1)),
-                                            Text(
-                                              'Time: 09:00 - 09:00',
-                                              style: TextStyles.w400(
-                                                  resp.dp(1), lightGrey),
-                                              textAlign: TextAlign.start,
-                                            )
-                                          ],
-                                        ),
-                                        SizedBox(height: resp.hp(0.5)),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.location_on_outlined,
-                                              size: resp.sp16,
-                                              color: lightGrey,
-                                            ),
-                                            SizedBox(width: resp.wp(1)),
-                                            Text(
-                                              'Location: Tijuana, BC.',
-                                              style: TextStyles.w400(
-                                                  resp.dp(1), lightGrey),
-                                              textAlign: TextAlign.start,
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
+
+                        return ReminderContainer(
+                          containerKey: _keys[x],
+                          index: x,
+                          leftWidget: ReminderHour(
+                            hours: const ['09:00', '09:30'],
+                            fontSize: resp.sp14,
+                          ),
+                          middleWidget: AnimatedContainer(
+                            curve: Curves.easeIn,
+                            duration: const Duration(milliseconds: 300),
+                            height: _sizes[x] == null ? 0 : _sizes[x]!.height,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: containerColor,
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                          ],
+                          ),
+                          rightWidget: ReminderInformation(
+                            showHourInTop: false,
+                            containData: _tempContainData[x],
+                          ),
                         );
                       },
                     ),

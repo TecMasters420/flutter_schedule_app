@@ -5,6 +5,7 @@ import 'package:schedulemanager/models/initial_announcement_model.dart';
 import 'package:schedulemanager/services/initial_announcements_service.dart';
 import 'package:schedulemanager/utils/text_styles.dart';
 import 'package:schedulemanager/widgets/custom_button.dart';
+import 'package:schedulemanager/widgets/custom_circular_progress.dart';
 
 import 'widgets/widgets.dart';
 import '../../utils/responsive_util.dart';
@@ -100,9 +101,7 @@ class _InitialInformationPageState extends State<InitialInformationPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const CircularProgressIndicator(
-                              color: Colors.white,
-                            ),
+                            const CustomCircularProgress(),
                             SizedBox(height: resp.hp(2)),
                             Text(
                               'Loading announcements',

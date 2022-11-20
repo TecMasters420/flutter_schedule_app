@@ -6,7 +6,7 @@ import 'package:schedulemanager/widgets/map_preview.dart';
 import '../../utils/text_styles.dart';
 import '../../widgets/custom_back_button.dart';
 
-class ActivitiesDetailsPage extends StatelessWidget {
+class ReminderDetailsPage extends StatelessWidget {
   static final Map<IconData, Map<String, List<Widget>>> _bodyElements = {
     Icons.calendar_today_rounded: {'Wednesday, 26 July': []},
     Icons.access_time_sharp: {'12:00 - 14:00': []},
@@ -33,7 +33,7 @@ class ActivitiesDetailsPage extends StatelessWidget {
       ]
     }
   };
-  const ActivitiesDetailsPage({super.key});
+  const ReminderDetailsPage({super.key});
 
   @override
   Widget build(BuildContext context) {

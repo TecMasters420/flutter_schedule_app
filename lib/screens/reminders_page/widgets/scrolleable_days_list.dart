@@ -67,10 +67,11 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
                       ),
                       SizedBox(height: resp.hp(0.5)),
                       Flexible(
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
+                        child: Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 15),
+                            horizontal: 15,
+                            vertical: 15,
+                          ),
                           decoration: BoxDecoration(
                             color: isSelected ? accent : Colors.transparent,
                             shape: BoxShape.circle,
