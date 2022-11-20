@@ -22,8 +22,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static const _maxRemindersToShow = 2;
-
   @override
   void initState() {
     super.initState();

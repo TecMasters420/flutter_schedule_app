@@ -39,13 +39,13 @@ class _RemindersPageState extends State<RemindersPage> {
     _selectedDay = 0;
     _monthDays = _getDays(DateTime.now());
     _remindersCountInSelectedDay = _getRemindersCount;
-    _tempContainData = List.generate(
-        _remindersCountInSelectedDay, (index) => Random().nextBool());
     _clearKeyAndSize();
   }
 
   void _clearKeyAndSize() {
     _containersHeightIsGen = false;
+    _tempContainData = List.generate(
+        _remindersCountInSelectedDay, (index) => Random().nextBool());
     _sizes = List.generate(_remindersCountInSelectedDay, (index) => null);
     _keys = List.generate(_remindersCountInSelectedDay, (index) => GlobalKey());
   }
@@ -141,7 +141,6 @@ class _RemindersPageState extends State<RemindersPage> {
                       (x) {
                         final Color containerColor =
                             colors[Random().nextInt(colors.length - 1)];
-
                         return ReminderContainer(
                           containerKey: _keys[x],
                           index: x,
