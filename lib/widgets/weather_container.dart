@@ -13,7 +13,7 @@ class WeatherContainer extends StatelessWidget {
         height: 150,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: lightGrey.withOpacity(0.1),
+          color: lightGrey.withOpacity(0.05),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Stack(

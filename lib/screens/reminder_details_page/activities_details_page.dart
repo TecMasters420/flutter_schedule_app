@@ -21,6 +21,30 @@ class ReminderDetailsPage extends StatelessWidget {
     Icons.calendar_today_rounded: {'Wednesday, 26 July': []},
     Icons.access_time_sharp: {'12:00 - 14:00': []},
     Icons.supervised_user_circle_outlined: {'Three': []},
+    Icons.bar_chart_rounded: {
+      'Progress': [
+        Container(
+          height: 30,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: accent.withOpacity(0.15),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Stack(
+            children: [
+              Container(
+                height: 30,
+                width: 200,
+                decoration: BoxDecoration(
+                  color: tempAccent,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ]
+    },
     Icons.tag: {
       'Tags': [
         TagsList(
@@ -83,7 +107,7 @@ class ReminderDetailsPage extends StatelessWidget {
                 'Reminder information:',
                 style: TextStyles.w800(resp.sp16),
               ),
-              SizedBox(height: resp.hp(2)),
+              SizedBox(height: resp.hp(2.5)),
               ..._bodyElements.entries.map(
                 (e) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,7 +115,7 @@ class ReminderDetailsPage extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Flexible(
+                        Expanded(
                           flex: 1,
                           child: Container(
                             alignment: Alignment.topLeft,
@@ -126,7 +150,7 @@ class ReminderDetailsPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: resp.wp(5)),
+                    SizedBox(height: resp.wp(2.5)),
                   ],
                 ),
               ),
