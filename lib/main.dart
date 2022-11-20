@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:schedulemanager/providers/activities_provider.dart';
-import 'package:schedulemanager/screens/reminder_details_page/activities_details_page.dart';
+import 'package:schedulemanager/screens/reminder_details_page/reminders_details_page.dart';
 import 'package:schedulemanager/screens/home_page/home_page.dart';
 import 'package:schedulemanager/screens/initial_page/initial_information_page.dart';
 import 'package:schedulemanager/screens/login_page/login_page.dart';
