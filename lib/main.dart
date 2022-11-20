@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Schedule Manager',
         debugShowCheckedModeBanner: false,
-        home: const RemindersPage(),
+        home: const InitialInformationPage(),
         routes: {
           'initialInformationPage': (context) => const InitialInformationPage(),
           'loginPage': (context) => const LoginPage(),

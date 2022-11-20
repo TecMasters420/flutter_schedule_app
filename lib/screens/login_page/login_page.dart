@@ -87,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: resp.hp(2.5)),
                 CustomFormField(
+                  obscure: true,
                   labelText: 'Password',
                   hintText: '*******',
                   icon: Icons.lock_outline_rounded,

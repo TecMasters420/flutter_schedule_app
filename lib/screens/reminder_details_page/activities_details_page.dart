@@ -2,35 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:schedulemanager/constants/constants.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/widgets/map_preview.dart';
+import 'package:schedulemanager/widgets/tags_list.dart';
+import 'package:schedulemanager/widgets/weather_container.dart';
 
 import '../../utils/text_styles.dart';
 import '../../widgets/custom_back_button.dart';
 
 class ReminderDetailsPage extends StatelessWidget {
+  static const List<String> _tags = [
+    'Project',
+    'Meeting',
+    'Shot Dribbble',
+    'Standup',
+    'Sprint'
+  ];
+
   static final Map<IconData, Map<String, List<Widget>>> _bodyElements = {
     Icons.calendar_today_rounded: {'Wednesday, 26 July': []},
     Icons.access_time_sharp: {'12:00 - 14:00': []},
     Icons.supervised_user_circle_outlined: {'Three': []},
+    Icons.tag: {
+      'Tags': [
+        TagsList(
+          tagsList: _tags,
+          maxTagsToShow: 3,
+          style: TextStyles.w500(
+            14,
+          ),
+        ),
+      ]
+    },
     Icons.location_on_outlined: {
       'South Portland CA, Apple Juice ST.': [const MapPreview()]
     },
     Icons.sunny: {
-      'Expected weather for that day': [
-        Container(
-          height: 30,
-          width: 70,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: tempAccent.withOpacity(0.75),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Text(
-            '10° C',
-            style: TextStyles.w900(20, Colors.white),
-            textAlign: TextAlign.center,
-          ),
-        )
-      ]
+      'Expected weather for that day': [const WeatherContainer()]
     }
   };
   const ReminderDetailsPage({super.key});
@@ -72,7 +78,12 @@ class ReminderDetailsPage extends StatelessWidget {
                 style: TextStyles.w500(resp.sp14),
                 textAlign: TextAlign.justify,
               ),
-              SizedBox(height: resp.hp(5)),
+              SizedBox(height: resp.hp(2.5)),
+              Text(
+                'Reminder information:',
+                style: TextStyles.w800(resp.sp16),
+              ),
+              SizedBox(height: resp.hp(2)),
               ..._bodyElements.entries.map(
                 (e) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

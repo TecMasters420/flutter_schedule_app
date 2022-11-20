@@ -14,18 +14,9 @@ import '../../utils/text_styles.dart';
 import '../../widgets/reminder_information.dart';
 import 'widgets/widgets.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
+  static const _maxReminders = 1;
   const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,35 +116,63 @@ class _HomePageState extends State<HomePage> {
                         '${activities.remindersCount} Reminders',
                         style: TextStyles.w700(resp.sp16, black),
                       ),
-                      const Spacer(),
-                      CustomButton(
-                        color: lightGrey.withOpacity(0.2),
-                        text: 'Add',
-                        height: resp.hp(4),
-                        style: TextStyles.w500(resp.sp16),
-                        width: double.infinity,
-                        constraints: const BoxConstraints(maxWidth: 70),
-                        prefixWidget:
-                            Icon(Icons.add, size: resp.sp20, color: accent),
-                        onTap: () {
-                          Navigator.pushNamed(context, 'remindersPage');
-                        },
-                      ),
+                      // const Spacer(),
+                      // CustomButton(
+                      //   color: lightGrey.withOpacity(0.2),
+                      //   text: 'Add',
+                      //   height: resp.hp(4),
+                      //   style: TextStyles.w500(resp.sp16),
+                      //   width: double.infinity,
+                      //   constraints: const BoxConstraints(maxWidth: 70),
+                      //   prefixWidget:
+                      //       Icon(Icons.add, size: resp.sp20, color: accent),
+                      //   onTap: () {
+                      //     Navigator.pushNamed(context, 'remindersPage');
+                      //   },
+                      // ),
                     ],
                   ),
                   SizedBox(height: resp.hp(2.5)),
                   if (activities.remindersCount != 0) ...[
                     ...List.generate(
-                      activities.remindersCount,
-                      (index) => ReminderContainer(
-                        index: index,
-                        leftWidget: ReminderDateData(index: index),
-                        middleWidget: const SizedBox(),
-                        rightWidget: ReminderInformation(
-                          showHourInTop: true,
-                          containData: Random().nextBool(),
-                        ),
-                      ),
+                      activities.remindersCount > _maxReminders
+                          ? _maxReminders + 2
+                          : activities.remindersCount,
+                      (index) => index <= _maxReminders
+                          ? ReminderContainer(
+                              index: index,
+                              leftWidget: ReminderDateData(index: index),
+                              middleWidget: const SizedBox(),
+                              rightWidget: ReminderInformation(
+                                showHourInTop: true,
+                                containData: Random().nextBool(),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () =>
+                                  Navigator.pushNamed(context, 'remindersPage'),
+                              child: Container(
+                                height: resp.hp(10),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: lightGrey.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Press to see all reminders',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyles.w600(
+                                        resp.sp16,
+                                        grey.withOpacity(0.5),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                     )
                   ] else
                     Center(

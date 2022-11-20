@@ -90,11 +90,11 @@ class UserProfilePage extends StatelessWidget {
                 ),
                 style: TextStyles.w400(resp.sp14, black),
               ),
-              // const Spacer(),
+              SizedBox(height: resp.hp(3)),
               CustomButton(
                 text: 'Save',
                 color: accent,
-                height: resp.hp(10),
+                height: resp.hp(5),
                 width: double.infinity,
                 onTap: () {},
                 style: TextStyles.w700(resp.sp20, Colors.white),
