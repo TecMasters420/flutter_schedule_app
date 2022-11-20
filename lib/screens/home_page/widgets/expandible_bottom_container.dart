@@ -1,9 +1,9 @@
 import 'dart:math';
-
-import 'package:flutter/foundation.dart';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:schedulemanager/constants/constants.dart';
+import 'package:schedulemanager/screens/reminders_page/widgets/create_reminder_form.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/utils/text_styles.dart';
 import 'package:schedulemanager/widgets/custom_form_field.dart';
@@ -30,91 +30,42 @@ class ExpandibleBottomContainer extends StatefulWidget {
       _ExpandibleBottomContainerState();
 }
 
-class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer> {
-  static const double _transitionPercent = 50; // % percent
-  static const List<String> _types = [
-    'Project',
-    'Meeting',
-    'Shot Dribbble',
-    'Standup',
-    'Sprint'
-  ];
-
-  late final Map<String, Color?> _coloredTypes;
-
-  late double _currentHeight;
-  late double _currentWidth;
-  late double _iconTransitionValue;
-  late double _bodyTransitionValue;
-  late double _containerTransitionValue;
+class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
-    _containerTransitionValue = 0;
-    _iconTransitionValue = 0;
-    _bodyTransitionValue = 0;
-    _currentHeight = widget.initialHeight;
-    _currentWidth = widget.initialWidth;
 
-    _coloredTypes = {};
-    for (final String type in _types) {
-      _coloredTypes.addAll({type: colors[Random().nextInt(colors.length - 1)]});
-    }
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 180));
+    _animation = Tween<double>(begin: 0, end: 1).animate(_controller)
+      ..addListener(_animListener);
+  }
+
+  void _animListener() {
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    final double animValue = _animation.value;
+    final double bodyValue = animValue;
+    final double iconValue = 1 - animValue;
+    final double containerWidth = (widget.finalWidth * animValue)
+        .clamp(widget.initialWidth, widget.finalWidth);
+    final double containerHeight = (widget.finalHeight * animValue)
+        .clamp(widget.initialHeight, widget.finalHeight);
+
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    final bool isInBodyTransition =
-        _bodyTransitionValue != 0 && _iconTransitionValue == 1;
     return GestureDetector(
-      onVerticalDragUpdate: (details) {
-        final increment = -1 * details.delta.dy;
-        setState(() {
-          _currentHeight += increment;
-          _currentHeight = clampDouble(
-              _currentHeight, widget.initialHeight, widget.finalHeight);
-
-          _containerTransitionValue = _currentHeight / widget.finalHeight;
-
-          final double maxHeightPerPercent =
-              widget.finalHeight * (_transitionPercent / 100);
-
-          _iconTransitionValue =
-              (_currentHeight / maxHeightPerPercent).clamp(0, 1);
-
-          if (_currentHeight >= maxHeightPerPercent) {
-            _bodyTransitionValue = _containerTransitionValue -
-                (_iconTransitionValue - _containerTransitionValue);
-          }
-
-          final double heightInitialPercent =
-              widget.initialHeight / widget.finalHeight;
-          final double width = widget.initialWidth +
-              (widget.finalWidth *
-                  (_containerTransitionValue - heightInitialPercent));
-          _currentWidth = width;
-        });
-      },
-      onVerticalDragEnd: (details) {
-        if (_currentHeight >= (widget.finalHeight / 2)) {
-          setState(() {
-            _currentHeight = widget.finalHeight;
-            _currentWidth = widget.finalWidth;
-          });
-        } else {
-          setState(() {
-            _currentHeight = widget.initialHeight;
-            _currentWidth = widget.initialWidth;
-          });
-        }
-      },
+      onTap: () => _controller.forward(),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.decelerate,
-        height: _currentHeight,
-        width: _currentWidth,
+        duration: const Duration(milliseconds: 180),
+        height: containerHeight,
+        width: containerWidth,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -127,166 +78,62 @@ class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer> {
           ],
         ),
         child: Padding(
-          padding: isInBodyTransition
+          padding: animValue > 0
               ? const EdgeInsets.symmetric(
                   vertical: 20,
                   horizontal: 20,
                 )
               : EdgeInsets.zero,
-          child: Stack(
-            alignment: _bodyTransitionValue != 0 && _iconTransitionValue == 1
-                ? Alignment.topLeft
-                : Alignment.center,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.add,
-                size: widget.iconSize,
-                color: black.withOpacity(_iconTransitionValue >= 0.20
-                    ? 1 - _iconTransitionValue
-                    : 1),
-              ),
-              FittedBox(
-                child: SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
+              if (iconValue != 0)
+                Flexible(
+                  child: Transform.scale(
+                    scale: iconValue,
+                    child: Icon(
+                      Icons.add,
+                      size: widget.iconSize,
+                      color: black.withOpacity(iconValue),
+                    ),
+                  ),
+                ),
+              if (bodyValue != 0)
+                Expanded(
                   child: Opacity(
-                    opacity: _bodyTransitionValue,
-                    child: SizedBox(
-                      width: _currentWidth - 40,
+                    opacity: bodyValue,
+                    child: SingleChildScrollView(
+                      physics: const NeverScrollableScrollPhysics(),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
                         children: [
-                          Stack(
-                            fit: StackFit.loose,
+                          Row(
                             children: [
-                              Align(
-                                alignment: Alignment.topLeft,
+                              Expanded(
+                                flex: 5,
                                 child: Text(
                                   'Create a new reminder',
                                   style: TextStyles.w700(resp.sp16),
                                 ),
                               ),
-                              const Align(
-                                alignment: Alignment.topRight,
-                                child: Icon(
-                                  Icons.transit_enterexit_rounded,
+                              Flexible(
+                                child: IconButton(
+                                  icon: const Icon(
+                                      Icons.transit_enterexit_rounded),
                                   color: lightGrey,
+                                  onPressed: () {
+                                    _controller.reverse();
+                                  },
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: resp.hp(1.5)),
-                          Text(
-                            'Title',
-                            style: TextStyles.w600(resp.sp14),
-                          ),
-                          SizedBox(height: resp.hp(1.5)),
-                          CustomFormField(
-                            labelText: 'Title',
-                            hintText: 'my title',
-                            icon: Icons.my_library_books_outlined,
-                            onChanged: (value) {},
-                          ),
-                          SizedBox(height: resp.hp(1.5)),
-                          Text(
-                            'Description',
-                            style: TextStyles.w600(resp.sp14),
-                          ),
-                          SizedBox(height: resp.hp(1.5)),
-                          CustomFormField(
-                            labelText: 'Description',
-                            hintText: 'My description',
-                            icon: Icons.mode_edit_outline_outlined,
-                            onChanged: (value) {},
-                          ),
-                          SizedBox(height: resp.hp(1.5)),
-                          Text(
-                            'Tag',
-                            style: TextStyles.w600(resp.sp14),
-                          ),
-                          SizedBox(height: resp.hp(1.5)),
-                          TagsList(
-                            tagsList: _types,
-                            style: TextStyles.w500(
-                              resp.dp(1),
-                            ),
-                          ),
-                          SizedBox(height: resp.hp(1.5)),
-                          Text(
-                            'Date',
-                            style: TextStyles.w600(resp.sp14),
-                          ),
-                          SizedBox(height: resp.hp(1.5)),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.calendar_month_outlined,
-                                color: lightGrey,
-                              ),
-                              SizedBox(width: resp.wp(1)),
-                              Text(
-                                DateFormat(DateFormat.YEAR_MONTH_DAY, 'en_US')
-                                    .format(
-                                  DateTime.now().toUtc(),
-                                ),
-                                style: TextStyles.w300(
-                                  resp.sp14,
-                                  lightGrey,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: resp.hp(1.5)),
-                          Text(
-                            'Duration',
-                            style: TextStyles.w600(resp.sp14),
-                          ),
-                          SizedBox(height: resp.hp(1.5)),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.watch_later_outlined,
-                                color: lightGrey,
-                              ),
-                              SizedBox(width: resp.wp(1)),
-                              Text(
-                                '10:00 - 11:00',
-                                style: TextStyles.w300(
-                                  resp.sp14,
-                                  lightGrey,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: resp.hp(1.5)),
-                          Text(
-                            'Location',
-                            style: TextStyles.w600(resp.sp14),
-                          ),
-                          SizedBox(height: resp.hp(1.5)),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.location_on_outlined,
-                                color: lightGrey,
-                              ),
-                              SizedBox(width: resp.wp(1)),
-                              Text(
-                                'Tijuana, BC',
-                                style: TextStyles.w300(
-                                  resp.sp14,
-                                  lightGrey,
-                                ),
-                              ),
-                            ],
-                          ),
+                          const CreateReminderForm()
                         ],
                       ),
                     ),
                   ),
                 ),
-              ),
             ],
           ),
         ),

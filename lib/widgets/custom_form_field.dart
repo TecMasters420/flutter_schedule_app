@@ -9,18 +9,21 @@ class CustomFormField extends StatelessWidget {
   final String labelText;
   final String hintText;
   final IconData icon;
+  final bool obscure;
   const CustomFormField({
     super.key,
     required this.labelText,
     required this.hintText,
     required this.icon,
     required this.onChanged,
+    this.obscure = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     return TextFormField(
+      obscureText: obscure,
       onChanged: onChanged,
       decoration: InputDecoration(
         labelText: labelText,
