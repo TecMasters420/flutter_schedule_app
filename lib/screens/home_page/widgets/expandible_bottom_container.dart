@@ -1,14 +1,8 @@
-import 'dart:math';
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:schedulemanager/constants/constants.dart';
 import 'package:schedulemanager/screens/reminders_page/widgets/create_reminder_form.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/utils/text_styles.dart';
-import 'package:schedulemanager/widgets/custom_form_field.dart';
-
-import '../../../widgets/tags_list.dart';
 
 class ExpandibleBottomContainer extends StatefulWidget {
   final double finalHeight;

@@ -3,16 +3,19 @@ import 'package:schedulemanager/models/tag_model.dart';
 import 'package:schedulemanager/models/task_model.dart';
 
 class ReminderModel {
+  final String? id;
   final Timestamp creationDate;
   final String description;
-  final Timestamp startDate;
-  final Timestamp endDate;
   final GeoPoint? location;
   final String title;
   final String uid;
   final int expectedTemp;
   final List<TaskModel> tasks;
   final List<TagModel> tags;
+
+  Timestamp endDate;
+  Timestamp startDate;
+
   ReminderModel({
     required this.creationDate,
     required this.description,
@@ -24,7 +27,11 @@ class ReminderModel {
     required this.expectedTemp,
     required this.tasks,
     required this.tags,
+    this.id,
   });
+
+  double get progress =>
+      (tasks.where((t) => t.isCompleted).length / tasks.length) * 100;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -41,12 +48,14 @@ class ReminderModel {
     };
   }
 
-  factory ReminderModel.fromMap(Map<String, dynamic> map) {
+  factory ReminderModel.fromMap(
+      final Map<String, dynamic> map, final String id) {
     final tasks = List.generate(
         map['tasks'].length, (x) => map['tasks'][x] as Map<String, dynamic>);
     final tags = List.generate(
         map['tags'].length, (x) => map['tags'][x] as Map<String, dynamic>);
     return ReminderModel(
+      id: id,
       creationDate: map['creationDate'],
       description: map['description'],
       startDate: map['startDate'],

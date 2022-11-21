@@ -159,11 +159,13 @@ class _HomePageState extends State<HomePage> {
                               (index) => index <= HomePage._maxReminders
                                   ? ReminderContainer(
                                       index: index,
-                                      leftWidget:
-                                          ReminderDateData(index: index),
+                                      leftWidget: ReminderDateData(
+                                        endDate: data[index].endDate.toDate(),
+                                        timeRemaining: data[index]
+                                            .timeLeft(DateTime.now()),
+                                      ),
                                       middleWidget: const SizedBox(),
                                       rightWidget: ReminderInformation(
-                                        showHourInTop: true,
                                         reminder: data[index],
                                       ),
                                     )

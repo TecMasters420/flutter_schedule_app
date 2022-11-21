@@ -196,7 +196,6 @@ class _RemindersPageState extends State<RemindersPage> {
                           ),
                           rightWidget: ReminderInformation(
                             reminder: _remindersToShow[x],
-                            showHourInTop: false,
                           ),
                         );
                       },

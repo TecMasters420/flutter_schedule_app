@@ -8,10 +8,12 @@ import '../../../constants/constants.dart';
 import '../../../utils/text_styles.dart';
 
 class ReminderDateData extends StatelessWidget {
-  final int index;
+  final DateTime endDate;
+  final Duration timeRemaining;
   const ReminderDateData({
     super.key,
-    required this.index,
+    required this.endDate,
+    required this.timeRemaining,
   });
 
   @override
@@ -27,18 +29,15 @@ class ReminderDateData extends StatelessWidget {
           ),
         ),
         Text(
-          '${index + 1}',
+          endDate.day.toString(),
           style: TextStyles.w500(resp.sp16),
         ),
         Text(
-          DateFormat('EEEE')
-              .format(DateTime(
-                  DateTime.now().year, DateTime.now().month, index + 1))
-              .substring(0, 3),
+          DateFormat('EEEE').format(endDate).substring(0, 3),
           style: TextStyles.w500(resp.sp16),
         ),
         Text(
-          DateFormat('MMMM').format(DateTime.now()).substring(0, 3),
+          DateFormat('MMMM').format(endDate).substring(0, 3),
           style: TextStyles.w500(resp.sp16),
         ),
       ],

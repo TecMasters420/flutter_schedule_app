@@ -22,18 +22,22 @@ class ProgressBar extends StatelessWidget {
         color: accent.withOpacity(0.15),
         borderRadius: BorderRadius.circular(15),
       ),
-      child: Stack(
-        children: [
-          Container(
-            height: height,
-            width: width * (percent / 100),
-            decoration: BoxDecoration(
-              color: tempAccent,
-              borderRadius: BorderRadius.circular(15),
+      child: LayoutBuilder(builder: (context, constraints) {
+        return Stack(
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeInOut,
+              height: height,
+              width: constraints.maxWidth * (percent / 100),
+              decoration: BoxDecoration(
+                color: tempAccent,
+                borderRadius: BorderRadius.circular(15),
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      }),
     );
   }
 }

@@ -1,5 +1,5 @@
 class TagModel {
-  final String name;
+  String name;
   TagModel({
     required this.name,
   });

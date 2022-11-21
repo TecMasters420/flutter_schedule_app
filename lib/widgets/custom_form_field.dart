@@ -5,7 +5,7 @@ import 'package:schedulemanager/utils/text_styles.dart';
 import '../constants/constants.dart';
 
 class CustomFormField extends StatelessWidget {
-  final Function(String value) onChanged;
+  final void Function(String value) onChanged;
   final String labelText;
   final String hintText;
   final IconData icon;

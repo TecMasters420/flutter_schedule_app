@@ -20,24 +20,27 @@ class ReminderService extends BaseService with ChangeNotifier {
     await db
         .add(data)
         .then((value) async => getData())
-        .onError((error, stackTrace) => print('Failed to add'));
+        .onError((error, stackTrace) => debugPrint('Failed to add'));
   }
 
   @override
   Future<void> delete(Map<String, dynamic> data) async {}
 
   @override
-  Future<void> update(Map<String, dynamic> data) async {}
+  Future<void> update(Map<String, dynamic> data, [final String id = '']) async {
+    if (id.isNotEmpty) {
+      await db.doc(id).update(data);
+      await getData();
+      return;
+    }
+    return;
+  }
 
   @override
   Future<void> getData() async {
     final String uid = FirebaseAuth.instance.currentUser!.uid;
-    _reminders = await FirebaseFirestore.instance
-        .collection(_collection)
-        .where('uid', isEqualTo: uid)
-        .get()
-        .then(
-            (r) => r.docs.map((e) => ReminderModel.fromMap(e.data())).toList());
+    _reminders = await db.where('uid', isEqualTo: uid).get().then((r) =>
+        r.docs.map((e) => ReminderModel.fromMap(e.data(), e.id)).toList());
 
     // Get expired reminders
     _expiredReminders = _reminders

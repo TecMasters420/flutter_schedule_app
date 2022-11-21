@@ -36,7 +36,7 @@ class ReminderContainer extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: resp.hp(2)),
+        SizedBox(height: resp.hp(5)),
       ],
     );
   }

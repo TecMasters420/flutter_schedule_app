@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:schedulemanager/models/reminder_model.dart';
 import 'package:schedulemanager/screens/reminder_details_page/reminders_details_page.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
+import 'package:schedulemanager/widgets/progress_bar.dart';
 import 'package:schedulemanager/widgets/tags_list.dart';
 
 import '../constants/constants.dart';
@@ -9,20 +10,10 @@ import '../utils/text_styles.dart';
 import 'custom_button.dart';
 
 class ReminderInformation extends StatelessWidget {
-  static const List<String> _tags = [
-    'Project',
-    'Meeting',
-    'Shot Dribbble',
-    'Standup',
-    'Sprint'
-  ];
-
   final ReminderModel reminder;
-  final bool showHourInTop;
   const ReminderInformation({
     super.key,
     required this.reminder,
-    required this.showHourInTop,
   });
 
   @override
@@ -35,30 +26,6 @@ class ReminderInformation extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (showHourInTop) ...[
-          Row(
-            children: [
-              Text(
-                'Hour: ',
-                style: TextStyles.w500(resp.sp14, lightGrey),
-              ),
-              Text(
-                '11:00 - 11:30',
-                style: TextStyles.w500(
-                  resp.sp14,
-                  lightGrey,
-                ),
-              ),
-              const Spacer(),
-              Icon(
-                Icons.more_horiz_rounded,
-                color: lightGrey,
-                size: resp.dp(2.25),
-              )
-            ],
-          ),
-        ],
-        SizedBox(height: resp.hp(1)),
         Text(
           reminder.title,
           style: TextStyles.w700(resp.sp16),
@@ -104,6 +71,19 @@ class ReminderInformation extends StatelessWidget {
             ),
           ),
           SizedBox(height: resp.hp(1)),
+        ],
+        if (reminder.tasks.isNotEmpty) ...[
+          Text(
+            'Tasks progress: ${(reminder.progress.isNaN ? 0 : reminder.progress).toStringAsFixed(2)}%',
+            style: TextStyles.w700(resp.sp14),
+          ),
+          SizedBox(height: resp.hp(0.5)),
+          ProgressBar(
+            percent: reminder.progress,
+            height: resp.hp(2),
+            width: resp.width,
+          ),
+          SizedBox(height: resp.hp(2)),
         ],
         Row(
           children: [

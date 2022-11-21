@@ -1,5 +1,5 @@
 class TaskModel {
-  final String name;
+  String name;
   bool isCompleted;
   TaskModel({
     required this.name,
@@ -22,4 +22,6 @@ class TaskModel {
 
   @override
   String toString() => 'TaskModel(name: $name, isCompleted: $isCompleted)';
+
+  List<Object?> get props => [];
 }
