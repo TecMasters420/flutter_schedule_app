@@ -1,9 +1,16 @@
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:schedulemanager/models/reminder_model.dart';
+import 'package:schedulemanager/models/tag_model.dart';
+import 'package:schedulemanager/models/task_model.dart';
 import 'package:schedulemanager/screens/reminder_details_page/widgets/reminder_hour.dart';
+import 'package:schedulemanager/services/base_service.dart';
+import 'package:schedulemanager/services/reminder_service.dart';
 import 'package:schedulemanager/widgets/reminder_container.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/widgets/custom_back_button.dart';
@@ -23,50 +30,49 @@ class RemindersPage extends StatefulWidget {
 }
 
 class _RemindersPageState extends State<RemindersPage> {
-  late Map<int, int> _remindersPerDay;
-  late int _monthDays;
-  late int _selectedDay;
-  late int _remindersCountInSelectedDay;
-
   late bool _containersHeightIsGen;
   late List<GlobalKey> _keys;
   late List<Size?> _sizes;
-  late List<bool> _tempContainData;
+  late List<ReminderModel> _remindersToShow;
+  late DateTime _selectedDate;
+  late int _monthDays;
 
   @override
   void initState() {
     super.initState();
-    _selectedDay = 0;
+    _sizes = [];
+    _keys = [];
+    _containersHeightIsGen = false;
+    _remindersToShow = [];
+    _selectedDate = DateTime.now();
     _monthDays = _getDays(DateTime.now());
-    _remindersCountInSelectedDay = _getRemindersCount;
-    _clearKeyAndSize();
+    _getReminders();
   }
 
-  void _clearKeyAndSize() {
+  void _getReminders() async {
+    final service = Provider.of<ReminderService>(context, listen: false);
+    await service.getData();
+    _remindersToShow = service.getRemindersPerDate(_selectedDate);
+    _clearKeyAndSize(_remindersToShow.length);
+  }
+
+  void _clearKeyAndSize(final int quantity) {
     _containersHeightIsGen = false;
-    _tempContainData = List.generate(
-        _remindersCountInSelectedDay, (index) => Random().nextBool());
-    _sizes = List.generate(_remindersCountInSelectedDay, (index) => null);
-    _keys = List.generate(_remindersCountInSelectedDay, (index) => GlobalKey());
+    _sizes = List.generate(quantity, (index) => null);
+    _keys = List.generate(quantity, (index) => GlobalKey());
   }
 
   int _getDays(final DateTime date) {
     final int days = DateTime(date.year, date.month + 1, 1)
         .difference(DateTime(date.year, date.month, 1))
         .inDays;
-
-    _remindersPerDay = {};
-    for (int x = 0; x <= days; x++) {
-      _remindersPerDay.addAll({x: Random().nextInt(10)});
-    }
     return days;
   }
-
-  int get _getRemindersCount => _remindersPerDay.values.elementAt(_selectedDay);
 
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final ReminderService service = Provider.of<ReminderService>(context);
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (_containersHeightIsGen) return;
@@ -82,6 +88,32 @@ class _RemindersPageState extends State<RemindersPage> {
     });
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final DateTime now = DateTime.now();
+          final ReminderModel reminder = ReminderModel(
+            creationDate: Timestamp.fromDate(now),
+            description: 'Generic desc',
+            startDate: Timestamp.fromDate(DateTime.now()),
+            endDate:
+                Timestamp.fromDate(DateTime(now.year, now.month, now.day + 2)),
+            location: const GeoPoint(30, 30),
+            title: 'Generic title',
+            uid: FirebaseAuth.instance.currentUser!.uid,
+            expectedTemp: 32,
+            tasks: [
+              TaskModel(
+                name: 'Start Project',
+                isCompleted: true,
+              ),
+            ],
+            tags: [
+              TagModel(name: 'StandUp'),
+            ],
+          );
+          await ReminderService().create(reminder.toMap());
+        },
+      ),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -119,25 +151,29 @@ class _RemindersPageState extends State<RemindersPage> {
                     style: TextStyles.w700(resp.sp20, black),
                   ),
                   ScrolleableDaysList(
+                    initialDay: _selectedDate.day - 1,
                     days: _monthDays,
                     onSelectedNewDay: (newDay) {
-                      if (newDay == _selectedDay) return;
+                      if (newDay == _selectedDate.day) return;
+                      final DateTime current = _selectedDate;
                       setState(() {
-                        _selectedDay = newDay;
-                        _remindersCountInSelectedDay = _getRemindersCount;
-                        _clearKeyAndSize();
+                        _selectedDate = DateTime(
+                            current.year, DateTime.now().month, newDay);
+                        _remindersToShow =
+                            service.getRemindersPerDate(_selectedDate);
+                        _clearKeyAndSize(_remindersToShow.length);
                       });
                     },
                   ),
                   SizedBox(height: resp.hp(2)),
                   Text(
-                    '$_remindersCountInSelectedDay Reminders',
+                    '${_remindersToShow.length} Reminders',
                     style: TextStyles.w700(resp.sp20, black),
                   ),
                   SizedBox(height: resp.hp(3)),
-                  if (_getRemindersCount != 0) ...[
+                  if (_remindersToShow.isNotEmpty) ...[
                     ...List.generate(
-                      _getRemindersCount,
+                      _remindersToShow.length,
                       (x) {
                         final Color containerColor =
                             colors[Random().nextInt(colors.length - 1)];
@@ -159,8 +195,8 @@ class _RemindersPageState extends State<RemindersPage> {
                             ),
                           ),
                           rightWidget: ReminderInformation(
+                            reminder: _remindersToShow[x],
                             showHourInTop: false,
-                            containData: _tempContainData[x],
                           ),
                         );
                       },

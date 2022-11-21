@@ -23,7 +23,7 @@ class InitialAnnouncementsService extends BaseService with ChangeNotifier {
   Future<void> delete(Map<String, dynamic> data) async {}
 
   @override
-  Future<void> getData() async {
+  Future<void> getData([final String uid = '']) async {
     announces = await collection.get().then((snapshot) => snapshot.docs
         .map((e) => InitialAnnouncementModel.fromMap(e.data()))
         .toList());

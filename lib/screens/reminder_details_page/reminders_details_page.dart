@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:schedulemanager/constants/constants.dart';
+import 'package:schedulemanager/models/reminder_model.dart';
+import 'package:schedulemanager/models/task_model.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/widgets/map_preview.dart';
+import 'package:schedulemanager/widgets/progress_bar.dart';
+import 'package:schedulemanager/widgets/reminder_information_widget.dart';
 import 'package:schedulemanager/widgets/tags_list.dart';
 import 'package:schedulemanager/widgets/weather_container.dart';
 
@@ -17,57 +22,25 @@ class ReminderDetailsPage extends StatelessWidget {
     'Sprint'
   ];
 
-  static final Map<IconData, Map<String, List<Widget>>> _bodyElements = {
-    Icons.calendar_today_rounded: {'Wednesday, 26 July': []},
-    Icons.access_time_sharp: {'12:00 - 14:00': []},
-    Icons.supervised_user_circle_outlined: {'Three': []},
-    Icons.bar_chart_rounded: {
-      'Progress': [
-        Container(
-          height: 30,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: accent.withOpacity(0.15),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Stack(
-            children: [
-              Container(
-                height: 30,
-                width: 200,
-                decoration: BoxDecoration(
-                  color: tempAccent,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ]
-    },
-    Icons.tag: {
-      'Tags': [
-        TagsList(
-          tagsList: _tags,
-          maxTagsToShow: 3,
-          style: TextStyles.w500(
-            14,
-          ),
-        ),
-      ]
-    },
-    Icons.location_on_outlined: {
-      'South Portland CA, Apple Juice ST.': [const MapPreview()]
-    },
-    Icons.sunny: {
-      'Expected weather for that day': [const WeatherContainer()]
-    }
-  };
-  const ReminderDetailsPage({super.key});
+  final ReminderModel? reminder;
+
+  const ReminderDetailsPage({
+    super.key,
+    required this.reminder,
+  });
+
+  String getDateFormatted(DateTime date) {
+    return DateFormat(DateFormat.YEAR_MONTH_DAY, 'en_US').format(date.toUtc());
+  }
 
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+
+    final DateTime startDate = reminder!.startDate.toDate();
+    final DateTime endDate = reminder!.endDate.toDate();
+    final bool isSameDay = startDate.difference(endDate).inDays == 0;
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: accent,
@@ -87,7 +60,7 @@ class ReminderDetailsPage extends StatelessWidget {
               SizedBox(height: resp.hp(2.5)),
               Center(
                 child: Text(
-                  'Uber car rentals assistant.',
+                  reminder!.title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyles.w700(resp.sp30),
@@ -96,7 +69,7 @@ class ReminderDetailsPage extends StatelessWidget {
               ),
               SizedBox(height: resp.hp(2.5)),
               Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                reminder!.description,
                 maxLines: 20,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyles.w500(resp.sp14),
@@ -108,52 +81,82 @@ class ReminderDetailsPage extends StatelessWidget {
                 style: TextStyles.w800(resp.sp16),
               ),
               SizedBox(height: resp.hp(2.5)),
-              ..._bodyElements.entries.map(
-                (e) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            alignment: Alignment.topLeft,
-                            child: Icon(
-                              e.key,
-                              color: grey,
-                              size: resp.sp20,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: resp.wp(2.5)),
-                        Flexible(
-                          flex: 10,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ...e.value.keys.map(
-                                (e) => Text(
-                                  e,
-                                  style: TextStyles.w500(resp.sp14),
-                                ),
-                              ),
-                              SizedBox(height: resp.hp(1)),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Column(
-                                  children: e.value.values.map((e) => e).first,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: resp.wp(2.5)),
-                  ],
+              ReminderInformationWidget(
+                  icon: Icons.calendar_today_rounded,
+                  title: 'Start Date:',
+                  value:
+                      '${isSameDay ? 'Today' : getDateFormatted(startDate)} at ${DateFormat('hh:mm a').format(startDate)}'),
+              ReminderInformationWidget(
+                  icon: Icons.calendar_month_outlined,
+                  title: 'End Date:',
+                  value:
+                      '${isSameDay ? 'Today' : getDateFormatted(endDate)} at ${DateFormat('hh:mm a').format(endDate)}'),
+              ReminderInformationWidget(
+                icon: Icons.timer,
+                title: 'Time remaining:',
+                value:
+                    '${reminder!.timeLeft(DateTime.now()).inDays} day/s, ${reminder!.timeLeft(DateTime.now()).inHours} hours',
+              ),
+              const ReminderInformationWidget(
+                icon: Icons.location_on_outlined,
+                title: 'Expected weather:',
+                extra: WeatherContainer(),
+              ),
+              const ReminderInformationWidget(
+                icon: Icons.location_on_outlined,
+                title: 'Location:',
+                value: 'Tijuana',
+                extra: MapPreview(),
+              ),
+              ReminderInformationWidget(
+                icon: Icons.tag_rounded,
+                title: 'Tags:',
+                extra: TagsList(
+                  tagsList: reminder!.tags.map((e) => e.name).toList(),
+                  maxTagsToShow: 3,
+                  style: TextStyles.w500(
+                    resp.sp14,
+                  ),
                 ),
               ),
+              if (reminder!.tasks.isNotEmpty) ...[
+                ReminderInformationWidget(
+                    icon: Icons.list_alt_rounded,
+                    title: 'Tasks:',
+                    extra: Column(
+                      children: List.generate(
+                        reminder!.tasks.length,
+                        (index) {
+                          final TaskModel task = reminder!.tasks[index];
+                          return Row(
+                            children: [
+                              Checkbox(
+                                activeColor: accent,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                value: task.isCompleted,
+                                onChanged: (value) {
+                                  reminder!.tasks[index].isCompleted = value!;
+                                },
+                              ),
+                              Text(
+                                task.name,
+                                style: TextStyles.w500(resp.sp14, grey),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    )),
+                ReminderInformationWidget(
+                  icon: Icons.bar_chart_rounded,
+                  title: 'Progress:',
+                  value: '90%',
+                  extra: ProgressBar(
+                      percent: 90, height: resp.hp(2.5), width: resp.wp(70)),
+                ),
+              ]
             ],
           ),
         ),

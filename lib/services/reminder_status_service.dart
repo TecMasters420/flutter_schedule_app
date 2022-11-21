@@ -13,7 +13,7 @@ class ReminderStatusService extends BaseService {
   Future<void> delete(Map<String, dynamic> data) async {}
 
   @override
-  Future<void> getData() async {}
+  Future<void> getData([final String uid = '']) async {}
 
   @override
   Future<void> update(Map<String, dynamic> data) async {}

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:schedulemanager/providers/activities_provider.dart';
 import 'package:schedulemanager/screens/reminder_details_page/reminders_details_page.dart';
 import 'package:schedulemanager/screens/home_page/home_page.dart';
 import 'package:schedulemanager/screens/initial_page/initial_information_page.dart';
@@ -14,6 +13,7 @@ import 'package:schedulemanager/screens/reminders_page/reminders_page.dart';
 import 'package:schedulemanager/screens/user_profile_page/user_profile_page.dart';
 import 'package:schedulemanager/services/auth_service.dart';
 import 'package:schedulemanager/services/initial_announcements_service.dart';
+import 'package:schedulemanager/services/reminder_service.dart';
 
 import 'firebase_options.dart';
 
@@ -34,21 +34,22 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthService>(create: (context) => AuthService()),
+        ChangeNotifierProvider<ReminderService>(
+            create: (context) => ReminderService()),
         ChangeNotifierProvider<InitialAnnouncementsService>(
             create: (context) => InitialAnnouncementsService()),
-        ChangeNotifierProvider<ActivitiesProvider>(
-            create: (context) => ActivitiesProvider()),
       ],
       child: MaterialApp(
         title: 'Schedule Manager',
         debugShowCheckedModeBanner: false,
-        home: const InitialInformationPage(),
+        home: const LoginPage(),
         routes: {
           'initialInformationPage': (context) => const InitialInformationPage(),
           'loginPage': (context) => const LoginPage(),
           'homePage': (context) => const HomePage(),
           'registerPage': (context) => const RegisterPage(),
-          'reminderDetailsPage': (context) => const ReminderDetailsPage(),
+          'reminderDetailsPage': (context) =>
+              const ReminderDetailsPage(reminder: null),
           'remindersPage': (context) => const RemindersPage(),
           'userProfilePage': (context) => const UserProfilePage(),
           'mapPage': (context) => const MapPage(),

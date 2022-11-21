@@ -6,11 +6,13 @@ import 'package:schedulemanager/utils/text_styles.dart';
 
 class ScrolleableDaysList extends StatefulWidget {
   final int days;
+  final int initialDay;
   final Function(int selectedDay) onSelectedNewDay;
 
   const ScrolleableDaysList({
     super.key,
     required this.days,
+    required this.initialDay,
     required this.onSelectedNewDay,
   });
 
@@ -23,7 +25,7 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
   @override
   void initState() {
     super.initState();
-    _selectedDay = 0;
+    _selectedDay = widget.initialDay;
   }
 
   @override
@@ -41,7 +43,7 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
               final isSelected = index == _selectedDay;
               return GestureDetector(
                 onTap: () {
-                  widget.onSelectedNewDay(index);
+                  widget.onSelectedNewDay(index + 1);
                   setState(() {
                     _selectedDay = index;
                   });
