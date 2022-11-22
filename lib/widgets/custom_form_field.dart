@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:schedulemanager/utils/responsive_util.dart';
-import 'package:schedulemanager/utils/text_styles.dart';
+import '../utils/responsive_util.dart';
+import '../utils/text_styles.dart';
 
 import '../constants/constants.dart';
 

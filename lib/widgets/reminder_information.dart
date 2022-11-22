@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:schedulemanager/models/reminder_model.dart';
-import 'package:schedulemanager/screens/reminder_details_page/reminders_details_page.dart';
-import 'package:schedulemanager/utils/responsive_util.dart';
-import 'package:schedulemanager/widgets/progress_bar.dart';
-import 'package:schedulemanager/widgets/tags_list.dart';
+import '../models/reminder_model.dart';
+import '../screens/reminder_details_page/reminders_details_page.dart';
+import '../utils/responsive_util.dart';
+import 'progress_bar.dart';
+import 'tags_list.dart';
 
 import '../constants/constants.dart';
 import '../utils/text_styles.dart';

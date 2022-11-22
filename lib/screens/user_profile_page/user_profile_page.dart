@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:schedulemanager/utils/responsive_util.dart';
-import 'package:schedulemanager/widgets/custom_button.dart';
+import '../../utils/responsive_util.dart';
+import '../../widgets/custom_button.dart';
 
 import '../../constants/constants.dart';
 import '../../services/auth_service.dart';

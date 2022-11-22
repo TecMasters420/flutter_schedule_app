@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:schedulemanager/utils/responsive_util.dart';
-import 'package:schedulemanager/widgets/custom_button.dart';
+import '../../../utils/responsive_util.dart';
+import '../../../widgets/custom_button.dart';
 
 import '../../../constants/constants.dart';
 import '../../../models/reminder_model.dart';

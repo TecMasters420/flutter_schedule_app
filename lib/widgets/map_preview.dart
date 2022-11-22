@@ -3,8 +3,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:schedulemanager/constants/constants.dart';
-import 'package:schedulemanager/services/base_service.dart';
+import '../constants/constants.dart';
+import '../services/base_service.dart';
 
 class MapPreview extends StatefulWidget {
   final double height;

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
-import 'package:schedulemanager/models/reminder_model.dart';
-import 'package:schedulemanager/services/base_service.dart';
+import '../models/reminder_model.dart';
+import 'base_service.dart';
 
 class ReminderService extends BaseService with ChangeNotifier {
   static const String _collection = 'Reminder';

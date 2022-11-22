@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:schedulemanager/constants/constants.dart';
-import 'package:schedulemanager/models/initial_announcement_model.dart';
-import 'package:schedulemanager/services/initial_announcements_service.dart';
-import 'package:schedulemanager/utils/text_styles.dart';
-import 'package:schedulemanager/widgets/custom_button.dart';
-import 'package:schedulemanager/widgets/custom_circular_progress.dart';
+import '../../constants/constants.dart';
+import '../../models/initial_announcement_model.dart';
+import '../../services/initial_announcements_service.dart';
+import '../../utils/text_styles.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_circular_progress.dart';
 
 import 'widgets/widgets.dart';
 import '../../utils/responsive_util.dart';

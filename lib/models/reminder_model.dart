@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:schedulemanager/models/tag_model.dart';
-import 'package:schedulemanager/models/task_model.dart';
+import 'tag_model.dart';
+import 'task_model.dart';
 
 class ReminderModel {
   final String? id;

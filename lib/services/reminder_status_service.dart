@@ -1,4 +1,4 @@
-import 'package:schedulemanager/services/base_service.dart';
+import 'base_service.dart';
 
 class ReminderStatusService extends BaseService {
   static const _collection = 'ReminderStatus';

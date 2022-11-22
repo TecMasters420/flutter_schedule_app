@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:schedulemanager/models/initial_announcement_model.dart';
-import 'package:schedulemanager/services/base_service.dart';
+import '../models/initial_announcement_model.dart';
+import 'base_service.dart';
 
 class InitialAnnouncementsService extends BaseService with ChangeNotifier {
   static const _collection = 'InitialAnnouncements';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:schedulemanager/constants/constants.dart';
-import 'package:schedulemanager/screens/reminder_details_page/widgets/create_reminder_form.dart';
-import 'package:schedulemanager/services/base_service.dart';
-import 'package:schedulemanager/utils/responsive_util.dart';
-import 'package:schedulemanager/utils/text_styles.dart';
+import '../../../constants/constants.dart';
+import 'create_reminder_form.dart';
+import '../../../services/base_service.dart';
+import '../../../utils/responsive_util.dart';
+import '../../../utils/text_styles.dart';
 
 import '../../../models/reminder_model.dart';
 

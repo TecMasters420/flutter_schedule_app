@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:schedulemanager/models/user_model.dart';
-import 'package:schedulemanager/services/auth_service.dart';
-import 'package:schedulemanager/utils/responsive_util.dart';
-import 'package:schedulemanager/utils/text_styles.dart';
-import 'package:schedulemanager/widgets/custom_button.dart';
-import 'package:schedulemanager/widgets/custom_form_field.dart';
+import '../../models/user_model.dart';
+import '../../services/auth_service.dart';
+import '../../utils/responsive_util.dart';
+import '../../utils/text_styles.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_form_field.dart';
 
 import '../../constants/constants.dart';
 

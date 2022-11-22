@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:schedulemanager/services/auth_service.dart';
-import 'package:schedulemanager/services/reminder_service.dart';
-import 'package:schedulemanager/utils/responsive_util.dart';
+import '../../services/auth_service.dart';
+import '../../services/reminder_service.dart';
+import '../../utils/responsive_util.dart';
 
 import '../../constants/constants.dart';
 import '../../utils/text_styles.dart';
