@@ -41,7 +41,7 @@ class ReminderInformation extends StatelessWidget {
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
         ),
-        if (reminder.location != null) ...[
+        if (reminder.endLocation != null) ...[
           SizedBox(height: resp.hp(1)),
           Text(
             'Information:',
@@ -49,7 +49,7 @@ class ReminderInformation extends StatelessWidget {
           ),
           SizedBox(height: resp.hp(0.5)),
           Text(
-            'Location: ${reminder.location.toString()}',
+            'Location: ${reminder.endLocation.toString()}',
             style: TextStyles.w500(resp.sp14, grey),
           ),
           Text(
@@ -97,7 +97,7 @@ class ReminderInformation extends StatelessWidget {
                       style: TextStyles.w700(resp.sp14),
                     ),
                     Text(
-                      '${remainingTime.inDays} day/s, ${remainingTime.inHours} hours',
+                      '${remainingTime.inDays == 0 ? '' : '${remainingTime.inDays} day/s, '}${remainingTime.inHours} hours',
                       style: TextStyles.w500(resp.sp14, grey),
                     ),
                   ],

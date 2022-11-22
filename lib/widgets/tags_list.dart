@@ -34,7 +34,6 @@ class TagsList extends StatelessWidget {
             child: Chip(
               padding: EdgeInsets.zero,
               backgroundColor: lightGrey.withOpacity(0.2),
-              //     _coloredTypes.values.elementAt(index),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),

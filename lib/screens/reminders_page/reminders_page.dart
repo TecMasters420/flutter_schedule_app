@@ -1,15 +1,11 @@
 import 'dart:math';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:schedulemanager/models/reminder_model.dart';
-import 'package:schedulemanager/models/tag_model.dart';
-import 'package:schedulemanager/models/task_model.dart';
-import 'package:schedulemanager/screens/reminder_details_page/widgets/reminder_hour.dart';
-import 'package:schedulemanager/services/base_service.dart';
+import 'package:schedulemanager/screens/reminder_details_page/reminders_details_page.dart';
 import 'package:schedulemanager/services/reminder_service.dart';
 import 'package:schedulemanager/widgets/reminder_container.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
@@ -19,7 +15,7 @@ import 'package:schedulemanager/widgets/user_profile_picture.dart';
 
 import '../../constants/constants.dart';
 import '../../utils/text_styles.dart';
-import '../home_page/widgets/expandible_bottom_container.dart';
+import '../reminder_details_page/widgets/expandible_creation_or_edit_reminder.dart';
 import 'widgets/widgets.dart';
 
 class RemindersPage extends StatefulWidget {
@@ -88,32 +84,6 @@ class _RemindersPageState extends State<RemindersPage> {
     });
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final DateTime now = DateTime.now();
-          final ReminderModel reminder = ReminderModel(
-            creationDate: Timestamp.fromDate(now),
-            description: 'Generic desc',
-            startDate: Timestamp.fromDate(DateTime.now()),
-            endDate:
-                Timestamp.fromDate(DateTime(now.year, now.month, now.day + 2)),
-            location: const GeoPoint(30, 30),
-            title: 'Generic title',
-            uid: FirebaseAuth.instance.currentUser!.uid,
-            expectedTemp: 32,
-            tasks: [
-              TaskModel(
-                name: 'Start Project',
-                isCompleted: true,
-              ),
-            ],
-            tags: [
-              TagModel(name: 'StandUp'),
-            ],
-          );
-          await ReminderService().create(reminder.toMap());
-        },
-      ),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -220,15 +190,26 @@ class _RemindersPageState extends State<RemindersPage> {
                 right: 32,
                 bottom: 20,
               ),
-              child: ExpandibleBottomContainer(
+              child: ExpandibleCreationOrEditReminder(
+                icon: Icons.add,
                 initialHeight: resp.hp(6),
-                finalHeight: resp.hp(75),
+                finalHeight: resp.hp(50),
                 initialWidth: resp.wp(13),
                 finalWidth: resp.width,
                 iconSize: resp.dp(3),
+                onAcceptCallback: (reminder) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ReminderDetailsPage(
+                        reminder: reminder,
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
-          )
+          ),
         ],
       ),
     );

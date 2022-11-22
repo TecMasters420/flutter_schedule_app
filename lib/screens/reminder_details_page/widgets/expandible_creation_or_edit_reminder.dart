@@ -1,33 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:schedulemanager/constants/constants.dart';
-import 'package:schedulemanager/screens/reminders_page/widgets/create_reminder_form.dart';
+import 'package:schedulemanager/screens/reminder_details_page/widgets/create_reminder_form.dart';
+import 'package:schedulemanager/services/base_service.dart';
 import 'package:schedulemanager/utils/responsive_util.dart';
 import 'package:schedulemanager/utils/text_styles.dart';
 
-class ExpandibleBottomContainer extends StatefulWidget {
+import '../../../models/reminder_model.dart';
+
+class ExpandibleCreationOrEditReminder extends StatefulWidget {
+  final void Function(ReminderModel reminder) onAcceptCallback;
+  final IconData icon;
   final double finalHeight;
   final double finalWidth;
   final double initialHeight;
   final double initialWidth;
   final double iconSize;
-  const ExpandibleBottomContainer({
+  final ReminderModel? reminder;
+
+  const ExpandibleCreationOrEditReminder({
     super.key,
     required this.finalHeight,
     required this.finalWidth,
     required this.initialHeight,
     required this.initialWidth,
     required this.iconSize,
+    required this.onAcceptCallback,
+    required this.icon,
+    this.reminder,
   });
 
   @override
-  State<ExpandibleBottomContainer> createState() =>
-      _ExpandibleBottomContainerState();
+  State<ExpandibleCreationOrEditReminder> createState() =>
+      _ExpandibleCreationOrEditReminderState();
 }
 
-class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer>
+class _ExpandibleCreationOrEditReminderState
+    extends State<ExpandibleCreationOrEditReminder>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;
+  late final ReminderModel _reminder;
 
   @override
   void initState() {
@@ -37,6 +49,23 @@ class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer>
         vsync: this, duration: const Duration(milliseconds: 180));
     _animation = Tween<double>(begin: 0, end: 1).animate(_controller)
       ..addListener(_animListener);
+
+    _reminder = widget.reminder ??
+        ReminderModel(
+          creationDate: Timestamp.now(),
+          description: '',
+          address: '',
+          endDate: Timestamp.now(),
+          endLocation: null,
+          expectedTemp: null,
+          startDate: Timestamp.now(),
+          startLocation: null,
+          tags: [],
+          tasks: [],
+          title: '',
+          id: null,
+          uid: '',
+        );
   }
 
   void _animListener() {
@@ -87,7 +116,7 @@ class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer>
                   child: Transform.scale(
                     scale: iconValue,
                     child: Icon(
-                      Icons.add,
+                      widget.icon,
                       size: widget.iconSize,
                       color: black.withOpacity(iconValue),
                     ),
@@ -122,7 +151,13 @@ class _ExpandibleBottomContainerState extends State<ExpandibleBottomContainer>
                               ),
                             ],
                           ),
-                          const CreateReminderForm()
+                          CreateReminderForm(
+                            reminder: _reminder,
+                            onAcceptCallback: (reminder) {
+                              _controller.reverse();
+                              widget.onAcceptCallback(reminder);
+                            },
+                          )
                         ],
                       ),
                     ),

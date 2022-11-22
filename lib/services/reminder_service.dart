@@ -15,8 +15,15 @@ class ReminderService extends BaseService with ChangeNotifier {
   List<ReminderModel> get expiredReminders => _expiredReminders;
   List<ReminderModel> get notExpiredReminders => _notExpiredReminders;
 
+  bool isValidToUpload(final ReminderModel reminder) {
+    return reminder.title.isNotEmpty && reminder.description.isNotEmpty;
+  }
+
   @override
   Future<void> create(Map<String, dynamic> data) async {
+    debugPrint('Adding $data ');
+    final String uid = FirebaseAuth.instance.currentUser!.uid;
+    data['uid'] = uid;
     await db
         .add(data)
         .then((value) async => getData())
@@ -28,6 +35,7 @@ class ReminderService extends BaseService with ChangeNotifier {
 
   @override
   Future<void> update(Map<String, dynamic> data, [final String id = '']) async {
+    debugPrint('Updating $data ');
     if (id.isNotEmpty) {
       await db.doc(id).update(data);
       await getData();

@@ -10,6 +10,8 @@ class CustomFormField extends StatelessWidget {
   final String hintText;
   final IconData icon;
   final bool obscure;
+  final TextEditingController? controller;
+
   const CustomFormField({
     super.key,
     required this.labelText,
@@ -17,19 +19,20 @@ class CustomFormField extends StatelessWidget {
     required this.icon,
     required this.onChanged,
     this.obscure = false,
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     return TextFormField(
+      controller: controller,
       obscureText: obscure,
       onChanged: onChanged,
       decoration: InputDecoration(
-        labelText: labelText,
         hintText: hintText,
-        hintStyle: TextStyles.w400(resp.sp16, grey),
-        labelStyle: TextStyles.w400(resp.sp16, grey),
+        hintStyle: TextStyles.w400(resp.sp14, grey),
+        labelStyle: TextStyles.w400(resp.sp14, grey),
         floatingLabelStyle: TextStyles.w400(resp.sp16, accent),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
