@@ -14,9 +14,11 @@ class ReminderModel {
   Timestamp startDate;
 
   int? expectedTemp;
+
   GeoPoint? startLocation;
   GeoPoint? endLocation;
-  String? address;
+  String? endLocationAddress;
+  String? startLocationAddress;
 
   ReminderModel({
     required this.creationDate,
@@ -30,7 +32,8 @@ class ReminderModel {
     required this.expectedTemp,
     required this.tasks,
     required this.tags,
-    required this.address,
+    required this.endLocationAddress,
+    required this.startLocationAddress,
     this.id,
   });
 
@@ -43,12 +46,13 @@ class ReminderModel {
       'description': description,
       'startDate': startDate,
       'endDate': endDate,
-      'location': endLocation,
       'title': title,
       'uid': uid,
-      'startLocation': startLocation,
       'expectedTemp': expectedTemp,
-      'address': address,
+      'startLocation': startLocation,
+      'endLocation': endLocation,
+      'endLocationAddress': endLocationAddress,
+      'startLocationAddress': startLocationAddress,
       'tasks': tasks.map((x) => x.toMap()).toList(),
       'tags': tags.map((x) => x.toMap()).toList(),
     };
@@ -65,12 +69,13 @@ class ReminderModel {
       creationDate: map['creationDate'],
       description: map['description'],
       startDate: map['startDate'],
-      startLocation: map['startLocation'],
       endDate: map['endDate'],
-      endLocation: map['location'],
       title: map['title'],
       uid: map['uid'],
-      address: map['address'],
+      endLocation: map['endLocation'],
+      startLocation: map['startLocation'],
+      endLocationAddress: map['endLocationAddress'],
+      startLocationAddress: map['startLocationAddress'],
       expectedTemp: map['expectedTemp'],
       tasks: tasks.map((e) => TaskModel.fromMap(e)).toList(),
       tags: tags.map((e) => TagModel.fromMap(e)).toList(),

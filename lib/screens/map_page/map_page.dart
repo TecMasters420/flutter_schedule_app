@@ -1,10 +1,11 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:location/location.dart';
-import '../../constants/constants.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:location/location.dart';
+
+import '../../constants/constants.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});

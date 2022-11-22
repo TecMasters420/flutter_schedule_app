@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import '../../constants/constants.dart';
 import '../../models/reminder_model.dart';
@@ -42,26 +40,9 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
   @override
   void initState() {
     super.initState();
+    address = null;
     tag = TagModel(name: '');
     task = TaskModel(name: '', isCompleted: false);
-    address = null;
-    getAddress();
-  }
-
-  void getAddress() async {
-    try {
-      final coordinates = LatLng(32.5203356, -116.8689805);
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-        coordinates.latitude,
-        coordinates.longitude,
-      );
-      setState(() {
-        address =
-            '${placemarks[0].street}, ${placemarks[0].locality}, ${placemarks[0].administrativeArea}.';
-      });
-    } catch (e) {
-      debugPrint(e.toString());
-    }
   }
 
   String getDateFormatted(DateTime date) =>
@@ -91,13 +72,17 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
           Navigator.pop(context);
         },
       ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 50, right: 35, left: 35, bottom: 80),
+      body: Padding(
+        padding: const EdgeInsets.only(
+          left: 32,
+          right: 32,
+          top: 50,
+          bottom: 20,
+        ),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -411,34 +396,25 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                       width: resp.wp(70),
                     ),
                   ),
+                  SizedBox(height: resp.hp(5)),
                 ],
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 32,
-                right: 32,
-                bottom: 15,
-              ),
-              child: ExpandibleCreationOrEditReminder(
-                icon: Icons.edit,
-                initialHeight: resp.hp(6),
-                finalHeight: resp.hp(50),
-                initialWidth: resp.wp(13),
-                finalWidth: resp.width,
-                iconSize: resp.dp(3),
-                reminder: widget.reminder,
-                onAcceptCallback: (reminder) {
-                  widget.reminder!.title = reminder.title;
-                  widget.reminder!.description = reminder.description;
-                },
-              ),
+            ExpandibleCreationOrEditReminder(
+              icon: Icons.edit,
+              initialHeight: resp.hp(6),
+              finalHeight: resp.hp(50),
+              initialWidth: resp.wp(13),
+              finalWidth: resp.width,
+              iconSize: resp.dp(3),
+              reminder: widget.reminder,
+              onAcceptCallback: (reminder) {
+                widget.reminder!.title = reminder.title;
+                widget.reminder!.description = reminder.description;
+              },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

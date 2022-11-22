@@ -16,6 +16,7 @@ class ExpandibleCreationOrEditReminder extends StatefulWidget {
   final double initialWidth;
   final double iconSize;
   final ReminderModel? reminder;
+  final Alignment align;
 
   const ExpandibleCreationOrEditReminder({
     super.key,
@@ -27,6 +28,7 @@ class ExpandibleCreationOrEditReminder extends StatefulWidget {
     required this.onAcceptCallback,
     required this.icon,
     this.reminder,
+    this.align = Alignment.bottomCenter,
   });
 
   @override
@@ -54,7 +56,8 @@ class _ExpandibleCreationOrEditReminderState
         ReminderModel(
           creationDate: Timestamp.now(),
           description: '',
-          address: '',
+          endLocationAddress: null,
+          startLocationAddress: null,
           endDate: Timestamp.now(),
           endLocation: null,
           expectedTemp: null,
@@ -83,87 +86,90 @@ class _ExpandibleCreationOrEditReminderState
         .clamp(widget.initialHeight, widget.finalHeight);
 
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    return GestureDetector(
-      onTap: () => _controller.forward(),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        height: containerHeight,
-        width: containerWidth,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.15),
-              blurRadius: 40,
-              offset: const Offset(0, 20),
-            )
-          ],
-        ),
-        child: Padding(
-          padding: animValue > 0
-              ? const EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 20,
-                )
-              : EdgeInsets.zero,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (iconValue != 0)
-                Flexible(
-                  child: Transform.scale(
-                    scale: iconValue,
-                    child: Icon(
-                      widget.icon,
-                      size: widget.iconSize,
-                      color: black.withOpacity(iconValue),
-                    ),
-                  ),
-                ),
-              if (bodyValue != 0)
-                Expanded(
-                  child: Opacity(
-                    opacity: bodyValue,
-                    child: SingleChildScrollView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                flex: 5,
-                                child: Text(
-                                  'Create a new reminder',
-                                  style: TextStyles.w700(resp.sp16),
-                                ),
-                              ),
-                              Flexible(
-                                child: IconButton(
-                                  icon: const Icon(
-                                      Icons.transit_enterexit_rounded),
-                                  color: lightGrey,
-                                  onPressed: () {
-                                    _controller.reverse();
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          CreateReminderForm(
-                            reminder: _reminder,
-                            onAcceptCallback: (reminder) {
-                              _controller.reverse();
-                              widget.onAcceptCallback(reminder);
-                            },
-                          )
-                        ],
+    return Align(
+      alignment: widget.align,
+      child: GestureDetector(
+        onTap: () => _controller.forward(),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          height: containerHeight,
+          width: containerWidth,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.15),
+                blurRadius: 40,
+                offset: const Offset(0, 20),
+              )
+            ],
+          ),
+          child: Padding(
+            padding: animValue > 0
+                ? const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 20,
+                  )
+                : EdgeInsets.zero,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (iconValue != 0)
+                  Flexible(
+                    child: Transform.scale(
+                      scale: iconValue,
+                      child: Icon(
+                        widget.icon,
+                        size: widget.iconSize,
+                        color: black.withOpacity(iconValue),
                       ),
                     ),
                   ),
-                ),
-            ],
+                if (bodyValue != 0)
+                  Expanded(
+                    child: Opacity(
+                      opacity: bodyValue,
+                      child: SingleChildScrollView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 5,
+                                  child: Text(
+                                    'Create a new reminder',
+                                    style: TextStyles.w700(resp.sp16),
+                                  ),
+                                ),
+                                Flexible(
+                                  child: IconButton(
+                                    icon: const Icon(
+                                        Icons.transit_enterexit_rounded),
+                                    color: lightGrey,
+                                    onPressed: () {
+                                      _controller.reverse();
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            CreateReminderForm(
+                              reminder: _reminder,
+                              onAcceptCallback: (reminder) {
+                                _controller.reverse();
+                                widget.onAcceptCallback(reminder);
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),

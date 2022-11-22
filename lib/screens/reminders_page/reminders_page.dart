@@ -1,16 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../models/reminder_model.dart';
 import '../reminder_details_page/reminders_details_page.dart';
 import '../../services/reminder_service.dart';
-import '../../widgets/reminder_container.dart';
 import '../../utils/responsive_util.dart';
 import '../../widgets/custom_back_button.dart';
-import '../../widgets/reminder_information.dart';
 import '../../widgets/user_profile_picture.dart';
 
 import '../../constants/constants.dart';
@@ -26,9 +21,6 @@ class RemindersPage extends StatefulWidget {
 }
 
 class _RemindersPageState extends State<RemindersPage> {
-  late bool _containersHeightIsGen;
-  late List<GlobalKey> _keys;
-  late List<Size?> _sizes;
   late List<ReminderModel> _remindersToShow;
   late DateTime _selectedDate;
   late int _monthDays;
@@ -36,9 +28,6 @@ class _RemindersPageState extends State<RemindersPage> {
   @override
   void initState() {
     super.initState();
-    _sizes = [];
-    _keys = [];
-    _containersHeightIsGen = false;
     _remindersToShow = [];
     _selectedDate = DateTime.now();
     _monthDays = _getDays(DateTime.now());
@@ -49,13 +38,6 @@ class _RemindersPageState extends State<RemindersPage> {
     final service = Provider.of<ReminderService>(context, listen: false);
     await service.getData();
     _remindersToShow = service.getRemindersPerDate(_selectedDate);
-    _clearKeyAndSize(_remindersToShow.length);
-  }
-
-  void _clearKeyAndSize(final int quantity) {
-    _containersHeightIsGen = false;
-    _sizes = List.generate(quantity, (index) => null);
-    _keys = List.generate(quantity, (index) => GlobalKey());
   }
 
   int _getDays(final DateTime date) {
@@ -65,38 +47,30 @@ class _RemindersPageState extends State<RemindersPage> {
     return days;
   }
 
+  String _getFormattedDate(final DateTime date) {
+    return DateFormat(DateFormat.YEAR_MONTH_DAY, 'en_US').format(
+      date.toUtc(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     final ReminderService service = Provider.of<ReminderService>(context);
 
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (_containersHeightIsGen) return;
-      for (int x = 0; x < _keys.length; x++) {
-        final RenderObject? renderBoxRed =
-            _keys[x].currentContext?.findRenderObject();
-        final sizeRed = renderBoxRed!.paintBounds;
-        _sizes[x] = sizeRed.size;
-      }
-      setState(() {
-        _containersHeightIsGen = true;
-      });
-    });
-
     return Scaffold(
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 32,
-                right: 32,
-                top: 50,
-                bottom: 100,
-              ),
+      body: Padding(
+        padding: const EdgeInsets.only(
+          left: 32,
+          right: 32,
+          top: 50,
+          bottom: 20,
+        ),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
@@ -107,31 +81,25 @@ class _RemindersPageState extends State<RemindersPage> {
                     ],
                   ),
                   SizedBox(height: resp.hp(2.5)),
-                  Text('Today', style: TextStyles.w400(resp.sp16, lightGrey)),
+                  Text('Today is',
+                      style: TextStyles.w400(resp.sp16, lightGrey)),
                   SizedBox(height: resp.hp(0.5)),
                   Text(
-                    DateFormat(DateFormat.YEAR_MONTH_DAY, 'en_US').format(
-                      DateTime.now().toUtc(),
-                    ),
-                    style: TextStyles.w700(resp.sp20, black),
-                  ),
-                  SizedBox(height: resp.hp(5)),
-                  Text(
-                    'Today Schedule',
+                    _getFormattedDate(DateTime.now()),
                     style: TextStyles.w700(resp.sp20, black),
                   ),
                   ScrolleableDaysList(
+                    label:
+                        '${_getFormattedDate(_selectedDate).split(',')[0]} Schedules',
                     initialDay: _selectedDate.day - 1,
                     days: _monthDays,
                     onSelectedNewDay: (newDay) {
-                      if (newDay == _selectedDate.day) return;
                       final DateTime current = _selectedDate;
                       setState(() {
                         _selectedDate = DateTime(
                             current.year, DateTime.now().month, newDay);
                         _remindersToShow =
                             service.getRemindersPerDate(_selectedDate);
-                        _clearKeyAndSize(_remindersToShow.length);
                       });
                     },
                   ),
@@ -141,76 +109,39 @@ class _RemindersPageState extends State<RemindersPage> {
                     style: TextStyles.w700(resp.sp20, black),
                   ),
                   SizedBox(height: resp.hp(3)),
-                  if (_remindersToShow.isNotEmpty) ...[
-                    ...List.generate(
-                      _remindersToShow.length,
-                      (x) {
-                        final Color containerColor =
-                            colors[Random().nextInt(colors.length - 1)];
-                        return ReminderContainer(
-                          containerKey: _keys[x],
-                          index: x,
-                          leftWidget: ReminderHour(
-                            hours: const ['09:00', '09:30'],
-                            fontSize: resp.sp14,
-                          ),
-                          middleWidget: AnimatedContainer(
-                            curve: Curves.easeIn,
-                            duration: const Duration(milliseconds: 300),
-                            height: _sizes[x] == null ? 0 : _sizes[x]!.height,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: containerColor,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          rightWidget: ReminderInformation(
-                            reminder: _remindersToShow[x],
-                          ),
-                        );
-                      },
-                    ),
-                  ] else
+                  if (_remindersToShow.isNotEmpty)
+                    RemindersListPerDay(reminders: _remindersToShow)
+                  else
                     Center(
                       child: Text(
                         'No reminders',
                         style: TextStyles.w500(resp.sp20, lightGrey),
                       ),
                     ),
-                  SizedBox(height: resp.hp(1)),
+                  SizedBox(height: resp.hp(5)),
                 ],
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 32,
-                right: 32,
-                bottom: 20,
-              ),
-              child: ExpandibleCreationOrEditReminder(
-                icon: Icons.add,
-                initialHeight: resp.hp(6),
-                finalHeight: resp.hp(50),
-                initialWidth: resp.wp(13),
-                finalWidth: resp.width,
-                iconSize: resp.dp(3),
-                onAcceptCallback: (reminder) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ReminderDetailsPage(
-                        reminder: reminder,
-                      ),
+            ExpandibleCreationOrEditReminder(
+              icon: Icons.add,
+              initialHeight: resp.hp(6),
+              finalHeight: resp.hp(50),
+              initialWidth: resp.wp(13),
+              finalWidth: resp.width,
+              iconSize: resp.dp(3),
+              onAcceptCallback: (reminder) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReminderDetailsPage(
+                      reminder: reminder,
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

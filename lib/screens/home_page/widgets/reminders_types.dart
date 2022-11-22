@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'reminders_list.dart';
 import '../../../models/reminder_model.dart';
 import '../../../utils/responsive_util.dart';
 import '../../../utils/text_styles.dart';
@@ -7,13 +8,11 @@ import '../../../constants/constants.dart';
 
 class ActivitiesTypes extends StatefulWidget {
   final Map<String, List<ReminderModel>> remindersPerType;
-  final Widget Function(List<ReminderModel>) showDataChild;
   final int initialTabIndex;
   const ActivitiesTypes({
     super.key,
     required this.remindersPerType,
     required this.initialTabIndex,
-    required this.showDataChild,
   });
 
   @override
@@ -75,8 +74,12 @@ class _ActivitiesTypesState extends State<ActivitiesTypes> {
             ),
           ],
         ),
-        widget.showDataChild(
-            widget.remindersPerType.values.elementAt(_currentIndex))
+        RemindersListPerType(
+          data: widget.remindersPerType.values.elementAt(_currentIndex),
+          maxRemindersToShow: 1,
+        ),
+        // widget.showDataChild(
+        //     widget.remindersPerType.values.elementAt(_currentIndex))
       ],
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../utils/responsive_util.dart';
 
 import '../constants/constants.dart';
+import '../utils/responsive_util.dart';
 import '../utils/text_styles.dart';
 
 class ReminderInformationWidget extends StatelessWidget {

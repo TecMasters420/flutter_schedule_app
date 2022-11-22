@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../utils/responsive_util.dart';
 
 class DotIndicator extends StatelessWidget {
