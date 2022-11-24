@@ -4,6 +4,7 @@ import 'task_model.dart';
 
 class ReminderModel {
   final String? id;
+
   Timestamp creationDate;
   String description;
   String title;
@@ -14,7 +15,6 @@ class ReminderModel {
   Timestamp startDate;
 
   int? expectedTemp;
-
   GeoPoint? startLocation;
   GeoPoint? endLocation;
   String? endLocationAddress;
@@ -25,15 +25,15 @@ class ReminderModel {
     required this.description,
     required this.startDate,
     required this.endDate,
-    required this.endLocation,
-    required this.startLocation,
     required this.title,
     required this.uid,
-    required this.expectedTemp,
     required this.tasks,
     required this.tags,
-    required this.endLocationAddress,
-    required this.startLocationAddress,
+    this.endLocation,
+    this.startLocation,
+    this.expectedTemp,
+    this.endLocationAddress,
+    this.startLocationAddress,
     this.id,
   });
 
@@ -79,6 +79,19 @@ class ReminderModel {
       expectedTemp: map['expectedTemp'],
       tasks: tasks.map((e) => TaskModel.fromMap(e)).toList(),
       tags: tags.map((e) => TagModel.fromMap(e)).toList(),
+    );
+  }
+
+  factory ReminderModel.empty() {
+    return ReminderModel(
+      creationDate: Timestamp.now(),
+      description: '',
+      startDate: Timestamp.now(),
+      endDate: Timestamp.now(),
+      title: '',
+      uid: '',
+      tasks: [],
+      tags: [],
     );
   }
 

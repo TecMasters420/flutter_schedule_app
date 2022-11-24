@@ -11,6 +11,7 @@ class CustomFormField extends StatelessWidget {
   final IconData icon;
   final bool obscure;
   final TextEditingController? controller;
+  final int? maxLines;
 
   const CustomFormField({
     super.key,
@@ -20,6 +21,7 @@ class CustomFormField extends StatelessWidget {
     required this.onChanged,
     this.obscure = false,
     this.controller,
+    this.maxLines,
   });
 
   @override
@@ -27,6 +29,7 @@ class CustomFormField extends StatelessWidget {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     return TextFormField(
       controller: controller,
+      maxLines: maxLines ?? 1,
       obscureText: obscure,
       onChanged: onChanged,
       decoration: InputDecoration(

@@ -1,5 +1,5 @@
 name: schedulemanager
-description: A new Flutter project.
+description: Schedule App.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -50,6 +50,8 @@ dependencies:
   google_maps_flutter: ^2.2.1
   geocoding: ^2.0.5
   flutter_polyline_points: ^1.0.0
+  firebase_messaging: ^14.1.1
+  flutter_local_notifications: ^12.0.4
   
 
 dev_dependencies:

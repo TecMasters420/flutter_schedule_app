@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:schedulemanager/widgets/user_profile_picture.dart';
 import '../../utils/responsive_util.dart';
 import '../../widgets/custom_button.dart';
 
@@ -42,10 +43,11 @@ class UserProfilePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: resp.hp(3)),
-              Image.asset(
-                'assets/images/user.png',
-                height: resp.hp(20),
-                width: resp.width,
+              Center(
+                child: UserProfilePicture(
+                    height: resp.hp(20),
+                    width: resp.wp(42.5),
+                    userImage: auth.userInformation!.imageURL ?? ''),
               ),
               SizedBox(height: resp.hp(3)),
               Text(

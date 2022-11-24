@@ -55,6 +55,12 @@ class _MapPreviewState extends State<MapPreview> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     SchedulerBinding.instance.addPostFrameCallback(
       (_) async {
@@ -115,9 +121,10 @@ class _MapPreviewState extends State<MapPreview> {
               PolylineLayer(
                 polylines: [
                   Polyline(
-                    strokeWidth: 0.15,
-                    borderColor: tempAccent.withOpacity(0.35),
-                    borderStrokeWidth: 2.5,
+                    color: accent.withOpacity(0.8),
+                    borderColor: accent.withOpacity(0.8),
+                    borderStrokeWidth: 5,
+                    strokeCap: StrokeCap.round,
                     points: _points,
                   ),
                 ],
@@ -128,11 +135,7 @@ class _MapPreviewState extends State<MapPreview> {
                       (e) => Marker(
                         point: LatLng(e.latitude, e.longitude),
                         builder: (context) {
-                          return AnimatedMarker(
-                            color: e == widget.initialPoint
-                                ? Colors.green[300]!
-                                : tempAccent,
-                          );
+                          return const AnimatedMarker();
                         },
                       ),
                     )

@@ -52,23 +52,7 @@ class _ExpandibleCreationOrEditReminderState
     _animation = Tween<double>(begin: 0, end: 1).animate(_controller)
       ..addListener(_animListener);
 
-    _reminder = widget.reminder ??
-        ReminderModel(
-          creationDate: Timestamp.now(),
-          description: '',
-          endLocationAddress: null,
-          startLocationAddress: null,
-          endDate: Timestamp.now(),
-          endLocation: null,
-          expectedTemp: null,
-          startDate: Timestamp.now(),
-          startLocation: null,
-          tags: [],
-          tasks: [],
-          title: '',
-          id: null,
-          uid: '',
-        );
+    _reminder = widget.reminder ?? ReminderModel.empty();
   }
 
   void _animListener() {
@@ -140,7 +124,7 @@ class _ExpandibleCreationOrEditReminderState
                                 Expanded(
                                   flex: 5,
                                   child: Text(
-                                    'Create a new reminder',
+                                    'Modify reminder',
                                     style: TextStyles.w700(resp.sp16),
                                   ),
                                 ),

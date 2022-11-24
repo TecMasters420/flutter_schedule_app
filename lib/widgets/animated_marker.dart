@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:schedulemanager/constants/constants.dart';
 
 class AnimatedMarker extends StatefulWidget {
-  final Color color;
   const AnimatedMarker({
     super.key,
-    required this.color,
   });
 
   @override
@@ -49,15 +47,15 @@ class _AnimatedMarkerState extends State<AnimatedMarker>
           width: 25 * value,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: widget.color.withOpacity(0.5),
+            color: tempAccent.withOpacity(0.5),
             shape: BoxShape.circle,
           ),
         ),
         Container(
           height: 15,
           width: 15,
-          decoration: BoxDecoration(
-            color: widget.color,
+          decoration: const BoxDecoration(
+            color: tempAccent,
             shape: BoxShape.circle,
           ),
         ),

@@ -1,5 +1,11 @@
+apply plugin: 'com.google.gms.google-services'
+
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
+
+
+
 if (localPropertiesFile.exists()) {
     localPropertiesFile.withReader('UTF-8') { reader ->
         localProperties.load(reader)
@@ -69,4 +75,7 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
+    implementation 'com.google.firebase:firebase-analytics'
 }
+

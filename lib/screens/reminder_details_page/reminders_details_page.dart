@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:schedulemanager/screens/reminders_page/reminders_page.dart';
 import '../../constants/constants.dart';
 import '../../models/reminder_model.dart';
 import '../../models/tag_model.dart';
@@ -59,6 +58,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
     final bool isSameDay = startDate.difference(endDate).inDays == 0;
     final double progress =
         widget.reminder!.progress.isNaN ? 0 : widget.reminder!.progress;
+    final Duration timeRemaining = widget.reminder!.timeLeft(DateTime.now());
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -68,26 +68,14 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
           final idIsEmpty =
               widget.reminder!.id == null || widget.reminder!.id!.isEmpty;
           await (idIsEmpty
-              ? service.create(widget.reminder!.toMap()).then((value) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RemindersPage(),
-                    ),
-                  );
-                })
-              : service
-                  .update(widget.reminder!.toMap(), widget.reminder!.id ?? '')
-                  .then(
-                  (value) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RemindersPage(),
-                      ),
-                    );
-                  },
-                ));
+                  ? service.create(widget.reminder!.toMap())
+                  : service.update(
+                      widget.reminder!.toMap(), widget.reminder!.id ?? ''))
+              .whenComplete(
+            () {
+              Navigator.pop(context);
+            },
+          );
         },
       ),
       body: Padding(
@@ -209,7 +197,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                     icon: Icons.timer,
                     title: 'Time remaining:',
                     value:
-                        '${widget.reminder!.timeLeft(DateTime.now()).inDays == 0 ? '' : '${widget.reminder!.timeLeft(DateTime.now()).inDays} day/s, '}${widget.reminder!.timeLeft(DateTime.now()).inHours} hours',
+                        '${timeRemaining.isNegative ? 'Expired' : ''} ${timeRemaining.inDays == 0 ? '' : '${timeRemaining.inDays.abs()} day/s, '}${timeRemaining.inHours.abs()} hour/s ${timeRemaining.isNegative ? 'ago' : ''}',
                   ),
                   if (widget.reminder!.expectedTemp != null)
                     ReminderInformationWidget(

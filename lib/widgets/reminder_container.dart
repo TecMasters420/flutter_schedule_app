@@ -50,8 +50,8 @@ class ReminderContainer extends StatelessWidget {
                         Expanded(
                           flex: 1,
                           child: AnimatedContainer(
-                            curve: Curves.easeIn,
-                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.ease,
+                            duration: const Duration(milliseconds: 350),
                             height: height.value,
                             width: double.infinity,
                             decoration: BoxDecoration(

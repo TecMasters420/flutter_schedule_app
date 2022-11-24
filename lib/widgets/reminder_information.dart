@@ -130,7 +130,7 @@ class ReminderInformation extends StatelessWidget {
               height: resp.hp(4),
               width: resp.wp(15),
               style: TextStyles.w600(resp.sp14, Colors.white),
-              onTap: () => Navigator.pushReplacement(
+              onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (BuildContext context) =>
