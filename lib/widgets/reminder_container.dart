@@ -22,7 +22,7 @@ class ReminderContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
 
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       if (!isGenerated) {
         isGenerated = true;
         final RenderObject? renderBoxRed =
@@ -41,15 +41,15 @@ class ReminderContainer extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: [
-                ValueListenableBuilder(
-                  valueListenable: height,
-                  builder: (context, value, child) {
-                    return Row(
-                      children: [
-                        Expanded(flex: 8, child: leftWidget),
-                        Expanded(
-                          flex: 1,
-                          child: AnimatedContainer(
+                Row(
+                  children: [
+                    Expanded(flex: 8, child: leftWidget),
+                    Expanded(
+                      flex: 1,
+                      child: ValueListenableBuilder(
+                        valueListenable: height,
+                        builder: (context, value, child) {
+                          return AnimatedContainer(
                             curve: Curves.ease,
                             duration: const Duration(milliseconds: 350),
                             height: height.value,
@@ -58,14 +58,14 @@ class ReminderContainer extends StatelessWidget {
                               color: color,
                               borderRadius: BorderRadius.circular(20),
                             ),
-                          ),
-                        ),
-                        SizedBox(width: resp.wp(2)),
-                        Expanded(flex: 30, child: rightWidget),
-                        SizedBox(width: resp.wp(1)),
-                      ],
-                    );
-                  },
+                          );
+                        },
+                      ),
+                    ),
+                    SizedBox(width: resp.wp(2)),
+                    Expanded(flex: 30, child: rightWidget),
+                    SizedBox(width: resp.wp(1)),
+                  ],
                 ),
               ],
             ),

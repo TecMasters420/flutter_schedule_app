@@ -11,6 +11,7 @@ class CustomAlertDialog {
     required final BuildContext context,
     required final VoidCallback onAcceptCallback,
     required final String title,
+    final bool showButtons = true,
     final Widget? customBody,
   }) {
     final AlertDialog alert = AlertDialog(
@@ -30,25 +31,27 @@ class CustomAlertDialog {
             textAlign: TextAlign.center,
           ),
       actions: [
-        CustomButton(
-          text: 'No',
-          color: lightGrey.withOpacity(0.25),
-          height: resp.hp(5),
-          width: resp.wp(25),
-          onTap: () => Navigator.pop(context),
-          style: TextStyles.w500(resp.sp16),
-        ),
-        CustomButton(
-          text: 'Yes',
-          color: accent,
-          height: resp.hp(5),
-          width: resp.wp(25),
-          onTap: () {
-            Navigator.pop(context);
-            onAcceptCallback();
-          },
-          style: TextStyles.w500(resp.sp16, Colors.white),
-        ),
+        if (showButtons) ...[
+          CustomButton(
+            text: 'No',
+            color: lightGrey.withOpacity(0.25),
+            height: resp.hp(5),
+            width: resp.wp(25),
+            onTap: () => Navigator.pop(context),
+            style: TextStyles.w500(resp.sp16),
+          ),
+          CustomButton(
+            text: 'Yes',
+            color: accent,
+            height: resp.hp(5),
+            width: resp.wp(25),
+            onTap: () {
+              Navigator.pop(context);
+              onAcceptCallback();
+            },
+            style: TextStyles.w500(resp.sp16, Colors.white),
+          ),
+        ]
       ],
     );
 

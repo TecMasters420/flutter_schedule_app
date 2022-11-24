@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:schedulemanager/api/map_api.dart';
 import 'package:schedulemanager/services/flutter_notification.dart';
 
 import 'firebase_options.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthService>(create: (context) => AuthService()),
+        ChangeNotifierProvider<MapApi>(create: (context) => MapApi()),
         ChangeNotifierProvider<ReminderService>(
             create: (context) => ReminderService()),
         ChangeNotifierProvider<InitialAnnouncementsService>(

@@ -38,16 +38,16 @@ class CustomFormField extends StatelessWidget {
         labelStyle: TextStyles.w400(resp.sp14, grey),
         floatingLabelStyle: TextStyles.w400(resp.sp16, accent),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: accent,
             width: 2,
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
-            color: Colors.transparent,
+            color: lightGrey,
             width: 0,
           ),
         ),

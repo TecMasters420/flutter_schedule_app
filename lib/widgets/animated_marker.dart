@@ -19,11 +19,11 @@ class _AnimatedMarkerState extends State<AnimatedMarker>
   void initState() {
     super.initState();
     _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 850))
+        vsync: this, duration: const Duration(milliseconds: 500))
       ..forward()
       ..repeat(reverse: true)
       ..addListener(_animationListener);
-    _animation = Tween<double>(begin: 1, end: 0.5).animate(_controller);
+    _animation = Tween<double>(begin: 1, end: 0.25).animate(_controller);
   }
 
   void _animationListener() {
@@ -43,8 +43,7 @@ class _AnimatedMarkerState extends State<AnimatedMarker>
       alignment: Alignment.center,
       children: [
         Container(
-          height: 25 * value,
-          width: 25 * value,
+          width: 35 * value,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: tempAccent.withOpacity(0.5),
@@ -52,7 +51,6 @@ class _AnimatedMarkerState extends State<AnimatedMarker>
           ),
         ),
         Container(
-          height: 15,
           width: 15,
           decoration: const BoxDecoration(
             color: tempAccent,

@@ -68,8 +68,6 @@ class _RemindersPageState extends State<RemindersPage> {
     }
 
     final int remindersInCurrentMonth = remindersInMonth.length;
-    debugPrint(
-        '${remindersInMonth.keys} ${_selectedDate.day} ${_selectedDate.month} ${remindersInMonth.keys} ${remindersInMonth[23]!.first.title}');
     final List<ReminderModel> remindersInSelectedDay =
         remindersInCurrentMonth == 0
             ? []

@@ -3,16 +3,21 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:schedulemanager/api/map_api.dart';
+import 'package:schedulemanager/screens/map_page/map_page.dart';
 import 'package:schedulemanager/widgets/animated_marker.dart';
 import '../constants/constants.dart';
 import '../services/base_service.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 class MapPreview extends StatefulWidget {
+  final void Function(LatLng start, String? startAddress, LatLng end,
+      String? endAddress, List<LatLng>? points)? onAcceptCallback;
   final double height;
   final double width;
   final GeoPoint initialPoint;
   final GeoPoint endPoint;
+  final String? startAddress;
+  final String? endAddress;
 
   const MapPreview({
     super.key,
@@ -20,6 +25,9 @@ class MapPreview extends StatefulWidget {
     required this.width,
     required this.initialPoint,
     required this.endPoint,
+    required this.onAcceptCallback,
+    this.startAddress,
+    this.endAddress,
   });
 
   @override
@@ -35,19 +43,17 @@ class _MapPreviewState extends State<MapPreview> {
     _controller = MapController();
     _points = [];
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      print('updating');
       try {
-        PolylinePoints polylinePoints = PolylinePoints();
-        PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-          'AIzaSyAYMvt_98nr90xX8DD_cSFXJYIC4ro_2LI',
-          PointLatLng(
-              widget.initialPoint.latitude, widget.initialPoint.longitude),
-          PointLatLng(widget.endPoint.latitude, widget.endPoint.longitude),
-        );
-        setState(() {
-          _points = result.points
-              .map((e) => LatLng(e.latitude, e.longitude))
-              .toList();
-        });
+        final start =
+            LatLng(widget.initialPoint.latitude, widget.initialPoint.longitude);
+        final end = LatLng(widget.endPoint.latitude, widget.endPoint.longitude);
+        final points = await MapApi().getPolyline(start, end);
+        if (points != null) {
+          setState(() {
+            _points = points;
+          });
+        }
       } on Exception catch (e) {
         debugPrint(e.toString());
       }
@@ -62,12 +68,12 @@ class _MapPreviewState extends State<MapPreview> {
 
   @override
   Widget build(BuildContext context) {
+    final LatLng startlPos =
+        LatLng(widget.initialPoint.latitude, widget.initialPoint.longitude);
+    final LatLng endPos =
+        LatLng(widget.endPoint.latitude, widget.endPoint.longitude);
     SchedulerBinding.instance.addPostFrameCallback(
       (_) async {
-        final LatLng startlPos =
-            LatLng(widget.initialPoint.latitude, widget.initialPoint.longitude);
-        final LatLng endPos =
-            LatLng(widget.endPoint.latitude, widget.endPoint.longitude);
         _controller.fitBounds(
           LatLngBounds(startlPos, endPos),
           options: const FitBoundsOptions(
@@ -81,7 +87,6 @@ class _MapPreviewState extends State<MapPreview> {
     );
 
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, 'mapPage'),
       child: Container(
         height: widget.height,
         width: widget.width,
@@ -102,11 +107,32 @@ class _MapPreviewState extends State<MapPreview> {
               maxZoom: 15,
               zoom: 5,
               minZoom: 5,
+              onTap: (tapPosition, point) {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return MapPage(
+                      startPos: startlPos,
+                      endPost: endPos,
+                      startAddress: widget.startAddress,
+                      endAddress: widget.endAddress,
+                      onAcceptCallback:
+                          (start, startAddress, end, endAddress, points) {
+                        setState(() {
+                          _points = points!;
+                        });
+                        if (widget.onAcceptCallback != null) {
+                          widget.onAcceptCallback!(
+                              start, startAddress, end, endAddress, points);
+                        }
+                      },
+                    );
+                  },
+                ));
+              },
               center: LatLng(
                 widget.initialPoint.latitude,
                 widget.initialPoint.longitude,
               ),
-              onMapReady: () {},
             ),
             children: [
               TileLayer(

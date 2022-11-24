@@ -4,6 +4,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
 import '../models/reminder_model.dart';
 import 'base_service.dart';
+import 'package:uuid/uuid.dart';
 
 class ReminderService extends BaseService with ChangeNotifier {
   static const String _collection = 'Reminder';
@@ -23,11 +24,12 @@ class ReminderService extends BaseService with ChangeNotifier {
 
   @override
   Future<void> create(Map<String, dynamic> data) async {
-    debugPrint('Adding $data ');
+    debugPrint('Adding $data');
     final String uid = FirebaseAuth.instance.currentUser!.uid;
     data['uid'] = uid;
     await db
-        .add(data)
+        .doc(data['id'])
+        .set(data)
         .then((value) async => await getData())
         .onError((error, stackTrace) => debugPrint('Failed to add'));
   }
@@ -47,8 +49,8 @@ class ReminderService extends BaseService with ChangeNotifier {
   @override
   Future<void> getData([VoidCallback? onChangesCallback]) async {
     final String uid = FirebaseAuth.instance.currentUser!.uid;
-    _reminders = await db.where('uid', isEqualTo: uid).get().then((r) =>
-        r.docs.map((e) => ReminderModel.fromMap(e.data(), e.id)).toList());
+    _reminders = await db.where('uid', isEqualTo: uid).get().then(
+        (r) => r.docs.map((e) => ReminderModel.fromMap(e.data())).toList());
     final remindersWithoutAddress = _reminders
         .where((r) =>
             r.endLocationAddress == null && r.endLocation != null ||
@@ -68,7 +70,6 @@ class ReminderService extends BaseService with ChangeNotifier {
             '${endMarks[0].street}, ${endMarks[0].locality}, ${endMarks[0].administrativeArea}.';
         final String startAddress =
             '${startMarks[0].street}, ${startMarks[0].locality}, ${startMarks[0].administrativeArea}.';
-        // debugPrint('Address of ${r.title}:  \nLocation : $endAddress');
 
         r.endLocationAddress = endAddress;
         r.startLocationAddress = startAddress;

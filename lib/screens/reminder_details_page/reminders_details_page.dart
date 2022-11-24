@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
+import 'package:schedulemanager/screens/map_page/map_page.dart';
 import '../../constants/constants.dart';
 import '../../models/reminder_model.dart';
 import '../../models/tag_model.dart';
@@ -36,17 +38,30 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
   late TagModel tag;
   late TaskModel task;
   late String? address;
+  late List<LatLng> _mapPreviewPoints;
 
   @override
   void initState() {
     super.initState();
     address = null;
+    _mapPreviewPoints = [];
     tag = TagModel(name: '');
     task = TaskModel(name: '', isCompleted: false);
   }
 
   String getDateFormatted(DateTime date) =>
       DateFormat(DateFormat.YEAR_MONTH_DAY, 'en_US').format(date.toUtc());
+
+  void _onLocationChanged(final LatLng start, final String? startAddress,
+      final LatLng end, final String? endAddress, List<LatLng>? points) {
+    setState(() {
+      widget.reminder!.startLocation =
+          GeoPoint(start.latitude, start.longitude);
+      widget.reminder!.endLocation = GeoPoint(end.latitude, end.longitude);
+      widget.reminder!.startLocationAddress = startAddress;
+      widget.reminder!.endLocationAddress = endAddress;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +80,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
         backgroundColor: accent,
         child: const Icon(Icons.check),
         onPressed: () async {
-          final idIsEmpty =
-              widget.reminder!.id == null || widget.reminder!.id!.isEmpty;
+          final idIsEmpty = widget.reminder!.uid.isEmpty;
           await (idIsEmpty
                   ? service.create(widget.reminder!.toMap())
                   : service.update(
@@ -225,14 +239,38 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                             title: 'End location',
                             value: widget.reminder!.endLocationAddress,
                           ),
-                        MapPreview(
-                          height: resp.hp(20),
-                          width: resp.width,
-                          initialPoint: widget.reminder!.startLocation ??
-                              const GeoPoint(0, 0),
-                          endPoint: widget.reminder!.endLocation ??
-                              const GeoPoint(0, 0),
-                        ),
+                        if (widget.reminder!.endLocation != null ||
+                            widget.reminder!.startLocation != null) ...[
+                          MapPreview(
+                            height: resp.hp(20),
+                            width: resp.width,
+                            initialPoint: widget.reminder!.startLocation ??
+                                const GeoPoint(0, 0),
+                            endPoint: widget.reminder!.endLocation ??
+                                const GeoPoint(0, 0),
+                            onAcceptCallback: _onLocationChanged,
+                            startAddress: widget.reminder!.startLocationAddress,
+                            endAddress: widget.reminder!.endLocationAddress,
+                          ),
+                        ] else ...[
+                          CustomButton(
+                            text: 'Add location',
+                            color: lightGrey.withOpacity(0.25),
+                            height: resp.hp(5),
+                            width: resp.width,
+                            style: TextStyles.w500(resp.sp16),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MapPage(
+                                    onAcceptCallback: _onLocationChanged,
+                                  ),
+                                ),
+                              );
+                            },
+                          )
+                        ]
                       ],
                     ),
                   ),

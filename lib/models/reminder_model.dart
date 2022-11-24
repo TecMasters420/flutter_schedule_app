@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'tag_model.dart';
 import 'task_model.dart';
+import 'package:uuid/uuid.dart';
 
 class ReminderModel {
   final String? id;
@@ -42,6 +43,7 @@ class ReminderModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'creationDate': creationDate,
       'description': description,
       'startDate': startDate,
@@ -58,14 +60,13 @@ class ReminderModel {
     };
   }
 
-  factory ReminderModel.fromMap(
-      final Map<String, dynamic> map, final String id) {
+  factory ReminderModel.fromMap(final Map<String, dynamic> map) {
     final tasks = List.generate(
         map['tasks'].length, (x) => map['tasks'][x] as Map<String, dynamic>);
     final tags = List.generate(
         map['tags'].length, (x) => map['tags'][x] as Map<String, dynamic>);
     return ReminderModel(
-      id: id,
+      id: map['id'],
       creationDate: map['creationDate'],
       description: map['description'],
       startDate: map['startDate'],
@@ -84,6 +85,7 @@ class ReminderModel {
 
   factory ReminderModel.empty() {
     return ReminderModel(
+      id: const Uuid().v4(),
       creationDate: Timestamp.now(),
       description: '',
       startDate: Timestamp.now(),
