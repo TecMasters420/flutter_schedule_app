@@ -56,6 +56,14 @@ class LoginPageInformation extends StatelessWidget {
                                 if (loadingProgress == null) return child;
                                 return const CustomCircularProgress();
                               },
+                              errorBuilder: (context, error, stackTrace) {
+                                debugPrint('Error loading image');
+                                return Text(
+                                  'Error loading image',
+                                  style:
+                                      TextStyles.w600(resp.sp16, Colors.white),
+                                );
+                              },
                             )
                       : SizedBox(
                           height: resp.hp(65),

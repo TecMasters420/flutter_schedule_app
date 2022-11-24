@@ -89,7 +89,7 @@ class _ExpandibleCreationOrEditReminderState
     return Align(
       alignment: widget.align,
       child: GestureDetector(
-        onTap: () => _controller.forward(),
+        onTap: () async => await _controller.forward(),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
           height: containerHeight,
@@ -149,9 +149,8 @@ class _ExpandibleCreationOrEditReminderState
                                     icon: const Icon(
                                         Icons.transit_enterexit_rounded),
                                     color: lightGrey,
-                                    onPressed: () {
-                                      _controller.reverse();
-                                    },
+                                    onPressed: () async =>
+                                        _controller.reverse(),
                                   ),
                                 ),
                               ],

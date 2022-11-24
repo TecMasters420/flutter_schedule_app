@@ -41,27 +41,40 @@ class ReminderInformation extends StatelessWidget {
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
         ),
-        if (reminder.endLocation != null) ...[
+        SizedBox(height: resp.hp(1)),
+        Text(
+          'Information:',
+          style: TextStyles.w700(resp.sp14),
+        ),
+        if (reminder.endLocation != null &&
+            reminder.endLocationAddress != null) ...[
           SizedBox(height: resp.hp(1)),
           Text(
-            'Information:',
-            style: TextStyles.w700(resp.sp14),
-          ),
-          SizedBox(height: resp.hp(0.5)),
-          Text(
-            'Location: ${reminder.endLocation.toString()}',
-            style: TextStyles.w500(resp.sp14, grey),
+            'End location:',
+            style: TextStyles.w600(resp.sp14),
           ),
           Text(
-            'Time to arrive: 92 min',
+            reminder.endLocationAddress.toString(),
             style: TextStyles.w500(resp.sp14, grey),
           ),
         ],
-        SizedBox(height: resp.hp(0.5)),
+        if (reminder.startLocation != null &&
+            reminder.startLocationAddress != null) ...[
+          SizedBox(height: resp.hp(1)),
+          Text(
+            'Start location:',
+            style: TextStyles.w600(resp.sp14),
+          ),
+          Text(
+            reminder.startLocationAddress.toString(),
+            style: TextStyles.w500(resp.sp14, grey),
+          ),
+        ],
+        SizedBox(height: resp.hp(1)),
         if (reminder.tags.isNotEmpty) ...[
           Text(
             'Tags:',
-            style: TextStyles.w700(resp.sp14),
+            style: TextStyles.w600(resp.sp14),
           ),
           TagsList(
             tagsList: reminder.tags.map((e) => e.name).toList(),
@@ -75,12 +88,12 @@ class ReminderInformation extends StatelessWidget {
         if (reminder.tasks.isNotEmpty) ...[
           Text(
             'Tasks progress: ${(reminder.progress.isNaN ? 0 : reminder.progress).toStringAsFixed(2)}%',
-            style: TextStyles.w700(resp.sp14),
+            style: TextStyles.w600(resp.sp14),
           ),
-          SizedBox(height: resp.hp(0.5)),
+          SizedBox(height: resp.hp(1)),
           ProgressBar(
             percent: reminder.progress,
-            height: resp.hp(2),
+            height: resp.hp(1.5),
             width: resp.width,
           ),
           SizedBox(height: resp.hp(2)),
@@ -117,9 +130,9 @@ class ReminderInformation extends StatelessWidget {
               height: resp.hp(4),
               width: resp.wp(15),
               style: TextStyles.w600(resp.sp14, Colors.white),
-              onTap: () => Navigator.push(
+              onTap: () => Navigator.pushReplacement(
                 context,
-                MaterialPageRoute<void>(
+                MaterialPageRoute(
                   builder: (BuildContext context) =>
                       ReminderDetailsPage(reminder: reminder),
                 ),

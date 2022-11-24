@@ -1,43 +1,77 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter/scheduler.dart';
 import '../utils/responsive_util.dart';
 
 class ReminderContainer extends StatelessWidget {
-  final GlobalKey? containerKey;
+  final Color color;
   final Widget leftWidget;
-  final Widget? middleWidget;
   final Widget rightWidget;
-  final int index;
-  const ReminderContainer({
+
+  final ValueNotifier<double> height = ValueNotifier(0);
+  final GlobalKey testKey = GlobalKey();
+  bool isGenerated = false;
+
+  ReminderContainer({
     super.key,
-    required this.index,
+    required this.color,
     required this.leftWidget,
     required this.rightWidget,
-    this.middleWidget,
-    this.containerKey,
   });
 
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
 
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (!isGenerated) {
+        isGenerated = true;
+        final RenderObject? renderBoxRed =
+            testKey.currentContext?.findRenderObject();
+        final size = renderBoxRed!.paintBounds;
+        height.value = size.size.height;
+      }
+    });
+
     return Column(
       children: [
         SizedBox(
           width: double.infinity,
-          key: containerKey ?? GlobalKey(),
-          child: Row(
-            children: [
-              Expanded(flex: 8, child: leftWidget),
-              if (middleWidget != null) ...[
-                Expanded(flex: 1, child: middleWidget!),
-                SizedBox(width: resp.wp(2)),
+          key: testKey,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              children: [
+                ValueListenableBuilder(
+                  valueListenable: height,
+                  builder: (context, value, child) {
+                    return Row(
+                      children: [
+                        Expanded(flex: 8, child: leftWidget),
+                        Expanded(
+                          flex: 1,
+                          child: AnimatedContainer(
+                            curve: Curves.easeIn,
+                            duration: const Duration(milliseconds: 300),
+                            height: height.value,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: color,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: resp.wp(2)),
+                        Expanded(flex: 30, child: rightWidget),
+                        SizedBox(width: resp.wp(1)),
+                      ],
+                    );
+                  },
+                ),
               ],
-              Expanded(flex: 30, child: rightWidget)
-            ],
+            ),
           ),
         ),
-        SizedBox(height: resp.hp(5)),
+        SizedBox(height: resp.hp(2.5)),
       ],
     );
   }

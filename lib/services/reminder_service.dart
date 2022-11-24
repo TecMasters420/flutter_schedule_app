@@ -28,7 +28,7 @@ class ReminderService extends BaseService with ChangeNotifier {
     data['uid'] = uid;
     await db
         .add(data)
-        .then((value) async => getData())
+        .then((value) async => await getData())
         .onError((error, stackTrace) => debugPrint('Failed to add'));
   }
 
@@ -41,30 +41,37 @@ class ReminderService extends BaseService with ChangeNotifier {
     if (id.isNotEmpty) {
       await db.doc(id).update(data);
       await getData();
-      return;
     }
-    return;
   }
 
   @override
-  Future<void> getData() async {
+  Future<void> getData([VoidCallback? onChangesCallback]) async {
     final String uid = FirebaseAuth.instance.currentUser!.uid;
     _reminders = await db.where('uid', isEqualTo: uid).get().then((r) =>
         r.docs.map((e) => ReminderModel.fromMap(e.data(), e.id)).toList());
     final remindersWithoutAddress = _reminders
-        .where((r) => r.endLocationAddress == null && r.endLocation != null)
+        .where((r) =>
+            r.endLocationAddress == null && r.endLocation != null ||
+            r.startLocationAddress == null && r.startLocation != null)
         .toList();
     for (final ReminderModel r in remindersWithoutAddress) {
       try {
-        List<Placemark> placemarks = await placemarkFromCoordinates(
+        List<Placemark> endMarks = await placemarkFromCoordinates(
           r.endLocation!.latitude,
           r.endLocation!.longitude,
         );
-        final address =
-            '${placemarks[0].street}, ${placemarks[0].locality}, ${placemarks[0].administrativeArea}.';
-        debugPrint('Address of ${r.title}:  \nLocation : $address');
+        List<Placemark> startMarks = await placemarkFromCoordinates(
+          r.startLocation!.latitude,
+          r.startLocation!.longitude,
+        );
+        final endAddress =
+            '${endMarks[0].street}, ${endMarks[0].locality}, ${endMarks[0].administrativeArea}.';
+        final String startAddress =
+            '${startMarks[0].street}, ${startMarks[0].locality}, ${startMarks[0].administrativeArea}.';
+        // debugPrint('Address of ${r.title}:  \nLocation : $endAddress');
 
-        r.endLocationAddress = address;
+        r.endLocationAddress = endAddress;
+        r.startLocationAddress = startAddress;
         await db.doc(r.id).update(r.toMap());
       } on Exception catch (e) {
         debugPrint(
@@ -74,7 +81,7 @@ class ReminderService extends BaseService with ChangeNotifier {
           LatLng(r.endLocation!.latitude, r.endLocation!.longitude));
       if (address != null) {
         r.endLocationAddress = address;
-        print(address);
+        // debugPrint(address);
         await db.doc(r.id).update(r.toMap());
       }
     }
@@ -90,8 +97,8 @@ class ReminderService extends BaseService with ChangeNotifier {
       final isAfter = endDate.isAfter(DateTime.now());
       return isAfter;
     }).toList();
-    debugPrint(
-        'RemindersService Debug: \nTotal reminders: ${reminders.length} \nExpired reminders: ${expiredReminders.length} \nNot expired reminders ${_notExpiredReminders.length}');
+    // debugPrint(
+    //     'RemindersService Debug: \nTotal reminders: ${reminders.length} \nExpired reminders: ${expiredReminders.length} \nNot expired reminders ${_notExpiredReminders.length}');
     notifyListeners();
   }
 
@@ -104,6 +111,7 @@ class ReminderService extends BaseService with ChangeNotifier {
       return '${placemarks[0].street}, ${placemarks[0].locality}, ${placemarks[0].administrativeArea}.';
     } on Exception catch (e) {
       debugPrint('Error $e');
+      return null;
     }
   }
 

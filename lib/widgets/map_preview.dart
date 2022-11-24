@@ -3,8 +3,10 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:schedulemanager/widgets/animated_marker.dart';
 import '../constants/constants.dart';
 import '../services/base_service.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 class MapPreview extends StatefulWidget {
   final double height;
@@ -26,11 +28,30 @@ class MapPreview extends StatefulWidget {
 
 class _MapPreviewState extends State<MapPreview> {
   late MapController _controller;
-
+  late List<LatLng> _points;
   @override
   void initState() {
     super.initState();
     _controller = MapController();
+    _points = [];
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      try {
+        PolylinePoints polylinePoints = PolylinePoints();
+        PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+          'AIzaSyAYMvt_98nr90xX8DD_cSFXJYIC4ro_2LI',
+          PointLatLng(
+              widget.initialPoint.latitude, widget.initialPoint.longitude),
+          PointLatLng(widget.endPoint.latitude, widget.endPoint.longitude),
+        );
+        setState(() {
+          _points = result.points
+              .map((e) => LatLng(e.latitude, e.longitude))
+              .toList();
+        });
+      } on Exception catch (e) {
+        debugPrint(e.toString());
+      }
+    });
   }
 
   @override
@@ -64,85 +85,62 @@ class _MapPreviewState extends State<MapPreview> {
           color: lightGrey.withOpacity(0.25),
         ),
         child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: FlutterMap(
-              mapController: _controller,
-              options: MapOptions(
-                interactiveFlags: InteractiveFlag.none,
-                enableMultiFingerGestureRace: false,
-                keepAlive: false,
-                // minZoom: 13,
-                maxZoom: 15,
-                zoom: 5,
-                minZoom: 5,
-                center: LatLng(
-                  widget.initialPoint.latitude,
-                  widget.initialPoint.longitude,
-                ),
-                onMapReady: () {},
+          borderRadius: BorderRadius.circular(10),
+          child: FlutterMap(
+            mapController: _controller,
+            options: MapOptions(
+              interactiveFlags: InteractiveFlag.none,
+              enableMultiFingerGestureRace: false,
+              keepAlive: false,
+              // minZoom: 13,
+              maxZoom: 15,
+              zoom: 5,
+              minZoom: 5,
+              center: LatLng(
+                widget.initialPoint.latitude,
+                widget.initialPoint.longitude,
               ),
-              children: [
-                PolygonLayer(
-                  polygons: [
-                    Polygon(
-                      isFilled: true,
-                      borderStrokeWidth: 10,
-                      isDotted: true,
-                      label: "Building",
-                      points: [
-                        LatLng(
-                          widget.initialPoint.latitude,
-                          widget.initialPoint.longitude,
-                        ),
-                        LatLng(
-                          widget.endPoint.latitude,
-                          widget.endPoint.longitude,
-                        )
-                      ],
-                      color: Colors.red,
-                      borderColor: Colors.green,
+              onMapReady: () {},
+            ),
+            children: [
+              TileLayer(
+                backgroundColor: Colors.white,
+                urlTemplate:
+                    "https://api.mapbox.com/styles/v1/frankrdz/{styleId}/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
+                additionalOptions: {
+                  'styleId': 'clarc1scl000314lfyzx582dm',
+                  'accessToken': dotenv.env['MAPBOX_ACCESSTOKEN']!,
+                },
+              ),
+              PolylineLayer(
+                polylines: [
+                  Polyline(
+                    strokeWidth: 0.15,
+                    borderColor: tempAccent.withOpacity(0.35),
+                    borderStrokeWidth: 2.5,
+                    points: _points,
+                  ),
+                ],
+              ),
+              MarkerLayer(
+                markers: [widget.initialPoint, widget.endPoint]
+                    .map(
+                      (e) => Marker(
+                        point: LatLng(e.latitude, e.longitude),
+                        builder: (context) {
+                          return AnimatedMarker(
+                            color: e == widget.initialPoint
+                                ? Colors.green[300]!
+                                : tempAccent,
+                          );
+                        },
+                      ),
                     )
-                  ],
-                ),
-                TileLayer(
-                  backgroundColor: Colors.white,
-                  urlTemplate:
-                      "https://api.mapbox.com/styles/v1/frankrdz/clarc1scl000314lfyzx582dm/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
-                  additionalOptions: {
-                    'styleId': 'cl6h78sq8007q15pqr3dj6xqp',
-                    'accessToken': dotenv.env['MAPBOX_ACCESSTOKEN']!,
-                  },
-                ),
-                MarkerLayer(
-                  markers: [
-                    Marker(
-                      point: LatLng(
-                        widget.initialPoint.latitude,
-                        widget.initialPoint.longitude,
-                      ),
-                      builder: (context) {
-                        return const Icon(
-                          Icons.location_pin,
-                          color: Colors.blue,
-                        );
-                      },
-                    ),
-                    Marker(
-                      point: LatLng(
-                        widget.endPoint.latitude,
-                        widget.endPoint.longitude,
-                      ),
-                      builder: (context) {
-                        return const Icon(
-                          Icons.location_pin,
-                          color: Colors.blue,
-                        );
-                      },
-                    ),
-                  ],
-                )
-              ],
-            )),
+                    .toList(),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

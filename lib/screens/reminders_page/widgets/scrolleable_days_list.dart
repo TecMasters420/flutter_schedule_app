@@ -5,7 +5,7 @@ import '../../../utils/responsive_util.dart';
 import '../../../utils/text_styles.dart';
 
 class ScrolleableDaysList extends StatefulWidget {
-  final int days;
+  final List<int> days;
   final int initialDay;
   final String label;
   final Function(int selectedDay) onSelectedNewDay;
@@ -23,11 +23,11 @@ class ScrolleableDaysList extends StatefulWidget {
 }
 
 class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
-  late int _selectedDay;
+  late int? _selectedDay;
   @override
   void initState() {
     super.initState();
-    _selectedDay = widget.initialDay;
+    _selectedDay = null;
   }
 
   @override
@@ -48,20 +48,24 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
           child: Row(
             children: [
               ...List.generate(
-                widget.days,
+                widget.days.length,
                 (index) {
-                  final isSelected = index == _selectedDay;
+                  final int containerDay = widget.days[index];
+                  final bool isSelected =
+                      containerDay == (_selectedDay ?? widget.initialDay);
                   return GestureDetector(
                     onTap: () {
-                      if (_selectedDay == index) return;
-                      widget.onSelectedNewDay(index + 1);
+                      if (_selectedDay == containerDay) return;
+                      widget.onSelectedNewDay(containerDay);
                       setState(() {
-                        _selectedDay = index;
+                        _selectedDay = containerDay;
                       });
                     },
                     child: Padding(
                       padding: EdgeInsets.only(
-                        right: index >= 0 && index < widget.days - 1 ? 20 : 0,
+                        right: index >= 0 && index < widget.days.length - 1
+                            ? 20
+                            : 0,
                         top: 20,
                         bottom: 20,
                       ),
@@ -71,7 +75,7 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
                           Text(
                             DateFormat('EEEE')
                                 .format(DateTime(DateTime.now().year,
-                                    DateTime.now().month, index + 1))
+                                    DateTime.now().month, containerDay))
                                 .substring(0, 3)
                                 .toUpperCase(),
                             style: isSelected
@@ -90,12 +94,23 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
                                 shape: BoxShape.circle,
                               ),
                               child: Text(
-                                (index + 1).toString(),
+                                widget.days[index].toString(),
                                 style: TextStyles.w500(resp.sp16,
                                     isSelected ? Colors.white : lightGrey),
                               ),
                             ),
                           ),
+                          if (isSelected)
+                            Container(
+                              height: resp.hp(0.75),
+                              width: resp.wp(5),
+                              decoration: BoxDecoration(
+                                color: isSelected ? accent : Colors.transparent,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                            )
                         ],
                       ),
                     ),

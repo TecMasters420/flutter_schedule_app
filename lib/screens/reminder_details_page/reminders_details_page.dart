@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:schedulemanager/screens/reminders_page/reminders_page.dart';
 import '../../constants/constants.dart';
 import '../../models/reminder_model.dart';
 import '../../models/tag_model.dart';
@@ -67,9 +68,26 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
           final idIsEmpty =
               widget.reminder!.id == null || widget.reminder!.id!.isEmpty;
           await (idIsEmpty
-              ? service.create(widget.reminder!.toMap())
-              : service.update(widget.reminder!.toMap()));
-          Navigator.pop(context);
+              ? service.create(widget.reminder!.toMap()).then((value) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RemindersPage(),
+                    ),
+                  );
+                })
+              : service
+                  .update(widget.reminder!.toMap(), widget.reminder!.id ?? '')
+                  .then(
+                  (value) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RemindersPage(),
+                      ),
+                    );
+                  },
+                ));
         },
       ),
       body: Padding(
@@ -205,15 +223,29 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                     icon: Icons.location_on_outlined,
                     title: 'Location:',
                     value: address ?? '',
-                    extra: MapPreview(
-                      height: resp.hp(20),
-                      width: resp.width,
-                      initialPoint: widget.reminder!.startLocation ??
-                          const GeoPoint(0, 0),
-                      endPoint: const GeoPoint(
-                        32.51368305032329,
-                        -116.87312410460065,
-                      ),
+                    extra: Column(
+                      children: [
+                        if (widget.reminder!.startLocationAddress != null)
+                          ReminderInformationWidget(
+                            icon: Icons.location_pin,
+                            title: 'Start location',
+                            value: widget.reminder!.startLocationAddress,
+                          ),
+                        if (widget.reminder!.endLocationAddress != null)
+                          ReminderInformationWidget(
+                            icon: Icons.location_searching_rounded,
+                            title: 'End location',
+                            value: widget.reminder!.endLocationAddress,
+                          ),
+                        MapPreview(
+                          height: resp.hp(20),
+                          width: resp.width,
+                          initialPoint: widget.reminder!.startLocation ??
+                              const GeoPoint(0, 0),
+                          endPoint: widget.reminder!.endLocation ??
+                              const GeoPoint(0, 0),
+                        ),
+                      ],
                     ),
                   ),
                   ReminderInformationWidget(

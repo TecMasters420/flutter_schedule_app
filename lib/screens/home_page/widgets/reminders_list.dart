@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/screens/home_page/widgets/all_reminders_redirection_button.dart';
 import '../../../models/reminder_model.dart';
 import 'reminder_date_data.dart';
 import '../../../utils/responsive_util.dart';
@@ -59,40 +62,16 @@ class RemindersListPerType extends StatelessWidget {
                 : data.length,
             (index) => index <= maxRemindersToShow
                 ? ReminderContainer(
-                    index: index,
+                    color: colors[Random().nextInt(colors.length - 1)],
                     leftWidget: ReminderDateData(
                       endDate: data[index].endDate.toDate(),
                       timeRemaining: data[index].timeLeft(DateTime.now()),
                     ),
-                    middleWidget: const SizedBox(),
                     rightWidget: ReminderInformation(
                       reminder: data[index],
                     ),
                   )
-                : GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, 'remindersPage'),
-                    child: Container(
-                      height: resp.hp(10),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: lightGrey.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Press to see all reminders',
-                            textAlign: TextAlign.center,
-                            style: TextStyles.w600(
-                              resp.sp16,
-                              grey.withOpacity(0.5),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                : const AllRemindersRedirectionButton(),
           )
         ] else
           Center(
