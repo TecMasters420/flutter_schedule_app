@@ -5,12 +5,14 @@ class CustomDateTimePicker {
   final void Function(DateTime date) onAcceptCallback;
   final DateTime startDate;
   final DateTime endDate;
+  late final DateTime? firstDate;
 
   CustomDateTimePicker({
     required this.context,
     required this.startDate,
     required this.endDate,
     required this.onAcceptCallback,
+    this.firstDate,
   }) {
     _show();
   }
@@ -20,7 +22,7 @@ class CustomDateTimePicker {
       context: context,
       initialDate: startDate,
       initialDatePickerMode: DatePickerMode.day,
-      firstDate: DateTime(DateTime.now().year - 3),
+      firstDate: firstDate ?? DateTime.now(),
       lastDate: endDate,
       keyboardType: TextInputType.number,
     );

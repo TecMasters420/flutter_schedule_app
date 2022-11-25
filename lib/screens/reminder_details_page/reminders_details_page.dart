@@ -38,10 +38,19 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
   late TagModel tag;
   late TaskModel task;
   late String? address;
+  late DateTime? _selectedStartDate;
+  late DateTime? _selectedEndDate;
 
   @override
   void initState() {
     super.initState();
+    if (_hasDate) {
+      _selectedEndDate = widget.reminder!.endDate.toDate();
+      _selectedStartDate = widget.reminder!.startDate.toDate();
+    } else {
+      _selectedEndDate = null;
+      _selectedStartDate = null;
+    }
     address = null;
     tag = TagModel(name: '');
     task = TaskModel(name: '', isCompleted: false);
@@ -61,14 +70,17 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
     });
   }
 
+  bool get _hasDate => widget.reminder!.uid.isNotEmpty;
+
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     final ReminderService service = Provider.of<ReminderService>(context);
 
-    final DateTime startDate = widget.reminder!.startDate.toDate();
-    final DateTime endDate = widget.reminder!.endDate.toDate();
-    final bool isSameDay = startDate.difference(endDate).inDays == 0;
+    final bool isSameDay =
+        _selectedEndDate == null || _selectedStartDate == null
+            ? false
+            : _selectedStartDate!.difference(_selectedEndDate!).inDays == 0;
     final double progress =
         widget.reminder!.progress.isNaN ? 0 : widget.reminder!.progress;
     final Duration timeRemaining = widget.reminder!.timeLeft(DateTime.now());
@@ -136,15 +148,16 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
             child: const Icon(Icons.check),
             onPressed: () async {
               final idIsEmpty = widget.reminder!.uid.isEmpty;
-              await (idIsEmpty
-                      ? service.create(widget.reminder!.toMap())
-                      : service.update(
-                          widget.reminder!.toMap(), widget.reminder!.id ?? ''))
-                  .whenComplete(
-                () {
-                  Navigator.pop(context);
-                },
-              );
+              if (service.isValidToUpload(widget.reminder!)) {
+                await (idIsEmpty
+                        ? service.create(widget.reminder!.toMap())
+                        : service.update(widget.reminder!.toMap()))
+                    .whenComplete(
+                  () {
+                    Navigator.pop(context);
+                  },
+                );
+              }
             },
           ),
         ],
@@ -197,8 +210,9 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                           child: ReminderInformationWidget(
                             icon: Icons.calendar_today_rounded,
                             title: 'Start Date:',
-                            value:
-                                '${isSameDay ? 'Today' : getDateFormatted(startDate)} at ${DateFormat('hh:mm a').format(startDate)}',
+                            value: _selectedStartDate == null
+                                ? 'No date'
+                                : '${isSameDay ? 'Today' : getDateFormatted(_selectedStartDate!)} at ${DateFormat('hh:mm a').format(_selectedStartDate!)}',
                           ),
                         ),
                         IconButton(
@@ -211,12 +225,17 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                             size: resp.sp20,
                           ),
                           onPressed: () async {
+                            // ? Start date
                             CustomDateTimePicker(
                               context: context,
-                              startDate: startDate,
-                              endDate: endDate,
+                              firstDate: _hasDate
+                                  ? DateTime(DateTime.now().year - 3)
+                                  : DateTime.now(),
+                              endDate: DateTime(DateTime.now().year + 3),
+                              startDate: DateTime.now(),
                               onAcceptCallback: (date) {
                                 setState(() {
+                                  _selectedStartDate = date;
                                   widget.reminder!.startDate =
                                       Timestamp.fromDate(date);
                                 });
@@ -234,8 +253,9 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                           child: ReminderInformationWidget(
                             icon: Icons.calendar_month_outlined,
                             title: 'End Date:',
-                            value:
-                                '${isSameDay ? 'Today' : getDateFormatted(endDate)} at ${DateFormat('hh:mm a').format(endDate)}',
+                            value: _selectedEndDate == null
+                                ? 'No date'
+                                : '${isSameDay ? 'Today' : getDateFormatted(_selectedEndDate!)} at ${DateFormat('hh:mm a').format(_selectedEndDate!)}',
                           ),
                         ),
                         IconButton(
@@ -248,12 +268,15 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                             size: resp.sp20,
                           ),
                           onPressed: () async {
+                            // ? End date
                             CustomDateTimePicker(
                               context: context,
-                              startDate: startDate,
-                              endDate: DateTime(endDate.year + 3),
+                              startDate: _selectedStartDate ?? DateTime.now(),
+                              firstDate: DateTime.now(),
+                              endDate: DateTime(DateTime.now().year + 3),
                               onAcceptCallback: (date) {
                                 setState(() {
+                                  _selectedEndDate = date;
                                   widget.reminder!.endDate =
                                       Timestamp.fromDate(date);
                                 });
@@ -267,8 +290,10 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                   ReminderInformationWidget(
                     icon: Icons.timer,
                     title: 'Time remaining:',
-                    value:
-                        '${timeRemaining.isNegative ? 'Expired ' : ''}${timeRemaining.inDays == 0 ? '' : '${timeRemaining.inDays.abs()} ${(timeRemaining.inDays.abs() == 1 ? 'day' : 'days')}, '}$hoursMess ${timeRemaining.isNegative ? 'ago' : ''}',
+                    value: _selectedEndDate == null ||
+                            _selectedStartDate == null
+                        ? 'No date'
+                        : '${timeRemaining.isNegative ? 'Expired ' : ''}$daysMess$hoursMess ${timeRemaining.isNegative ? 'ago' : ''}',
                   ),
                   if (widget.reminder!.expectedTemp != null)
                     ReminderInformationWidget(
@@ -504,7 +529,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                   ReminderInformationWidget(
                     icon: Icons.bar_chart_rounded,
                     title: 'Progress:',
-                    value: '$progress%',
+                    value: '${progress.toStringAsFixed(2)}%',
                     extra: ProgressBar(
                       percent: progress,
                       height: resp.hp(2.5),

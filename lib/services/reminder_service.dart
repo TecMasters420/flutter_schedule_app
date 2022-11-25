@@ -4,7 +4,6 @@ import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
 import '../models/reminder_model.dart';
 import 'base_service.dart';
-import 'package:uuid/uuid.dart';
 
 class ReminderService extends BaseService with ChangeNotifier {
   static const String _collection = 'Reminder';
@@ -19,7 +18,9 @@ class ReminderService extends BaseService with ChangeNotifier {
   List<ReminderModel> get notExpiredReminders => _notExpiredReminders;
 
   bool isValidToUpload(final ReminderModel reminder) {
-    return reminder.title.isNotEmpty && reminder.description.isNotEmpty;
+    return reminder.title.isNotEmpty &&
+        reminder.description.isNotEmpty &&
+        reminder.endDate.toDate().isAfter(reminder.startDate.toDate());
   }
 
   @override
@@ -38,12 +39,13 @@ class ReminderService extends BaseService with ChangeNotifier {
   Future<void> delete(Map<String, dynamic> data) async {}
 
   @override
-  Future<void> update(Map<String, dynamic> data, [final String id = '']) async {
+  Future<void> update(Map<String, dynamic> data) async {
     debugPrint('Updating $data ');
-    if (id.isNotEmpty) {
-      await db.doc(id).update(data);
-      await getData();
-    }
+    await db
+        .doc(data['id'])
+        .set(data, SetOptions(merge: true))
+        .then((value) async => await getData())
+        .onError((error, stackTrace) => debugPrint('Failed to add'));
   }
 
   @override
@@ -98,8 +100,6 @@ class ReminderService extends BaseService with ChangeNotifier {
       final isAfter = endDate.isAfter(DateTime.now());
       return isAfter;
     }).toList();
-    // debugPrint(
-    //     'RemindersService Debug: \nTotal reminders: ${reminders.length} \nExpired reminders: ${expiredReminders.length} \nNot expired reminders ${_notExpiredReminders.length}');
     notifyListeners();
   }
 

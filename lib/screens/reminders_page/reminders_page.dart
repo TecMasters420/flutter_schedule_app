@@ -80,7 +80,6 @@ class _RemindersPageState extends State<RemindersPage> {
     final List<int> daysWithReminders = remindersInMonth.keys.toList();
     daysWithReminders.sort((a, b) => a.compareTo(b));
 
-    final int remindersInCurrentMonth = remindersInMonth.length;
     final int currentDay =
         _selectedDate == null || !daysWithReminders.contains(_selectedDate!.day)
             ? daysWithReminders[0]

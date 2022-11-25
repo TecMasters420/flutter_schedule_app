@@ -34,8 +34,8 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
   @override
   void initState() {
     super.initState();
-    _selectedDay = null;
-    _selectedMonth = null;
+    _selectedDay = widget.initialDay;
+    _selectedMonth = widget.initialMonth;
   }
 
   @override
