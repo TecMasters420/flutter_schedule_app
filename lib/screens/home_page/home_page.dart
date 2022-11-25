@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:schedulemanager/models/reminder_model.dart';
 import '../../services/auth_service.dart';
 import '../../services/reminder_service.dart';
 import '../../utils/responsive_util.dart';
 
-import '../../constants/constants.dart';
 import '../../utils/text_styles.dart';
+import '../../widgets/user_profile_picture.dart';
 import 'widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,6 +29,15 @@ class _HomePageState extends State<HomePage> {
     final AuthService auth = Provider.of<AuthService>(context);
     final ReminderService service = Provider.of<ReminderService>(context);
 
+    int remindersWithTasks = 0;
+    double totalProgress = 0;
+    for (final ReminderModel r in service.notExpiredReminders) {
+      if (r.tasks.isNotEmpty) {
+        remindersWithTasks += 1;
+        totalProgress += r.progress;
+      }
+    }
+
     return Scaffold(
       body: Stack(
         children: [
@@ -43,15 +53,30 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Hello ${auth.user!.displayName ?? 'NoName'}!',
-                      style: TextStyles.w400(resp.sp16, lightGrey)),
+                  SizedBox(height: resp.hp(5)),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Welcome!',
+                          style: TextStyles.w500(resp.sp20),
+                        ),
+                      ),
+                      UserProfilePicture(
+                        height: resp.hp(5),
+                        width: resp.wp(10),
+                        userImage: auth.userInformation!.imageURL ?? '',
+                      )
+                    ],
+                  ),
+                  SizedBox(height: resp.hp(2.5)),
                   Text(
                     'My daily activities',
                     style: TextStyles.w700(resp.sp30),
                   ),
                   SizedBox(height: resp.hp(2)),
                   SizedBox(
-                    height: resp.hp(25),
+                    height: resp.hp(28),
                     width: resp.width,
                     child: const HomeActivitiesShow(),
                   ),

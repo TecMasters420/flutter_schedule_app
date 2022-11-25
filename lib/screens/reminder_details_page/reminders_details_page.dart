@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:schedulemanager/screens/map_page/map_page.dart';
+import 'package:schedulemanager/screens/reminder_details_page/widgets/custom_alert_with_calendart.dart';
+import 'package:schedulemanager/screens/reminders_page/widgets/scrolleable_calendar.dart';
 import '../../constants/constants.dart';
 import '../../models/reminder_model.dart';
 import '../../models/tag_model.dart';
@@ -41,10 +43,14 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
   late String? address;
   late DateTime? _selectedStartDate;
   late DateTime? _selectedEndDate;
+  late DateTime? _tempStartDate;
+  late DateTime? _tempEndDate;
 
   @override
   void initState() {
     super.initState();
+    _tempStartDate = null;
+    _tempEndDate = null;
     if (_hasDate) {
       _selectedEndDate = widget.reminder!.endDate.toDate();
       _selectedStartDate = widget.reminder!.startDate.toDate();
@@ -57,8 +63,11 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
     task = TaskModel(name: '', isCompleted: false);
   }
 
-  String getDateFormatted(DateTime date) =>
-      DateFormat(DateFormat.YEAR_MONTH_DAY, 'en_US').format(date.toUtc());
+  String getDateFormatted(DateTime date) {
+    final formattedDate =
+        DateFormat(DateFormat.YEAR_MONTH_DAY, 'en_US').format(date.toUtc());
+    return formattedDate;
+  }
 
   void _onLocationChanged(final LatLng start, final String? startAddress,
       final LatLng end, final String? endAddress, List<LatLng>? points) {
@@ -78,10 +87,11 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     final ReminderService service = Provider.of<ReminderService>(context);
 
-    final bool isSameDay =
-        _selectedEndDate == null || _selectedStartDate == null
-            ? false
-            : _selectedStartDate!.difference(_selectedEndDate!).inDays == 0;
+    final bool isSameDay = widget.reminder!.startDate
+            .toDate()
+            .difference(widget.reminder!.endDate.toDate())
+            .inDays ==
+        0;
     final double progress =
         widget.reminder!.progress.isNaN ? 0 : widget.reminder!.progress;
     final Duration timeRemaining = widget.reminder!.timeLeft(DateTime.now());
@@ -89,6 +99,10 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
         timeRemaining.inDays == 0 ? '' : '${timeRemaining.inDays} day/s, ';
     final String hoursMess =
         '${timeRemaining.inHours - (timeRemaining.inDays * 24)} hours';
+
+    final DateTime now = DateTime.now();
+    final List<int> monthsToCalendar =
+        List.generate(12 - now.month, (index) => now.month + index);
 
     return Scaffold(
       floatingActionButton: Row(
@@ -220,7 +234,9 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                   SizedBox(height: resp.hp(2.5)),
                   Center(
                     child: Text(
-                      widget.reminder!.title,
+                      widget.reminder!.title.isEmpty
+                          ? 'Insert title'
+                          : widget.reminder!.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyles.w700(resp.sp30),
@@ -228,12 +244,21 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                     ),
                   ),
                   SizedBox(height: resp.hp(2.5)),
-                  Text(
-                    widget.reminder!.description,
-                    maxLines: 20,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyles.w500(resp.sp14),
-                    textAlign: TextAlign.justify,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          widget.reminder!.description.isEmpty
+                              ? 'Insert description'
+                              : widget.reminder!.description,
+                          maxLines: 20,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyles.w500(resp.sp14),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: resp.hp(2.5)),
                   Text(
@@ -264,67 +289,92 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                           ),
                           onPressed: () async {
                             // ? Start date
-                            CustomDateTimePicker(
+                            CustomAlertDialog(
+                              resp: resp,
                               context: context,
-                              firstDate: _hasDate
-                                  ? DateTime(DateTime.now().year - 3)
-                                  : DateTime.now(),
-                              endDate: DateTime(DateTime.now().year + 3),
-                              startDate: DateTime.now(),
-                              onAcceptCallback: (date) {
+                              dismissible: false,
+                              title: 'Select start date',
+                              onAcceptCallback: () {
                                 setState(() {
-                                  _selectedStartDate = date;
                                   widget.reminder!.startDate =
-                                      Timestamp.fromDate(date);
+                                      Timestamp.fromDate(_tempStartDate!);
+                                  _selectedStartDate = _tempStartDate;
                                 });
                               },
+                              customBody: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ScrolleableCalendarWithHour(
+                                    endDate: DateTime(DateTime.now().year + 3),
+                                    firstDate: DateTime.now(),
+                                    onChangesInDate: (date) {
+                                      _tempStartDate = date;
+                                    },
+                                  ),
+                                ],
+                              ),
                             );
                           },
                         ),
                       ],
                     ),
                   ),
-                  Flexible(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: ReminderInformationWidget(
-                            icon: Icons.calendar_month_outlined,
-                            title: 'End Date:',
-                            value: _selectedEndDate == null
-                                ? 'No date'
-                                : '${isSameDay ? 'Today' : getDateFormatted(_selectedEndDate!)} at ${DateFormat('hh:mm a').format(_selectedEndDate!)}',
+                  if (_selectedStartDate != null) ...[
+                    Flexible(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: ReminderInformationWidget(
+                              icon: Icons.calendar_month_outlined,
+                              title: 'End Date:',
+                              value: _selectedEndDate == null
+                                  ? 'No date'
+                                  : '${isSameDay ? 'Today' : getDateFormatted(_selectedEndDate!)} at ${DateFormat('hh:mm a').format(_selectedEndDate!)}',
+                            ),
                           ),
-                        ),
-                        IconButton(
-                          splashRadius: 20,
-                          splashColor: accent.withOpacity(0.3),
-                          highlightColor: accent.withOpacity(0.25),
-                          icon: Icon(
-                            Icons.mode,
-                            color: lightGrey,
-                            size: resp.sp20,
+                          IconButton(
+                            splashRadius: 20,
+                            splashColor: accent.withOpacity(0.3),
+                            highlightColor: accent.withOpacity(0.25),
+                            icon: Icon(
+                              Icons.mode,
+                              color: lightGrey,
+                              size: resp.sp20,
+                            ),
+                            onPressed: () async {
+                              // ? End date
+                              CustomAlertDialog(
+                                resp: resp,
+                                context: context,
+                                dismissible: false,
+                                title: 'Select end date',
+                                onAcceptCallback: () {
+                                  setState(() {
+                                    widget.reminder!.endDate =
+                                        Timestamp.fromDate(_tempEndDate!);
+                                    _selectedEndDate = _tempEndDate;
+                                  });
+                                },
+                                customBody: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ScrolleableCalendarWithHour(
+                                      endDate:
+                                          DateTime(DateTime.now().year + 3),
+                                      firstDate: _selectedStartDate!,
+                                      onChangesInDate: (date) {
+                                        _tempEndDate = date;
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
                           ),
-                          onPressed: () async {
-                            // ? End date
-                            CustomDateTimePicker(
-                              context: context,
-                              startDate: _selectedStartDate ?? DateTime.now(),
-                              firstDate: DateTime.now(),
-                              endDate: DateTime(DateTime.now().year + 3),
-                              onAcceptCallback: (date) {
-                                setState(() {
-                                  _selectedEndDate = date;
-                                  widget.reminder!.endDate =
-                                      Timestamp.fromDate(date);
-                                });
-                              },
-                            );
-                          },
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
+                  ],
                   ReminderInformationWidget(
                     icon: Icons.timer,
                     title: 'Time remaining:',

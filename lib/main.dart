@@ -18,6 +18,7 @@ import 'screens/user_profile_page/user_profile_page.dart';
 import 'services/auth_service.dart';
 import 'services/initial_announcements_service.dart';
 import 'services/reminder_service.dart';
+import 'package:flutter/services.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
@@ -28,6 +29,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   FirebaseMessaging.instance.onTokenRefresh
       .listen((fcmToken) {})
       .onError((err) {});

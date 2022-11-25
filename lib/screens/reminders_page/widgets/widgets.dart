@@ -1,3 +1,3 @@
-export 'scrolleable_days_list.dart';
+export 'scrolleable_calendar.dart';
 export 'reminder_hour.dart';
 export 'reminders_list_per_day.dart';

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../../../constants/constants.dart';
 import '../../../models/reminder_model.dart';
 import '../../../utils/responsive_util.dart';
@@ -43,19 +44,25 @@ class _RemindersListPerDayState extends State<RemindersListPerDay> {
       children: List.generate(
         widget.reminders.length,
         (x) {
+          final ReminderModel remider = widget.reminders[x];
+          final String startDate =
+              DateFormat('MM-dd').format(remider.startDate.toDate());
+          final String endDate =
+              DateFormat('MM-dd').format(remider.endDate.toDate());
+
           return InkWell(
-            onLongPress: () => widget.onLongPressCallback(widget.reminders[x]),
+            onLongPress: () => widget.onLongPressCallback(remider),
             borderRadius: BorderRadius.circular(10),
             splashColor: color.withOpacity(0.25),
-            highlightColor: lightGrey.withOpacity(0.15),
+            highlightColor: lightGrey.withOpacity(0.05),
             child: ReminderContainer(
               color: color,
               leftWidget: ReminderHour(
-                hours: const ['09:00', '09:30'],
+                dates: [startDate, endDate],
                 fontSize: resp.sp14,
               ),
               rightWidget: ReminderInformation(
-                reminder: widget.reminders[x],
+                reminder: remider,
               ),
             ),
           );

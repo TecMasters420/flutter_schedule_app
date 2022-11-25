@@ -106,6 +106,7 @@ class ReminderService extends BaseService with ChangeNotifier {
       final isAfter = endDate.isAfter(DateTime.now());
       return isAfter;
     }).toList();
+    print('REMINDERS: ${reminders.length}');
     notifyListeners();
   }
 

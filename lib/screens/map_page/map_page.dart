@@ -14,6 +14,7 @@ import 'package:schedulemanager/widgets/custom_button.dart';
 
 import '../../constants/constants.dart';
 import '../../utils/text_styles.dart';
+import '../../widgets/custom_circular_progress.dart';
 
 class MapPage extends StatefulWidget {
   final LatLng? startPos;
@@ -416,6 +417,25 @@ class _MapPageState extends State<MapPage> {
                             _endPos!, _endAddress!, _points);
                         Navigator.pop(context);
                       }
+                    } else {
+                      CustomAlertDialog(
+                        resp: resp,
+                        dismissible: true,
+                        context: context,
+                        onAcceptCallback: () {},
+                        showButtons: false,
+                        title: 'Error: check the data!',
+                        customBody: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.block_rounded,
+                                color: Colors.red[200], size: resp.sp40),
+                            SizedBox(height: resp.hp(2)),
+                            Text('You must enter a location.',
+                                style: TextStyles.w500(resp.sp16))
+                          ],
+                        ),
+                      );
                     }
                   },
                 ),

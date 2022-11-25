@@ -55,9 +55,7 @@ class _RegisterPageState extends State<RegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const FlutterLogo(
-                  size: 150,
-                ),
+                Image.asset('assets/images/home_logo.png'),
                 SizedBox(height: resp.hp(2.5)),
                 Text(
                   'Register page!',

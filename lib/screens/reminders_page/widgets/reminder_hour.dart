@@ -4,11 +4,11 @@ import '../../../constants/constants.dart';
 import '../../../utils/text_styles.dart';
 
 class ReminderHour extends StatelessWidget {
-  final List<String> hours;
+  final List<String> dates;
   final double fontSize;
   const ReminderHour({
     super.key,
-    required this.hours,
+    required this.dates,
     required this.fontSize,
   });
 
@@ -17,14 +17,14 @@ class ReminderHour extends StatelessWidget {
     return Column(
       children: [
         ...List.generate(
-          hours.length,
+          dates.length,
           (x) => Column(
             children: [
               Text(
-                hours[x],
+                dates[x],
                 style: TextStyles.w400(fontSize, lightGrey),
               ),
-              if (x < hours.length - 1) const Divider(),
+              if (x < dates.length - 1) const Divider(),
             ],
           ),
         ),

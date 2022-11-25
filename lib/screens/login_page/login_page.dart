@@ -58,17 +58,16 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(),
-                FlutterLogo(
-                  size: resp.hp(20),
-                ),
+                Image.asset('assets/images/home_logo.png'),
                 SizedBox(height: resp.hp(2.5)),
                 Text(
-                  'Login',
+                  'Hello, Welcome!',
                   style: TextStyles.w500(resp.sp40),
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: resp.hp(1)),
                 Text(
-                  'aliquam consectetur et tincidunt praesent enim massa pellentesque velit odio neque',
+                  'Enter the following fields that are requested to log in.',
                   style: TextStyles.w400(resp.sp16, Colors.grey[600]!),
                   textAlign: TextAlign.center,
                 ),

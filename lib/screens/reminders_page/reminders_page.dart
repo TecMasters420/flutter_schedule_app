@@ -146,16 +146,15 @@ class _RemindersPageState extends State<RemindersPage> {
               SizedBox(height: resp.hp(2.5)),
               Text(
                 'Today is',
-                style: TextStyles.w400(resp.sp16, lightGrey),
+                style: TextStyles.w400(resp.sp20, lightGrey),
               ),
               SizedBox(height: resp.hp(0.5)),
               Text(
                 _getFormattedDate(DateTime.now()),
-                style: TextStyles.w700(resp.sp20, black),
+                style: TextStyles.w700(resp.sp30, black),
               ),
-              ScrolleableDaysList(
-                label:
-                    '${remindersInSelectedDay.length} ${remindersInSelectedDay.length == 1 ? 'Reminder' : 'Reminders'} in this day',
+              SizedBox(height: resp.hp(5)),
+              ScrolleableCalendar(
                 initialDay:
                     daysWithReminders.isEmpty ? 0 : daysWithReminders[0],
                 days: daysWithReminders,
@@ -164,7 +163,6 @@ class _RemindersPageState extends State<RemindersPage> {
                 months: monthsWithReminders,
                 onSelectedNewMonth: (selectedMonth) {
                   final DateTime current = _selectedDate ?? DateTime.now();
-                  print('New month $selectedMonth');
                   setState(() {
                     _selectedDate = DateTime(
                       current.year,
@@ -183,6 +181,11 @@ class _RemindersPageState extends State<RemindersPage> {
                     );
                   });
                 },
+              ),
+              SizedBox(height: resp.hp(4)),
+              Text(
+                '${remindersInSelectedDay.length} ${remindersInSelectedDay.length == 1 ? 'Reminder' : 'Reminders'} in this day',
+                style: TextStyles.w700(resp.sp16),
               ),
               SizedBox(height: resp.hp(3)),
               if (remindersInSelectedDay.isNotEmpty)
