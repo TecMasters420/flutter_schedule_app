@@ -105,8 +105,8 @@ class _MapPreviewState extends State<MapPreview> {
               keepAlive: false,
               // minZoom: 13,
               maxZoom: 15,
-              zoom: 5,
-              minZoom: 5,
+              zoom: 10,
+              minZoom: 1,
               onTap: (tapPosition, point) {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {

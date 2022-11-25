@@ -36,7 +36,13 @@ class ReminderService extends BaseService with ChangeNotifier {
   }
 
   @override
-  Future<void> delete(Map<String, dynamic> data) async {}
+  Future<void> delete(Map<String, dynamic> data) async {
+    await db
+        .doc(data['id'])
+        .delete()
+        .then((value) async => await getData())
+        .onError((error, stackTrace) => debugPrint('Failed to add'));
+  }
 
   @override
   Future<void> update(Map<String, dynamic> data) async {

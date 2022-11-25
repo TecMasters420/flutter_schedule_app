@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:schedulemanager/models/reminder_model.dart';
 import 'package:schedulemanager/services/auth_service.dart';
+import 'package:schedulemanager/widgets/custom_alert_dialog.dart';
+import 'package:schedulemanager/widgets/custom_circular_progress.dart';
 import '../reminder_details_page/reminders_details_page.dart';
 import '../../services/reminder_service.dart';
 import '../../utils/responsive_util.dart';
@@ -54,19 +56,24 @@ class _RemindersPageState extends State<RemindersPage> {
         monthsWithReminders.add(reminderEndMonth);
       }
     }
+    monthsWithReminders.sort((a, b) => a.compareTo(b));
+    if (_selectedDate == null ||
+        !monthsWithReminders.contains(_selectedDate!.month) &&
+            monthsWithReminders.isNotEmpty) {
+      final month = monthsWithReminders.isEmpty ? 0 : monthsWithReminders[0];
+      _selectedDate = DateTime(DateTime.now().year, month);
+    }
 
     // Get reminders in current month
     final List<ReminderModel> remInMonth = monthsWithReminders.isEmpty
         ? []
         : service.reminders
-            .where((r) =>
-                r.endDate.toDate().month ==
-                (_selectedDate == null
-                    ? monthsWithReminders[0]
-                    : _selectedDate!.month))
+            .where((r) => r.endDate.toDate().month == _selectedDate!.month)
             .toList();
+
     // Reminders per month
     final Map<int, List<ReminderModel>> remindersInMonth = {};
+
     for (final ReminderModel r in remInMonth) {
       final int reminderDay = r.endDate.toDate().day;
       remindersInMonth.containsKey(reminderDay)
@@ -80,9 +87,17 @@ class _RemindersPageState extends State<RemindersPage> {
     final List<int> daysWithReminders = remindersInMonth.keys.toList();
     daysWithReminders.sort((a, b) => a.compareTo(b));
 
+    if (!daysWithReminders.contains(_selectedDate!.day) &&
+        daysWithReminders.isNotEmpty) {
+      _selectedDate = DateTime(
+          _selectedDate!.year, _selectedDate!.month, daysWithReminders[0]);
+    }
+
     final int currentDay =
         _selectedDate == null || !daysWithReminders.contains(_selectedDate!.day)
-            ? daysWithReminders[0]
+            ? daysWithReminders.isEmpty
+                ? 0
+                : daysWithReminders[0]
             : _selectedDate!.day;
 
     // Check day
@@ -140,7 +155,7 @@ class _RemindersPageState extends State<RemindersPage> {
               ),
               ScrolleableDaysList(
                 label:
-                    '${remindersInSelectedDay.length} ${remindersInSelectedDay.length == 1 ? 'Reminder' : 'Reminders'} in November ${_selectedDate == null ? daysWithReminders[0] : _selectedDate!.day}',
+                    '${remindersInSelectedDay.length} ${remindersInSelectedDay.length == 1 ? 'Reminder' : 'Reminders'} in this day',
                 initialDay:
                     daysWithReminders.isEmpty ? 0 : daysWithReminders[0],
                 days: daysWithReminders,
@@ -149,11 +164,11 @@ class _RemindersPageState extends State<RemindersPage> {
                 months: monthsWithReminders,
                 onSelectedNewMonth: (selectedMonth) {
                   final DateTime current = _selectedDate ?? DateTime.now();
+                  print('New month $selectedMonth');
                   setState(() {
                     _selectedDate = DateTime(
                       current.year,
                       selectedMonth,
-                      current.day,
                     );
                   });
                 },
@@ -173,6 +188,35 @@ class _RemindersPageState extends State<RemindersPage> {
               if (remindersInSelectedDay.isNotEmpty)
                 RemindersListPerDay(
                   reminders: remindersInSelectedDay,
+                  onLongPressCallback: (reminder) {
+                    CustomAlertDialog(
+                      resp: resp,
+                      context: context,
+                      title: 'Are you sure you want to delete the reminder?',
+                      onAcceptCallback: () async {
+                        CustomAlertDialog(
+                          resp: resp,
+                          context: context,
+                          title: 'Wait a minute...',
+                          dismissible: false,
+                          showButtons: false,
+                          onAcceptCallback: () {},
+                          customBody: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const CustomCircularProgress(color: accent),
+                              SizedBox(height: resp.hp(2)),
+                              Text('Is being removed!',
+                                  style: TextStyles.w500(resp.sp16))
+                            ],
+                          ),
+                        );
+                        await service
+                            .delete(reminder.toMap())
+                            .whenComplete(() => Navigator.pop(context));
+                      },
+                    );
+                  },
                 )
               else
                 Center(

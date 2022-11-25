@@ -12,6 +12,7 @@ class CustomAlertDialog {
     required final VoidCallback onAcceptCallback,
     required final String title,
     final bool showButtons = true,
+    final bool dismissible = true,
     final Widget? customBody,
   }) {
     final AlertDialog alert = AlertDialog(
@@ -58,6 +59,7 @@ class CustomAlertDialog {
     // show the dialog
     showDialog(
       context: context,
+      barrierDismissible: dismissible,
       builder: (BuildContext context) {
         return alert;
       },

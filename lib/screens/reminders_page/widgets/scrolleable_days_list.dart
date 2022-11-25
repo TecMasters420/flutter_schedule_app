@@ -42,7 +42,11 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     if (!widget.days.contains(_selectedDay)) {
-      _selectedDay = widget.days[0];
+      _selectedDay = widget.days.isEmpty ? 0 : widget.days[0];
+    }
+
+    if (!widget.months.contains(_selectedMonth)) {
+      _selectedMonth = widget.months.isEmpty ? 0 : widget.months[0];
     }
 
     return Column(
@@ -80,16 +84,14 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Flexible(
-                            child: Text(
-                              DateFormat('MMMM').format(DateTime(
-                                DateTime.now().year,
-                                monthContainer,
-                              )),
-                              style: !isSelected
-                                  ? TextStyles.w600(resp.sp16, lightGrey)
-                                  : TextStyles.w800(resp.sp16),
-                            ),
+                          Text(
+                            DateFormat('MMMM').format(DateTime(
+                              DateTime.now().year,
+                              monthContainer,
+                            )),
+                            style: !isSelected
+                                ? TextStyles.w600(resp.sp16, lightGrey)
+                                : TextStyles.w800(resp.sp16),
                           ),
                           SizedBox(height: resp.hp(0.5)),
                           AnimatedContainer(

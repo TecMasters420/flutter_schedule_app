@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:schedulemanager/widgets/custom_alert_dialog.dart';
+import 'package:schedulemanager/widgets/custom_circular_progress.dart';
 
 import '../../constants/constants.dart';
 import '../../models/user_model.dart';
@@ -141,8 +143,26 @@ class _LoginPageState extends State<LoginPage> {
                     width: resp.wp(5),
                   ),
                   onTap: () async {
+                    CustomAlertDialog(
+                      resp: resp,
+                      dismissible: false,
+                      context: context,
+                      onAcceptCallback: () {},
+                      showButtons: false,
+                      title: 'Logging in...',
+                      customBody: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const CustomCircularProgress(color: accent),
+                          SizedBox(height: resp.hp(2)),
+                          Text('Wait a bit while it logs in',
+                              style: TextStyles.w500(resp.sp16))
+                        ],
+                      ),
+                    );
                     await auth.googleLogin(
                       () {
+                        Navigator.pop(context);
                         _showSnackbar('Logged!', 'Logged');
                         Navigator.pushReplacementNamed(context, 'homePage');
                       },
