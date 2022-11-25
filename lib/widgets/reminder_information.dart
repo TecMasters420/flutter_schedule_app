@@ -22,6 +22,11 @@ class ReminderInformation extends StatelessWidget {
 
     final remainingTime = reminder.timeLeft(DateTime.now());
 
+    final String daysMess =
+        remainingTime.inDays == 0 ? '' : '${remainingTime.inDays} day/s, ';
+    final String hoursMess =
+        '${remainingTime.inHours - (remainingTime.inDays * 24)} hours';
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +115,7 @@ class ReminderInformation extends StatelessWidget {
                       style: TextStyles.w700(resp.sp14),
                     ),
                     Text(
-                      '${remainingTime.inDays == 0 ? '' : '${remainingTime.inDays} day/s, '}${remainingTime.inHours} hours',
+                      daysMess + hoursMess,
                       style: TextStyles.w500(resp.sp14, grey),
                     ),
                   ],

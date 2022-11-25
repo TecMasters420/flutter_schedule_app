@@ -23,15 +23,15 @@ class RemindersPage extends StatefulWidget {
 }
 
 class _RemindersPageState extends State<RemindersPage> {
-  late DateTime _selectedDate;
+  late DateTime? _selectedDate;
 
   @override
   void initState() {
     super.initState();
+    _selectedDate = null;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Provider.of<ReminderService>(context, listen: false).getData();
     });
-    _selectedDate = DateTime.now();
   }
 
   String _getFormattedDate(final DateTime date) {
@@ -46,6 +46,7 @@ class _RemindersPageState extends State<RemindersPage> {
     final ReminderService service = Provider.of<ReminderService>(context);
     final AuthService auth = Provider.of<AuthService>(context);
 
+    // Get months with reminders
     final List<int> monthsWithReminders = [];
     for (final ReminderModel r in service.reminders) {
       final int reminderEndMonth = r.endDate.toDate().month;
@@ -54,11 +55,19 @@ class _RemindersPageState extends State<RemindersPage> {
       }
     }
 
-    final List<ReminderModel> inMonth = service.reminders
-        .where((r) => r.endDate.toDate().month == _selectedDate.month)
-        .toList();
+    // Get reminders in current month
+    final List<ReminderModel> remInMonth = monthsWithReminders.isEmpty
+        ? []
+        : service.reminders
+            .where((r) =>
+                r.endDate.toDate().month ==
+                (_selectedDate == null
+                    ? monthsWithReminders[0]
+                    : _selectedDate!.month))
+            .toList();
+    // Reminders per month
     final Map<int, List<ReminderModel>> remindersInMonth = {};
-    for (final ReminderModel r in inMonth) {
+    for (final ReminderModel r in remInMonth) {
       final int reminderDay = r.endDate.toDate().day;
       remindersInMonth.containsKey(reminderDay)
           ? remindersInMonth[reminderDay]!.add(r)
@@ -67,13 +76,23 @@ class _RemindersPageState extends State<RemindersPage> {
             });
     }
 
+    // Get list of days with reminders
+    final List<int> daysWithReminders = remindersInMonth.keys.toList();
+    daysWithReminders.sort((a, b) => a.compareTo(b));
+
     final int remindersInCurrentMonth = remindersInMonth.length;
+    final int currentDay =
+        _selectedDate == null || !daysWithReminders.contains(_selectedDate!.day)
+            ? daysWithReminders[0]
+            : _selectedDate!.day;
+
+    // Check day
+    if (_selectedDate != null && currentDay != _selectedDate!.day) {
+      _selectedDate =
+          DateTime(_selectedDate!.year, _selectedDate!.month, currentDay);
+    }
     final List<ReminderModel> remindersInSelectedDay =
-        remindersInCurrentMonth == 0
-            ? []
-            : remindersInMonth.keys.contains(_selectedDate.day)
-                ? remindersInMonth[_selectedDate.day]!.toList()
-                : [];
+        remInMonth.isEmpty ? [] : remindersInMonth[currentDay]!.toList();
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -122,30 +141,30 @@ class _RemindersPageState extends State<RemindersPage> {
               ),
               ScrolleableDaysList(
                 label:
-                    'Reminders in November ${_selectedDate.day}: $remindersInCurrentMonth',
-                initialDay: remindersInMonth.isEmpty
-                    ? 0
-                    : remindersInMonth.keys.elementAt(0),
-                days: remindersInMonth.keys.toList(),
+                    '${remindersInSelectedDay.length} ${remindersInSelectedDay.length == 1 ? 'Reminder' : 'Reminders'} in November ${_selectedDate == null ? daysWithReminders[0] : _selectedDate!.day}',
+                initialDay:
+                    daysWithReminders.isEmpty ? 0 : daysWithReminders[0],
+                days: daysWithReminders,
                 initialMonth:
-                    monthsWithReminders.isEmpty ? 0 : DateTime.now().month,
+                    monthsWithReminders.isEmpty ? 0 : monthsWithReminders[0],
                 months: monthsWithReminders,
                 onSelectedNewMonth: (selectedMonth) {
-                  final DateTime current = _selectedDate;
+                  final DateTime current = _selectedDate ?? DateTime.now();
                   setState(() {
                     _selectedDate = DateTime(
                       current.year,
                       selectedMonth,
-                      _selectedDate.day,
+                      current.day,
                     );
                   });
                 },
                 onSelectedNewDay: (newDay) {
-                  final DateTime current = _selectedDate;
+                  final DateTime current = _selectedDate ?? DateTime.now();
+
                   setState(() {
                     _selectedDate = DateTime(
                       current.year,
-                      _selectedDate.month,
+                      current.month,
                       newDay,
                     );
                   });

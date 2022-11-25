@@ -151,6 +151,7 @@ class _MapPageState extends State<MapPage> {
                                       style: TextStyles.w600(
                                           resp.sp14, Colors.white),
                                       onTap: () async {
+                                        Navigator.pop(context);
                                         final String? address =
                                             await api.getAddress(point);
                                         setState(() {
@@ -164,7 +165,6 @@ class _MapPageState extends State<MapPage> {
                                           setState(() {
                                             _points = points;
                                           });
-                                          Navigator.pop(context);
                                         }
                                       },
                                     ),
@@ -180,6 +180,7 @@ class _MapPageState extends State<MapPage> {
                                       width: resp.width,
                                       style: TextStyles.w600(resp.sp14),
                                       onTap: () async {
+                                        Navigator.pop(context);
                                         final String? address =
                                             await MapApi().getAddress(point);
                                         setState(() {
@@ -193,7 +194,6 @@ class _MapPageState extends State<MapPage> {
                                           setState(() {
                                             _points = points;
                                           });
-                                          Navigator.pop(context);
                                         }
                                       },
                                     ),
@@ -304,14 +304,16 @@ class _MapPageState extends State<MapPage> {
                                 width: resp.wp(35),
                                 style: TextStyles.w600(resp.sp14, Colors.white),
                                 onTap: () async {
-                                  final points = await api
-                                      .getPolyline(_currentLocation, _endPos!)
-                                      .whenComplete(
-                                          () => Navigator.pop(context));
+                                  Navigator.pop(context);
+                                  List<LatLng>? points;
+                                  if (_endPos != null && _startPos != null) {
+                                    points = await api.getPolyline(
+                                        _currentLocation, _endPos!);
+                                  }
                                   setState(() {
-                                    _points = points;
-                                    _startAddress = _currentAddress;
                                     _startPos = _currentLocation;
+                                    _startAddress = _currentAddress;
+                                    _points = points;
                                   });
                                 },
                               ),
@@ -357,10 +359,12 @@ class _MapPageState extends State<MapPage> {
                                 width: resp.wp(35),
                                 style: TextStyles.w600(resp.sp14, Colors.white),
                                 onTap: () async {
-                                  final points = await api
-                                      .getPolyline(_startPos!, _currentLocation)
-                                      .whenComplete(
-                                          () => Navigator.pop(context));
+                                  Navigator.pop(context);
+                                  List<LatLng>? points;
+                                  if (_startPos != null && _endPos != null) {
+                                    points = await api.getPolyline(
+                                        _startPos!, _currentLocation);
+                                  }
                                   setState(() {
                                     _points = points;
                                     _endAddress = _currentAddress;

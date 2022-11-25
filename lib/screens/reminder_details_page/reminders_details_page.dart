@@ -38,13 +38,11 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
   late TagModel tag;
   late TaskModel task;
   late String? address;
-  late List<LatLng> _mapPreviewPoints;
 
   @override
   void initState() {
     super.initState();
     address = null;
-    _mapPreviewPoints = [];
     tag = TagModel(name: '');
     task = TaskModel(name: '', isCompleted: false);
   }
@@ -74,23 +72,82 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
     final double progress =
         widget.reminder!.progress.isNaN ? 0 : widget.reminder!.progress;
     final Duration timeRemaining = widget.reminder!.timeLeft(DateTime.now());
+    final String daysMess =
+        timeRemaining.inDays == 0 ? '' : '${timeRemaining.inDays} day/s, ';
+    final String hoursMess =
+        '${timeRemaining.inHours - (timeRemaining.inDays * 24)} hours';
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: accent,
-        child: const Icon(Icons.check),
-        onPressed: () async {
-          final idIsEmpty = widget.reminder!.uid.isEmpty;
-          await (idIsEmpty
-                  ? service.create(widget.reminder!.toMap())
-                  : service.update(
-                      widget.reminder!.toMap(), widget.reminder!.id ?? ''))
-              .whenComplete(
-            () {
-              Navigator.pop(context);
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            heroTag: '1',
+            backgroundColor: Colors.grey[100],
+            elevation: 0.5,
+            child: const Icon(Icons.mode, color: accent),
+            onPressed: () async {
+              CustomAlertDialog(
+                resp: resp,
+                context: context,
+                title: 'Modify Reminder',
+                onAcceptCallback: () {},
+                customBody: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: resp.hp(1)),
+                    Text(
+                      'Title',
+                      style: TextStyles.w600(resp.sp14),
+                    ),
+                    SizedBox(height: resp.hp(1)),
+                    CustomFormField(
+                      labelText: 'Title',
+                      hintText: 'My title',
+                      icon: Icons.my_library_books_outlined,
+                      onChanged: (value) {
+                        widget.reminder!.title = value;
+                      },
+                    ),
+                    SizedBox(height: resp.hp(1)),
+                    Text(
+                      'Description',
+                      style: TextStyles.w600(resp.sp14),
+                    ),
+                    SizedBox(height: resp.hp(1)),
+                    CustomFormField(
+                      labelText: 'Description',
+                      hintText: 'My description',
+                      icon: Icons.mode_edit_outline_outlined,
+                      onChanged: (value) {
+                        widget.reminder!.description = value;
+                      },
+                    ),
+                  ],
+                ),
+              );
             },
-          );
-        },
+          ),
+          SizedBox(width: resp.wp(1.5)),
+          FloatingActionButton(
+            heroTag: '0',
+            backgroundColor: accent,
+            child: const Icon(Icons.check),
+            onPressed: () async {
+              final idIsEmpty = widget.reminder!.uid.isEmpty;
+              await (idIsEmpty
+                      ? service.create(widget.reminder!.toMap())
+                      : service.update(
+                          widget.reminder!.toMap(), widget.reminder!.id ?? ''))
+                  .whenComplete(
+                () {
+                  Navigator.pop(context);
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(
@@ -211,7 +268,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                     icon: Icons.timer,
                     title: 'Time remaining:',
                     value:
-                        '${timeRemaining.isNegative ? 'Expired' : ''} ${timeRemaining.inDays == 0 ? '' : '${timeRemaining.inDays.abs()} day/s, '}${timeRemaining.inHours.abs()} hour/s ${timeRemaining.isNegative ? 'ago' : ''}',
+                        '${timeRemaining.isNegative ? 'Expired ' : ''}${timeRemaining.inDays == 0 ? '' : '${timeRemaining.inDays.abs()} ${(timeRemaining.inDays.abs() == 1 ? 'day' : 'days')}, '}$hoursMess ${timeRemaining.isNegative ? 'ago' : ''}',
                   ),
                   if (widget.reminder!.expectedTemp != null)
                     ReminderInformationWidget(
@@ -457,19 +514,6 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                   SizedBox(height: resp.hp(5)),
                 ],
               ),
-            ),
-            ExpandibleCreationOrEditReminder(
-              icon: Icons.edit,
-              initialHeight: resp.hp(6),
-              finalHeight: resp.hp(50),
-              initialWidth: resp.wp(13),
-              finalWidth: resp.width,
-              iconSize: resp.dp(3),
-              reminder: widget.reminder,
-              onAcceptCallback: (reminder) {
-                widget.reminder!.title = reminder.title;
-                widget.reminder!.description = reminder.description;
-              },
             ),
           ],
         ),

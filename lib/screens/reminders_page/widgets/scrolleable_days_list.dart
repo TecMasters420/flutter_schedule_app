@@ -41,6 +41,9 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    if (!widget.days.contains(_selectedDay)) {
+      _selectedDay = widget.days[0];
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,12 +64,11 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
                       monthContainer == (_selectedMonth ?? widget.initialMonth);
                   return GestureDetector(
                     onTap: () {
-                      if ((_selectedMonth ?? widget.initialMonth) ==
-                              monthContainer ||
+                      if (isSelected ||
                           !widget.months.contains(monthContainer)) {
                         return;
                       }
-                      widget.onSelectedNewDay(monthContainer);
+                      widget.onSelectedNewMonth(monthContainer);
                       setState(() {
                         _selectedMonth = monthContainer;
                       });
@@ -90,11 +92,16 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
                             ),
                           ),
                           SizedBox(height: resp.hp(0.5)),
-                          Container(
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 250),
                             height: resp.hp(0.75),
-                            width: resp.wp(5),
+                            width: isSelected ? resp.wp(5) : resp.wp(2.5),
                             decoration: BoxDecoration(
-                              color: isSelected ? accent : Colors.transparent,
+                              color: isSelected
+                                  ? accent
+                                  : widget.months.contains(monthContainer)
+                                      ? lightGrey.withOpacity(0.25)
+                                      : Colors.transparent,
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(10),
                               ),
@@ -162,7 +169,7 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
                           Text(
                             DateFormat('EEEE')
                                 .format(DateTime(DateTime.now().year,
-                                    DateTime.now().month, dayContainer))
+                                    _selectedMonth!, dayContainer))
                                 .substring(0, 3)
                                 .toUpperCase(),
                             style: isSelected
@@ -170,17 +177,16 @@ class _ScrolleableDaysListState extends State<ScrolleableDaysList> {
                                 : TextStyles.w500(resp.sp16, lightGrey),
                           ),
                           SizedBox(height: resp.hp(0.5)),
-                          if (isSelected)
-                            Container(
-                              height: resp.hp(0.75),
-                              width: resp.wp(5),
-                              decoration: BoxDecoration(
-                                color: isSelected ? accent : Colors.transparent,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
+                          Container(
+                            height: resp.hp(0.75),
+                            width: resp.wp(5),
+                            decoration: BoxDecoration(
+                              color: isSelected ? accent : Colors.transparent,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10),
                               ),
-                            )
+                            ),
+                          )
                         ],
                       ),
                     ),
