@@ -12,6 +12,7 @@ import '../../services/reminder_service.dart';
 import '../../utils/responsive_util.dart';
 import '../../widgets/custom_alert_dialog.dart';
 import '../../widgets/custom_button.dart';
+import '../../widgets/custom_circular_progress.dart';
 import '../../widgets/custom_date_time_picker.dart';
 import '../../widgets/custom_form_field.dart';
 import '../../widgets/map_preview.dart';
@@ -149,13 +150,50 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
             onPressed: () async {
               final idIsEmpty = widget.reminder!.uid.isEmpty;
               if (service.isValidToUpload(widget.reminder!)) {
+                CustomAlertDialog(
+                  resp: resp,
+                  dismissible: false,
+                  context: context,
+                  onAcceptCallback: () {},
+                  showButtons: false,
+                  title: 'Adding reminder...',
+                  customBody: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const CustomCircularProgress(color: accent),
+                      SizedBox(height: resp.hp(2)),
+                      Text('Wait a bit while it saves',
+                          style: TextStyles.w500(resp.sp16))
+                    ],
+                  ),
+                );
                 await (idIsEmpty
                         ? service.create(widget.reminder!.toMap())
                         : service.update(widget.reminder!.toMap()))
                     .whenComplete(
                   () {
                     Navigator.pop(context);
+                    Navigator.pop(context);
                   },
+                );
+              } else {
+                CustomAlertDialog(
+                  resp: resp,
+                  dismissible: true,
+                  context: context,
+                  onAcceptCallback: () {},
+                  showButtons: false,
+                  title: 'Can not save!',
+                  customBody: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.block_rounded,
+                          color: Colors.red[200], size: resp.sp40),
+                      SizedBox(height: resp.hp(2)),
+                      Text('Review the entered data.',
+                          style: TextStyles.w500(resp.sp16))
+                    ],
+                  ),
                 );
               }
             },
