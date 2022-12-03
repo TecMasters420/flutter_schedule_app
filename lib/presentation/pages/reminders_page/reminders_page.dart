@@ -47,8 +47,6 @@ class _RemindersPageState extends State<RemindersPage> {
     final AuthController auth = Get.find();
     final RemindersController reminderService = Get.put(RemindersController());
 
-    // Get months with reminders
-
     return Obx(
       () {
         final List<int> monthsWithReminders = [];

@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:schedulemanager/presentation/pages/home_page/home_page.dart';
-import 'package:schedulemanager/presentation/pages/initial_page/initial_information_page.dart';
-import 'package:schedulemanager/presentation/pages/login_page/login_page.dart';
 
 import '../../app/services/base_service.dart';
 import '../../data/models/user_model.dart';
@@ -13,13 +11,21 @@ import '../../data/models/user_model.dart';
 class AuthController extends GetxController {
   static const String _collection = 'Users';
 
-  // static AuthController instance = Get.find();
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSign = GoogleSignIn();
 
   late final Rx<User?> user;
   late final Rx<UserModel?> userInformation;
+
+  @override
+  void onInit() async {
+    super.onInit();
+    user = Rx<User?>(_auth.currentUser);
+    userInformation = Rx<UserModel?>(null);
+    if (user.value != null) await updateUserFireStore();
+    user.bindStream(_auth.userChanges());
+    ever(user, _initialScreen);
+  }
 
   void _showError(final String error) {
     String errorMessage = error.replaceAll('-', ' ');
@@ -37,19 +43,10 @@ class AuthController extends GetxController {
     );
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-    user = Rx<User?>(_auth.currentUser);
-    userInformation = Rx<UserModel?>(null);
-    user.bindStream(_auth.userChanges());
-    ever(user, _initialScreen);
-  }
-
   _initialScreen(User? user) {
-    Get.to(() => user == null && userInformation.value == null
-        ? const InitialInformationPage()
-        : const LoginPage());
+    Get.toNamed(user == null || userInformation.value == null
+        ? '/initialInformationPage'
+        : '/homePage');
   }
 
   Future<void> googleLogin() async {
@@ -84,12 +81,12 @@ class AuthController extends GetxController {
     final User currentUser = user.value!;
     final UserModel tempUser = UserModel(
       uid: currentUser.uid,
-      displayName: currentUser.displayName ?? '',
+      displayName: currentUser.displayName,
       email: currentUser.email,
       emailVerified: currentUser.emailVerified,
-      phoneNumber: currentUser.phoneNumber ?? '',
-      createdAt: currentUser.metadata.creationTime ?? DateTime.now(),
-      imageURL: currentUser.photoURL ?? '',
+      phoneNumber: currentUser.phoneNumber,
+      createdAt: currentUser.metadata.creationTime,
+      imageURL: currentUser.photoURL,
       lastLoginAt: currentUser.metadata.lastSignInTime!,
       fcmToken: fcmToken!,
     );

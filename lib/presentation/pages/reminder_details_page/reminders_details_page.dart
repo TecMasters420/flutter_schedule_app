@@ -83,7 +83,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    final RemindersController reminderService = Get.put(RemindersController());
+    final RemindersController reminderService = Get.find<RemindersController>();
     final bool isSameDay = widget.reminder!.startDate
             .toDate()
             .difference(widget.reminder!.endDate.toDate())

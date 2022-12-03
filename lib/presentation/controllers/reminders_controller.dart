@@ -12,7 +12,7 @@ class RemindersController extends GetxController implements BaseService {
 
   final db = FirebaseFirestore.instance.collection(_collection);
 
-  final RxBool _isLoading = true.obs;
+  final RxBool isLoading = true.obs;
   final Rx<List<ReminderModel>> _reminders = Rx<List<ReminderModel>>([]);
   final Rx<List<ReminderModel>> _expiredReminders = Rx<List<ReminderModel>>([]);
   final Rx<List<ReminderModel>> _notExpiredReminders =
@@ -25,7 +25,6 @@ class RemindersController extends GetxController implements BaseService {
   @override
   void onInit() async {
     super.onInit();
-    print('on init');
     await getData();
   }
 
@@ -68,7 +67,8 @@ class RemindersController extends GetxController implements BaseService {
 
   @override
   Future<void> getData([VoidCallback? onChangesCallback]) async {
-    _isLoading.value = true;
+    debugPrint('Getting data');
+    isLoading.value = true;
     final String uid = FirebaseAuth.instance.currentUser!.uid;
     _reminders.value = await db.where('uid', isEqualTo: uid).get().then(
         (r) => r.docs.map((e) => ReminderModel.fromMap(e.data())).toList());
@@ -106,7 +106,6 @@ class RemindersController extends GetxController implements BaseService {
         // debugPrint(address);
         await db.doc(r.id).update(r.toMap());
       }
-      _isLoading.value = false;
     }
 
     // Get expired reminders
@@ -120,6 +119,7 @@ class RemindersController extends GetxController implements BaseService {
       final isAfter = endDate.isAfter(DateTime.now());
       return isAfter;
     }).toList();
+    isLoading.value = false;
   }
 
   Future<String?> _getReminderAddress(final LatLng coords) async {
