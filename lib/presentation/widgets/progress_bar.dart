@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../app_docker/constants/constants.dart';
+import '../../app/config/constants.dart';
 
 class ProgressBar extends StatelessWidget {
   final double percent;

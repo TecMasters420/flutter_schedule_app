@@ -3,11 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:schedulemanager/presentation/widgets/custom_alert_dialog.dart';
 import 'package:schedulemanager/presentation/widgets/custom_circular_progress.dart';
 
-import '../../../app_docker/constants/constants.dart';
+import '../../../app/config/constants.dart';
 import '../../../data/models/user_model.dart';
-import '../../../app_docker/app/services/auth_service.dart';
-import '../../../app_docker/app/utils/responsive_util.dart';
-import '../../../app_docker/app/utils/text_styles.dart';
+import '../../../app/services/auth_service.dart';
+import '../../../app/utils/responsive_util.dart';
+import '../../../app/utils/text_styles.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_form_field.dart';
 

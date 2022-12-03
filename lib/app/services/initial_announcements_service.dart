@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../data/models/initial_announcement_model.dart';
+import '../../data/models/initial_announcement_model.dart';
 import 'base_service.dart';
 
 class InitialAnnouncementsService extends BaseService with ChangeNotifier {

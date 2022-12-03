@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../app_docker/constants/constants.dart';
+import '../../app/config/constants.dart';
 
 class TagsList extends StatelessWidget {
   final void Function(int index)? onLongPressCallback;

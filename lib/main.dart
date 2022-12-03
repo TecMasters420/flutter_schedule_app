@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:schedulemanager/app_docker/api/map_api.dart';
+import 'package:schedulemanager/domain/map_api.dart';
 import 'package:schedulemanager/presentation/controllers/auth_controller.dart';
-import 'package:schedulemanager/app_docker/app/services/flutter_notification.dart';
+import 'package:schedulemanager/app/services/flutter_notification.dart';
 
 import 'firebase_options.dart';
 import 'presentation/pages/home_page/home_page.dart';
@@ -17,9 +17,9 @@ import 'presentation/pages/register_page/register_page.dart';
 import 'presentation/pages/reminder_details_page/reminders_details_page.dart';
 import 'presentation/pages/reminders_page/reminders_page.dart';
 import 'presentation/pages/user_profile_page/user_profile_page.dart';
-import 'app_docker/app/services/auth_service.dart';
-import 'app_docker/app/services/initial_announcements_service.dart';
-import 'app_docker/app/services/reminder_service.dart';
+import 'app/services/auth_service.dart';
+import 'app/services/initial_announcements_service.dart';
+import 'app/services/reminder_service.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}

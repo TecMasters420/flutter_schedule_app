@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:schedulemanager/app_docker/app/utils/responsive_util.dart';
+import 'package:schedulemanager/app/utils/responsive_util.dart';
 
-import '../../../../app_docker/constants/constants.dart';
-import '../../../../app_docker/app/utils/text_styles.dart';
+import '../../../../app/config/constants.dart';
+import '../../../../app/utils/text_styles.dart';
 
 class AllRemindersRedirectionButton extends StatelessWidget {
   const AllRemindersRedirectionButton({super.key});

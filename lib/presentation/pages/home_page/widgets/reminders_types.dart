@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'reminders_list.dart';
 import '../../../../data/models/reminder_model.dart';
-import '../../../../app_docker/app/utils/responsive_util.dart';
-import '../../../../app_docker/app/utils/text_styles.dart';
+import '../../../../app/utils/responsive_util.dart';
+import '../../../../app/utils/text_styles.dart';
 
-import '../../../../app_docker/constants/constants.dart';
+import '../../../../app/config/constants.dart';
 
 class ActivitiesTypes extends StatefulWidget {
   final Map<String, List<ReminderModel>> remindersPerType;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../data/models/reminder_model.dart';
 import '../pages/reminder_details_page/reminders_details_page.dart';
-import '../../app_docker/app/utils/responsive_util.dart';
+import '../../app/utils/responsive_util.dart';
 import 'progress_bar.dart';
 import 'tags_list.dart';
 
-import '../../app_docker/constants/constants.dart';
-import '../../app_docker/app/utils/text_styles.dart';
+import '../../app/config/constants.dart';
+import '../../app/utils/text_styles.dart';
 import 'custom_button.dart';
 
 class ReminderInformation extends StatelessWidget {
