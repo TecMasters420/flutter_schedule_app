@@ -14,7 +14,6 @@ import 'package:schedulemanager/presentation/widgets/custom_button.dart';
 
 import '../../../app/config/constants.dart';
 import '../../../app/utils/text_styles.dart';
-import '../../widgets/custom_circular_progress.dart';
 
 class MapPage extends StatefulWidget {
   final LatLng? startPos;

@@ -1,42 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:schedulemanager/data/models/reminder_model.dart';
-import '../../../app/services/auth_service.dart';
-import '../../../app/services/reminder_service.dart';
+import 'package:get/get.dart';
+import 'package:schedulemanager/presentation/controllers/auth_controller.dart';
+import 'package:schedulemanager/presentation/controllers/reminders_controller.dart';
+
 import '../../../app/utils/responsive_util.dart';
 
 import '../../../app/utils/text_styles.dart';
 import '../../widgets/user_profile_picture.dart';
 import 'widgets/widgets.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends GetWidget {
   const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<ReminderService>(context, listen: false).getData();
-  }
 
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    final AuthService auth = Provider.of<AuthService>(context);
-    final ReminderService service = Provider.of<ReminderService>(context);
-
-    int remindersWithTasks = 0;
-    double totalProgress = 0;
-    for (final ReminderModel r in service.notExpiredReminders) {
-      if (r.tasks.isNotEmpty) {
-        remindersWithTasks += 1;
-        totalProgress += r.progress;
-      }
-    }
+    final RemindersController reminderService = Get.put(RemindersController());
+    final AuthController auth = Get.find();
 
     return Scaffold(
       body: Stack(
@@ -65,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                       UserProfilePicture(
                         height: resp.hp(5),
                         width: resp.wp(10),
-                        userImage: auth.userInformation!.imageURL ?? '',
+                        userImage: auth.userInformation.value!.imageURL ?? '',
                       )
                     ],
                   ),
@@ -81,13 +61,15 @@ class _HomePageState extends State<HomePage> {
                     child: const HomeActivitiesShow(),
                   ),
                   SizedBox(height: resp.hp(5)),
-                  ActivitiesTypes(
-                    initialTabIndex: 1,
-                    remindersPerType: {
-                      'Expired': service.expiredReminders,
-                      'Current': service.notExpiredReminders,
-                      'Completed': service.expiredReminders,
-                    },
+                  Obx(
+                    () => ActivitiesTypes(
+                      initialTabIndex: 1,
+                      remindersPerType: {
+                        'Expired': reminderService.expiredReminders,
+                        'Current': reminderService.notExpiredReminders,
+                        'Completed': reminderService.expiredReminders,
+                      },
+                    ),
                   ),
                 ],
               ),

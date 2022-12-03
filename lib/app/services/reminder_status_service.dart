@@ -7,14 +7,14 @@ class ReminderStatusService extends BaseService {
       FirebaseFirestore.instance.collection(_collection);
 
   @override
-  Future<void> create(Map<String, dynamic> data) async {}
+  Future<void> createData(Map<String, dynamic> data) async {}
 
   @override
-  Future<void> delete(Map<String, dynamic> data) async {}
+  Future<void> deleteData(Map<String, dynamic> data) async {}
 
   @override
   Future<void> getData([final String uid = '']) async {}
 
   @override
-  Future<void> update(Map<String, dynamic> data) async {}
+  Future<void> updateData(Map<String, dynamic> data) async {}
 }

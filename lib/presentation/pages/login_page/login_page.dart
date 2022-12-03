@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+import 'package:schedulemanager/presentation/controllers/auth_controller.dart';
 import 'package:schedulemanager/presentation/widgets/custom_alert_dialog.dart';
 import 'package:schedulemanager/presentation/widgets/custom_circular_progress.dart';
 
 import '../../../app/config/constants.dart';
 import '../../../data/models/user_model.dart';
-import '../../../app/services/auth_service.dart';
+
 import '../../../app/utils/responsive_util.dart';
 import '../../../app/utils/text_styles.dart';
 import '../../widgets/custom_button.dart';
@@ -27,20 +28,10 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
-  void _showSnackbar(final String code, final String type) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(milliseconds: 1000),
-        backgroundColor: type == 'error' ? Colors.red[200] : Colors.green[200],
-        content: Text('Message: $code'),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    final AuthService auth = Provider.of<AuthService>(context);
+    final AuthController auth = Get.find();
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -113,15 +104,8 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyles.w800(resp.sp16, Colors.white),
                   width: resp.wp(30),
                   text: 'Login',
-                  onTap: () async => await auth.login(
-                    _user.email!,
-                    _user.password!,
-                    () async {
-                      _showSnackbar('Logged!', 'Logged');
-                      await Navigator.pushReplacementNamed(context, 'homePage');
-                    },
-                    (errorCode) => _showSnackbar(errorCode, 'error'),
-                  ),
+                  onTap: () async =>
+                      await auth.login(_user.email ?? '', _user.password ?? ''),
                 ),
                 SizedBox(height: resp.hp(1)),
                 Text(
@@ -159,14 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                     );
-                    await auth.googleLogin(
-                      () {
-                        Navigator.pop(context);
-                        _showSnackbar('Logged!', 'Logged');
-                        Navigator.pushReplacementNamed(context, 'homePage');
-                      },
-                      (errorCode) => _showSnackbar(errorCode, 'error'),
-                    );
+                    await auth.googleLogin();
                   },
                 ),
                 const Spacer(),

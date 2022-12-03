@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:schedulemanager/app/utils/responsive_util.dart';
 
 import '../../../../app/config/constants.dart';
