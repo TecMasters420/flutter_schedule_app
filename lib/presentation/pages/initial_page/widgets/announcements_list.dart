@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:schedulemanager/presentation/pages/login_page/login_page.dart';
 import '../../../../app/utils/responsive_util.dart';
 
 import '../../../../app/config/constants.dart';
@@ -39,9 +41,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
   void _pageListener() {
     setState(() {
       final int newPage = _pageController.page!.round();
-      if (newPage != _currentPage) {
-        widget.onNewPageCallback(newPage);
-      }
+      if (newPage != _currentPage) widget.onNewPageCallback(newPage);
       _currentPage = newPage;
       _pageProgress = _pageController.page!;
     });
@@ -86,10 +86,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                             style: TextStyles.w800(resp.sp14, Colors.white),
                             width: resp.wp(40),
                             text: 'Join',
-                            onTap: () => Navigator.pushReplacementNamed(
-                              context,
-                              'loginPage',
-                            ),
+                            onTap: () => Get.toNamed('/loginPage'),
                           ),
                         ],
                       ),

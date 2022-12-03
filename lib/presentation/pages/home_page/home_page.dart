@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/presentation/controllers/auth_controller.dart';
 import 'package:schedulemanager/presentation/controllers/reminders_controller.dart';
+import 'package:schedulemanager/presentation/widgets/custom_circular_progress.dart';
 
 import '../../../app/utils/responsive_util.dart';
 
@@ -9,13 +11,14 @@ import '../../../app/utils/text_styles.dart';
 import '../../widgets/user_profile_picture.dart';
 import 'widgets/widgets.dart';
 
-class HomePage extends GetWidget {
+class HomePage extends GetView {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    final RemindersController reminderService = Get.put(RemindersController());
+    final RemindersController reminderController =
+        Get.put(RemindersController());
     final AuthController auth = Get.find();
 
     return Scaffold(
@@ -62,14 +65,16 @@ class HomePage extends GetWidget {
                   ),
                   SizedBox(height: resp.hp(5)),
                   Obx(
-                    () => ActivitiesTypes(
-                      initialTabIndex: 1,
-                      remindersPerType: {
-                        'Expired': reminderService.expiredReminders,
-                        'Current': reminderService.notExpiredReminders,
-                        'Completed': reminderService.expiredReminders,
-                      },
-                    ),
+                    () => reminderController.isLoading.value
+                        ? const CustomCircularProgress(color: accent)
+                        : ActivitiesTypes(
+                            initialTabIndex: 1,
+                            remindersPerType: {
+                              'Expired': reminderController.expiredReminders,
+                              'Current': reminderController.notExpiredReminders,
+                              'Completed': reminderController.expiredReminders,
+                            },
+                          ),
                   ),
                 ],
               ),

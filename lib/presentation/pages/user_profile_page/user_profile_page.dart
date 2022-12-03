@@ -11,7 +11,7 @@ import '../../../app/config/constants.dart';
 import '../../../app/utils/text_styles.dart';
 import '../../widgets/custom_back_button.dart';
 
-class UserProfilePage extends StatelessWidget {
+class UserProfilePage extends GetWidget<AuthController> {
   const UserProfilePage({super.key});
 
   @override
@@ -29,8 +29,6 @@ class UserProfilePage extends StatelessWidget {
             bottom: 20,
           ),
           child: Obx(() {
-            final AuthController auth = Get.find();
-
             return Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +37,7 @@ class UserProfilePage extends StatelessWidget {
                 SizedBox(height: resp.hp(2.5)),
                 Center(
                   child: Text(
-                    '${auth.user.value!.displayName ?? 'NoName'} Profile.',
+                    '${controller.user.value!.displayName ?? 'NoName'} Profile.',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyles.w700(resp.sp30),
@@ -51,7 +49,8 @@ class UserProfilePage extends StatelessWidget {
                   child: UserProfilePicture(
                       height: resp.hp(20),
                       width: resp.wp(42.5),
-                      userImage: auth.userInformation.value!.imageURL ?? ''),
+                      userImage:
+                          controller.userInformation.value!.imageURL ?? ''),
                 ),
                 SizedBox(height: resp.hp(3)),
                 Text(
@@ -64,7 +63,7 @@ class UserProfilePage extends StatelessWidget {
                   style: TextStyles.w500(resp.sp16, black),
                 ),
                 Text(
-                  auth.user.value!.displayName ?? 'NoName',
+                  controller.user.value!.displayName ?? 'NoName',
                   style: TextStyles.w400(resp.sp14, black),
                 ),
                 SizedBox(height: resp.hp(3)),
@@ -73,7 +72,7 @@ class UserProfilePage extends StatelessWidget {
                   style: TextStyles.w500(resp.sp16, black),
                 ),
                 Text(
-                  auth.user.value!.email ?? 'NoEmail',
+                  controller.user.value!.email ?? 'NoEmail',
                   style: TextStyles.w400(resp.sp14, black),
                 ),
                 SizedBox(height: resp.hp(3)),
@@ -82,7 +81,7 @@ class UserProfilePage extends StatelessWidget {
                   style: TextStyles.w500(resp.sp16, black),
                 ),
                 Text(
-                  auth.user.value!.phoneNumber ?? 'NoNumber',
+                  controller.user.value!.phoneNumber ?? 'NoNumber',
                   style: TextStyles.w400(resp.sp14, black),
                 ),
                 SizedBox(height: resp.hp(3)),

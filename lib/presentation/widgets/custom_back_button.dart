@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomBackButton extends StatelessWidget {
   const CustomBackButton({super.key});
@@ -10,9 +11,7 @@ class CustomBackButton extends StatelessWidget {
       splashRadius: 20,
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.zero,
-      onPressed: () {
-        Navigator.pop(context);
-      },
+      onPressed: () => Get.back(),
     );
   }
 }

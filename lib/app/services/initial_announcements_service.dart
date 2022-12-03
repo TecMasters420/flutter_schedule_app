@@ -1,20 +1,25 @@
-import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
 import '../../data/models/initial_announcement_model.dart';
 import 'base_service.dart';
 
-class InitialAnnouncementsService extends BaseService with ChangeNotifier {
+class InitialAnnouncementsService extends GetxController
+    implements BaseService {
   static const _collection = 'InitialAnnouncements';
 
   final collection = FirebaseFirestore.instance.collection(_collection);
 
-  late List<InitialAnnouncementModel> announces;
-  late bool isLoaded;
+  Rx<List<InitialAnnouncementModel>> announces =
+      Rx<List<InitialAnnouncementModel>>([]);
 
-  InitialAnnouncementsService() {
-    announces = [];
-    isLoaded = false;
-    getData();
+  int get announcementsQuantity => announces.value.length;
+
+  RxBool isLoaded = false.obs;
+
+  @override
+  void onInit() async {
+    super.onInit();
+    await getData();
   }
 
   @override
@@ -25,12 +30,11 @@ class InitialAnnouncementsService extends BaseService with ChangeNotifier {
 
   @override
   Future<void> getData([final String uid = '']) async {
-    announces = await collection.get().then((snapshot) => snapshot.docs
+    announces.value = await collection.get().then((snapshot) => snapshot.docs
         .map((e) => InitialAnnouncementModel.fromMap(e.data()))
         .toList());
     Future.delayed(const Duration(milliseconds: 500)).then((value) {
-      isLoaded = true;
-      notifyListeners();
+      isLoaded.value = true;
     });
   }
 
