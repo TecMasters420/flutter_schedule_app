@@ -43,7 +43,6 @@ class _MapPreviewState extends State<MapPreview> {
     _controller = MapController();
     _points = [];
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      print('updating');
       try {
         final start =
             LatLng(widget.initialPoint.latitude, widget.initialPoint.longitude);

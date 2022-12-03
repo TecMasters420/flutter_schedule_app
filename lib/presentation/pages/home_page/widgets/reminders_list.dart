@@ -1,7 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:schedulemanager/presentation/controllers/reminders_controller.dart';
 import 'package:schedulemanager/presentation/pages/home_page/widgets/all_reminders_redirection_button.dart';
+import 'package:schedulemanager/presentation/pages/reminders_page/reminders_page.dart';
 import '../../../../data/models/reminder_model.dart';
 import 'reminder_date_data.dart';
 import '../../../../app/utils/responsive_util.dart';
@@ -49,7 +52,8 @@ class RemindersListPerType extends StatelessWidget {
               constraints: const BoxConstraints(maxWidth: 90),
               prefixWidget: Icon(Icons.add, size: resp.sp20, color: accent),
               onTap: () {
-                Navigator.pushNamed(context, 'remindersPage');
+                Get.to(() => const RemindersPage())!
+                    .whenComplete(() => Get.delete<RemindersController>());
               },
             ),
           ],

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+import 'package:schedulemanager/presentation/controllers/auth_controller.dart';
 
 import '../../../app/config/constants.dart';
 import '../../../data/models/user_model.dart';
-import '../../../app/services/auth_service.dart';
+
 import '../../../app/utils/responsive_util.dart';
 import '../../../app/utils/text_styles.dart';
 import '../../widgets/custom_button.dart';
@@ -25,21 +26,11 @@ class _RegisterPageState extends State<RegisterPage> {
     super.initState();
   }
 
-  void _showSnackbar(
-      final BuildContext context, final String code, final String type) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(milliseconds: 1000),
-        backgroundColor: type == 'error' ? Colors.red[200] : Colors.green[200],
-        content: Text('Message: $code'),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    final AuthService auth = Provider.of<AuthService>(context);
+    final AuthController auth = Get.find();
+
     return Scaffold(
       backgroundColor: backgroundColor,
       body: SingleChildScrollView(
@@ -103,15 +94,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   style: TextStyles.w800(16, Colors.white),
                   width: resp.wp(30),
                   text: 'Register',
-                  onTap: () async => await auth.createUser(
-                    _user.email!,
-                    _user.password!,
-                    () {
-                      _showSnackbar(context, 'Registered!', 'Registered');
-                      Navigator.pushReplacementNamed(context, 'loginPage');
-                    },
-                    (errorCode) => _showSnackbar(context, errorCode, 'error'),
-                  ),
+                  onTap: () async =>
+                      await auth.createUser(_user.email!, _user.password!),
                 ),
               ],
             ),

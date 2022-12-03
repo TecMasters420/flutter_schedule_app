@@ -1,21 +1,33 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
-import '../../data/models/reminder_model.dart';
-import 'base_service.dart';
+import 'package:schedulemanager/app/services/base_service.dart';
 
-class ReminderService extends BaseService with ChangeNotifier {
+import '../../data/models/reminder_model.dart';
+
+class RemindersController extends GetxController implements BaseService {
   static const String _collection = 'Reminder';
 
   final db = FirebaseFirestore.instance.collection(_collection);
-  List<ReminderModel> _reminders = [];
-  List<ReminderModel> _expiredReminders = [];
-  List<ReminderModel> _notExpiredReminders = [];
 
-  List<ReminderModel> get reminders => _reminders;
-  List<ReminderModel> get expiredReminders => _expiredReminders;
-  List<ReminderModel> get notExpiredReminders => _notExpiredReminders;
+  final RxBool _isLoading = true.obs;
+  final Rx<List<ReminderModel>> _reminders = Rx<List<ReminderModel>>([]);
+  final Rx<List<ReminderModel>> _expiredReminders = Rx<List<ReminderModel>>([]);
+  final Rx<List<ReminderModel>> _notExpiredReminders =
+      Rx<List<ReminderModel>>([]);
+
+  List<ReminderModel> get reminders => _reminders.value;
+  List<ReminderModel> get expiredReminders => _expiredReminders.value;
+  List<ReminderModel> get notExpiredReminders => _notExpiredReminders.value;
+
+  @override
+  void onInit() async {
+    super.onInit();
+    print('on init');
+    await getData();
+  }
 
   bool isValidToUpload(final ReminderModel reminder) {
     return reminder.title.isNotEmpty &&
@@ -24,7 +36,7 @@ class ReminderService extends BaseService with ChangeNotifier {
   }
 
   @override
-  Future<void> create(Map<String, dynamic> data) async {
+  Future<void> createData(Map<String, dynamic> data) async {
     debugPrint('Adding $data');
     final String uid = FirebaseAuth.instance.currentUser!.uid;
     data['uid'] = uid;
@@ -36,7 +48,7 @@ class ReminderService extends BaseService with ChangeNotifier {
   }
 
   @override
-  Future<void> delete(Map<String, dynamic> data) async {
+  Future<void> deleteData(Map<String, dynamic> data) async {
     await db
         .doc(data['id'])
         .delete()
@@ -45,7 +57,7 @@ class ReminderService extends BaseService with ChangeNotifier {
   }
 
   @override
-  Future<void> update(Map<String, dynamic> data) async {
+  Future<void> updateData(Map<String, dynamic> data) async {
     debugPrint('Updating $data ');
     await db
         .doc(data['id'])
@@ -56,10 +68,11 @@ class ReminderService extends BaseService with ChangeNotifier {
 
   @override
   Future<void> getData([VoidCallback? onChangesCallback]) async {
+    _isLoading.value = true;
     final String uid = FirebaseAuth.instance.currentUser!.uid;
-    _reminders = await db.where('uid', isEqualTo: uid).get().then(
+    _reminders.value = await db.where('uid', isEqualTo: uid).get().then(
         (r) => r.docs.map((e) => ReminderModel.fromMap(e.data())).toList());
-    final remindersWithoutAddress = _reminders
+    final remindersWithoutAddress = _reminders.value
         .where((r) =>
             r.endLocationAddress == null && r.endLocation != null ||
             r.startLocationAddress == null && r.startLocation != null)
@@ -93,21 +106,20 @@ class ReminderService extends BaseService with ChangeNotifier {
         // debugPrint(address);
         await db.doc(r.id).update(r.toMap());
       }
+      _isLoading.value = false;
     }
 
     // Get expired reminders
-    _expiredReminders = _reminders
+    _expiredReminders.value = _reminders.value
         .where((reminder) => reminder.endDate.toDate().isBefore(DateTime.now()))
         .toList();
 
     // Get not expired reminders
-    _notExpiredReminders = reminders.where((reminder) {
+    _notExpiredReminders.value = reminders.where((reminder) {
       final endDate = reminder.endDate.toDate();
       final isAfter = endDate.isAfter(DateTime.now());
       return isAfter;
     }).toList();
-    print('REMINDERS: ${reminders.length}');
-    notifyListeners();
   }
 
   Future<String?> _getReminderAddress(final LatLng coords) async {

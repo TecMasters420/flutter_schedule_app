@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:provider/provider.dart';
 import 'package:schedulemanager/presentation/pages/map_page/map_page.dart';
 import 'package:schedulemanager/presentation/pages/reminder_details_page/widgets/custom_alert_with_calendart.dart';
-import 'package:schedulemanager/presentation/pages/reminders_page/widgets/scrolleable_calendar.dart';
 import '../../../app/config/constants.dart';
 import '../../../data/models/reminder_model.dart';
 import '../../../data/models/tag_model.dart';
 import '../../../data/models/task_model.dart';
 import '../../../app/services/base_service.dart';
-import '../../../app/services/reminder_service.dart';
 import '../../../app/utils/responsive_util.dart';
+import '../../controllers/reminders_controller.dart';
 import '../../widgets/custom_alert_dialog.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_circular_progress.dart';
-import '../../widgets/custom_date_time_picker.dart';
 import '../../widgets/custom_form_field.dart';
 import '../../widgets/map_preview.dart';
 import '../../widgets/progress_bar.dart';
@@ -85,8 +83,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    final ReminderService service = Provider.of<ReminderService>(context);
-
+    final RemindersController reminderService = Get.put(RemindersController());
     final bool isSameDay = widget.reminder!.startDate
             .toDate()
             .difference(widget.reminder!.endDate.toDate())
@@ -99,10 +96,6 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
         timeRemaining.inDays == 0 ? '' : '${timeRemaining.inDays} day/s, ';
     final String hoursMess =
         '${timeRemaining.inHours - (timeRemaining.inDays * 24)} hours';
-
-    final DateTime now = DateTime.now();
-    final List<int> monthsToCalendar =
-        List.generate(12 - now.month, (index) => now.month + index);
 
     return Scaffold(
       floatingActionButton: Row(
@@ -163,7 +156,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
             child: const Icon(Icons.check),
             onPressed: () async {
               final idIsEmpty = widget.reminder!.uid.isEmpty;
-              if (service.isValidToUpload(widget.reminder!)) {
+              if (reminderService.isValidToUpload(widget.reminder!)) {
                 CustomAlertDialog(
                   resp: resp,
                   dismissible: false,
@@ -182,8 +175,8 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                   ),
                 );
                 await (idIsEmpty
-                        ? service.create(widget.reminder!.toMap())
-                        : service.update(widget.reminder!.toMap()))
+                        ? reminderService.createData(widget.reminder!.toMap())
+                        : reminderService.updateData(widget.reminder!.toMap()))
                     .whenComplete(
                   () {
                     Navigator.pop(context);

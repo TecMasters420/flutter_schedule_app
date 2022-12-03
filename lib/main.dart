@@ -17,9 +17,7 @@ import 'presentation/pages/register_page/register_page.dart';
 import 'presentation/pages/reminder_details_page/reminders_details_page.dart';
 import 'presentation/pages/reminders_page/reminders_page.dart';
 import 'presentation/pages/user_profile_page/user_profile_page.dart';
-import 'app/services/auth_service.dart';
 import 'app/services/initial_announcements_service.dart';
-import 'app/services/reminder_service.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
@@ -61,14 +59,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AuthService>(create: (context) => AuthService()),
+        // ChangeNotifierProvider<AuthService>(create: (context) => AuthService()),
         ChangeNotifierProvider<MapApi>(create: (context) => MapApi()),
-        ChangeNotifierProvider<ReminderService>(
-            create: (context) => ReminderService()),
+        // ChangeNotifierProvider<ReminderService>(
+        // create: (context) => ReminderService()),
         ChangeNotifierProvider<InitialAnnouncementsService>(
             create: (context) => InitialAnnouncementsService()),
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         title: 'Schedule Manager',
         debugShowCheckedModeBanner: false,
         home: const InitialInformationPage(),

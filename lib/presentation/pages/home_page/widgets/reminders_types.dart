@@ -24,8 +24,6 @@ class _ActivitiesTypesState extends State<ActivitiesTypes> {
   @override
   void initState() {
     super.initState();
-    debugPrint(
-        'Debug ${widget.remindersPerType.values.map((e) => debugPrint(e.length.toString()))}');
     _currentIndex = widget.initialTabIndex;
   }
 
@@ -78,8 +76,6 @@ class _ActivitiesTypesState extends State<ActivitiesTypes> {
           data: widget.remindersPerType.values.elementAt(_currentIndex),
           maxRemindersToShow: 1,
         ),
-        // widget.showDataChild(
-        //     widget.remindersPerType.values.elementAt(_currentIndex))
       ],
     );
   }

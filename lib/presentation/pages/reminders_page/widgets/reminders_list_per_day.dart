@@ -10,7 +10,7 @@ import '../../../widgets/reminder_container.dart';
 import '../../../widgets/reminder_information.dart';
 import 'reminder_hour.dart';
 
-class RemindersListPerDay extends StatefulWidget {
+class RemindersListPerDay extends StatelessWidget {
   final void Function(ReminderModel reminder) onLongPressCallback;
   final List<ReminderModel> reminders;
   const RemindersListPerDay({
@@ -20,38 +20,23 @@ class RemindersListPerDay extends StatefulWidget {
   });
 
   @override
-  State<RemindersListPerDay> createState() => _RemindersListPerDayState();
-}
-
-class _RemindersListPerDayState extends State<RemindersListPerDay> {
-  late int remindersQuantity;
-  late Color color;
-  @override
-  void initState() {
-    super.initState();
-    color = Colors.transparent;
-  }
-
-  @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      color = colors[Random().nextInt(colors.length - 1)];
-    });
-
     return Column(
       children: List.generate(
-        widget.reminders.length,
+        reminders.length,
         (x) {
-          final ReminderModel remider = widget.reminders[x];
+          final ReminderModel remider = reminders[x];
           final String startDate =
               DateFormat('MM-dd').format(remider.startDate.toDate());
           final String endDate =
               DateFormat('MM-dd').format(remider.endDate.toDate());
 
+          final Color color = colors[Random().nextInt(colors.length - 1)];
+
           return InkWell(
-            onLongPress: () => widget.onLongPressCallback(remider),
+            onLongPress: () => onLongPressCallback(remider),
             borderRadius: BorderRadius.circular(10),
             splashColor: color.withOpacity(0.25),
             highlightColor: lightGrey.withOpacity(0.05),

@@ -18,10 +18,10 @@ class InitialAnnouncementsService extends BaseService with ChangeNotifier {
   }
 
   @override
-  Future<void> create(Map<String, dynamic> data) async {}
+  Future<void> createData(Map<String, dynamic> data) async {}
 
   @override
-  Future<void> delete(Map<String, dynamic> data) async {}
+  Future<void> deleteData(Map<String, dynamic> data) async {}
 
   @override
   Future<void> getData([final String uid = '']) async {
@@ -35,5 +35,5 @@ class InitialAnnouncementsService extends BaseService with ChangeNotifier {
   }
 
   @override
-  Future<void> update(Map<String, dynamic> data) async {}
+  Future<void> updateData(Map<String, dynamic> data) async {}
 }
