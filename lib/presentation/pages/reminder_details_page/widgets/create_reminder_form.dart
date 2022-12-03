@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../../../app_docker/app/utils/responsive_util.dart';
+import '../../../../app/utils/responsive_util.dart';
 import '../../../widgets/custom_button.dart';
 
-import '../../../../app_docker/constants/constants.dart';
+import '../../../../app/config/constants.dart';
 import '../../../../data/models/reminder_model.dart';
-import '../../../../app_docker/app/utils/text_styles.dart';
+import '../../../../app/utils/text_styles.dart';
 import '../../../widgets/custom_form_field.dart';
 
 class CreateReminderForm extends StatelessWidget {

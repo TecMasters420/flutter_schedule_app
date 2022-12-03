@@ -5,15 +5,15 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
-import 'package:schedulemanager/app_docker/api/map_api.dart';
+import 'package:schedulemanager/domain/map_api.dart';
 import 'package:schedulemanager/data/models/address_model.dart';
 import 'package:schedulemanager/presentation/pages/map_page/widgets/custom_marker_with_information.dart';
-import 'package:schedulemanager/app_docker/app/utils/responsive_util.dart';
+import 'package:schedulemanager/app/utils/responsive_util.dart';
 import 'package:schedulemanager/presentation/widgets/custom_alert_dialog.dart';
 import 'package:schedulemanager/presentation/widgets/custom_button.dart';
 
-import '../../../app_docker/constants/constants.dart';
-import '../../../app_docker/app/utils/text_styles.dart';
+import '../../../app/config/constants.dart';
+import '../../../app/utils/text_styles.dart';
 import '../../widgets/custom_circular_progress.dart';
 
 class MapPage extends StatefulWidget {

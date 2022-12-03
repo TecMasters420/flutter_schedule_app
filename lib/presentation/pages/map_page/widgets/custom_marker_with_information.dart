@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:schedulemanager/app_docker/app/utils/responsive_util.dart';
+import 'package:schedulemanager/app/utils/responsive_util.dart';
 
-import '../../../../app_docker/app/utils/text_styles.dart';
+import '../../../../app/utils/text_styles.dart';
 import '../../../widgets/animated_marker.dart';
 
 class CustomMarkerWithInformation extends StatefulWidget {

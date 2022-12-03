@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
-import '../../../data/models/reminder_model.dart';
+import '../../data/models/reminder_model.dart';
 import 'base_service.dart';
 
 class ReminderService extends BaseService with ChangeNotifier {

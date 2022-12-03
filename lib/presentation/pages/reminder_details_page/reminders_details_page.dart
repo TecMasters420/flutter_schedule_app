@@ -5,13 +5,13 @@ import 'package:provider/provider.dart';
 import 'package:schedulemanager/presentation/pages/map_page/map_page.dart';
 import 'package:schedulemanager/presentation/pages/reminder_details_page/widgets/custom_alert_with_calendart.dart';
 import 'package:schedulemanager/presentation/pages/reminders_page/widgets/scrolleable_calendar.dart';
-import '../../../app_docker/constants/constants.dart';
+import '../../../app/config/constants.dart';
 import '../../../data/models/reminder_model.dart';
 import '../../../data/models/tag_model.dart';
 import '../../../data/models/task_model.dart';
-import '../../../app_docker/app/services/base_service.dart';
-import '../../../app_docker/app/services/reminder_service.dart';
-import '../../../app_docker/app/utils/responsive_util.dart';
+import '../../../app/services/base_service.dart';
+import '../../../app/services/reminder_service.dart';
+import '../../../app/utils/responsive_util.dart';
 import '../../widgets/custom_alert_dialog.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_circular_progress.dart';
@@ -22,7 +22,7 @@ import '../../widgets/progress_bar.dart';
 import '../../widgets/reminder_information_widget.dart';
 import '../../widgets/tags_list.dart';
 
-import '../../../app_docker/app/utils/text_styles.dart';
+import '../../../app/utils/text_styles.dart';
 import '../../widgets/custom_back_button.dart';
 import 'widgets/widgets.dart';
 

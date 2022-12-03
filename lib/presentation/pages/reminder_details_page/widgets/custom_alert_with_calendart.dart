@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../../app_docker/constants/constants.dart';
-import '../../../../app_docker/app/utils/responsive_util.dart';
-import '../../../../app_docker/app/utils/text_styles.dart';
+import '../../../../app/config/constants.dart';
+import '../../../../app/utils/responsive_util.dart';
+import '../../../../app/utils/text_styles.dart';
 import '../../reminders_page/widgets/date_container.dart';
 
 class ScrolleableCalendarWithHour extends StatefulWidget {

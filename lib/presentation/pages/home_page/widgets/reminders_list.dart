@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:schedulemanager/presentation/pages/home_page/widgets/all_reminders_redirection_button.dart';
 import '../../../../data/models/reminder_model.dart';
 import 'reminder_date_data.dart';
-import '../../../../app_docker/app/utils/responsive_util.dart';
+import '../../../../app/utils/responsive_util.dart';
 
-import '../../../../app_docker/constants/constants.dart';
-import '../../../../app_docker/app/utils/text_styles.dart';
+import '../../../../app/config/constants.dart';
+import '../../../../app/utils/text_styles.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/reminder_container.dart';
 import '../../../widgets/reminder_information.dart';

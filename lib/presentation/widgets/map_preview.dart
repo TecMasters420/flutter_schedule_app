@@ -3,11 +3,11 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:schedulemanager/app_docker/api/map_api.dart';
+import 'package:schedulemanager/domain/map_api.dart';
 import 'package:schedulemanager/presentation/pages/map_page/map_page.dart';
 import 'package:schedulemanager/presentation/widgets/animated_marker.dart';
-import '../../app_docker/constants/constants.dart';
-import '../../app_docker/app/services/base_service.dart';
+import '../../app/config/constants.dart';
+import '../../app/services/base_service.dart';
 
 class MapPreview extends StatefulWidget {
   final void Function(LatLng start, String? startAddress, LatLng end,

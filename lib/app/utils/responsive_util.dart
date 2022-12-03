@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
-import '../../enums/devices_enum.dart';
+import '../../presentation/enums/devices_enum.dart';
 
 class ResponsiveUtil {
   static final ResponsiveUtil _resp = ResponsiveUtil._internal();

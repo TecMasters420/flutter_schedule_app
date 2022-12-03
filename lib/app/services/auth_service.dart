@@ -3,7 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:schedulemanager/data/models/user_model.dart';
-import 'package:schedulemanager/app_docker/app/services/base_service.dart';
+import 'package:schedulemanager/app/services/base_service.dart';
 
 class AuthService with ChangeNotifier {
   static const String _collection = 'Users';

@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:schedulemanager/data/models/reminder_model.dart';
-import 'package:schedulemanager/app_docker/app/services/auth_service.dart';
+import 'package:schedulemanager/app/services/auth_service.dart';
 import 'package:schedulemanager/presentation/widgets/custom_alert_dialog.dart';
 import 'package:schedulemanager/presentation/widgets/custom_circular_progress.dart';
 import '../reminder_details_page/reminders_details_page.dart';
-import '../../../app_docker/app/services/reminder_service.dart';
-import '../../../app_docker/app/utils/responsive_util.dart';
+import '../../../app/services/reminder_service.dart';
+import '../../../app/utils/responsive_util.dart';
 import '../../widgets/custom_back_button.dart';
 import '../../widgets/user_profile_picture.dart';
 
-import '../../../app_docker/constants/constants.dart';
-import '../../../app_docker/app/utils/text_styles.dart';
+import '../../../app/config/constants.dart';
+import '../../../app/utils/text_styles.dart';
 import 'widgets/widgets.dart';
 
 class RemindersPage extends StatefulWidget {

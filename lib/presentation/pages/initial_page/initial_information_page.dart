@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../app_docker/constants/constants.dart';
-import '../../../app_docker/app/services/initial_announcements_service.dart';
+import '../../../app/config/constants.dart';
+import '../../../app/services/initial_announcements_service.dart';
 
 import 'widgets/widgets.dart';
-import '../../../app_docker/app/utils/responsive_util.dart';
+import '../../../app/utils/responsive_util.dart';
 
 class InitialInformationPage extends StatefulWidget {
   const InitialInformationPage({super.key});

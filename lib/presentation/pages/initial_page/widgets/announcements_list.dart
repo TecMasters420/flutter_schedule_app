@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../../app_docker/app/utils/responsive_util.dart';
+import '../../../../app/utils/responsive_util.dart';
 
-import '../../../../app_docker/constants/constants.dart';
+import '../../../../app/config/constants.dart';
 import '../../../../data/models/initial_announcement_model.dart';
-import '../../../../app_docker/app/utils/text_styles.dart';
+import '../../../../app/utils/text_styles.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_circular_progress.dart';
 import 'initial_page_information.dart';

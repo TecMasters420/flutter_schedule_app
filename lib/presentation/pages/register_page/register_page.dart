@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../app_docker/constants/constants.dart';
+import '../../../app/config/constants.dart';
 import '../../../data/models/user_model.dart';
-import '../../../app_docker/app/services/auth_service.dart';
-import '../../../app_docker/app/utils/responsive_util.dart';
-import '../../../app_docker/app/utils/text_styles.dart';
+import '../../../app/services/auth_service.dart';
+import '../../../app/utils/responsive_util.dart';
+import '../../../app/utils/text_styles.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_form_field.dart';
 

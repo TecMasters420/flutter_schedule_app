@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import '../../app_docker/app/utils/responsive_util.dart';
+import '../../app/utils/responsive_util.dart';
 
 class ReminderContainer extends StatelessWidget {
   final Color color;

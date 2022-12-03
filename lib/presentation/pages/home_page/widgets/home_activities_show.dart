@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:schedulemanager/presentation/pages/home_page/widgets/home_announce_container.dart';
-import '../../../../app_docker/constants/constants.dart';
-import '../../../../app_docker/app/utils/responsive_util.dart';
-import '../../../../app_docker/app/utils/text_styles.dart';
+import '../../../../app/config/constants.dart';
+import '../../../../app/utils/responsive_util.dart';
+import '../../../../app/utils/text_styles.dart';
 
 class HomeActivitiesShow extends StatelessWidget {
   const HomeActivitiesShow({super.key});
