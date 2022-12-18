@@ -68,7 +68,7 @@ class RemindersListPerType extends StatelessWidget {
                 ? ReminderContainer(
                     color: colors[Random().nextInt(colors.length - 1)],
                     leftWidget: ReminderDateData(
-                      endDate: data[index].endDate.toDate(),
+                      endDate: data[index].endDate,
                       timeRemaining: data[index].timeLeft(DateTime.now()),
                     ),
                     rightWidget: ReminderInformation(

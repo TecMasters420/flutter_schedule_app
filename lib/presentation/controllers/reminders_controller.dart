@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:schedulemanager/app/services/base_service.dart';
+import 'package:schedulemanager/data/repositories/events_repository_iml.dart';
 
 import '../../data/models/reminder_model.dart';
 
@@ -12,26 +11,30 @@ class RemindersController extends GetxController implements BaseService {
 
   final db = FirebaseFirestore.instance.collection(_collection);
 
+  final EventsRepositoryIml _repo = EventsRepositoryIml();
+
   final RxBool isLoading = true.obs;
   final Rx<List<ReminderModel>> _reminders = Rx<List<ReminderModel>>([]);
-  final Rx<List<ReminderModel>> _expiredReminders = Rx<List<ReminderModel>>([]);
-  final Rx<List<ReminderModel>> _notExpiredReminders =
-      Rx<List<ReminderModel>>([]);
+  final Rx<List<ReminderModel>> _expiredEvents = Rx<List<ReminderModel>>([]);
+  final Rx<List<ReminderModel>> _nextEvents = Rx<List<ReminderModel>>([]);
+  final Rx<List<ReminderModel>> _currentEvents = Rx<List<ReminderModel>>([]);
 
   List<ReminderModel> get reminders => _reminders.value;
-  List<ReminderModel> get expiredReminders => _expiredReminders.value;
-  List<ReminderModel> get notExpiredReminders => _notExpiredReminders.value;
+  List<ReminderModel> get expiredEvents => _expiredEvents.value;
+  List<ReminderModel> get nextEvents => _nextEvents.value;
+  List<ReminderModel> get currentEvents => _currentEvents.value;
 
   @override
   void onInit() async {
     super.onInit();
     await getData();
+    await getRemindersPerDate(DateTime(2022, 12, 18));
   }
 
   bool isValidToUpload(final ReminderModel reminder) {
     return reminder.title.isNotEmpty &&
         reminder.description.isNotEmpty &&
-        reminder.endDate.toDate().isAfter(reminder.startDate.toDate());
+        reminder.endDate.isAfter(reminder.startDate);
   }
 
   @override
@@ -66,80 +69,15 @@ class RemindersController extends GetxController implements BaseService {
   }
 
   @override
-  Future<void> getData([VoidCallback? onChangesCallback]) async {
-    debugPrint('Getting data');
-    isLoading.value = true;
-    final String uid = FirebaseAuth.instance.currentUser!.uid;
-    _reminders.value = await db.where('uid', isEqualTo: uid).get().then(
-        (r) => r.docs.map((e) => ReminderModel.fromMap(e.data())).toList());
-    final remindersWithoutAddress = _reminders.value
-        .where((r) =>
-            r.endLocationAddress == null && r.endLocation != null ||
-            r.startLocationAddress == null && r.startLocation != null)
-        .toList();
-    for (final ReminderModel r in remindersWithoutAddress) {
-      try {
-        List<Placemark> endMarks = await placemarkFromCoordinates(
-          r.endLocation!.latitude,
-          r.endLocation!.longitude,
-        );
-        List<Placemark> startMarks = await placemarkFromCoordinates(
-          r.startLocation!.latitude,
-          r.startLocation!.longitude,
-        );
-        final endAddress =
-            '${endMarks[0].street}, ${endMarks[0].locality}, ${endMarks[0].administrativeArea}.';
-        final String startAddress =
-            '${startMarks[0].street}, ${startMarks[0].locality}, ${startMarks[0].administrativeArea}.';
-
-        r.endLocationAddress = endAddress;
-        r.startLocationAddress = startAddress;
-        await db.doc(r.id).update(r.toMap());
-      } on Exception catch (e) {
-        debugPrint(
-            'Error in ${r.title} ${e.toString()}:  \nLocation : ${r.endLocation}');
-      }
-      final String? address = await _getReminderAddress(
-          LatLng(r.endLocation!.latitude, r.endLocation!.longitude));
-      if (address != null) {
-        r.endLocationAddress = address;
-        // debugPrint(address);
-        await db.doc(r.id).update(r.toMap());
-      }
-    }
-
-    // Get expired reminders
-    _expiredReminders.value = _reminders.value
-        .where((reminder) => reminder.endDate.toDate().isBefore(DateTime.now()))
-        .toList();
-
-    // Get not expired reminders
-    _notExpiredReminders.value = reminders.where((reminder) {
-      final endDate = reminder.endDate.toDate();
-      final isAfter = endDate.isAfter(DateTime.now());
-      return isAfter;
-    }).toList();
+  Future<void> getData() async {
+    final res = await _repo.getFilteredEvents();
+    _expiredEvents.value = res['Expired']!;
+    _nextEvents.value = res['Next']!;
+    _currentEvents.value = res['Current']!;
     isLoading.value = false;
   }
 
-  Future<String?> _getReminderAddress(final LatLng coords) async {
-    try {
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-        coords.latitude,
-        coords.longitude,
-      );
-      return '${placemarks[0].street}, ${placemarks[0].locality}, ${placemarks[0].administrativeArea}.';
-    } on Exception catch (e) {
-      debugPrint('Error $e');
-      return null;
-    }
-  }
-
-  List<ReminderModel> getRemindersPerDate(final DateTime date) {
-    return reminders.where((e) {
-      final remDate = e.endDate.toDate();
-      final roundDate = DateTime(remDate.year, remDate.month, remDate.day);
-      return roundDate.difference(date).inDays == 0;
-    }).toList();
+  Future<List<ReminderModel>> getRemindersPerDate(final DateTime date) async {
+    return await _repo.getEventsPerDate(date);
   }
 }

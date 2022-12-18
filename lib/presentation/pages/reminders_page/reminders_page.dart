@@ -51,7 +51,7 @@ class _RemindersPageState extends State<RemindersPage> {
       () {
         final List<int> monthsWithReminders = [];
         for (final ReminderModel r in reminderService.reminders) {
-          final int reminderEndMonth = r.endDate.toDate().month;
+          final int reminderEndMonth = r.endDate.month;
           if (!monthsWithReminders.contains(reminderEndMonth)) {
             monthsWithReminders.add(reminderEndMonth);
           }
@@ -69,14 +69,14 @@ class _RemindersPageState extends State<RemindersPage> {
         final List<ReminderModel> remInMonth = monthsWithReminders.isEmpty
             ? []
             : reminderService.reminders
-                .where((r) => r.endDate.toDate().month == _selectedDate!.month)
+                .where((r) => r.endDate.month == _selectedDate!.month)
                 .toList();
 
         // Reminders per month
         final Map<int, List<ReminderModel>> remindersInMonth = {};
 
         for (final ReminderModel r in remInMonth) {
-          final int reminderDay = r.endDate.toDate().day;
+          final int reminderDay = r.endDate.day;
           remindersInMonth.containsKey(reminderDay)
               ? remindersInMonth[reminderDay]!.add(r)
               : remindersInMonth.addAll({

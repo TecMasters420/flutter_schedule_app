@@ -1,41 +1,35 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:schedulemanager/data/models/event_location_model.dart';
 import 'tag_model.dart';
 import 'task_model.dart';
-import 'package:uuid/uuid.dart';
 
 class ReminderModel {
-  final String? id;
-
-  Timestamp creationDate;
-  String description;
+  final int id;
   String title;
-  String uid;
+  String description;
+  DateTime startDate;
+  DateTime endDate;
+  String currentStatus;
+  EventLocation? startLocation;
+  EventLocation? endLocation;
   List<TaskModel> tasks;
   List<TagModel> tags;
-  Timestamp endDate;
-  Timestamp startDate;
 
-  int? expectedTemp;
-  GeoPoint? startLocation;
-  GeoPoint? endLocation;
-  String? endLocationAddress;
-  String? startLocationAddress;
+  DateTime createdAt;
+  DateTime updatedAt;
 
   ReminderModel({
-    required this.creationDate,
+    required this.id,
+    required this.createdAt,
     required this.description,
     required this.startDate,
     required this.endDate,
     required this.title,
-    required this.uid,
     required this.tasks,
     required this.tags,
-    this.endLocation,
-    this.startLocation,
-    this.expectedTemp,
-    this.endLocationAddress,
-    this.startLocationAddress,
-    this.id,
+    required this.currentStatus,
+    required this.updatedAt,
+    required this.endLocation,
+    required this.startLocation,
   });
 
   double get progress =>
@@ -44,69 +38,68 @@ class ReminderModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'creationDate': creationDate,
+      'creationDate': createdAt,
       'description': description,
       'startDate': startDate,
       'endDate': endDate,
       'title': title,
-      'uid': uid,
-      'expectedTemp': expectedTemp,
       'startLocation': startLocation,
       'endLocation': endLocation,
-      'endLocationAddress': endLocationAddress,
-      'startLocationAddress': startLocationAddress,
       'tasks': tasks.map((x) => x.toMap()).toList(),
       'tags': tags.map((x) => x.toMap()).toList(),
     };
   }
 
   factory ReminderModel.fromMap(final Map<String, dynamic> map) {
-    final tasks = List.generate(
-        map['tasks'].length, (x) => map['tasks'][x] as Map<String, dynamic>);
-    final tags = List.generate(
-        map['tags'].length, (x) => map['tags'][x] as Map<String, dynamic>);
+    final tasks = List.generate(map['tasks'].length, (x) => map['tasks'][x]);
+    final tags = List.generate(map['tags'].length, (x) => map['tags'][x]);
     return ReminderModel(
       id: map['id'],
-      creationDate: map['creationDate'],
+      createdAt: DateTime.parse(map['createdAt']),
       description: map['description'],
-      startDate: map['startDate'],
-      endDate: map['endDate'],
+      startDate: DateTime.parse(map['startDate']),
+      endDate: DateTime.parse(map['EndDate']),
       title: map['title'],
-      uid: map['uid'],
-      endLocation: map['endLocation'],
-      startLocation: map['startLocation'],
-      endLocationAddress: map['endLocationAddress'],
-      startLocationAddress: map['startLocationAddress'],
-      expectedTemp: map['expectedTemp'],
+      endLocation: map['endLocation'] != null
+          ? EventLocation.fromMap(map['endLocation'])
+          : null,
+      startLocation: map['startLocation'] != null
+          ? EventLocation.fromMap(map['startLocation'])
+          : null,
       tasks: tasks.map((e) => TaskModel.fromMap(e)).toList(),
       tags: tags.map((e) => TagModel.fromMap(e)).toList(),
+      currentStatus: 'None',
+      updatedAt: DateTime.parse(map['updatedAt']),
     );
   }
 
   factory ReminderModel.empty() {
     return ReminderModel(
-      id: const Uuid().v4(),
-      creationDate: Timestamp.now(),
+      id: 0,
+      createdAt: DateTime.now(),
       description: '',
-      startDate: Timestamp.now(),
-      endDate: Timestamp.now(),
+      startDate: DateTime.now(),
+      endDate: DateTime.now(),
       title: '',
-      uid: '',
       tasks: [],
       tags: [],
+      currentStatus: 'None',
+      updatedAt: DateTime.now(),
+      endLocation: null,
+      startLocation: null,
     );
   }
 
   @override
   String toString() {
-    return 'Reminder(creationDate: $creationDate, description: $description, endDate: $endDate, location: $endLocation, title: $title, uid: $uid, expectedTemp: $expectedTemp, tasks: $tasks, tags: $tags)';
+    return 'Reminder(creationDate: $createdAt, description: $description, endDate: $endDate, location: $endLocation, title: $title, tasks: $tasks, tags: $tags)';
   }
 
   Duration timeLeft(final DateTime date) {
-    return endDate.toDate().difference(date);
+    return endDate.difference(date);
   }
 
   bool hasExpired(final DateTime date) {
-    return date.isAfter(endDate.toDate());
+    return date.isAfter(endDate);
   }
 }

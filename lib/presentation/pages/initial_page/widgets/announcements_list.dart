@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:schedulemanager/presentation/pages/login_page/login_page.dart';
 import '../../../../app/utils/responsive_util.dart';
 
 import '../../../../app/config/constants.dart';
