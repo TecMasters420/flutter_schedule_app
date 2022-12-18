@@ -70,9 +70,9 @@ class HomePage extends GetView {
                         : ActivitiesTypes(
                             initialTabIndex: 1,
                             remindersPerType: {
-                              'Expired': reminderController.expiredReminders,
-                              'Current': reminderController.notExpiredReminders,
-                              'Completed': reminderController.expiredReminders,
+                              'Expired': reminderController.expiredEvents,
+                              'Current': reminderController.currentEvents,
+                              'Next': reminderController.nextEvents,
                             },
                           ),
                   ),

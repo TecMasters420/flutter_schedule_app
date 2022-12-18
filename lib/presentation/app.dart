@@ -11,7 +11,7 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/initialInformationPage',
-      initialBinding: InitialInformationBindings(),
+      initialBinding: const InitialInformationBindings(),
       getPages: appPages,
       home: const InitialInformationPage(),
     );

@@ -51,30 +51,30 @@ class ReminderInformation extends StatelessWidget {
           'Information:',
           style: TextStyles.w700(resp.sp14),
         ),
-        if (reminder.endLocation != null &&
-            reminder.endLocationAddress != null) ...[
-          SizedBox(height: resp.hp(1)),
-          Text(
-            'End location:',
-            style: TextStyles.w600(resp.sp14),
-          ),
-          Text(
-            reminder.endLocationAddress.toString(),
-            style: TextStyles.w500(resp.sp14, grey),
-          ),
-        ],
-        if (reminder.startLocation != null &&
-            reminder.startLocationAddress != null) ...[
-          SizedBox(height: resp.hp(1)),
-          Text(
-            'Start location:',
-            style: TextStyles.w600(resp.sp14),
-          ),
-          Text(
-            reminder.startLocationAddress.toString(),
-            style: TextStyles.w500(resp.sp14, grey),
-          ),
-        ],
+        // if (reminder.endLocation != null &&
+        //     reminder.endLocationAddress != null) ...[
+        //   SizedBox(height: resp.hp(1)),
+        //   Text(
+        //     'End location:',
+        //     style: TextStyles.w600(resp.sp14),
+        //   ),
+        //   Text(
+        //     reminder.endLocationAddress.toString(),
+        //     style: TextStyles.w500(resp.sp14, grey),
+        //   ),
+        // ],
+        // if (reminder.startLocation != null &&
+        //     reminder.startLocationAddress != null) ...[
+        //   SizedBox(height: resp.hp(1)),
+        //   Text(
+        //     'Start location:',
+        //     style: TextStyles.w600(resp.sp14),
+        //   ),
+        //   Text(
+        //     reminder.startLocationAddress.toString(),
+        //     style: TextStyles.w500(resp.sp14, grey),
+        //   ),
+        // ],
         SizedBox(height: resp.hp(1)),
         if (reminder.tags.isNotEmpty) ...[
           Text(
