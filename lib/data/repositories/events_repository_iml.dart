@@ -7,7 +7,7 @@ class EventsRepositoryIml extends EventsRepository {
 
   @override
   Future<List<ReminderModel>> getAllEvents() async {
-    return [];
+    return await _api.getAllEvents();
   }
 
   @override

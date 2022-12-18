@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/data/models/event_status_enum.dart';
 import '../../data/models/reminder_model.dart';
 import '../pages/reminder_details_page/reminders_details_page.dart';
 import '../../app/utils/responsive_util.dart';
@@ -51,30 +52,30 @@ class ReminderInformation extends StatelessWidget {
           'Information:',
           style: TextStyles.w700(resp.sp14),
         ),
-        // if (reminder.endLocation != null &&
-        //     reminder.endLocationAddress != null) ...[
-        //   SizedBox(height: resp.hp(1)),
-        //   Text(
-        //     'End location:',
-        //     style: TextStyles.w600(resp.sp14),
-        //   ),
-        //   Text(
-        //     reminder.endLocationAddress.toString(),
-        //     style: TextStyles.w500(resp.sp14, grey),
-        //   ),
-        // ],
-        // if (reminder.startLocation != null &&
-        //     reminder.startLocationAddress != null) ...[
-        //   SizedBox(height: resp.hp(1)),
-        //   Text(
-        //     'Start location:',
-        //     style: TextStyles.w600(resp.sp14),
-        //   ),
-        //   Text(
-        //     reminder.startLocationAddress.toString(),
-        //     style: TextStyles.w500(resp.sp14, grey),
-        //   ),
-        // ],
+        if (reminder.endLocation != null &&
+            reminder.endLocation!.address != null) ...[
+          SizedBox(height: resp.hp(1)),
+          Text(
+            'End location:',
+            style: TextStyles.w600(resp.sp14),
+          ),
+          Text(
+            reminder.endLocation!.address.toString(),
+            style: TextStyles.w500(resp.sp14, grey),
+          ),
+        ],
+        if (reminder.startLocation != null &&
+            reminder.startLocation!.address != null) ...[
+          SizedBox(height: resp.hp(1)),
+          Text(
+            'Start location:',
+            style: TextStyles.w600(resp.sp14),
+          ),
+          Text(
+            reminder.startLocation!.address.toString(),
+            style: TextStyles.w500(resp.sp14, grey),
+          ),
+        ],
         SizedBox(height: resp.hp(1)),
         if (reminder.tags.isNotEmpty) ...[
           Text(
@@ -105,7 +106,7 @@ class ReminderInformation extends StatelessWidget {
         ],
         Row(
           children: [
-            if (!reminder.hasExpired(DateTime.now())) ...[
+            if (reminder.currentStatus != EventStatus.expired) ...[
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
