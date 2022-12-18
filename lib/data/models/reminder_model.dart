@@ -1,4 +1,5 @@
 import 'package:schedulemanager/data/models/event_location_model.dart';
+import 'package:schedulemanager/data/models/event_status_enum.dart';
 import 'tag_model.dart';
 import 'task_model.dart';
 
@@ -8,7 +9,7 @@ class ReminderModel {
   String description;
   DateTime startDate;
   DateTime endDate;
-  String currentStatus;
+  EventStatus currentStatus;
   EventLocation? startLocation;
   EventLocation? endLocation;
   List<TaskModel> tasks;
@@ -68,7 +69,9 @@ class ReminderModel {
           : null,
       tasks: tasks.map((e) => TaskModel.fromMap(e)).toList(),
       tags: tags.map((e) => TagModel.fromMap(e)).toList(),
-      currentStatus: 'None',
+      currentStatus: EventStatus.values.firstWhere((e) =>
+          e.name.toString().toUpperCase() ==
+          map['currentStatus'].toString().toUpperCase()),
       updatedAt: DateTime.parse(map['updatedAt']),
     );
   }
@@ -83,7 +86,7 @@ class ReminderModel {
       title: '',
       tasks: [],
       tags: [],
-      currentStatus: 'None',
+      currentStatus: EventStatus.none,
       updatedAt: DateTime.now(),
       endLocation: null,
       startLocation: null,

@@ -28,7 +28,6 @@ class RemindersController extends GetxController implements BaseService {
   void onInit() async {
     super.onInit();
     await getData();
-    await getRemindersPerDate(DateTime(2022, 12, 18));
   }
 
   bool isValidToUpload(final ReminderModel reminder) {
@@ -70,6 +69,8 @@ class RemindersController extends GetxController implements BaseService {
 
   @override
   Future<void> getData() async {
+    final resEvents = await _repo.getAllEvents();
+    _reminders.value = resEvents;
     final res = await _repo.getFilteredEvents();
     _expiredEvents.value = res['Expired']!;
     _nextEvents.value = res['Next']!;
