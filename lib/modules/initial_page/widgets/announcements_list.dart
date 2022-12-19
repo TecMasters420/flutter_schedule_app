@@ -59,8 +59,9 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
         final InitialAnnouncementModel announce = !isFinalElement
             ? widget.announcements[x]
             : const InitialAnnouncementModel(
+                id: 0,
                 title: 'Welcome!',
-                subtitle: 'Press button to join!',
+                description: 'Press button to join!',
                 imageUrl: '',
               );
         final double scale = (x - _pageProgress).abs() < 0.2 ? 1 : 0.9;
@@ -73,7 +74,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                 opacity: opacity,
                 imageUrl: announce.imageUrl,
                 title: announce.title,
-                description: announce.subtitle,
+                description: announce.description,
                 extraWidget: !isFinalElement
                     ? null
                     : Column(

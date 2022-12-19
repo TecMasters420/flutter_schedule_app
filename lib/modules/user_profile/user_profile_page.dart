@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:schedulemanager/presentation/controllers/auth_controller.dart';
 import 'package:schedulemanager/widgets/user_profile_picture.dart';
 import '../../app/utils/responsive_util.dart';
 import '../../widgets/custom_button.dart';

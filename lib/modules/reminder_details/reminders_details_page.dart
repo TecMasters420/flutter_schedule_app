@@ -8,7 +8,7 @@ import '../../app/config/constants.dart';
 import '../../data/models/reminder_model.dart';
 import '../../data/models/tag_model.dart';
 import '../../data/models/task_model.dart';
-import '../../app/services/base_service.dart';
+import '../../app/services/base_repository.dart';
 import '../../app/utils/responsive_util.dart';
 import '../../widgets/custom_alert_dialog.dart';
 import '../../widgets/custom_button.dart';

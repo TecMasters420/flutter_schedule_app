@@ -7,7 +7,7 @@ import 'package:schedulemanager/domain/map_api.dart';
 import 'package:schedulemanager/modules/map_page/map_page.dart';
 import 'package:schedulemanager/widgets/animated_marker.dart';
 import '../app/config/constants.dart';
-import '../app/services/base_service.dart';
+import '../app/services/base_repository.dart';
 
 class MapPreview extends StatefulWidget {
   final void Function(LatLng start, String? startAddress, LatLng end,

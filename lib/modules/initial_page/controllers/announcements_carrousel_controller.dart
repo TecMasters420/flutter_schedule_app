@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class InitialAnnouncementsController extends GetxController {
+class AnnouncementsCarrouselController extends GetxController {
   RxInt currentIndex = 0.obs;
 
   void setNewIndex(final int index) {

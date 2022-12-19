@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:schedulemanager/common/request_base.dart';
+import 'package:schedulemanager/data/models/user_model.dart';
 import 'package:schedulemanager/modules/auth/models/auth_response_model.dart';
 
-class AuthRepository {
-  final RequestBase base = RequestBase();
+import '../../../app/services/base_repository.dart';
 
+class AuthRepository extends BaseRepository {
   Future<AuthResponseModel?> logIn(String email, String password) async {
     final Map<String, String> body = {
       'username': email,
@@ -13,6 +13,14 @@ class AuthRepository {
     final res = await base.call('auth/login', body: body);
     if (res != null) {
       return AuthResponseModel.fromMap(jsonDecode(res));
+    }
+    return null;
+  }
+
+  Future<UserModel?> getUserFromToken(String token) async {
+    final res = await base.call('users/me', token: token);
+    if (res != null) {
+      return UserModel.fromMap(jsonDecode(res));
     }
     return null;
   }
