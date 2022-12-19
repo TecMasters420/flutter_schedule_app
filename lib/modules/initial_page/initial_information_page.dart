@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:schedulemanager/presentation/controllers/initial_announcements_controller.dart';
+import 'package:schedulemanager/modules/initial_page/controllers/announcements_carrousel_controller.dart';
+import 'package:schedulemanager/modules/initial_page/controllers/initial_announcements_controller.dart';
 import '../../app/config/constants.dart';
 import '../../app/services/initial_announcements_service.dart';
 
@@ -13,10 +14,8 @@ class InitialInformationPage extends GetWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    final InitialAnnouncementsController initialAnnouncementsController =
-        Get.find<InitialAnnouncementsController>();
-    final InitialAnnouncementsService announcesService =
-        Get.find<InitialAnnouncementsService>();
+    final AnnouncementsCarrouselController carrouselController = Get.find();
+    final InitialAnnouncementsController announcesController = Get.find();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -28,10 +27,10 @@ class InitialInformationPage extends GetWidget {
             width: resp.width,
             child: Obx(
               () => AnnouncementsList(
-                announcements: announcesService.announces.value,
-                isLoaded: announcesService.isLoaded.value,
+                announcements: announcesController.announces,
+                isLoaded: !announcesController.isLoading.value,
                 onNewPageCallback: (newPage) =>
-                    initialAnnouncementsController.setNewIndex(newPage),
+                    carrouselController.setNewIndex(newPage),
               ),
             ),
           ),
@@ -41,12 +40,10 @@ class InitialInformationPage extends GetWidget {
             child: Obx(
               () => Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                    announcesService.announcementsQuantity + 1, (x) {
+                children: List.generate(announcesController.quantity + 1, (x) {
                   final bool isCurrentPage =
-                      x == initialAnnouncementsController.currentIndex.value;
-                  final bool isFinalElement =
-                      x == announcesService.announcementsQuantity;
+                      x == carrouselController.currentIndex.value;
+                  final bool isFinalElement = x == announcesController.quantity;
 
                   return DotIndicator(
                     isFinalElement: isFinalElement,

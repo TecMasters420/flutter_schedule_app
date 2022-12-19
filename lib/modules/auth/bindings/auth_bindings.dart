@@ -5,6 +5,6 @@ class AuthBindings implements Bindings {
   const AuthBindings();
   @override
   void dependencies() {
-    Get.put<AuthController>(AuthController(), permanent: true);
+    Get.put(AuthController(), permanent: true);
   }
 }

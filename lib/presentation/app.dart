@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:schedulemanager/presentation/bindings/initial_information_bindings.dart';
+import 'package:schedulemanager/modules/initial_page/bindings/initial_information_bindings.dart';
 import 'package:schedulemanager/modules/initial_page/initial_information_page.dart';
 import 'package:schedulemanager/routes/app_pages.dart';
 

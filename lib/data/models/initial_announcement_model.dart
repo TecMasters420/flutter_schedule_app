@@ -1,31 +1,22 @@
-import 'dart:convert';
-
 class InitialAnnouncementModel {
+  final int id;
   final String title;
-  final String subtitle;
+  final String description;
   final String imageUrl;
 
   const InitialAnnouncementModel({
+    required this.id,
     required this.title,
-    required this.subtitle,
+    required this.description,
     required this.imageUrl,
   });
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'title': title,
-      'subtitle': subtitle,
-      'imageUrl': imageUrl,
-    };
-  }
-
   factory InitialAnnouncementModel.fromMap(Map<String, dynamic> map) {
     return InitialAnnouncementModel(
-      title: map['title'] ?? '',
-      subtitle: map['subtitle'] ?? '',
+      id: map['id'],
+      title: map['title'],
+      description: map['description'],
       imageUrl: map['imageUrl'] ?? '',
     );
   }
-
-  String toJson() => json.encode(toMap());
 }
