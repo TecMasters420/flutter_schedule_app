@@ -7,8 +7,8 @@ class ReminderModel {
   final int id;
   String title;
   String description;
-  DateTime startDate;
-  DateTime endDate;
+  DateTime? startDate;
+  DateTime? endDate;
   EventStatus currentStatus;
   EventLocation? startLocation;
   EventLocation? endLocation;
@@ -22,8 +22,6 @@ class ReminderModel {
     required this.id,
     required this.createdAt,
     required this.description,
-    required this.startDate,
-    required this.endDate,
     required this.title,
     required this.tasks,
     required this.tags,
@@ -31,6 +29,8 @@ class ReminderModel {
     required this.updatedAt,
     required this.endLocation,
     required this.startLocation,
+    this.endDate,
+    this.startDate,
   });
 
   double get progress =>
@@ -99,10 +99,10 @@ class ReminderModel {
   }
 
   Duration timeLeft(final DateTime date) {
-    return endDate.difference(date);
+    return endDate!.difference(date);
   }
 
   bool hasExpired(final DateTime date) {
-    return date.isAfter(endDate);
+    return date.isAfter(endDate!);
   }
 }
