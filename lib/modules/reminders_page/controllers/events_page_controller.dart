@@ -36,6 +36,7 @@ class EventsPageController extends GetxController {
       final day = res.first.dates.first.days.first;
       selectedDate.value = DateTime(year, month, day);
       _setValues();
+      await getEventsPerDate();
     }
     isLoading.value = false;
   }

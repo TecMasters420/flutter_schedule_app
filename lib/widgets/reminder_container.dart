@@ -50,7 +50,7 @@ class ReminderContainer extends StatelessWidget {
                         builder: (context, value, child) {
                           return AnimatedContainer(
                             curve: Curves.ease,
-                            duration: const Duration(milliseconds: 350),
+                            duration: const Duration(milliseconds: 400),
                             height: height.value,
                             width: double.infinity,
                             decoration: BoxDecoration(
