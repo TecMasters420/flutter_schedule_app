@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/modules/home/widgets/all_reminders_redirection_button.dart';
+import 'package:schedulemanager/modules/home/widgets/no_events_widget.dart';
 import '../../../data/models/reminder_model.dart';
 import 'reminder_date_data.dart';
 import '../../../app/utils/responsive_util.dart';
@@ -51,8 +52,6 @@ class RemindersListPerType extends StatelessWidget {
               prefixWidget: Icon(Icons.add, size: resp.sp20, color: accent),
               onTap: () {
                 Get.toNamed('remindersPage');
-                // Get.to(() => const RemindersPage())!
-                //     .whenComplete(() => Get.delete<RemindersController>());
               },
             ),
           ],
@@ -77,12 +76,7 @@ class RemindersListPerType extends StatelessWidget {
                 : const AllRemindersRedirectionButton(),
           )
         ] else
-          Center(
-            child: Text(
-              'No Activities',
-              style: TextStyles.w500(resp.sp14, lightGrey),
-            ),
-          ),
+          const NoEventsWidget()
       ],
     );
   }

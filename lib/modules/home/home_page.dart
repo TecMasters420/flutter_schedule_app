@@ -70,8 +70,8 @@ class HomePage extends GetView {
                             initialTabIndex: 1,
                             remindersPerType: {
                               'Expired': home.expiredEvents,
-                              'Current': home.currentEvents,
-                              'Next': home.nextEvents,
+                              'Today': home.currentEvents,
+                              'Upcoming': home.nextEvents,
                             },
                           ),
                   ),
