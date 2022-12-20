@@ -17,6 +17,7 @@ class UserProfilePicture extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, 'userProfilePage');
+        print('test');
       },
       child: SizedBox(
         width: width,
