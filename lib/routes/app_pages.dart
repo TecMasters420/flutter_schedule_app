@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:schedulemanager/modules/home/bindings/home_bindings.dart';
-import 'package:schedulemanager/modules/auth/bindings/auth_bindings.dart';
 import 'package:schedulemanager/modules/reminders_page/bindings/events_page_bindings.dart';
 import 'package:schedulemanager/modules/initial_page/bindings/initial_information_bindings.dart';
 import 'package:schedulemanager/modules/home/home_page.dart';
