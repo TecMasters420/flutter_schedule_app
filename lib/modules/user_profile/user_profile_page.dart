@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:schedulemanager/widgets/user_profile_picture.dart';
 import '../../app/utils/responsive_util.dart';
-import '../../widgets/custom_button.dart';
-
-import '../../app/config/constants.dart';
-
-import '../../app/utils/text_styles.dart';
-import '../../widgets/custom_back_button.dart';
 import '../auth/controllers/auth_controller.dart';
 
 class UserProfilePage extends GetWidget<AuthController> {

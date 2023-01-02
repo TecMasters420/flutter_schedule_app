@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../app/config/constants.dart';
 
@@ -7,7 +6,6 @@ import '../../../app/utils/responsive_util.dart';
 import '../../../app/utils/text_styles.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_form_field.dart';
-import '../controllers/auth_controller.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -30,7 +28,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    final AuthController auth = Get.find();
 
     return Scaffold(
       backgroundColor: backgroundColor,

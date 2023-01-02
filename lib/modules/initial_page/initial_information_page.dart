@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:schedulemanager/modules/initial_page/controllers/announcements_carrousel_controller.dart';
 import 'package:schedulemanager/modules/initial_page/controllers/initial_announcements_controller.dart';
 import '../../app/config/constants.dart';
-import '../../app/services/initial_announcements_service.dart';
 
 import 'widgets/widgets.dart';
 import '../../app/utils/responsive_util.dart';
