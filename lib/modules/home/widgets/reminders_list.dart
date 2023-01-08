@@ -14,13 +14,13 @@ import '../../../widgets/custom_button.dart';
 import '../../../widgets/reminder_container.dart';
 import '../../../widgets/reminder_information.dart';
 
-class RemindersListPerType extends StatelessWidget {
+class EventsListPerType extends StatelessWidget {
   final List<ReminderModel> data;
-  final int maxRemindersToShow;
-  const RemindersListPerType({
+  final int maxEventsToShow;
+  const EventsListPerType({
     super.key,
     required this.data,
-    required this.maxRemindersToShow,
+    required this.maxEventsToShow,
   });
 
   @override
@@ -28,52 +28,42 @@ class RemindersListPerType extends StatelessWidget {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     return Column(
       children: [
-        SizedBox(height: resp.hp(1)),
-        Divider(
-          color: lightGrey.withOpacity(0.15),
-          height: resp.hp(1),
-          thickness: 0.5,
-        ),
-        SizedBox(height: resp.hp(1)),
-        Row(
-          children: [
-            Text(
-              '${data.length} Reminders',
-              style: TextStyles.w700(resp.sp16, black),
-            ),
-            const Spacer(),
-            CustomButton(
-              color: lightGrey.withOpacity(0.2),
-              text: 'See all',
-              height: resp.hp(4),
-              style: TextStyles.w500(resp.sp16),
-              width: double.infinity,
-              constraints: const BoxConstraints(maxWidth: 90),
-              prefixWidget: Icon(Icons.add, size: resp.sp20, color: accent),
-              onTap: () {
-                Get.toNamed('remindersPage');
-              },
-            ),
-          ],
-        ),
         SizedBox(height: resp.hp(2.5)),
         if (data.isNotEmpty) ...[
+          Row(
+            children: [
+              Text(
+                '${data.length} Events',
+                style: TextStyles.w700(16),
+              ),
+              const Spacer(),
+              TextButton(
+                child: Text(
+                  'See all',
+                  style: TextStyles.w700(16, accent),
+                ),
+                onPressed: () => Get.toNamed('remindersPage'),
+              )
+            ],
+          ),
+          SizedBox(height: resp.hp(2.5)),
           ...List.generate(
-            data.length > maxRemindersToShow
-                ? maxRemindersToShow + 2
-                : data.length,
-            (index) => index <= maxRemindersToShow
-                ? ReminderContainer(
-                    color: colors[Random().nextInt(colors.length - 1)],
-                    leftWidget: ReminderDateData(
-                      endDate: data[index].endDate!,
-                      timeRemaining: data[index].timeLeft(DateTime.now()),
-                    ),
-                    rightWidget: ReminderInformation(
-                      reminder: data[index],
-                    ),
-                  )
-                : const AllRemindersRedirectionButton(),
+            data.length > maxEventsToShow ? maxEventsToShow + 2 : data.length,
+            (index) {
+              if (index > maxEventsToShow) const AllEventsRedirectionButton();
+              final color = colors[Random().nextInt(colors.length - 1)];
+              return ReminderContainer(
+                color: color,
+                leftWidget: ReminderDateData(
+                  endDate: data[index].endDate!,
+                  timeRemaining: data[index].timeLeft(DateTime.now()),
+                  dotColor: color,
+                ),
+                rightWidget: ReminderInformation(
+                  reminder: data[index],
+                ),
+              );
+            },
           )
         ] else
           const NoEventsWidget()

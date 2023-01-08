@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/modules/home/controllers/home_controller.dart';
+import 'package:schedulemanager/modules/home/widgets/group_events/group_events_list_widget.dart';
+import 'package:schedulemanager/modules/home/widgets/home_header_widget.dart';
 import 'package:schedulemanager/widgets/custom_circular_progress.dart';
 
 import '../../app/utils/responsive_util.dart';
 
 import '../../app/utils/text_styles.dart';
-import '../../widgets/user_profile_picture.dart';
-import '../auth/controllers/auth_controller.dart';
 import 'widgets/widgets.dart';
 
 class HomePage extends GetView {
@@ -18,7 +18,6 @@ class HomePage extends GetView {
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     final HomeController home = Get.find();
-    final AuthController auth = Get.find();
 
     return Scaffold(
       body: Stack(
@@ -30,49 +29,46 @@ class HomePage extends GetView {
                 left: 32,
                 right: 32,
                 top: 50,
-                bottom: 80,
+                bottom: 20,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: resp.hp(5)),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Welcome!',
-                          style: TextStyles.w500(resp.sp20),
-                        ),
-                      ),
-                      UserProfilePicture(
-                        height: resp.hp(5),
-                        width: resp.wp(10),
-                        userImage: auth.currentUser!.imageUrl ?? '',
-                      )
-                    ],
-                  ),
-                  SizedBox(height: resp.hp(2.5)),
-                  Text(
-                    'My daily activities',
-                    style: TextStyles.w700(resp.sp30),
-                  ),
+                  const HomeHeaderWidget(),
                   SizedBox(height: resp.hp(2)),
                   SizedBox(
-                    height: resp.hp(28),
+                    height: resp.hp(20),
                     width: resp.width,
                     child: const HomeActivitiesShow(),
                   ),
-                  SizedBox(height: resp.hp(5)),
+                  // Text(
+                  //   'Group events:',
+                  //   style: TextStyles.w700(20),
+                  // ),
+                  // SizedBox(height: resp.hp(2.5)),
+                  // const GroupEventsListWidget(),
+                  SizedBox(height: resp.hp(2.5)),
                   Obx(
                     () => home.isLoading.value
                         ? const CustomCircularProgress(color: accent)
-                        : ActivitiesTypes(
-                            initialTabIndex: 1,
-                            remindersPerType: {
-                              'Expired': home.expiredEvents,
-                              'Today': home.currentEvents,
-                              'Upcoming': home.nextEvents,
-                            },
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Select the event type:',
+                                style: TextStyles.w700(20),
+                              ),
+                              SizedBox(height: resp.hp(2.5)),
+                              ActivitiesTypes(
+                                initialTabIndex: 1,
+                                remindersPerType: {
+                                  'Expired': home.expiredEvents,
+                                  'Today': home.currentEvents,
+                                  'Upcoming': home.nextEvents,
+                                },
+                              ),
+                            ],
                           ),
                   ),
                 ],

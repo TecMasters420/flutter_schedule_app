@@ -38,12 +38,12 @@ class ReminderInformationWidget extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyles.w600(resp.sp14),
+                    style: TextStyles.w600(14),
                   ),
                   if (value != null)
                     Text(
                       value!,
-                      style: TextStyles.w500(resp.sp14, grey),
+                      style: TextStyles.w500(14, grey),
                     ),
                   if (extra != null) ...[
                     SizedBox(height: resp.hp(1)),

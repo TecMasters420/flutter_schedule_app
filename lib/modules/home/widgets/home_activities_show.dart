@@ -12,24 +12,22 @@ class HomeActivitiesShow extends StatelessWidget {
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     return PageView(
+      clipBehavior: Clip.none,
       physics: const BouncingScrollPhysics(),
       children: [
         HomeAnnounceContainer(
           title: "Excellent, you're almost done with your activities!",
           secondWidget: CircularPercentIndicator(
-            radius: resp.hp(6.5),
+            radius: 60,
             lineWidth: 13.0,
             animation: true,
             percent: 0.9,
             center: Text(
               '90%',
-              style: TextStyles.w800(
-                resp.sp16,
-                Colors.white,
-              ),
+              style: TextStyles.w800(16),
             ),
-            progressColor: Colors.white,
-            backgroundColor: tempAccent,
+            progressColor: accent,
+            backgroundColor: backgroundColor,
           ),
         ),
       ],

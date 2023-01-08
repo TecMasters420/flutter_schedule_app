@@ -8,7 +8,7 @@ import 'package:schedulemanager/modules/home/models/filtered_events_model.dart';
 class HomeRepository {
   final RequestBase base = RequestBase();
 
-  Future<FilteredEventsModel?> getFilteredReminders() async {
+  Future<FilteredEventsModel?> getFilteredEvents() async {
     final AuthController auth = Get.find();
     final res = await base.call('events', token: auth.token);
     if (res != null) {

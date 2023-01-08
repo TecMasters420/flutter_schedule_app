@@ -18,7 +18,7 @@ class EventsPageController extends GetxController {
   late DatesWithEventsModel sameYear;
   late EventsDateModel sameMonth;
 
-  bool get hasReminders => remindersInDate.isNotEmpty;
+  bool get hasEvents => remindersInDate.isNotEmpty;
 
   @override
   void onInit() async {

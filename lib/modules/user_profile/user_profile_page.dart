@@ -53,40 +53,40 @@ class UserProfilePage extends GetWidget<AuthController> {
     //             SizedBox(height: resp.hp(3)),
     //             Text(
     //               'Name: ',
-    //               style: TextStyles.w500(resp.sp16, black),
+    //               style: TextStyles.w500(16, black),
     //             ),
     //             Text(
     //               controller.user.value!.displayName ?? 'NoName',
-    //               style: TextStyles.w400(resp.sp14, black),
+    //               style: TextStyles.w400(14, black),
     //             ),
     //             SizedBox(height: resp.hp(3)),
     //             Text(
     //               'Email: ',
-    //               style: TextStyles.w500(resp.sp16, black),
+    //               style: TextStyles.w500(16, black),
     //             ),
     //             Text(
     //               controller.user.value!.email ?? 'NoEmail',
-    //               style: TextStyles.w400(resp.sp14, black),
+    //               style: TextStyles.w400(14, black),
     //             ),
     //             SizedBox(height: resp.hp(3)),
     //             Text(
     //               'Phone number: ',
-    //               style: TextStyles.w500(resp.sp16, black),
+    //               style: TextStyles.w500(16, black),
     //             ),
     //             Text(
     //               controller.user.value!.phoneNumber ?? 'NoNumber',
-    //               style: TextStyles.w400(resp.sp14, black),
+    //               style: TextStyles.w400(14, black),
     //             ),
     //             SizedBox(height: resp.hp(3)),
     //             Text(
     //               'Registered at: ',
-    //               style: TextStyles.w500(resp.sp16, black),
+    //               style: TextStyles.w500(16, black),
     //             ),
     //             Text(
     //               DateFormat(DateFormat.YEAR_MONTH_DAY, 'en_US').format(
     //                 DateTime.now().toUtc(),
     //               ),
-    //               style: TextStyles.w400(resp.sp14, black),
+    //               style: TextStyles.w400(14, black),
     //             ),
     //             SizedBox(height: resp.hp(3)),
     //             CustomButton(

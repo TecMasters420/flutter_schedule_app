@@ -14,6 +14,9 @@ class App extends StatelessWidget {
       initialBinding: const InitialInformationBindings(),
       getPages: appPages,
       home: const InitialInformationPage(),
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color(0xfffcfbff),
+      ),
     );
   }
 }

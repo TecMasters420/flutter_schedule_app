@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: resp.hp(1)),
                 Text(
                   'Enter the following fields that are requested to log in.',
-                  style: TextStyles.w400(resp.sp16, Colors.grey[600]!),
+                  style: TextStyles.w400(16, Colors.grey[600]!),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: resp.hp(2.5)),
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextButton(
                       child: Text(
                         'Recovery password',
-                        style: TextStyles.w400(resp.sp16, accent),
+                        style: TextStyles.w400(16, accent),
                       ),
                       onPressed: () {},
                     )
@@ -93,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                 CustomButton(
                   color: tempAccent,
                   height: resp.hp(5),
-                  style: TextStyles.w800(resp.sp16, Colors.white),
+                  style: TextStyles.w800(16, Colors.white),
                   width: resp.wp(30),
                   text: 'Login',
                   onTap: () async {
@@ -104,14 +104,14 @@ class _LoginPageState extends State<LoginPage> {
                 // SizedBox(height: resp.hp(1)),
                 // Text(
                 //   'Or',
-                //   style: TextStyles.w200(resp.sp16, Colors.grey[600]!),
+                //   style: TextStyles.w200(16, Colors.grey[600]!),
                 //   textAlign: TextAlign.center,
                 // ),
                 // SizedBox(height: resp.hp(1)),
                 // CustomButton(
                 //   color: Colors.grey[50]!,
                 //   height: resp.hp(5),
-                //   style: TextStyles.w400(resp.sp16),
+                //   style: TextStyles.w400(16),
                 //   width: resp.wp(30),
                 //   text: 'Google',
                 //   prefixWidget: Image.asset(
@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                 //           const CustomCircularProgress(color: accent),
                 //           SizedBox(height: resp.hp(2)),
                 //           Text('Wait a bit while it logs in',
-                //               style: TextStyles.w500(resp.sp16))
+                //               style: TextStyles.w500(16))
                 //         ],
                 //       ),
                 //     );
@@ -146,12 +146,12 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Text(
                       "Don't have an account yet?",
-                      style: TextStyles.w400(resp.sp16, grey),
+                      style: TextStyles.w400(16, grey),
                     ),
                     TextButton(
                       child: Text(
                         'Sign Up',
-                        style: TextStyles.w500(resp.sp16, accent),
+                        style: TextStyles.w500(16, accent),
                       ),
                       onPressed: () =>
                           Navigator.pushNamed(context, 'registerPage'),

@@ -37,7 +37,7 @@ final List<GetPage> appPages = [
   ),
   GetPage(
     name: '/remindersPage',
-    page: () => const RemindersPage(),
+    page: () => const EventsPage(),
     binding: const EventsPageBindings(),
   ),
   GetPage(

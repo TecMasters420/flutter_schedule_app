@@ -93,7 +93,7 @@ class _ScrolleableCalendarWithHourState
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(height: resp.hp(2)),
-        Text('Month:', style: TextStyles.w700(resp.sp16)),
+        Text('Month:', style: TextStyles.w700(16)),
         SizedBox(height: resp.hp(1)),
         CustomDateContainer(
           data: _monthsToShow,
@@ -115,7 +115,7 @@ class _ScrolleableCalendarWithHourState
                     currentElement,
                   )),
                   style: TextStyles.w500(
-                    resp.sp16,
+                    16,
                     isSelected ? black : lightGrey,
                   ),
                 ),
@@ -136,7 +136,7 @@ class _ScrolleableCalendarWithHourState
           },
         ),
         SizedBox(height: resp.hp(1)),
-        Text('Day:', style: TextStyles.w700(resp.sp16)),
+        Text('Day:', style: TextStyles.w700(16)),
         SizedBox(height: resp.hp(1)),
         // ? DAYS LIST
         CustomDateContainer(
@@ -171,7 +171,7 @@ class _ScrolleableCalendarWithHourState
                     child: Text(
                       currentElement.toString(),
                       style: TextStyles.w500(
-                          resp.sp16, isSelected ? Colors.white : lightGrey),
+                          16, isSelected ? Colors.white : lightGrey),
                     ),
                   ),
                 ),
@@ -182,7 +182,7 @@ class _ScrolleableCalendarWithHourState
                       .substring(0, 3)
                       .toUpperCase(),
                   style: TextStyles.w500(
-                    resp.sp16,
+                    16,
                     isSelected ? black : lightGrey,
                   ),
                 ),
@@ -202,7 +202,7 @@ class _ScrolleableCalendarWithHourState
           },
         ),
         SizedBox(height: resp.hp(1)),
-        Text('Hour:', style: TextStyles.w700(resp.sp16)),
+        Text('Hour:', style: TextStyles.w700(16)),
         SizedBox(height: resp.hp(1)),
         // ? HOURS LIST
         CustomDateContainer(
@@ -240,14 +240,14 @@ class _ScrolleableCalendarWithHourState
                               : currentElement)
                           .toString(),
                       style: TextStyles.w500(
-                          resp.sp16, isSelected ? Colors.white : lightGrey),
+                          16, isSelected ? Colors.white : lightGrey),
                     ),
                   ),
                 ),
                 Text(
                   currentElement >= 12 ? 'PM' : 'AM',
                   style: TextStyles.w500(
-                    resp.sp16,
+                    16,
                     isSelected ? black : lightGrey,
                   ),
                 ),
@@ -267,7 +267,7 @@ class _ScrolleableCalendarWithHourState
           },
         ),
         SizedBox(height: resp.hp(1)),
-        Text('Minutes:', style: TextStyles.w700(resp.sp16)),
+        Text('Minutes:', style: TextStyles.w700(16)),
         SizedBox(height: resp.hp(1)),
         // ? MINUTES LIST
         CustomDateContainer(
@@ -304,14 +304,14 @@ class _ScrolleableCalendarWithHourState
                     child: Text(
                       currentElement.toString(),
                       style: TextStyles.w500(
-                          resp.sp16, isSelected ? Colors.white : lightGrey),
+                          16, isSelected ? Colors.white : lightGrey),
                     ),
                   ),
                 ),
                 Text(
                   'MIN',
                   style: TextStyles.w500(
-                    resp.sp16,
+                    16,
                     isSelected ? black : lightGrey,
                   ),
                 ),

@@ -17,8 +17,8 @@ import '../../app/config/constants.dart';
 import '../../app/utils/text_styles.dart';
 import 'widgets/widgets.dart';
 
-class RemindersPage extends StatelessWidget {
-  const RemindersPage({
+class EventsPage extends StatelessWidget {
+  const EventsPage({
     super.key,
   });
 
@@ -115,14 +115,14 @@ class RemindersPage extends StatelessWidget {
                     ),
                   SizedBox(height: resp.hp(4)),
                   Text(
-                    '${events.remindersInDate.length} ${events.remindersInDate.length == 1 ? 'Reminder' : 'Reminders'} in this day',
-                    style: TextStyles.w700(resp.sp16),
+                    '${events.remindersInDate.length} ${events.remindersInDate.length == 1 ? 'Reminder' : 'Events'} in this day',
+                    style: TextStyles.w700(16),
                   ),
                   SizedBox(height: resp.hp(3)),
-                  if (events.hasReminders) ...[
+                  if (events.hasEvents) ...[
                     events.gettingEventsList.value
                         ? const CustomCircularProgress(color: AppColors.accent)
-                        : RemindersListPerDay(
+                        : EventsListPerDay(
                             reminders: events.remindersInDate,
                             onLongPressCallback: (reminder) {
                               CustomAlertDialog(
@@ -145,7 +145,7 @@ class RemindersPage extends StatelessWidget {
                                             color: accent),
                                         SizedBox(height: resp.hp(2)),
                                         Text('Is being removed!',
-                                            style: TextStyles.w500(resp.sp16))
+                                            style: TextStyles.w500(16))
                                       ],
                                     ),
                                   );

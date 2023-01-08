@@ -4,8 +4,8 @@ import 'package:schedulemanager/app/utils/responsive_util.dart';
 import '../../../app/config/constants.dart';
 import '../../../app/utils/text_styles.dart';
 
-class AllRemindersRedirectionButton extends StatelessWidget {
-  const AllRemindersRedirectionButton({super.key});
+class AllEventsRedirectionButton extends StatelessWidget {
+  const AllEventsRedirectionButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class AllRemindersRedirectionButton extends StatelessWidget {
               'Press to see all reminders',
               textAlign: TextAlign.center,
               style: TextStyles.w600(
-                resp.sp16,
+                16,
                 grey.withOpacity(0.5),
               ),
             ),

@@ -66,7 +66,7 @@ class _CustomMarkerWithInformationState
               ),
               child: Text(
                 widget.label,
-                style: TextStyles.w500(resp.sp14),
+                style: TextStyles.w500(14),
                 textAlign: TextAlign.center,
               ),
             ),

@@ -34,9 +34,9 @@ class CustomFormField extends StatelessWidget {
       onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: TextStyles.w400(resp.sp14, grey),
-        labelStyle: TextStyles.w400(resp.sp14, grey),
-        floatingLabelStyle: TextStyles.w400(resp.sp16, accent),
+        hintStyle: TextStyles.w400(14, grey),
+        labelStyle: TextStyles.w400(14, grey),
+        floatingLabelStyle: TextStyles.w400(16, accent),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(

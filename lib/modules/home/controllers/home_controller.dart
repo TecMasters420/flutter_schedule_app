@@ -18,7 +18,7 @@ class HomeController extends GetxController {
 
   Future<void> getFilteredEvents() async {
     isLoading.value = true;
-    final res = await _repo.getFilteredReminders();
+    final res = await _repo.getFilteredEvents();
     if (res != null) {
       currentEvents.value = res.current;
       nextEvents.value = res.next;

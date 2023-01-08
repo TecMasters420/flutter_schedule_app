@@ -22,7 +22,7 @@ class HomeAnnounceContainer extends StatelessWidget {
         vertical: 20,
       ),
       decoration: BoxDecoration(
-        color: accent,
+        color: containerBg,
         borderRadius: BorderRadius.circular(30),
       ),
       child: Row(
@@ -31,10 +31,7 @@ class HomeAnnounceContainer extends StatelessWidget {
             flex: 3,
             child: Text(
               title,
-              style: TextStyles.w800(
-                resp.sp16,
-                Colors.white,
-              ),
+              style: TextStyles.w800(16),
             ),
           ),
           SizedBox(width: resp.wp(2.5)),

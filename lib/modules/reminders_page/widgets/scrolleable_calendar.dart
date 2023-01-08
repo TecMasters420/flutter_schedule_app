@@ -60,7 +60,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
           Text('Select a date:', style: TextStyles.w700(resp.sp20)),
           SizedBox(height: resp.hp(2)),
         ],
-        // Text('Year:', style: TextStyles.w700(resp.sp16)),
+        // Text('Year:', style: TextStyles.w700(16)),
         // SizedBox(height: resp.hp(1)),
         // CustomDateContainer(
         //   data: List.generate(3, (index) => DateTime.now().year + index),
@@ -73,7 +73,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
         //         Text(
         //           currentElement.toString(),
         //           style: TextStyles.w500(
-        //             resp.sp16,
+        //             16,
         //             isSelected ? black : lightGrey,
         //           ),
         //         ),
@@ -94,7 +94,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
         //   },
         // ),
         SizedBox(height: resp.hp(2)),
-        Text('Month:', style: TextStyles.w700(resp.sp16)),
+        Text('Month:', style: TextStyles.w700(16)),
         SizedBox(height: resp.hp(1)),
         CustomDateContainer(
           data: List.generate(12, (index) => index + 1),
@@ -118,7 +118,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                     currentElement,
                   )),
                   style: TextStyles.w500(
-                    resp.sp16,
+                    16,
                     isSelected ? black : lightGrey,
                   ),
                 ),
@@ -143,7 +143,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
           },
         ),
         SizedBox(height: resp.hp(1)),
-        Text('Day:', style: TextStyles.w700(resp.sp16)),
+        Text('Day:', style: TextStyles.w700(16)),
         SizedBox(height: resp.hp(1)),
         // ? DAYS LIST
         CustomDateContainer(
@@ -175,7 +175,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                           ? ' ${widget.days[index]} '
                           : widget.days[index].toString(),
                       style: TextStyles.w500(
-                          resp.sp16, isSelected ? Colors.white : lightGrey),
+                          16, isSelected ? Colors.white : lightGrey),
                     ),
                   ),
                 ),
@@ -186,7 +186,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                       .substring(0, 3)
                       .toUpperCase(),
                   style: TextStyles.w500(
-                    resp.sp16,
+                    16,
                     isSelected ? black : lightGrey,
                   ),
                 ),

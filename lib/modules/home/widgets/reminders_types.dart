@@ -32,51 +32,60 @@ class _ActivitiesTypesState extends State<ActivitiesTypes> {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     final List<String> remindersTabs = widget.remindersPerType.keys.toList();
 
-    return Column(
-      children: [
-        Row(
-          children: [
-            ...List.generate(
-              remindersTabs.length,
-              (x) => Expanded(
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        if (_currentIndex != x) {
-                          setState(() {
-                            _currentIndex = x;
-                          });
-                        }
-                      },
-                      child: Text(
-                        remindersTabs[x],
-                        style: x == _currentIndex
-                            ? TextStyles.w700(resp.sp16)
-                            : TextStyles.w600(resp.sp16, grey),
-                        textAlign: TextAlign.center,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      decoration: BoxDecoration(
+        color: containerBg,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              ...List.generate(
+                remindersTabs.length,
+                (x) => Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: resp.hp(1.5)),
+                      GestureDetector(
+                        onTap: () {
+                          if (_currentIndex != x) {
+                            setState(() {
+                              _currentIndex = x;
+                            });
+                          }
+                        },
+                        child: Text(
+                          remindersTabs[x],
+                          style: x == _currentIndex
+                              ? TextStyles.w700(16)
+                              : TextStyles.w600(16, grey),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: resp.hp(1)),
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 150),
-                      height: resp.hp(1),
-                      decoration: BoxDecoration(
-                        color: _currentIndex == x ? accent : Colors.transparent,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    )
-                  ],
+                      SizedBox(height: resp.hp(0.5)),
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 100),
+                        height: resp.hp(1),
+                        decoration: BoxDecoration(
+                          gradient: _currentIndex == x ? accentGradient : null,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        RemindersListPerType(
-          data: widget.remindersPerType.values.elementAt(_currentIndex),
-          maxRemindersToShow: 1,
-        ),
-      ],
+            ],
+          ),
+          EventsListPerType(
+            data: widget.remindersPerType.values.elementAt(_currentIndex),
+            maxEventsToShow: 1,
+          ),
+        ],
+      ),
     );
   }
 }

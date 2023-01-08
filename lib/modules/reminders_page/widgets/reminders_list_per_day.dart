@@ -10,10 +10,10 @@ import '../../../widgets/reminder_container.dart';
 import '../../../widgets/reminder_information.dart';
 import 'reminder_hour.dart';
 
-class RemindersListPerDay extends StatelessWidget {
+class EventsListPerDay extends StatelessWidget {
   final void Function(ReminderModel reminder) onLongPressCallback;
   final List<ReminderModel> reminders;
-  const RemindersListPerDay({
+  const EventsListPerDay({
     super.key,
     required this.reminders,
     required this.onLongPressCallback,
@@ -43,7 +43,7 @@ class RemindersListPerDay extends StatelessWidget {
               color: color,
               leftWidget: ReminderHour(
                 dates: [startDate, endDate],
-                fontSize: resp.sp14,
+                fontSize: 14,
               ),
               rightWidget: ReminderInformation(
                 reminder: remider,

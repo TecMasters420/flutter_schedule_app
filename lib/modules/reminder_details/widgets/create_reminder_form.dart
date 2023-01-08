@@ -32,7 +32,7 @@ class CreateReminderForm extends StatelessWidget {
         SizedBox(height: resp.hp(1)),
         Text(
           'Title',
-          style: TextStyles.w600(resp.sp14),
+          style: TextStyles.w600(14),
         ),
         SizedBox(height: resp.hp(1)),
         CustomFormField(
@@ -47,7 +47,7 @@ class CreateReminderForm extends StatelessWidget {
         SizedBox(height: resp.hp(1)),
         Text(
           'Description',
-          style: TextStyles.w600(resp.sp14),
+          style: TextStyles.w600(14),
         ),
         SizedBox(height: resp.hp(1)),
         CustomFormField(
@@ -65,7 +65,7 @@ class CreateReminderForm extends StatelessWidget {
           color: accent,
           height: resp.hp(5),
           width: resp.width,
-          style: TextStyles.w600(resp.sp16, Colors.white),
+          style: TextStyles.w600(16, Colors.white),
           onTap: () {
             if (reminder.description.isEmpty || reminder.title.isEmpty) {
               return;

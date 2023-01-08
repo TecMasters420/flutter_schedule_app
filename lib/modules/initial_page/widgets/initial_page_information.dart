@@ -60,8 +60,7 @@ class LoginPageInformation extends StatelessWidget {
                                 debugPrint('Error loading image');
                                 return Text(
                                   'Error loading image',
-                                  style:
-                                      TextStyles.w600(resp.sp16, Colors.white),
+                                  style: TextStyles.w600(16, Colors.white),
                                 );
                               },
                             )
@@ -87,7 +86,7 @@ class LoginPageInformation extends StatelessWidget {
                   const SizedBox(height: 5),
                   Text(
                     description,
-                    style: TextStyles.w400(resp.sp16, Colors.grey[100]!),
+                    style: TextStyles.w400(16, Colors.grey[100]!),
                     textAlign: TextAlign.center,
                     maxLines: 2,
                   ),

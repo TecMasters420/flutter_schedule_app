@@ -148,8 +148,7 @@ class _MapPageState extends State<MapPage> {
                                       color: accent,
                                       height: resp.hp(5),
                                       width: resp.width,
-                                      style: TextStyles.w600(
-                                          resp.sp14, Colors.white),
+                                      style: TextStyles.w600(14, Colors.white),
                                       onTap: () async {
                                         Navigator.pop(context);
                                         final String? address =
@@ -178,7 +177,7 @@ class _MapPageState extends State<MapPage> {
                                       color: lightGrey.withOpacity(0.25),
                                       height: resp.hp(5),
                                       width: resp.width,
-                                      style: TextStyles.w600(resp.sp14),
+                                      style: TextStyles.w600(14),
                                       onTap: () async {
                                         Navigator.pop(context);
                                         final String? address =
@@ -277,7 +276,7 @@ class _MapPageState extends State<MapPage> {
                   color: Colors.white,
                   height: resp.hp(7),
                   width: resp.wp(80),
-                  style: TextStyles.w700(resp.sp16, accent),
+                  style: TextStyles.w700(16, accent),
                   onTap: () {
                     CustomAlertDialog(
                       resp: resp,
@@ -291,7 +290,7 @@ class _MapPageState extends State<MapPage> {
                           Flexible(
                             child: Text(
                               'Select Start position:',
-                              style: TextStyles.w500(resp.sp16),
+                              style: TextStyles.w500(16),
                             ),
                           ),
                           SizedBox(height: resp.hp(1)),
@@ -302,7 +301,7 @@ class _MapPageState extends State<MapPage> {
                                 color: accent,
                                 height: resp.hp(5),
                                 width: resp.wp(35),
-                                style: TextStyles.w600(resp.sp14, Colors.white),
+                                style: TextStyles.w600(14, Colors.white),
                                 onTap: () async {
                                   Navigator.pop(context);
                                   List<LatLng>? points;
@@ -323,7 +322,7 @@ class _MapPageState extends State<MapPage> {
                                 color: lightGrey.withOpacity(0.25),
                                 height: resp.hp(5),
                                 width: resp.wp(25),
-                                style: TextStyles.w600(resp.sp14, accent),
+                                style: TextStyles.w600(14, accent),
                                 onTap: () async {
                                   final res = await showSearch(
                                     context: context,
@@ -346,7 +345,7 @@ class _MapPageState extends State<MapPage> {
                           Flexible(
                             child: Text(
                               'Select End position:',
-                              style: TextStyles.w500(resp.sp16),
+                              style: TextStyles.w500(16),
                             ),
                           ),
                           SizedBox(height: resp.hp(1)),
@@ -357,7 +356,7 @@ class _MapPageState extends State<MapPage> {
                                 color: accent,
                                 height: resp.hp(5),
                                 width: resp.wp(35),
-                                style: TextStyles.w600(resp.sp14, Colors.white),
+                                style: TextStyles.w600(14, Colors.white),
                                 onTap: () async {
                                   Navigator.pop(context);
                                   List<LatLng>? points;
@@ -378,7 +377,7 @@ class _MapPageState extends State<MapPage> {
                                 color: lightGrey.withOpacity(0.25),
                                 height: resp.hp(5),
                                 width: resp.wp(25),
-                                style: TextStyles.w600(resp.sp14, accent),
+                                style: TextStyles.w600(14, accent),
                                 onTap: () async {
                                   final res = await showSearch(
                                     context: context,
@@ -408,7 +407,7 @@ class _MapPageState extends State<MapPage> {
                   color: accent,
                   height: resp.hp(7),
                   width: resp.wp(80),
-                  style: TextStyles.w700(resp.sp16, Colors.white),
+                  style: TextStyles.w700(16, Colors.white),
                   onTap: () {
                     if (_endPos != null && _startPos != null) {
                       if (widget.onAcceptCallback != null) {
@@ -431,7 +430,7 @@ class _MapPageState extends State<MapPage> {
                                 color: Colors.red[200], size: resp.sp40),
                             SizedBox(height: resp.hp(2)),
                             Text('You must enter a location.',
-                                style: TextStyles.w500(resp.sp16))
+                                style: TextStyles.w500(16))
                           ],
                         ),
                       );

@@ -111,7 +111,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                     SizedBox(height: resp.hp(1)),
                     Text(
                       'Title',
-                      style: TextStyles.w600(resp.sp14),
+                      style: TextStyles.w600(14),
                     ),
                     SizedBox(height: resp.hp(1)),
                     CustomFormField(
@@ -125,7 +125,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                     SizedBox(height: resp.hp(1)),
                     Text(
                       'Description',
-                      style: TextStyles.w600(resp.sp14),
+                      style: TextStyles.w600(14),
                     ),
                     SizedBox(height: resp.hp(1)),
                     CustomFormField(
@@ -163,7 +163,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
               //         const CustomCircularProgress(color: accent),
               //         SizedBox(height: resp.hp(2)),
               //         Text('Wait a bit while it saves',
-              //             style: TextStyles.w500(resp.sp16))
+              //             style: TextStyles.w500(16))
               //       ],
               //     ),
               //   );
@@ -191,7 +191,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
               //             color: Colors.red[200], size: resp.sp40),
               //         SizedBox(height: resp.hp(2)),
               //         Text('Review the entered data.',
-              //             style: TextStyles.w500(resp.sp16))
+              //             style: TextStyles.w500(16))
               //       ],
               //     ),
               //   );
@@ -240,7 +240,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                               : _reminder.description,
                           maxLines: 20,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyles.w500(resp.sp14),
+                          style: TextStyles.w500(14),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -249,7 +249,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                   SizedBox(height: resp.hp(2.5)),
                   Text(
                     'Reminder information:',
-                    style: TextStyles.w800(resp.sp16),
+                    style: TextStyles.w800(16),
                   ),
                   SizedBox(height: resp.hp(2.5)),
                   Flexible(
@@ -418,7 +418,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                             color: lightGrey.withOpacity(0.25),
                             height: resp.hp(5),
                             width: resp.width,
-                            style: TextStyles.w500(resp.sp16),
+                            style: TextStyles.w500(16),
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -441,7 +441,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                       tagsList: _reminder.tags.map((e) => e.name).toList(),
                       maxTagsToShow: _reminder.tags.length,
                       style: TextStyles.w500(
-                        resp.sp14,
+                        14,
                       ),
                       onLongPressCallback: (index) {
                         final TagModel selectedTag = _reminder.tags[index];
@@ -469,10 +469,10 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                         color: lightGrey.withOpacity(0.25),
                         height: resp.hp(4),
                         width: resp.wp(30),
-                        style: TextStyles.w500(resp.sp14),
+                        style: TextStyles.w500(14),
                         prefixWidget: Icon(
                           Icons.add,
-                          size: resp.sp16,
+                          size: 16,
                           color: accent,
                         ),
                         onTap: () {
@@ -526,7 +526,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                               Expanded(
                                 child: Text(
                                   task.name,
-                                  style: TextStyles.w500(resp.sp14, grey),
+                                  style: TextStyles.w500(14, grey),
                                 ),
                               ),
                               IconButton(
@@ -569,10 +569,10 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                         color: lightGrey.withOpacity(0.25),
                         height: resp.hp(4),
                         width: resp.wp(30),
-                        style: TextStyles.w500(resp.sp14),
+                        style: TextStyles.w500(14),
                         prefixWidget: Icon(
                           Icons.add,
-                          size: resp.sp16,
+                          size: 16,
                           color: accent,
                         ),
                         onTap: () {

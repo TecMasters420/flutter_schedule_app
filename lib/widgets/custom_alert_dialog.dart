@@ -28,7 +28,7 @@ class CustomAlertDialog {
       content: customBody ??
           Text(
             'Select an option',
-            style: TextStyles.w500(resp.sp16, grey),
+            style: TextStyles.w500(16, grey),
             textAlign: TextAlign.center,
           ),
       actions: [
@@ -39,7 +39,7 @@ class CustomAlertDialog {
             height: resp.hp(5),
             width: resp.wp(25),
             onTap: () => Navigator.pop(context),
-            style: TextStyles.w500(resp.sp16),
+            style: TextStyles.w500(16),
           ),
           CustomButton(
             text: 'Yes',
@@ -50,7 +50,7 @@ class CustomAlertDialog {
               Navigator.pop(context);
               onAcceptCallback();
             },
-            style: TextStyles.w500(resp.sp16, Colors.white),
+            style: TextStyles.w500(16, Colors.white),
           ),
         ]
       ],

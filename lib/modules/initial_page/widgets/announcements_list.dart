@@ -83,7 +83,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                           CustomButton(
                             color: tempAccent,
                             height: resp.hp(5),
-                            style: TextStyles.w800(resp.sp14, Colors.white),
+                            style: TextStyles.w800(14, Colors.white),
                             width: resp.wp(40),
                             text: 'Join',
                             onTap: () => Get.toNamed('/loginPage'),
@@ -99,7 +99,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                     SizedBox(height: resp.hp(2)),
                     Text(
                       'Loading announcements',
-                      style: TextStyles.w800(resp.sp16, Colors.white),
+                      style: TextStyles.w800(16, Colors.white),
                     ),
                   ],
                 ),

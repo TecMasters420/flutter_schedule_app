@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "760990865871-78ph8046hrkq2i34h52hb9pc2m9mnjmm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.schedulemanager.tec",
+            "certificate_hash": "116afe70fbc44528c335b7f2bdff63b328470234"
+          }
+        },
+        {
           "client_id": "760990865871-1rb9vei5ktm1i6js7tuepmpsrjpf8nus.apps.googleusercontent.com",
           "client_type": 3
         }
