@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+
 import '../../../app/config/constants.dart';
-import '../../../app/utils/responsive_util.dart';
 import '../../../app/utils/text_styles.dart';
 
 class WeatherContainer extends StatelessWidget {
@@ -12,7 +12,6 @@ class WeatherContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ResponsiveUtil resp = ResponsiveUtil.of(context);
     return Container(
       height: 150,
       width: double.infinity,
@@ -25,7 +24,7 @@ class WeatherContainer extends StatelessWidget {
         children: [
           Text(
             '$temp° C',
-            style: TextStyles.w600(resp.dp(5)),
+            style: TextStyles.w600(30),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

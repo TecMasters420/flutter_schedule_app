@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:schedulemanager/data/models/reminder_model.dart';
-import 'package:schedulemanager/modules/reminders_page/models/dates_with_events_model.dart';
-import 'package:schedulemanager/modules/reminders_page/models/events_date_model.dart';
-import 'package:schedulemanager/modules/reminders_page/services/events_page_service.dart';
+import '../../../data/models/reminder_model.dart';
+import '../models/dates_with_events_model.dart';
+import '../models/events_date_model.dart';
+import '../services/events_page_service.dart';
 
 class EventsPageController extends GetxController {
   final EventsPageRepository _repo = EventsPageRepository();

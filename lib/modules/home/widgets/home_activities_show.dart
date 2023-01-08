@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:schedulemanager/modules/home/widgets/home_announce_container.dart';
+import 'home_announce_container.dart';
 import '../../../app/config/constants.dart';
-import '../../../app/utils/responsive_util.dart';
 import '../../../app/utils/text_styles.dart';
 
 class HomeActivitiesShow extends StatelessWidget {
@@ -10,7 +9,6 @@ class HomeActivitiesShow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ResponsiveUtil resp = ResponsiveUtil.of(context);
     return PageView(
       clipBehavior: Clip.none,
       physics: const BouncingScrollPhysics(),

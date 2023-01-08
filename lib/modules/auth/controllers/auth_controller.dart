@@ -4,8 +4,8 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_rx/src/rx_workers/rx_workers.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:schedulemanager/data/models/user_model.dart';
-import 'package:schedulemanager/modules/auth/services/auth_repository.dart';
+import '../../../data/models/user_model.dart';
+import '../services/auth_repository.dart';
 
 class AuthController extends GetxController {
   final storage = const FlutterSecureStorage(

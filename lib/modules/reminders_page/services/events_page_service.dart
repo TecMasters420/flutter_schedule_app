@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:get/instance_manager.dart';
-import 'package:schedulemanager/app/services/base_repository.dart';
-import 'package:schedulemanager/data/models/reminder_model.dart';
-import 'package:schedulemanager/modules/auth/controllers/auth_controller.dart';
-import 'package:schedulemanager/modules/reminders_page/models/dates_with_events_model.dart';
+import '../../../app/services/base_repository.dart';
+import '../../../data/models/reminder_model.dart';
+import '../../auth/controllers/auth_controller.dart';
+import '../models/dates_with_events_model.dart';
 
 class EventsPageRepository extends BaseRepository {
   Future<List<ReminderModel>> getEventPerDate(DateTime date) async {

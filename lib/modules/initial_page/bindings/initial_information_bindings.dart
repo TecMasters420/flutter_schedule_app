@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:schedulemanager/modules/initial_page/controllers/initial_announcements_controller.dart';
+import '../controllers/initial_announcements_controller.dart';
 
 import '../controllers/announcements_carrousel_controller.dart';
 

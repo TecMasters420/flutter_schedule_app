@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:schedulemanager/data/models/event_location_model.dart';
-import 'package:schedulemanager/modules/map_page/map_page.dart';
-import 'package:schedulemanager/modules/reminder_details/widgets/custom_alert_with_calendart.dart';
+import '../../data/models/event_location_model.dart';
+import '../map_page/map_page.dart';
+import 'widgets/custom_alert_with_calendart.dart';
 import '../../app/config/constants.dart';
 import '../../data/models/reminder_model.dart';
 import '../../data/models/tag_model.dart';
@@ -225,7 +225,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                           : _reminder.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyles.w700(resp.sp30),
+                      style: TextStyles.w700(35),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -268,10 +268,10 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                           splashRadius: 20,
                           splashColor: accent.withOpacity(0.3),
                           highlightColor: accent.withOpacity(0.25),
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.mode,
                             color: lightGrey,
-                            size: resp.sp20,
+                            size: 25,
                           ),
                           onPressed: () async {
                             // ? Start date
@@ -321,10 +321,10 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                             splashRadius: 20,
                             splashColor: accent.withOpacity(0.3),
                             highlightColor: accent.withOpacity(0.25),
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.mode,
                               color: lightGrey,
-                              size: resp.sp20,
+                              size: 25,
                             ),
                             onPressed: () async {
                               // ? End date
@@ -470,7 +470,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                         height: resp.hp(4),
                         width: resp.wp(30),
                         style: TextStyles.w500(14),
-                        prefixWidget: Icon(
+                        prefixWidget: const Icon(
                           Icons.add,
                           size: 16,
                           color: accent,
@@ -533,10 +533,10 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                                 splashRadius: 20,
                                 splashColor: Colors.red.withOpacity(0.3),
                                 highlightColor: Colors.red.withOpacity(0.25),
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.remove_circle_outline,
                                   color: lightGrey,
-                                  size: resp.sp20,
+                                  size: 25,
                                 ),
                                 onPressed: () {
                                   final TaskModel selectedTask =
@@ -570,7 +570,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                         height: resp.hp(4),
                         width: resp.wp(30),
                         style: TextStyles.w500(14),
-                        prefixWidget: Icon(
+                        prefixWidget: const Icon(
                           Icons.add,
                           size: 16,
                           color: accent,

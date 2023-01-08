@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:schedulemanager/data/models/user_model.dart';
-import 'package:schedulemanager/modules/auth/models/auth_response_model.dart';
+import '../../../data/models/user_model.dart';
+import '../models/auth_response_model.dart';
 
 import '../../../app/services/base_repository.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../app/utils/responsive_util.dart';
 
 import '../app/config/constants.dart';
+import '../app/utils/responsive_util.dart';
 import '../app/utils/text_styles.dart';
 import 'custom_button.dart';
 
@@ -22,7 +22,7 @@ class CustomAlertDialog {
       ),
       title: Text(
         title,
-        style: TextStyles.w500(resp.sp20),
+        style: TextStyles.w500(25),
         textAlign: TextAlign.center,
       ),
       content: customBody ??

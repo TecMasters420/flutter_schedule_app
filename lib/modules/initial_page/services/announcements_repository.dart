@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:schedulemanager/app/services/base_repository.dart';
-import 'package:schedulemanager/data/models/initial_announcement_model.dart';
+import '../../../app/services/base_repository.dart';
+import '../../../data/models/initial_announcement_model.dart';
 
 class AnnouncementsRepository extends BaseRepository {
   Future<List<InitialAnnouncementModel>?> getAll() async {

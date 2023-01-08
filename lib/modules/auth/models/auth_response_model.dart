@@ -1,4 +1,4 @@
-import 'package:schedulemanager/data/models/user_model.dart';
+import '../../../data/models/user_model.dart';
 
 class AuthResponseModel {
   final UserModel? user;

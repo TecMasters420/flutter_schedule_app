@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:schedulemanager/app/config/constants.dart';
-import 'package:schedulemanager/app/utils/responsive_util.dart';
-import 'package:schedulemanager/widgets/user_profile_picture.dart';
+import '../../../app/config/constants.dart';
+import '../../../app/utils/responsive_util.dart';
+import '../../../widgets/user_profile_picture.dart';
 
 import '../../../app/utils/text_styles.dart';
 

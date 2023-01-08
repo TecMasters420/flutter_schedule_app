@@ -3,9 +3,9 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:schedulemanager/domain/map_api.dart';
-import 'package:schedulemanager/modules/map_page/map_page.dart';
-import 'package:schedulemanager/widgets/animated_marker.dart';
+import '../domain/map_api.dart';
+import '../modules/map_page/map_page.dart';
+import 'animated_marker.dart';
 import '../app/config/constants.dart';
 import '../app/services/base_repository.dart';
 

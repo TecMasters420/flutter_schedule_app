@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:schedulemanager/app/config/app_colors.dart';
-import 'package:schedulemanager/data/models/reminder_model.dart';
-import 'package:schedulemanager/modules/reminders_page/controllers/events_page_controller.dart';
+import '../../app/config/app_colors.dart';
+import '../../data/models/reminder_model.dart';
+import 'controllers/events_page_controller.dart';
 
-import 'package:schedulemanager/widgets/custom_circular_progress.dart';
+import '../../widgets/custom_circular_progress.dart';
 import '../../widgets/custom_alert_dialog.dart';
 import '../auth/controllers/auth_controller.dart';
 import '../reminder_details/reminders_details_page.dart';
@@ -75,12 +75,12 @@ class EventsPage extends StatelessWidget {
                   SizedBox(height: resp.hp(2.5)),
                   Text(
                     'Today is',
-                    style: TextStyles.w400(resp.sp20, lightGrey),
+                    style: TextStyles.w400(25, lightGrey),
                   ),
                   SizedBox(height: resp.hp(0.5)),
                   Text(
                     _getFormattedDate(DateTime.now()),
-                    style: TextStyles.w700(resp.sp30, black),
+                    style: TextStyles.w700(35, black),
                   ),
                   SizedBox(height: resp.hp(5)),
                   if (events.isLoading.value)
@@ -160,7 +160,7 @@ class EventsPage extends StatelessWidget {
                     Center(
                       child: Text(
                         'No reminders',
-                        style: TextStyles.w500(resp.sp20, lightGrey),
+                        style: TextStyles.w500(25, lightGrey),
                       ),
                     ),
                   SizedBox(height: resp.hp(10)),

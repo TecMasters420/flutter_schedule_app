@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../app/utils/responsive_util.dart';
+// import '../../app/utils/responsive_util.dart';
 import '../auth/controllers/auth_controller.dart';
 
 class UserProfilePage extends GetWidget<AuthController> {
@@ -8,9 +8,9 @@ class UserProfilePage extends GetWidget<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    // final ResponsiveUtil resp = ResponsiveUtil.of(context);
 
-    return SizedBox();
+    return const SizedBox();
     // return Scaffold(
     //   body: SingleChildScrollView(
     //     physics: const BouncingScrollPhysics(),
@@ -33,7 +33,7 @@ class UserProfilePage extends GetWidget<AuthController> {
     //                 '${controller.user.value!.displayName ?? 'NoName'} Profile.',
     //                 maxLines: 2,
     //                 overflow: TextOverflow.ellipsis,
-    //                 style: TextStyles.w700(resp.sp30),
+    //                 style: TextStyles.w700(35),
     //                 textAlign: TextAlign.center,
     //               ),
     //             ),
@@ -48,7 +48,7 @@ class UserProfilePage extends GetWidget<AuthController> {
     //             SizedBox(height: resp.hp(3)),
     //             Text(
     //               'Information:',
-    //               style: TextStyles.w700(resp.sp20, black),
+    //               style: TextStyles.w700(25, black),
     //             ),
     //             SizedBox(height: resp.hp(3)),
     //             Text(
@@ -95,7 +95,7 @@ class UserProfilePage extends GetWidget<AuthController> {
     //               height: resp.hp(5),
     //               width: double.infinity,
     //               onTap: () {},
-    //               style: TextStyles.w700(resp.sp20, Colors.white),
+    //               style: TextStyles.w700(25, Colors.white),
     //             )
     //           ],
     //         );

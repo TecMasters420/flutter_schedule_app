@@ -9,7 +9,6 @@ class ReminderContainer extends StatelessWidget {
 
   final ValueNotifier<double> height = ValueNotifier(0);
   final GlobalKey testKey = GlobalKey();
-  bool isGenerated = false;
 
   ReminderContainer({
     super.key,
@@ -23,8 +22,6 @@ class ReminderContainer extends StatelessWidget {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      if (isGenerated) return;
-      isGenerated = true;
       final RenderObject? renderBoxRed =
           testKey.currentContext?.findRenderObject();
       final size = renderBoxRed!.paintBounds;

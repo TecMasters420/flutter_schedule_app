@@ -3,10 +3,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:schedulemanager/domain/map_api.dart';
-import 'package:schedulemanager/presentation/app.dart';
-import 'package:schedulemanager/presentation/bindings/app_bindings.dart';
-import 'package:schedulemanager/app/services/flutter_notification.dart';
+import 'domain/map_api.dart';
+import 'presentation/app.dart';
+import 'presentation/bindings/app_bindings.dart';
+import 'app/services/flutter_notification.dart';
 
 import 'firebase_options.dart';
 

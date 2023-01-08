@@ -1,4 +1,4 @@
-import 'package:schedulemanager/data/models/reminder_model.dart';
+import '../../data/models/reminder_model.dart';
 
 abstract class EventsRepository {
   Future<List<ReminderModel>> getAllEvents();

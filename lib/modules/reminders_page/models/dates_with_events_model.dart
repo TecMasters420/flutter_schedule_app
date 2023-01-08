@@ -1,5 +1,5 @@
-import 'package:schedulemanager/data/models/reminder_model.dart';
-import 'package:schedulemanager/modules/reminders_page/models/events_date_model.dart';
+import '../../../data/models/reminder_model.dart';
+import 'events_date_model.dart';
 
 class DatesWithEventsModel {
   final int year;

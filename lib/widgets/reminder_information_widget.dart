@@ -29,7 +29,7 @@ class ReminderInformationWidget extends StatelessWidget {
             Icon(
               icon,
               color: grey,
-              size: resp.sp20,
+              size: 25,
             ),
             SizedBox(width: resp.wp(5)),
             Expanded(

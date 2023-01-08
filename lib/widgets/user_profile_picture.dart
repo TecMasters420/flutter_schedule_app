@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schedulemanager/widgets/custom_circular_progress.dart';
+import 'custom_circular_progress.dart';
 
 class UserProfilePicture extends StatelessWidget {
   final double height;

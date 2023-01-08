@@ -2,15 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:schedulemanager/modules/home/widgets/all_reminders_redirection_button.dart';
-import 'package:schedulemanager/modules/home/widgets/no_events_widget.dart';
+import 'all_reminders_redirection_button.dart';
+import 'no_events_widget.dart';
 import '../../../data/models/reminder_model.dart';
 import 'reminder_date_data.dart';
 import '../../../app/utils/responsive_util.dart';
 
 import '../../../app/config/constants.dart';
 import '../../../app/utils/text_styles.dart';
-import '../../../widgets/custom_button.dart';
 import '../../../widgets/reminder_container.dart';
 import '../../../widgets/reminder_information.dart';
 

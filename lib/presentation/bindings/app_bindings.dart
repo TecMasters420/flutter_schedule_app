@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:schedulemanager/modules/auth/bindings/auth_bindings.dart';
+import '../../modules/auth/bindings/auth_bindings.dart';
 
 class AppBindings implements Bindings {
   const AppBindings();

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schedulemanager/data/models/event_status_enum.dart';
+import '../data/models/event_status_enum.dart';
 import '../data/models/reminder_model.dart';
 import '../modules/reminder_details/reminders_details_page.dart';
 import '../app/utils/responsive_util.dart';
@@ -87,9 +87,7 @@ class ReminderInformation extends StatelessWidget {
           TagsList(
             tagsList: reminder.tags.map((e) => e.name).toList(),
             maxTagsToShow: 3,
-            style: TextStyles.w500(
-              resp.dp(1),
-            ),
+            style: TextStyles.w500(12),
           ),
         ],
         if (reminder.tasks.isNotEmpty) ...[

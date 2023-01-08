@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:schedulemanager/app/config/constants.dart';
-import 'package:schedulemanager/modules/home/controllers/home_controller.dart';
-import 'package:schedulemanager/modules/home/widgets/group_events/group_events_list_widget.dart';
-import 'package:schedulemanager/modules/home/widgets/home_header_widget.dart';
-import 'package:schedulemanager/widgets/custom_circular_progress.dart';
+import '../../app/config/constants.dart';
+import 'controllers/home_controller.dart';
+import 'widgets/home_header_widget.dart';
+import '../../widgets/custom_circular_progress.dart';
 
 import '../../app/utils/responsive_util.dart';
 

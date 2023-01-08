@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../app/config/constants.dart';
-import '../app/utils/responsive_util.dart';
 import '../app/utils/text_styles.dart';
 
 class CustomFormField extends StatelessWidget {
@@ -26,7 +25,6 @@ class CustomFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ResponsiveUtil resp = ResponsiveUtil.of(context);
     return TextFormField(
       controller: controller,
       maxLines: maxLines ?? 1,
@@ -53,7 +51,7 @@ class CustomFormField extends StatelessWidget {
         ),
         suffixIcon: Icon(
           icon,
-          size: resp.sp20,
+          size: 25,
           color: accent,
         ),
       ),

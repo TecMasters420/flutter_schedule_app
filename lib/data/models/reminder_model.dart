@@ -1,5 +1,5 @@
-import 'package:schedulemanager/data/models/event_location_model.dart';
-import 'package:schedulemanager/data/models/event_status_enum.dart';
+import 'event_location_model.dart';
+import 'event_status_enum.dart';
 import 'tag_model.dart';
 import 'task_model.dart';
 

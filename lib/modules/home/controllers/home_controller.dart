@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:schedulemanager/data/models/reminder_model.dart';
-import 'package:schedulemanager/modules/home/services/home_services.dart';
+import '../../../data/models/reminder_model.dart';
+import '../services/home_services.dart';
 
 class HomeController extends GetxController {
   final HomeRepository _repo = HomeRepository();

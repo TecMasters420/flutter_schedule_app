@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
-import 'package:schedulemanager/data/models/address_model.dart';
+import '../data/models/address_model.dart';
 
 class MapApi with ChangeNotifier {
   static const String _apiURL = 'https://api.mapbox.com';

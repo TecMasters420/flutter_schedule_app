@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schedulemanager/app/config/constants.dart';
+import '../app/config/constants.dart';
 
 class AnimatedMarker extends StatefulWidget {
   const AnimatedMarker({

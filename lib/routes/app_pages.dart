@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:schedulemanager/modules/home/bindings/home_bindings.dart';
-import 'package:schedulemanager/modules/reminders_page/bindings/events_page_bindings.dart';
-import 'package:schedulemanager/modules/initial_page/bindings/initial_information_bindings.dart';
-import 'package:schedulemanager/modules/home/home_page.dart';
-import 'package:schedulemanager/modules/auth/pages/login_page.dart';
+import '../modules/home/bindings/home_bindings.dart';
+import '../modules/reminders_page/bindings/events_page_bindings.dart';
+import '../modules/initial_page/bindings/initial_information_bindings.dart';
+import '../modules/home/home_page.dart';
+import '../modules/auth/pages/login_page.dart';
 
 import '../modules/initial_page/initial_information_page.dart';
 import '../modules/map_page/map_page.dart';

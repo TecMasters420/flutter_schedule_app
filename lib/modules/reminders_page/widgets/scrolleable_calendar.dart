@@ -57,7 +57,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (widget.showTitle!) ...[
-          Text('Select a date:', style: TextStyles.w700(resp.sp20)),
+          Text('Select a date:', style: TextStyles.w700(25)),
           SizedBox(height: resp.hp(2)),
         ],
         // Text('Year:', style: TextStyles.w700(16)),

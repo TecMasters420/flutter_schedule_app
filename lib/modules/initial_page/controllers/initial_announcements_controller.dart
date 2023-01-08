@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:schedulemanager/data/models/initial_announcement_model.dart';
-import 'package:schedulemanager/modules/initial_page/services/announcements_repository.dart';
+import '../../../data/models/initial_announcement_model.dart';
+import '../services/announcements_repository.dart';
 
 class InitialAnnouncementsController extends GetxController {
   final AnnouncementsRepository _repo = AnnouncementsRepository();

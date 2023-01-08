@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:schedulemanager/app/config/constants.dart';
-import 'package:schedulemanager/app/utils/responsive_util.dart';
-import 'package:schedulemanager/app/utils/text_styles.dart';
-import 'package:schedulemanager/widgets/custom_button.dart';
+import '../../../../app/config/constants.dart';
+import '../../../../app/utils/responsive_util.dart';
+import '../../../../app/utils/text_styles.dart';
+import '../../../../widgets/custom_button.dart';
 
 class GroupEventsListWidget extends StatelessWidget {
   const GroupEventsListWidget({super.key});
