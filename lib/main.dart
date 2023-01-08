@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:schedulemanager/api/map_api.dart';
 import 'package:schedulemanager/services/flutter_notification.dart';
 
-import 'firebase_options.dart';
 import 'screens/home_page/home_page.dart';
 import 'screens/initial_page/initial_information_page.dart';
 import 'screens/login_page/login_page.dart';
@@ -27,8 +26,8 @@ void main() async {
   await dotenv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+      // options: DefaultFirebaseOptions.currentPlatform,
+      );
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   FirebaseMessaging.instance.onTokenRefresh
