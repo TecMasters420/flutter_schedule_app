@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/modules/initial_page/bindings/initial_information_bindings.dart';
 import 'package:schedulemanager/modules/initial_page/initial_information_page.dart';
 import 'package:schedulemanager/routes/app_pages.dart';
@@ -16,6 +17,7 @@ class App extends StatelessWidget {
       home: const InitialInformationPage(),
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xfffcfbff),
+        colorScheme: ColorScheme.fromSwatch().copyWith(primary: accent),
       ),
     );
   }

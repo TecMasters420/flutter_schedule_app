@@ -188,7 +188,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
               //       mainAxisSize: MainAxisSize.min,
               //       children: [
               //         Icon(Icons.block_rounded,
-              //             color: Colors.red[200], size: resp.sp40),
+              //             color: Colors.red[200], size: 45),
               //         SizedBox(height: resp.hp(2)),
               //         Text('Review the entered data.',
               //             style: TextStyles.w500(16))

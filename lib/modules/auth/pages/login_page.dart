@@ -5,7 +5,9 @@ import '../../../app/config/constants.dart';
 
 import '../../../app/utils/responsive_util.dart';
 import '../../../app/utils/text_styles.dart';
+import '../../../widgets/custom_alert_dialog.dart';
 import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_circular_progress.dart';
 import '../../../widgets/custom_form_field.dart';
 import '../controllers/auth_controller.dart';
 
@@ -26,140 +28,162 @@ class _LoginPageState extends State<LoginPage> {
     final AuthController auth = Get.find();
 
     return Scaffold(
-      backgroundColor: backgroundColor,
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: SizedBox(
-          height: resp.height,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 50,
-              vertical: 20,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Spacer(),
-                Image.asset('assets/images/home_logo.png'),
-                SizedBox(height: resp.hp(2.5)),
-                Text(
-                  'Hello, Welcome!',
-                  style: TextStyles.w500(resp.sp40),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: resp.hp(1)),
-                Text(
-                  'Enter the following fields that are requested to log in.',
-                  style: TextStyles.w400(16, Colors.grey[600]!),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: resp.hp(2.5)),
-                CustomFormField(
-                  labelText: 'Email',
-                  hintText: 'email@gmail.com',
-                  icon: Icons.alternate_email_rounded,
-                  onChanged: (value) {
-                    setState(() {
-                      _email = value;
-                    });
-                  },
-                ),
-                SizedBox(height: resp.hp(2.5)),
-                CustomFormField(
-                  obscure: true,
-                  labelText: 'Password',
-                  hintText: '*******',
-                  icon: Icons.lock_outline_rounded,
-                  onChanged: (value) {
-                    setState(() {
-                      _password = value;
-                    });
-                  },
-                ),
-                Row(
-                  children: [
-                    const Spacer(),
-                    TextButton(
-                      child: Text(
-                        'Recovery password',
-                        style: TextStyles.w400(16, accent),
-                      ),
-                      onPressed: () {},
-                    )
-                  ],
-                ),
-                SizedBox(height: resp.hp(2.5)),
-                CustomButton(
-                  color: tempAccent,
-                  height: resp.hp(5),
-                  style: TextStyles.w800(16, Colors.white),
-                  width: resp.wp(30),
-                  text: 'Login',
-                  onTap: () async {
-                    if (_email == null || _password == null) return;
-                    await auth.logIn(_email!, _password!);
-                  },
-                ),
-                // SizedBox(height: resp.hp(1)),
-                // Text(
-                //   'Or',
-                //   style: TextStyles.w200(16, Colors.grey[600]!),
-                //   textAlign: TextAlign.center,
-                // ),
-                // SizedBox(height: resp.hp(1)),
-                // CustomButton(
-                //   color: Colors.grey[50]!,
-                //   height: resp.hp(5),
-                //   style: TextStyles.w400(16),
-                //   width: resp.wp(30),
-                //   text: 'Google',
-                //   prefixWidget: Image.asset(
-                //     'assets/images/google.png',
-                //     height: resp.hp(5),
-                //     width: resp.wp(5),
-                //   ),
-                //   onTap: () async {
-                //     CustomAlertDialog(
-                //       resp: resp,
-                //       dismissible: false,
-                //       context: context,
-                //       onAcceptCallback: () {},
-                //       showButtons: false,
-                //       title: 'Logging in...',
-                //       customBody: Column(
-                //         mainAxisSize: MainAxisSize.min,
-                //         children: [
-                //           const CustomCircularProgress(color: accent),
-                //           SizedBox(height: resp.hp(2)),
-                //           Text('Wait a bit while it logs in',
-                //               style: TextStyles.w500(16))
-                //         ],
-                //       ),
-                //     );
-                //     // await auth.googleLogin();
-                //   },
-                // ),
-                const Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account yet?",
-                      style: TextStyles.w400(16, grey),
+      resizeToAvoidBottomInset: false,
+      backgroundColor: containerBg,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 50),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Login - Alpha',
+                style: TextStyles.w800(30),
+              ),
+              SizedBox(height: resp.hp(0.5)),
+              Text(
+                'Enter the following information so you can organize your events!',
+                style: TextStyles.w500(14, grey),
+              ),
+              SizedBox(height: resp.hp(2.5)),
+              Row(
+                children: [
+                  Text(
+                    'Email',
+                    style: TextStyles.w700(14),
+                  ),
+                  Text(
+                    ' *',
+                    style: TextStyles.w700(14, Colors.red),
+                  ),
+                ],
+              ),
+              SizedBox(height: resp.hp(1)),
+              CustomFormField(
+                labelText: 'Email',
+                hintText: 'email@gmail.com',
+                icon: Icons.alternate_email_rounded,
+                onChanged: (value) {
+                  setState(() {
+                    _email = value;
+                  });
+                },
+              ),
+              SizedBox(height: resp.hp(1)),
+              Row(
+                children: [
+                  Text(
+                    'Password',
+                    style: TextStyles.w700(14),
+                  ),
+                  Text(
+                    ' *',
+                    style: TextStyles.w700(14, Colors.red),
+                  ),
+                ],
+              ),
+              SizedBox(height: resp.hp(1)),
+              CustomFormField(
+                obscure: true,
+                labelText: 'Password',
+                hintText: '************',
+                icon: Icons.lock_outline_rounded,
+                onChanged: (value) {
+                  setState(() {
+                    _password = value;
+                  });
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    child: Text(
+                      'Forget password?',
+                      style: TextStyles.w700(14, accent),
                     ),
-                    TextButton(
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyles.w500(16, accent),
+                    onPressed: () {},
+                  )
+                ],
+              ),
+              Column(
+                children: [
+                  SizedBox(height: resp.hp(1)),
+                  CustomButton(
+                    color: tempAccent,
+                    height: resp.hp(5),
+                    style: TextStyles.w800(16, Colors.white),
+                    width: resp.wp(30),
+                    text: 'Login',
+                    onTap: () async {
+                      if (_email == null || _password == null) return;
+                      await auth.logIn(_email!, _password!);
+                    },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Not registered yet? ',
+                        style: TextStyles.w700(14),
                       ),
-                      onPressed: () =>
-                          Navigator.pushNamed(context, 'registerPage'),
-                    )
-                  ],
-                ),
-              ],
-            ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                        ),
+                        child: Text(
+                          'Create an account',
+                          style: TextStyles.w700(14, accent),
+                        ),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                  Text(
+                    'Or',
+                    style: TextStyles.w500(14, lightGrey),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: resp.hp(1)),
+                  CustomButton(
+                    color: Colors.transparent,
+                    height: resp.hp(5),
+                    style: TextStyles.w500(14),
+                    width: resp.wp(40),
+                    text: 'Login with Google',
+                    prefixWidget: Image.asset(
+                      'assets/images/google.png',
+                      height: resp.hp(5),
+                      width: resp.wp(5),
+                    ),
+                    onTap: () async {
+                      CustomAlertDialog(
+                        resp: resp,
+                        dismissible: false,
+                        context: context,
+                        onAcceptCallback: () {},
+                        showButtons: false,
+                        title: 'Logging in...',
+                        customBody: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const CustomCircularProgress(
+                              color: accent,
+                            ),
+                            SizedBox(height: resp.hp(2)),
+                            Text(
+                              'Wait a bit while it logs in',
+                              style: TextStyles.w500(16),
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

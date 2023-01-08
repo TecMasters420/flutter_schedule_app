@@ -427,7 +427,7 @@ class _MapPageState extends State<MapPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(Icons.block_rounded,
-                                color: Colors.red[200], size: resp.sp40),
+                                color: Colors.red[200], size: 45),
                             SizedBox(height: resp.hp(2)),
                             Text('You must enter a location.',
                                 style: TextStyles.w500(16))

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-const Color accent = Color(0xff3860e4);
-const Color tempAccent = Color.fromARGB(255, 28, 63, 179);
+const Color accent = Color(0xff4d34e0);
+const Color tempAccent = Color(0xff3521b5);
 const Color backgroundColor = Color(0xfffcfbff);
 const Color containerBg = Color(0xfff7f6fd);
 
