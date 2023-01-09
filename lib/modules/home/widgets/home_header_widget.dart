@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import '../../../app/config/constants.dart';
 import '../../../app/utils/responsive_util.dart';
 import '../../../widgets/user_profile_picture.dart';
@@ -32,23 +34,34 @@ class HomeHeaderWidget extends StatelessWidget {
                       'Francisco Rodríguez',
                       style: TextStyles.w700(14),
                     ),
-                    Text(
-                      'View profile',
-                      style: TextStyles.w700(12, accent),
+                    SizedBox(
+                      height: resp.hp(2),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          alignment: Alignment.topLeft,
+                        ),
+                        child: Text(
+                          'View profile',
+                          style: TextStyles.w700(12, accent),
+                        ),
+                        onPressed: () {
+                          Get.toNamed('userProfilePage');
+                        },
+                      ),
                     ),
                   ],
                 )
               ],
             ),
             const Spacer(),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              width: resp.wp(10),
-              decoration: BoxDecoration(
-                color: containerBg,
-                borderRadius: BorderRadius.circular(15),
+            IconButton(
+              style: IconButton.styleFrom(
+                padding: EdgeInsets.zero,
+                alignment: Alignment.topCenter,
               ),
-              child: const Icon(Icons.notifications_none_rounded, size: 30),
+              icon: const Icon(Icons.notifications_none_rounded, size: 30),
+              onPressed: () => Get.toNamed('/notificationsPage'),
             ),
           ],
         ),

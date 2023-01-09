@@ -43,7 +43,7 @@ class LoginPageInformation extends StatelessWidget {
                 child: Container(
                   height: resp.hp(65),
                   decoration: BoxDecoration(
-                    color: tempAccent,
+                    color: darkAccent,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: withImage && imageUrl != null && imageUrl != ''

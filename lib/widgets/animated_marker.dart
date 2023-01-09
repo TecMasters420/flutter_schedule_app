@@ -46,14 +46,14 @@ class _AnimatedMarkerState extends State<AnimatedMarker>
           width: 35 * value,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: tempAccent.withOpacity(0.5),
+            color: darkAccent.withOpacity(0.5),
             shape: BoxShape.circle,
           ),
         ),
         Container(
           width: 15,
           decoration: const BoxDecoration(
-            color: tempAccent,
+            color: darkAccent,
             shape: BoxShape.circle,
           ),
         ),

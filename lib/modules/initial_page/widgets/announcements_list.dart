@@ -81,7 +81,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                         children: [
                           SizedBox(height: resp.hp(1)),
                           CustomButton(
-                            color: tempAccent,
+                            color: darkAccent,
                             height: resp.hp(5),
                             style: TextStyles.w800(14, Colors.white),
                             width: resp.wp(40),

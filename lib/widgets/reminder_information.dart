@@ -47,9 +47,9 @@ class ReminderInformation extends StatelessWidget {
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
         ),
-        SizedBox(height: resp.hp(1)),
+        SizedBox(height: resp.hp(2)),
         Text(
-          'Information:',
+          'Event Information:',
           style: TextStyles.w700(16),
         ),
         if (reminder.endLocation != null &&
@@ -113,7 +113,7 @@ class ReminderInformation extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Remaining time:',
+                      'Time remaining:',
                       style: TextStyles.w600(14),
                     ),
                     Text(

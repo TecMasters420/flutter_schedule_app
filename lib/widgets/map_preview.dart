@@ -95,7 +95,7 @@ class _MapPreviewState extends State<MapPreview> {
           color: lightGrey.withOpacity(0.25),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
           child: FlutterMap(
             mapController: _controller,
             options: MapOptions(

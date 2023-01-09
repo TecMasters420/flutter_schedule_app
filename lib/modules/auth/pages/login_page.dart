@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   SizedBox(height: resp.hp(1)),
                   CustomButton(
-                    color: tempAccent,
+                    color: darkAccent,
                     height: resp.hp(5),
                     style: TextStyles.w800(16, Colors.white),
                     width: resp.wp(30),

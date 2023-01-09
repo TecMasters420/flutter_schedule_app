@@ -95,7 +95,7 @@ class ReminderModel {
 
   @override
   String toString() {
-    return 'Reminder(creationDate: $createdAt, description: $description, endDate: $endDate, location: $endLocation, title: $title, tasks: $tasks, tags: $tags)';
+    return 'Event(creationDate: $createdAt, description: $description, endDate: $endDate, location: $endLocation, title: $title, tasks: $tasks, tags: $tags)';
   }
 
   Duration timeLeft(final DateTime date) {

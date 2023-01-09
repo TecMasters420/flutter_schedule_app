@@ -87,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 SizedBox(height: resp.hp(2.5)),
                 CustomButton(
-                  color: tempAccent,
+                  color: darkAccent,
                   height: resp.hp(5),
                   style: TextStyles.w800(16, Colors.white),
                   width: resp.wp(30),

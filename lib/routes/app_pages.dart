@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:schedulemanager/modules/notifications_page/pages/notifications_page.dart';
 import '../modules/home/bindings/home_bindings.dart';
 import '../modules/reminders_page/bindings/events_page_bindings.dart';
 import '../modules/initial_page/bindings/initial_information_bindings.dart';
@@ -47,5 +48,9 @@ final List<GetPage> appPages = [
   GetPage(
     name: '/mapPage',
     page: () => const MapPage(),
+  ),
+  GetPage(
+    name: '/notificationsPage',
+    page: () => const NotificationsPage(),
   ),
 ];

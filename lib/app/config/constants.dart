@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color accent = Color(0xff2d76f1);
-const Color tempAccent = Color(0xff045cfb);
+const Color darkAccent = Color(0xff045cfb);
 const Color backgroundColor = Color(0xfffcfbff);
 const Color containerBg = Color(0xfff7f6fd);
 
@@ -9,8 +9,10 @@ const Color black = Color(0xff192252);
 const Color grey = Color(0xff9da1af);
 const Color lightGrey = Color(0xffb9bfce);
 
+const Color red = Color(0xffE0144C);
+
 const LinearGradient accentGradient = LinearGradient(
-  colors: [accent, tempAccent],
+  colors: [accent, darkAccent],
 );
 
 List<BoxShadow> shadows = [

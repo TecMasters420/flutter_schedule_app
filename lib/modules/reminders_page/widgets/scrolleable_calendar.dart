@@ -54,48 +54,10 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
     final currentMonthIndex = (_selectedMonth ?? widget.initialMonth) - 1;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
       children: [
-        if (widget.showTitle!) ...[
-          Text('Select a date:', style: TextStyles.w700(25)),
-          SizedBox(height: resp.hp(2)),
-        ],
-        // Text('Year:', style: TextStyles.w700(16)),
-        // SizedBox(height: resp.hp(1)),
-        // CustomDateContainer(
-        //   data: List.generate(3, (index) => DateTime.now().year + index),
-        //   initialElementIndex: 0,
-        //   onPressElement: (pressedElementIndex, index) {},
-        //   widgetBuild: (currentElement, isSelected, index) {
-        //     return Column(
-        //       mainAxisSize: MainAxisSize.min,
-        //       children: [
-        //         Text(
-        //           currentElement.toString(),
-        //           style: TextStyles.w500(
-        //             16,
-        //             isSelected ? black : lightGrey,
-        //           ),
-        //         ),
-        //         SizedBox(height: resp.hp(0.5)),
-        //         AnimatedContainer(
-        //           duration: const Duration(milliseconds: 250),
-        //           height: resp.hp(0.75),
-        //           width: isSelected ? resp.wp(5) : resp.wp(2.5),
-        //           decoration: BoxDecoration(
-        //             color: isSelected ? accent : lightGrey.withOpacity(0.25),
-        //             borderRadius: const BorderRadius.all(
-        //               Radius.circular(10),
-        //             ),
-        //           ),
-        //         )
-        //       ],
-        //     );
-        //   },
-        // ),
+        SizedBox(height: resp.hp(0.5)),
+        Text('Select Month', style: TextStyles.w700(18)),
         SizedBox(height: resp.hp(2)),
-        Text('Month:', style: TextStyles.w700(16)),
-        SizedBox(height: resp.hp(1)),
         CustomDateContainer(
           data: List.generate(12, (index) => index + 1),
           initialElementIndex: currentMonthIndex < 0 ? 0 : currentMonthIndex,
@@ -117,10 +79,12 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                     DateTime.now().year,
                     currentElement,
                   )),
-                  style: TextStyles.w500(
-                    16,
-                    isSelected ? black : lightGrey,
-                  ),
+                  style: isSelected
+                      ? TextStyles.w700(14)
+                      : TextStyles.w500(
+                          14,
+                          lightGrey,
+                        ),
                 ),
                 SizedBox(height: resp.hp(0.5)),
                 AnimatedContainer(
@@ -142,9 +106,9 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
             );
           },
         ),
-        SizedBox(height: resp.hp(1)),
-        Text('Day:', style: TextStyles.w700(16)),
-        SizedBox(height: resp.hp(1)),
+        SizedBox(height: resp.hp(2)),
+        Text('Select Day', style: TextStyles.w700(18)),
+        SizedBox(height: resp.hp(2)),
         // ? DAYS LIST
         CustomDateContainer(
           data: widget.days,
@@ -174,21 +138,32 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                       widget.days[index].toString().length == 1
                           ? ' ${widget.days[index]} '
                           : widget.days[index].toString(),
-                      style: TextStyles.w500(
-                          16, isSelected ? Colors.white : lightGrey),
+                      style: isSelected
+                          ? TextStyles.w700(16, Colors.white)
+                          : TextStyles.w500(
+                              14,
+                              lightGrey,
+                            ),
                     ),
                   ),
                 ),
                 Text(
                   DateFormat('EEEE')
-                      .format(DateTime(
-                          DateTime.now().year, _selectedMonth!, currentElement))
+                      .format(
+                        DateTime(
+                          DateTime.now().year,
+                          _selectedMonth!,
+                          currentElement,
+                        ),
+                      )
                       .substring(0, 3)
                       .toUpperCase(),
-                  style: TextStyles.w500(
-                    16,
-                    isSelected ? black : lightGrey,
-                  ),
+                  style: isSelected
+                      ? TextStyles.w700(16)
+                      : TextStyles.w500(
+                          14,
+                          lightGrey,
+                        ),
                 ),
                 SizedBox(height: resp.hp(0.5)),
                 Container(

@@ -23,9 +23,9 @@ class NoEventsWidget extends StatelessWidget {
           ),
         ),
         SizedBox(height: resp.hp(2.5)),
-        Text('No events in this category', style: TextStyles.w700(16)),
+        Text('No events found', style: TextStyles.w700(16)),
         Text(
-          'You can add your own event',
+          'You can click on the button to add an event.',
           style: TextStyles.w500(14),
         ),
         SizedBox(height: resp.hp(1.5)),
