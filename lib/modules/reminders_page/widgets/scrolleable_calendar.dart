@@ -55,9 +55,6 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: resp.hp(0.5)),
-        Text('Select Month', style: TextStyles.w700(18)),
-        SizedBox(height: resp.hp(2)),
         CustomDateContainer(
           data: List.generate(12, (index) => index + 1),
           initialElementIndex: currentMonthIndex < 0 ? 0 : currentMonthIndex,
@@ -107,8 +104,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
           },
         ),
         SizedBox(height: resp.hp(2)),
-        Text('Select Day', style: TextStyles.w700(18)),
-        SizedBox(height: resp.hp(2)),
+
         // ? DAYS LIST
         CustomDateContainer(
           data: widget.days,
@@ -131,46 +127,46 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                       vertical: 15,
                     ),
                     decoration: BoxDecoration(
-                      color: isSelected ? accent : Colors.transparent,
-                      shape: BoxShape.circle,
+                      color: isSelected ? accent : containerBg,
+                      borderRadius: BorderRadius.circular(25),
                     ),
-                    child: Text(
-                      widget.days[index].toString().length == 1
-                          ? ' ${widget.days[index]} '
-                          : widget.days[index].toString(),
-                      style: isSelected
-                          ? TextStyles.w700(16, Colors.white)
-                          : TextStyles.w500(
-                              14,
-                              lightGrey,
-                            ),
+                    child: Column(
+                      children: [
+                        Text(
+                          DateFormat('EEEE')
+                              .format(
+                                DateTime(
+                                  DateTime.now().year,
+                                  _selectedMonth!,
+                                  currentElement,
+                                ),
+                              )
+                              .substring(0, 3)
+                              .toUpperCase(),
+                          style: TextStyles.w500(
+                            14,
+                            isSelected ? Colors.white : grey,
+                          ),
+                        ),
+                        Text(
+                          widget.days[index].toString().length == 1
+                              ? ' ${widget.days[index]} '
+                              : widget.days[index].toString(),
+                          style: TextStyles.w700(
+                            25,
+                            isSelected ? Colors.white : black,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                Text(
-                  DateFormat('EEEE')
-                      .format(
-                        DateTime(
-                          DateTime.now().year,
-                          _selectedMonth!,
-                          currentElement,
-                        ),
-                      )
-                      .substring(0, 3)
-                      .toUpperCase(),
-                  style: isSelected
-                      ? TextStyles.w700(16)
-                      : TextStyles.w500(
-                          14,
-                          lightGrey,
-                        ),
                 ),
                 SizedBox(height: resp.hp(0.5)),
                 Container(
                   height: resp.hp(0.75),
                   width: resp.wp(5),
                   decoration: BoxDecoration(
-                    color: isSelected ? accent : Colors.transparent,
+                    color: isSelected ? accent : containerBg,
                     borderRadius: const BorderRadius.all(
                       Radius.circular(10),
                     ),

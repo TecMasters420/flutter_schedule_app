@@ -49,14 +49,14 @@ class ReminderInformation extends StatelessWidget {
         ),
         SizedBox(height: resp.hp(2)),
         Text(
-          'Event Information:',
+          'Event Information',
           style: TextStyles.w700(16),
         ),
         if (reminder.endLocation != null &&
             reminder.endLocation!.address != null) ...[
           SizedBox(height: resp.hp(1)),
           Text(
-            'End location:',
+            'End location',
             style: TextStyles.w600(14),
           ),
           SizedBox(height: resp.hp(0.5)),
@@ -69,7 +69,7 @@ class ReminderInformation extends StatelessWidget {
             reminder.startLocation!.address != null) ...[
           SizedBox(height: resp.hp(1)),
           Text(
-            'Start location:',
+            'Start location',
             style: TextStyles.w600(14),
           ),
           SizedBox(height: resp.hp(0.5)),
@@ -81,7 +81,7 @@ class ReminderInformation extends StatelessWidget {
         if (reminder.tags.isNotEmpty) ...[
           SizedBox(height: resp.hp(1)),
           Text(
-            'Tags:',
+            'Tags',
             style: TextStyles.w600(14),
           ),
           TagsList(
@@ -104,16 +104,16 @@ class ReminderInformation extends StatelessWidget {
           ),
           SizedBox(height: resp.hp(2)),
         ],
+        SizedBox(height: resp.hp(1)),
         Row(
           children: [
             if (reminder.currentStatus != EventStatus.expired) ...[
-              SizedBox(height: resp.hp(1)),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Time remaining:',
+                      'Time remaining',
                       style: TextStyles.w600(14),
                     ),
                     Text(
@@ -130,6 +130,12 @@ class ReminderInformation extends StatelessWidget {
                   style: TextStyles.w500(14, Colors.red[200]!),
                 ),
               ),
+          ],
+        ),
+        SizedBox(height: resp.hp(1)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
             CustomButton(
               constraints: const BoxConstraints(maxWidth: 150),
               text: 'Details',
@@ -144,9 +150,9 @@ class ReminderInformation extends StatelessWidget {
                       ReminderDetailsPage(reminder: reminder),
                 ),
               ),
-            )
+            ),
           ],
-        ),
+        )
       ],
     );
   }

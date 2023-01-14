@@ -47,7 +47,7 @@ class EventsListPerType extends StatelessWidget {
           ),
           SizedBox(height: resp.hp(2.5)),
           ...List.generate(
-            data.length > maxEventsToShow ? maxEventsToShow + 2 : data.length,
+            data.length > maxEventsToShow ? maxEventsToShow + 1 : data.length,
             (index) {
               if (index > maxEventsToShow) const AllEventsRedirectionButton();
               final color = colors[Random().nextInt(colors.length - 1)];

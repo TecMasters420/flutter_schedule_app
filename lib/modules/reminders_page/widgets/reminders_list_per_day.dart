@@ -38,10 +38,7 @@ class EventsListPerDay extends StatelessWidget {
             highlightColor: lightGrey.withOpacity(0.05),
             child: ReminderContainer(
               color: color,
-              leftWidget: ReminderHour(
-                dates: [startDate, endDate],
-                fontSize: 14,
-              ),
+              leftWidget: ReminderHour(dates: [startDate, endDate]),
               rightWidget: ReminderInformation(
                 reminder: remider,
               ),

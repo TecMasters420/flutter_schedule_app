@@ -3,16 +3,12 @@ import 'package:flutter/material.dart';
 import '../config/constants.dart';
 
 class TextStyles {
-  static TextStyle get _base => const TextStyle(
-      // fontFamily: '',
-      );
-
   static TextStyle _getCopy(
     final double size,
     final FontWeight weight,
     final Color color,
   ) {
-    return _base.copyWith(
+    return TextStyle(
       fontFamily: 'OpenSans',
       fontSize: size,
       fontWeight: weight,

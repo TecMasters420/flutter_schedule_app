@@ -25,5 +25,5 @@ class DatesWithEventsModel {
   }
 
   @override
-  String toString() => 'Date: $year  Dates: $dates';
+  String toString() => '(Date: $year  Dates: $dates)';
 }

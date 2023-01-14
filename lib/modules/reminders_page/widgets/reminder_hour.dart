@@ -5,11 +5,9 @@ import '../../../app/utils/text_styles.dart';
 
 class ReminderHour extends StatelessWidget {
   final List<String> dates;
-  final double fontSize;
   const ReminderHour({
     super.key,
     required this.dates,
-    required this.fontSize,
   });
 
   @override
@@ -22,7 +20,7 @@ class ReminderHour extends StatelessWidget {
             children: [
               Text(
                 dates[x],
-                style: TextStyles.w400(fontSize, grey),
+                style: TextStyles.w500(14, lightGrey),
               ),
               if (x < dates.length - 1)
                 const Divider(color: lightGrey, thickness: 0.25),

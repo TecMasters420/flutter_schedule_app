@@ -31,7 +31,7 @@ class HomeAnnounceContainer extends StatelessWidget {
             flex: 3,
             child: Text(
               title,
-              style: TextStyles.w800(16),
+              style: TextStyles.w500(16),
             ),
           ),
           SizedBox(width: resp.wp(2.5)),

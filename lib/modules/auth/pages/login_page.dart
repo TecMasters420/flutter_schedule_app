@@ -39,14 +39,14 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Text(
                 'Login - Alpha',
-                style: TextStyles.w800(30),
+                style: TextStyles.w800(35),
               ),
               SizedBox(height: resp.hp(0.5)),
               Text(
                 'Enter the following information so you can organize your events!',
                 style: TextStyles.w500(14, grey),
               ),
-              SizedBox(height: resp.hp(2.5)),
+              SizedBox(height: resp.hp(7)),
               Row(
                 children: [
                   Text(
@@ -121,6 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                       await auth.logIn(_email!, _password!);
                     },
                   ),
+                  SizedBox(height: resp.hp(1)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

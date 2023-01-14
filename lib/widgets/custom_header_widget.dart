@@ -23,6 +23,7 @@ class CustomHeaderWidget extends StatelessWidget {
         Expanded(
           flex: 8,
           child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
               color: containerBg,
               borderRadius: BorderRadius.circular(15),
