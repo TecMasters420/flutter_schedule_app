@@ -19,7 +19,7 @@ List<BoxShadow> shadows = [
   BoxShadow(
     color: black.withOpacity(0.08),
     blurRadius: 24,
-    offset: const Offset(0, 8),
+    offset: const Offset(0, 2),
   )
 ];
 

@@ -1,8 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:schedulemanager/modules/home/widgets/no_events_widget.dart';
+import 'package:schedulemanager/modules/reminders_page/widgets/short_event_data_widget.dart';
 import 'package:schedulemanager/widgets/custom_header_widget.dart';
+import 'package:schedulemanager/widgets/custom_timeline_reminder_object_widget.dart';
 import 'package:schedulemanager/widgets/loading_widget.dart';
 import '../../app/config/app_colors.dart';
 import '../../data/models/reminder_model.dart';
@@ -37,18 +41,20 @@ class EventsPage extends StatelessWidget {
     return Obx(
       () {
         return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: accent,
-            child: const Icon(Icons.add),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ReminderDetailsPage(
-                  reminder: ReminderModel.empty(),
+          floatingActionButton: events.isLoading.value
+              ? null
+              : FloatingActionButton(
+                  backgroundColor: accent,
+                  child: const Icon(Icons.add),
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ReminderDetailsPage(
+                        reminder: ReminderModel.empty(),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
           body: Padding(
             padding: const EdgeInsets.only(
               left: 32,
@@ -62,16 +68,17 @@ class EventsPage extends StatelessWidget {
                     clipBehavior: Clip.none,
                     physics: const BouncingScrollPhysics(),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const CustomHeaderWidget(
                           title: 'Events Page',
                         ),
                         SizedBox(height: resp.hp(3)),
-                        Text(
-                          _getFormattedDate(DateTime.now()),
-                          style: TextStyles.w700(30),
-                        ),
+                        // Text(
+                        //   _getFormattedDate(DateTime.now()),
+                        //   style: TextStyles.w700(30),
+                        // ),
                         if (!events.isLoading.value) ...[
                           SizedBox(height: resp.hp(2.5)),
                           ScrolleableCalendar(
@@ -149,6 +156,38 @@ class EventsPage extends StatelessWidget {
                             child: NoEventsWidget(),
                           ),
                         SizedBox(height: resp.hp(10)),
+                        Text('Timeline', style: TextStyles.w700(20)),
+                        Column(
+                          children: List.generate(
+                            2,
+                            (h) {
+                              final hour = h + 1;
+                              final tempHour = DateTime(0, 0, 0, hour);
+                              final time = DateFormat('hh a').format(tempHour);
+                              return CustomTimeLineReminderObjectWidget(
+                                title: time,
+                                suffixWidget: Row(
+                                  children: [
+                                    ...List.generate(5, (x) {
+                                      final isFinalElement = x == 5 - 1;
+                                      return Padding(
+                                        padding: EdgeInsets.only(
+                                          right: !isFinalElement ? 20 : 0,
+                                        ),
+                                        child: ShortEventDataWidget(
+                                          event: events.remindersInDate[0],
+                                          color: colors[Random().nextInt(
+                                            colors.length - 1,
+                                          )],
+                                        ),
+                                      );
+                                    })
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        )
                       ],
                     ),
                   ),

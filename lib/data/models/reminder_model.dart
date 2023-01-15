@@ -105,4 +105,20 @@ class ReminderModel {
   bool hasExpired(final DateTime date) {
     return date.isAfter(endDate!);
   }
+
+  String getExpirationTime() {
+    if (endDate == null) return 'No date';
+    final difference = endDate!.difference(DateTime.now());
+    final days = difference.inDays;
+    final hours = difference.inHours - difference.inDays * 24;
+    final minutes = difference.inMinutes - difference.inHours * 60;
+
+    return '${_checkTime(days, 'day')}${_checkTime(hours, 'hour')}${_checkTime(minutes, 'minute')}';
+  }
+
+  String _checkTime(int time, String label) {
+    if (time == 0) return '';
+    final finalLabel = time.abs() > 1 ? '${label}s' : label;
+    return '$time $finalLabel ';
+  }
 }
