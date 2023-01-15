@@ -23,6 +23,7 @@ class HomeAnnounceContainer extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: containerBg,
+        boxShadow: shadows,
         borderRadius: BorderRadius.circular(30),
       ),
       child: Row(

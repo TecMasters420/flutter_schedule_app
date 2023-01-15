@@ -77,10 +77,10 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                     currentElement,
                   )),
                   style: isSelected
-                      ? TextStyles.w700(14)
+                      ? TextStyles.w700(16)
                       : TextStyles.w500(
-                          14,
-                          lightGrey,
+                          16,
+                          grey,
                         ),
                 ),
                 SizedBox(height: resp.hp(0.5)),
@@ -128,6 +128,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                     ),
                     decoration: BoxDecoration(
                       color: isSelected ? accent : containerBg,
+                      boxShadow: isSelected ? null : shadows,
                       borderRadius: BorderRadius.circular(25),
                     ),
                     child: Column(
@@ -167,9 +168,8 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                   width: resp.wp(5),
                   decoration: BoxDecoration(
                     color: isSelected ? accent : containerBg,
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
-                    ),
+                    boxShadow: isSelected ? null : shadows,
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
                   ),
                 )
               ],

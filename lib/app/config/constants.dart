@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const Color accent = Color(0xff2d76f1);
 const Color darkAccent = Color(0xff045cfb);
 const Color backgroundColor = Color(0xfffcfbff);
-const Color containerBg = Color.fromARGB(255, 244, 242, 248);
+const Color containerBg = Color(0xffffffff);
 
 const Color black = Color(0xff192252);
 const Color grey = Color(0xff9da1af);
@@ -18,7 +18,7 @@ const LinearGradient accentGradient = LinearGradient(
 List<BoxShadow> shadows = [
   BoxShadow(
     color: black.withOpacity(0.08),
-    blurRadius: 24,
+    blurRadius: 10,
     offset: const Offset(0, 2),
   )
 ];

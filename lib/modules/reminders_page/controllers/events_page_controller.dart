@@ -7,7 +7,7 @@ import '../services/events_page_service.dart';
 class EventsPageController extends GetxController {
   final EventsPageRepository _repo = EventsPageRepository();
   RxList<DatesWithEventsModel> datesWithEvents = RxList([]);
-  RxList<ReminderModel> remindersInDate = RxList([]);
+  RxList<ReminderModel> eventsInDate = RxList([]);
   RxBool isLoading = RxBool(false);
   RxBool gettingEventsList = RxBool(false);
   Rx<DateTime?> selectedDate = Rx(null);
@@ -18,7 +18,7 @@ class EventsPageController extends GetxController {
   late DatesWithEventsModel sameYear;
   late EventsDateModel sameMonth;
 
-  bool get hasEvents => remindersInDate.isNotEmpty;
+  bool get hasEvents => eventsInDate.isNotEmpty;
 
   @override
   void onInit() async {
@@ -47,13 +47,14 @@ class EventsPageController extends GetxController {
     months.value = sameYear.dates.map((e) => e.month).toList();
     sameMonth =
         sameYear.dates.firstWhere((e) => e.month == selectedDate.value!.month);
+    sameMonth.days.sort();
     days.value = sameMonth.days;
   }
 
   Future<void> getEventsPerDate() async {
     gettingEventsList.value = true;
     if (selectedDate.value != null) {
-      remindersInDate.value = await _repo.getEventPerDate(selectedDate.value!);
+      eventsInDate.value = await _repo.getEventPerDate(selectedDate.value!);
     }
     gettingEventsList.value = false;
   }

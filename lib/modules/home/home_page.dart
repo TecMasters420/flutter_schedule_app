@@ -59,7 +59,7 @@ class HomePage extends GetView {
                           SizedBox(height: resp.hp(2.5)),
                           ActivitiesTypes(
                             initialTabIndex: 1,
-                            remindersPerType: {
+                            eventsPerType: {
                               'Expired': home.expiredEvents,
                               'Today': home.currentEvents,
                               'Upcoming': home.nextEvents,

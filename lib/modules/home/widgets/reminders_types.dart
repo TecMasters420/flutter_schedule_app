@@ -7,11 +7,11 @@ import '../../../app/utils/text_styles.dart';
 import '../../../app/config/constants.dart';
 
 class ActivitiesTypes extends StatefulWidget {
-  final Map<String, List<ReminderModel>> remindersPerType;
+  final Map<String, List<ReminderModel>> eventsPerType;
   final int initialTabIndex;
   const ActivitiesTypes({
     super.key,
-    required this.remindersPerType,
+    required this.eventsPerType,
     required this.initialTabIndex,
   });
 
@@ -30,20 +30,23 @@ class _ActivitiesTypesState extends State<ActivitiesTypes> {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    final List<String> remindersTabs = widget.remindersPerType.keys.toList();
+    final List<String> eventsTabs = widget.eventsPerType.keys.toList();
+    final int eventsQuantity =
+        widget.eventsPerType.values.elementAt(_currentIndex).length;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       decoration: BoxDecoration(
         color: containerBg,
         borderRadius: BorderRadius.circular(15),
+        boxShadow: shadows,
       ),
       child: Column(
         children: [
           Row(
             children: [
               ...List.generate(
-                remindersTabs.length,
+                eventsTabs.length,
                 (x) => Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +61,7 @@ class _ActivitiesTypesState extends State<ActivitiesTypes> {
                           }
                         },
                         child: Text(
-                          remindersTabs[x],
+                          '${eventsTabs[x]} ${x == _currentIndex ? '($eventsQuantity)' : ''}',
                           style: x == _currentIndex
                               ? TextStyles.w700(16)
                               : TextStyles.w600(16, grey),
@@ -81,7 +84,7 @@ class _ActivitiesTypesState extends State<ActivitiesTypes> {
             ],
           ),
           EventsListPerType(
-            data: widget.remindersPerType.values.elementAt(_currentIndex),
+            data: widget.eventsPerType.values.elementAt(_currentIndex),
             maxEventsToShow: 1,
           ),
         ],

@@ -26,12 +26,6 @@ class EventsPage extends StatelessWidget {
     super.key,
   });
 
-  String _getFormattedDate(final DateTime date) {
-    return DateFormat(DateFormat.YEAR_MONTH_DAY, 'en_US').format(
-      date.toUtc(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
@@ -75,10 +69,6 @@ class EventsPage extends StatelessWidget {
                           title: 'Events Page',
                         ),
                         SizedBox(height: resp.hp(3)),
-                        // Text(
-                        //   _getFormattedDate(DateTime.now()),
-                        //   style: TextStyles.w700(30),
-                        // ),
                         if (!events.isLoading.value) ...[
                           SizedBox(height: resp.hp(2.5)),
                           ScrolleableCalendar(
@@ -111,83 +101,109 @@ class EventsPage extends StatelessWidget {
                             },
                           ),
                         ],
-                        SizedBox(height: resp.hp(4)),
-                        Text(
-                          '${events.remindersInDate.length} ${events.remindersInDate.length == 1 ? 'Event' : 'Events'} in this day',
-                          style: TextStyles.w700(16),
-                        ),
                         SizedBox(height: resp.hp(3)),
+                        // if (events.gettingEventsList.value)
+                        //   const CustomCircularProgress(color: AppColors.accent)
+                        // else if (events.hasEvents) ...[
+                        //   EventsListPerDay(
+                        //     reminders: events.remindersInDate,
+                        //     onLongPressCallback: (reminder) {
+                        //       CustomAlertDialog(
+                        //         resp: resp,
+                        //         context: context,
+                        //         title:
+                        //             'Are you sure you want to delete the reminder?',
+                        //         onAcceptCallback: () async {
+                        //           CustomAlertDialog(
+                        //             resp: resp,
+                        //             context: context,
+                        //             title: 'Wait a minute...',
+                        //             dismissible: false,
+                        //             showButtons: false,
+                        //             onAcceptCallback: () {},
+                        //             customBody: Column(
+                        //               mainAxisSize: MainAxisSize.min,
+                        //               children: [
+                        //                 const CustomCircularProgress(
+                        //                     color: accent),
+                        //                 SizedBox(height: resp.hp(2)),
+                        //                 Text('Is being removed!',
+                        //                     style: TextStyles.w500(16))
+                        //               ],
+                        //             ),
+                        //           );
+                        //         },
+                        //       );
+                        //     },
+                        //   )
+                        // ] else
+                        //   const Center(
+                        //     child: NoEventsWidget(),
+                        //   ),
+                        // SizedBox(height: resp.hp(10)),
                         if (events.gettingEventsList.value)
-                          const CustomCircularProgress(color: AppColors.accent)
-                        else if (events.hasEvents) ...[
-                          EventsListPerDay(
-                            reminders: events.remindersInDate,
-                            onLongPressCallback: (reminder) {
-                              CustomAlertDialog(
-                                resp: resp,
-                                context: context,
-                                title:
-                                    'Are you sure you want to delete the reminder?',
-                                onAcceptCallback: () async {
-                                  CustomAlertDialog(
-                                    resp: resp,
-                                    context: context,
-                                    title: 'Wait a minute...',
-                                    dismissible: false,
-                                    showButtons: false,
-                                    onAcceptCallback: () {},
-                                    customBody: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const CustomCircularProgress(
-                                            color: accent),
-                                        SizedBox(height: resp.hp(2)),
-                                        Text('Is being removed!',
-                                            style: TextStyles.w500(16))
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
-                            },
+                          Column(
+                            children: [
+                              SizedBox(height: resp.hp(15)),
+                              const LoadingWidget(),
+                            ],
                           )
-                        ] else
+                        else if (!events.hasEvents)
                           const Center(
                             child: NoEventsWidget(),
+                          )
+                        else ...[
+                          Text('Timeline', style: TextStyles.w700(20)),
+                          Text(
+                            '${events.eventsInDate.length} ${events.eventsInDate.length == 1 ? 'Event' : 'Events'} in this day',
+                            style: TextStyles.w500(14, grey),
                           ),
-                        SizedBox(height: resp.hp(10)),
-                        Text('Timeline', style: TextStyles.w700(20)),
-                        Column(
-                          children: List.generate(
-                            2,
-                            (h) {
-                              final hour = h + 1;
-                              final tempHour = DateTime(0, 0, 0, hour);
-                              final time = DateFormat('hh a').format(tempHour);
-                              return CustomTimeLineReminderObjectWidget(
-                                title: time,
-                                suffixWidget: Row(
-                                  children: [
-                                    ...List.generate(5, (x) {
-                                      final isFinalElement = x == 5 - 1;
-                                      return Padding(
-                                        padding: EdgeInsets.only(
-                                          right: !isFinalElement ? 20 : 0,
-                                        ),
-                                        child: ShortEventDataWidget(
-                                          event: events.remindersInDate[0],
-                                          color: colors[Random().nextInt(
-                                            colors.length - 1,
-                                          )],
-                                        ),
-                                      );
-                                    })
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        )
+                          SizedBox(height: resp.hp(2.5)),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: List.generate(
+                              24,
+                              (h) {
+                                final hour = h + 1;
+                                final tempHour = DateTime(0, 0, 0, hour);
+                                final time =
+                                    DateFormat('hh a').format(tempHour);
+                                final eventsInHour = events.eventsInDate
+                                    .where((e) =>
+                                        e.endDate != null &&
+                                        e.endDate!.hour + 1 == hour)
+                                    .toList();
+                                return CustomTimeLineReminderObjectWidget(
+                                  title: time,
+                                  titleStyle: eventsInHour.isNotEmpty
+                                      ? TextStyles.w700(14)
+                                      : TextStyles.w500(14, lightGrey),
+                                  suffixWidget: Row(
+                                    children: [
+                                      ...List.generate(
+                                        eventsInHour.length,
+                                        (x) {
+                                          final isFinalElement = x == 5 - 1;
+                                          return Padding(
+                                            padding: EdgeInsets.only(
+                                              right: !isFinalElement ? 20 : 0,
+                                            ),
+                                            child: ShortEventDataWidget(
+                                              event: eventsInHour[x],
+                                              color: colors[Random().nextInt(
+                                                colors.length - 1,
+                                              )],
+                                            ),
+                                          );
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                        ]
                       ],
                     ),
                   ),

@@ -39,6 +39,7 @@ class _CustomDateContainerState extends State<CustomDateContainer> {
       _currentSelected = widget.initialElementIndex;
     }
     return SingleChildScrollView(
+      clipBehavior: Clip.none,
       scrollDirection: Axis.horizontal,
       physics: const BouncingScrollPhysics(),
       child: Row(

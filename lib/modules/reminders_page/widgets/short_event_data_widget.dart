@@ -33,7 +33,7 @@ class ShortEventDataWidget extends StatelessWidget {
       constraints: BoxConstraints(maxWidth: resp.wp(50), minWidth: 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: backgroundColor,
+        color: containerBg,
         boxShadow: shadows,
         border: Border.all(color: lightGrey.withOpacity(0.15)),
       ),

@@ -25,11 +25,15 @@ class CustomHeaderWidget extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
-              color: containerBg,
+              color: accent,
               borderRadius: BorderRadius.circular(15),
+              boxShadow: shadows,
             ),
             child: Center(
-              child: Text(title, style: TextStyles.w700(titleSize)),
+              child: Text(
+                title,
+                style: TextStyles.w700(titleSize, Colors.white),
+              ),
             ),
           ),
         ),
