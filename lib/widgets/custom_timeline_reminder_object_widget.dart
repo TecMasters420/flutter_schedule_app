@@ -7,7 +7,7 @@ import '../app/utils/text_styles.dart';
 class CustomTimeLineReminderObjectWidget extends StatelessWidget {
   final String title;
   final TextStyle? titleStyle;
-  final Widget suffixWidget;
+  final Widget? suffixWidget;
   const CustomTimeLineReminderObjectWidget({
     super.key,
     required this.title,
@@ -23,17 +23,28 @@ class CustomTimeLineReminderObjectWidget extends StatelessWidget {
       child: SingleChildScrollView(
         clipBehavior: Clip.none,
         scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              title,
-              style: titleStyle ?? TextStyles.w600(14, black),
-            ),
-            SizedBox(width: resp.wp(5)),
-            suffixWidget,
-          ],
+        physics: suffixWidget == null
+            ? const NeverScrollableScrollPhysics()
+            : const BouncingScrollPhysics(),
+        child: SizedBox(
+          width: resp.width,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                title,
+                style: titleStyle ?? TextStyles.w600(14, black),
+              ),
+              SizedBox(width: resp.wp(5)),
+              suffixWidget ??
+                  Expanded(
+                    child: Container(
+                      height: 1,
+                      color: lightGrey.withOpacity(0.25),
+                    ),
+                  ),
+            ],
+          ),
         ),
       ),
     );

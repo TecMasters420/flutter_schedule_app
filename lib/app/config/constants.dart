@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 
 const Color accent = Color(0xff2d76f1);
 const Color darkAccent = Color(0xff045cfb);
-const Color backgroundColor = Color(0xfffcfbff);
+const Color backgroundColor = Color(0xfff6f8fa);
 const Color containerBg = Color(0xffffffff);
 
 const Color black = Color(0xff192252);
 const Color grey = Color(0xff9da1af);
 const Color lightGrey = Color(0xffb9bfce);
 
-const Color red = Color(0xffE0144C);
+const Color red = Color.fromARGB(255, 207, 89, 93);
+const Color green = Color.fromARGB(255, 110, 195, 110);
 
 const LinearGradient accentGradient = LinearGradient(
   colors: [accent, darkAccent],

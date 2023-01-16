@@ -33,6 +33,7 @@ class EventsPageController extends GetxController {
       datesWithEvents.value = res;
       final year = res.first.year;
       final month = res.first.dates.first.month;
+      res.first.dates.first.days.sort();
       final day = res.first.dates.first.days.first;
       selectedDate.value = DateTime(year, month, day);
       _setValues();

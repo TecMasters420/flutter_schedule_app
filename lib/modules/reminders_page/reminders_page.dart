@@ -149,8 +149,11 @@ class EventsPage extends StatelessWidget {
                             ],
                           )
                         else if (!events.hasEvents)
-                          const Center(
-                            child: NoEventsWidget(),
+                          Column(
+                            children: [
+                              SizedBox(height: resp.hp(15)),
+                              const NoEventsWidget(),
+                            ],
                           )
                         else ...[
                           Text('Timeline', style: TextStyles.w700(20)),
@@ -178,27 +181,37 @@ class EventsPage extends StatelessWidget {
                                   titleStyle: eventsInHour.isNotEmpty
                                       ? TextStyles.w700(14)
                                       : TextStyles.w500(14, lightGrey),
-                                  suffixWidget: Row(
-                                    children: [
-                                      ...List.generate(
-                                        eventsInHour.length,
-                                        (x) {
-                                          final isFinalElement = x == 5 - 1;
-                                          return Padding(
-                                            padding: EdgeInsets.only(
-                                              right: !isFinalElement ? 20 : 0,
-                                            ),
-                                            child: ShortEventDataWidget(
-                                              event: eventsInHour[x],
-                                              color: colors[Random().nextInt(
-                                                colors.length - 1,
-                                              )],
-                                            ),
-                                          );
-                                        },
-                                      )
-                                    ],
-                                  ),
+                                  suffixWidget: eventsInHour.isEmpty
+                                      ? null
+                                      : Row(
+                                          children: [
+                                            ...List.generate(
+                                              eventsInHour.length,
+                                              (x) {
+                                                final isFinalElement =
+                                                    x == 5 - 1;
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                    right: !isFinalElement
+                                                        ? 20
+                                                        : 0,
+                                                  ),
+                                                  child: ShortEventDataWidget(
+                                                    event: eventsInHour[x],
+                                                    color:
+                                                        colors[Random().nextInt(
+                                                      colors.length - 1,
+                                                    )],
+                                                    onLongPressCallback:
+                                                        (event) {
+                                                      print('asasdasd');
+                                                    },
+                                                  ),
+                                                );
+                                              },
+                                            )
+                                          ],
+                                        ),
                                 );
                               },
                             ),

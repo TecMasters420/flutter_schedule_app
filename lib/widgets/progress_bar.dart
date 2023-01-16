@@ -15,11 +15,14 @@ class ProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color progressColor = percent < 25 ? red : green;
+    final Color bgColor = (percent < 25 ? red : green).withOpacity(0.25);
+
     return Container(
       height: height,
       width: width,
       decoration: BoxDecoration(
-        color: accent.withOpacity(0.15),
+        color: bgColor,
         borderRadius: BorderRadius.circular(15),
       ),
       child: LayoutBuilder(builder: (context, constraints) {
@@ -31,7 +34,7 @@ class ProgressBar extends StatelessWidget {
               height: height,
               width: constraints.maxWidth * (percent / 100),
               decoration: BoxDecoration(
-                color: accent,
+                color: progressColor,
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
