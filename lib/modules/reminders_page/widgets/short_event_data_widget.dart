@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:get/route_manager.dart';
+import 'package:intl/intl.dart';
 import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/app/utils/responsive_util.dart';
 import 'package:schedulemanager/app/utils/text_styles.dart';
 import 'package:schedulemanager/data/models/reminder_model.dart';
+import 'package:schedulemanager/modules/reminder_details/reminders_details_page.dart';
 import 'package:schedulemanager/widgets/progress_bar.dart';
 
 class ShortEventDataWidget extends StatelessWidget {
@@ -58,6 +61,7 @@ class ShortEventDataWidget extends StatelessWidget {
       ),
       child: Material(
         child: InkWell(
+          onTap: () => Get.to(ReminderDetailsPage(reminder: event)),
           onLongPress: () => onLongPressCallback(event),
           borderRadius: BorderRadius.circular(10),
           splashColor: color.withOpacity(0.25),
@@ -104,7 +108,7 @@ class ShortEventDataWidget extends StatelessWidget {
                               label: Text(
                                 event.tags.first.name,
                                 maxLines: 1,
-                                style: TextStyles.w500(12),
+                                style: TextStyles.w500(12, grey),
                               ),
                             ),
                             if (event.tags.length > 1)
@@ -130,11 +134,32 @@ class ShortEventDataWidget extends StatelessWidget {
                       Row(
                         children: [
                           Expanded(
-                            child: Text(
-                              event.title,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyles.w700(20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  event.title,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyles.w700(20),
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.flag,
+                                      color: red,
+                                      size: 15,
+                                    ),
+                                    Text(
+                                      'Due ${DateFormat('hh:mm a').format(event.endDate!)} ',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyles.w500(12, grey),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
                           ),
                           if (event.tasks.isEmpty) ...[
@@ -146,7 +171,7 @@ class ShortEventDataWidget extends StatelessWidget {
                         SizedBox(height: resp.hp(1)),
                         Text(
                           'Progress',
-                          style: TextStyles.w500(12),
+                          style: TextStyles.w500(12, grey),
                         ),
                         SizedBox(height: resp.hp(1)),
                         ProgressBar(

@@ -8,12 +8,9 @@ import 'package:schedulemanager/modules/reminders_page/widgets/short_event_data_
 import 'package:schedulemanager/widgets/custom_header_widget.dart';
 import 'package:schedulemanager/widgets/custom_timeline_reminder_object_widget.dart';
 import 'package:schedulemanager/widgets/loading_widget.dart';
-import '../../app/config/app_colors.dart';
 import '../../data/models/reminder_model.dart';
 import 'controllers/events_page_controller.dart';
 
-import '../../widgets/custom_circular_progress.dart';
-import '../../widgets/custom_alert_dialog.dart';
 import '../reminder_details/reminders_details_page.dart';
 import '../../app/utils/responsive_util.dart';
 
@@ -40,13 +37,8 @@ class EventsPage extends StatelessWidget {
               : FloatingActionButton(
                   backgroundColor: accent,
                   child: const Icon(Icons.add),
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ReminderDetailsPage(
-                        reminder: ReminderModel.empty(),
-                      ),
-                    ),
+                  onPressed: () => Get.to(
+                    ReminderDetailsPage(reminder: ReminderModel.empty()),
                   ),
                 ),
           body: Padding(
@@ -72,7 +64,8 @@ class EventsPage extends StatelessWidget {
                         if (!events.isLoading.value) ...[
                           SizedBox(height: resp.hp(2.5)),
                           ScrolleableCalendar(
-                            initialDay: events.days.first,
+                            initialDay:
+                                events.days.isEmpty ? 0 : events.days.first,
                             days: events.days,
                             initialMonth:
                                 events.months.isEmpty ? 0 : events.months.first,
@@ -102,45 +95,6 @@ class EventsPage extends StatelessWidget {
                           ),
                         ],
                         SizedBox(height: resp.hp(3)),
-                        // if (events.gettingEventsList.value)
-                        //   const CustomCircularProgress(color: AppColors.accent)
-                        // else if (events.hasEvents) ...[
-                        //   EventsListPerDay(
-                        //     reminders: events.remindersInDate,
-                        //     onLongPressCallback: (reminder) {
-                        //       CustomAlertDialog(
-                        //         resp: resp,
-                        //         context: context,
-                        //         title:
-                        //             'Are you sure you want to delete the reminder?',
-                        //         onAcceptCallback: () async {
-                        //           CustomAlertDialog(
-                        //             resp: resp,
-                        //             context: context,
-                        //             title: 'Wait a minute...',
-                        //             dismissible: false,
-                        //             showButtons: false,
-                        //             onAcceptCallback: () {},
-                        //             customBody: Column(
-                        //               mainAxisSize: MainAxisSize.min,
-                        //               children: [
-                        //                 const CustomCircularProgress(
-                        //                     color: accent),
-                        //                 SizedBox(height: resp.hp(2)),
-                        //                 Text('Is being removed!',
-                        //                     style: TextStyles.w500(16))
-                        //               ],
-                        //             ),
-                        //           );
-                        //         },
-                        //       );
-                        //     },
-                        //   )
-                        // ] else
-                        //   const Center(
-                        //     child: NoEventsWidget(),
-                        //   ),
-                        // SizedBox(height: resp.hp(10)),
                         if (events.gettingEventsList.value)
                           Column(
                             children: [
@@ -174,7 +128,7 @@ class EventsPage extends StatelessWidget {
                                 final eventsInHour = events.eventsInDate
                                     .where((e) =>
                                         e.endDate != null &&
-                                        e.endDate!.hour + 1 == hour)
+                                        e.endDate!.hour == hour)
                                     .toList();
                                 return CustomTimeLineReminderObjectWidget(
                                   title: time,
@@ -203,9 +157,7 @@ class EventsPage extends StatelessWidget {
                                                       colors.length - 1,
                                                     )],
                                                     onLongPressCallback:
-                                                        (event) {
-                                                      print('asasdasd');
-                                                    },
+                                                        (event) {},
                                                   ),
                                                 );
                                               },

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:schedulemanager/app/config/constants.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -33,9 +32,6 @@ class CustomButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(10),
-          // border: Border.all(
-          //   color: Colors.black.withOpacity(0.25),
-          // ),
         ),
         child: prefixWidget == null
             ? Text(text, style: style)

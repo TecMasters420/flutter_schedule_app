@@ -10,6 +10,7 @@ const Color grey = Color(0xff9da1af);
 const Color lightGrey = Color(0xffb9bfce);
 
 const Color red = Color.fromARGB(255, 207, 89, 93);
+const Color orange = Color.fromARGB(255, 244, 145, 99);
 const Color green = Color.fromARGB(255, 110, 195, 110);
 
 const LinearGradient accentGradient = LinearGradient(

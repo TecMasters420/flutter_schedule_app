@@ -30,9 +30,12 @@ class ReminderInformationWidget extends StatelessWidget {
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(
@@ -55,7 +58,7 @@ class ReminderInformationWidget extends StatelessWidget {
                             style: TextStyles.w500(12, grey),
                           ),
                         if (extra != null) ...[
-                          // SizedBox(height: resp.hp(1)),
+                          SizedBox(height: resp.hp(1)),
                           extra!,
                         ]
                       ],

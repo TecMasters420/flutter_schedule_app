@@ -16,7 +16,7 @@ class EventsPageController extends GetxController {
   RxList<int> days = RxList([]);
 
   late DatesWithEventsModel sameYear;
-  late EventsDateModel sameMonth;
+  late EventsDateModel? sameMonth;
 
   bool get hasEvents => eventsInDate.isNotEmpty;
 
@@ -46,10 +46,14 @@ class EventsPageController extends GetxController {
     sameYear =
         datesWithEvents.firstWhere((e) => e.year == selectedDate.value!.year);
     months.value = sameYear.dates.map((e) => e.month).toList();
-    sameMonth =
-        sameYear.dates.firstWhere((e) => e.month == selectedDate.value!.month);
-    sameMonth.days.sort();
-    days.value = sameMonth.days;
+    sameMonth = sameYear.dates
+        .firstWhereOrNull((e) => e.month == selectedDate.value!.month);
+    if (sameMonth == null) {
+      days.value = [];
+      return;
+    }
+    sameMonth!.days.sort();
+    days.value = sameMonth!.days;
   }
 
   Future<void> getEventsPerDate() async {
@@ -63,7 +67,7 @@ class EventsPageController extends GetxController {
   void setDate(DateTime date, {bool? genDay}) async {
     selectedDate.value = date;
     _setValues();
-    if (genDay != null && genDay) {
+    if (genDay != null && genDay && days.isNotEmpty) {
       selectedDate.value = DateTime(date.year, date.month, days.first);
     }
     await getEventsPerDate();

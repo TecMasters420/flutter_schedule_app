@@ -79,14 +79,14 @@ class LoginPageInformation extends StatelessWidget {
                   const SizedBox(height: 20),
                   Text(
                     title,
-                    style: TextStyles.w600(35, Colors.white),
+                    style: TextStyles.w800(30, Colors.white),
                     textAlign: TextAlign.center,
                     maxLines: 2,
                   ),
                   const SizedBox(height: 5),
                   Text(
                     description,
-                    style: TextStyles.w400(16, Colors.grey[100]!),
+                    style: TextStyles.w500(16, Colors.grey[100]!),
                     textAlign: TextAlign.center,
                     maxLines: 2,
                   ),

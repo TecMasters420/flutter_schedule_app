@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:schedulemanager/widgets/event_page_header_widget.dart';
+import 'package:schedulemanager/modules/reminder_details/widgets/weather_container.dart';
+import 'package:schedulemanager/widgets/custom_header_widget.dart';
 import '../../data/models/event_location_model.dart';
 import '../map_page/map_page.dart';
 import '../../app/config/constants.dart';
@@ -105,9 +106,19 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              EventPageHeaderWidget(
+              CustomHeaderWidget(
                 title:
                     _reminder.title.isEmpty ? 'Insert title' : _reminder.title,
+                suffixWidget: IconButton(
+                  icon: const Icon(
+                    Icons.edit,
+                    color: accent,
+                  ),
+                  splashRadius: 20,
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.zero,
+                  onPressed: () {},
+                ),
               ),
               SizedBox(height: resp.hp(5)),
               Text(
@@ -152,13 +163,13 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                     : '${timeRemaining.isNegative ? 'Expired ' : ''}$daysMess$hoursMess ${timeRemaining.isNegative ? 'ago' : ''}',
               ),
               // if (reminder.expectedTemp != null)
-              //   ReminderInformationWidget(
-              //     icon: Icons.location_on_outlined,
-              //     title: 'Expected weather:',
-              //     extra: WeatherContainer(
-              //       temp: reminder.expectedTemp!,
-              //     ),
-              //   ),
+              const ReminderInformationWidget(
+                icon: Icons.water_drop_outlined,
+                title: 'Expected weather',
+                extra: WeatherContainer(
+                  temp: 30,
+                ),
+              ),
               ReminderInformationWidget(
                 icon: Icons.location_on_outlined,
                 title: 'Location',
@@ -308,16 +319,21 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                           Expanded(
                             child: Text(
                               task.name,
-                              style: TextStyles.w500(14, grey),
+                              style: TextStyles.w500(14, grey).copyWith(
+                                decorationColor: grey,
+                                decoration: _reminder.tasks[index].isCompleted
+                                    ? TextDecoration.lineThrough
+                                    : null,
+                              ),
                             ),
                           ),
                           IconButton(
                             splashRadius: 20,
-                            splashColor: accent.withOpacity(0.1),
-                            highlightColor: accent.withOpacity(0.1),
+                            splashColor: red.withOpacity(0.1),
+                            highlightColor: red.withOpacity(0.1),
                             icon: const Icon(
                               Icons.remove_circle_outline,
-                              color: accent,
+                              color: lightGrey,
                               size: 25,
                             ),
                             onPressed: () {

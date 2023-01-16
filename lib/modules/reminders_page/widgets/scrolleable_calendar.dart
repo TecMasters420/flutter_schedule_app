@@ -55,10 +55,15 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text('Date', style: TextStyles.w700(20)),
+        Text(
+          'Select your events by dates',
+          style: TextStyles.w500(14, grey),
+        ),
+        SizedBox(height: resp.hp(2.5)),
         CustomDateContainer(
           data: List.generate(12, (index) => index + 1),
           initialElementIndex: currentMonthIndex < 0 ? 0 : currentMonthIndex,
-          selectableValues: widget.months,
           onPressElement: (itemPressed, index) {
             debugPrint('MONTH pressed: $itemPressed $index');
             final int month = itemPressed;
@@ -103,7 +108,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
             );
           },
         ),
-        SizedBox(height: resp.hp(2)),
+        SizedBox(height: resp.hp(4)),
 
         // ? DAYS LIST
         CustomDateContainer(
@@ -151,7 +156,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                         ),
                         Text(
                           widget.days[index].toString().length == 1
-                              ? ' ${widget.days[index]} '
+                              ? '0${widget.days[index]}'
                               : widget.days[index].toString(),
                           style: TextStyles.w700(
                             25,

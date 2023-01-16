@@ -15,12 +15,26 @@ class ProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color progressColor = percent < 25 ? red : green;
-    final Color bgColor = (percent < 25 ? red : green).withOpacity(0.25);
+    final Color progressColor = percent == 0
+        ? lightGrey
+        : percent <= 25
+            ? red
+            : percent <= 50
+                ? orange
+                : green;
+    final Color bgColor = (percent == 0
+            ? lightGrey
+            : percent <= 50
+                ? orange
+                : percent < 25
+                    ? red
+                    : green)
+        .withOpacity(0.25);
 
     return Container(
       height: height,
       width: width,
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(15),
