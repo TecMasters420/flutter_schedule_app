@@ -18,7 +18,7 @@ class InitialInformationPage extends GetWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: accent,
+      backgroundColor: backgroundColor,
       body: Stack(
         children: [
           SizedBox(
@@ -51,7 +51,7 @@ class InitialInformationPage extends GetWidget {
                 }),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

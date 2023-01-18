@@ -11,9 +11,9 @@ const Color lightGrey = Color(0xffb9bfce);
 const Color lightBlue = Color(0xffebf2ff);
 const Color darkBlue = Color(0xff84acfa);
 
-const Color red = Color.fromARGB(255, 231, 76, 81);
+const Color red = Colors.red;
 const Color orange = Color(0xfffb9b10);
-const Color green = Color.fromARGB(255, 110, 195, 110);
+const Color green = Colors.green;
 
 const LinearGradient accentGradient = LinearGradient(
   colors: [accent, darkAccent],

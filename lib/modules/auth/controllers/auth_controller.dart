@@ -60,5 +60,11 @@ class AuthController extends GetxController {
     isLoading.value = false;
   }
 
-  Future<void> signOut() async {}
+  Future<void> signOut() async {
+    isLoading.value = true;
+    await storage.delete(key: 'token');
+    _accessToken.value = null;
+    _currentUser.value = null;
+    isLoading.value = false;
+  }
 }

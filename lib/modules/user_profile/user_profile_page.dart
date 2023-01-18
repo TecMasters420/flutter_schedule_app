@@ -140,8 +140,8 @@ class UserProfilePage extends GetWidget<AuthController> {
                       color: red,
                       height: resp.hp(5),
                       width: resp.wp(25),
-                      onTap: () {
-                        Get.back();
+                      onTap: () async {
+                        await controller.signOut();
                       },
                       style: TextStyles.w500(16, Colors.white),
                     ),

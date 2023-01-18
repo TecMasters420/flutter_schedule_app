@@ -38,14 +38,9 @@ class LoginPageInformation extends StatelessWidget {
           children: [
             // Image
             if (withImage)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Container(
-                  height: resp.hp(65),
-                  decoration: BoxDecoration(
-                    color: darkAccent,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: resp.wp(5)),
                   child: withImage && imageUrl != null && imageUrl != ''
                       ? imageUrl!.contains('assets/images')
                           ? Image.asset(imageUrl!)
@@ -66,34 +61,37 @@ class LoginPageInformation extends StatelessWidget {
                             )
                       : SizedBox(
                           height: resp.hp(65),
-                          width: double.infinity,
                         ),
                 ),
               ),
 
             // Information
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 100),
+              padding: const EdgeInsets.symmetric(horizontal: 50),
               child: Column(
                 children: [
-                  const SizedBox(height: 20),
+                  SizedBox(height: resp.hp(2.5)),
                   Text(
                     title,
-                    style: TextStyles.w800(30, Colors.white),
+                    style: TextStyles.w800(30),
                     textAlign: TextAlign.center,
                     maxLines: 2,
                   ),
                   const SizedBox(height: 5),
                   Text(
                     description,
-                    style: TextStyles.w500(16, Colors.grey[100]!),
+                    style: TextStyles.w500(16, grey),
                     textAlign: TextAlign.center,
                     maxLines: 2,
                   ),
                 ],
               ),
             ),
-            if (extraWidget != null) extraWidget!
+            if (extraWidget != null) ...[
+              SizedBox(height: resp.hp(2)),
+              extraWidget!,
+            ],
+            SizedBox(height: resp.hp(10)),
           ],
         ),
       ),

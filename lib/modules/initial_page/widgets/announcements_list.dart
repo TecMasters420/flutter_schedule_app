@@ -50,25 +50,25 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     final int announcesQuantity = widget.announcements.length;
-    return PageView.builder(
-      physics: const BouncingScrollPhysics(),
-      controller: _pageController,
-      itemCount: announcesQuantity + 1,
-      itemBuilder: (context, x) {
-        final bool isFinalElement = x >= announcesQuantity;
-        final InitialAnnouncementModel announce = !isFinalElement
-            ? widget.announcements[x]
-            : const InitialAnnouncementModel(
-                id: 0,
-                title: 'Welcome!',
-                description: 'Press button to join!',
-                imageUrl: '',
-              );
-        final double scale = (x - _pageProgress).abs() < 0.2 ? 1 : 0.9;
-        final double opacity = (x - _pageProgress).abs() < 0.2 ? 1 : 0.25;
+    return widget.isLoaded
+        ? PageView.builder(
+            physics: const BouncingScrollPhysics(),
+            controller: _pageController,
+            itemCount: announcesQuantity + 1,
+            itemBuilder: (context, x) {
+              final bool isFinalElement = x >= announcesQuantity;
+              final InitialAnnouncementModel announce = !isFinalElement
+                  ? widget.announcements[x]
+                  : const InitialAnnouncementModel(
+                      id: 0,
+                      title: 'Welcome to\nSchedule App',
+                      description: 'Press button to join!',
+                      imageUrl: '',
+                    );
+              final double scale = (x - _pageProgress).abs() < 0.2 ? 1 : 0.9;
+              final double opacity = (x - _pageProgress).abs() < 0.2 ? 1 : 0.25;
 
-        return widget.isLoaded
-            ? LoginPageInformation(
+              return LoginPageInformation(
                 withImage: !isFinalElement,
                 scale: scale,
                 opacity: opacity,
@@ -76,35 +76,41 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                 title: announce.title,
                 description: announce.description,
                 extraWidget: !isFinalElement
-                    ? null
-                    : Column(
-                        children: [
-                          SizedBox(height: resp.hp(1)),
-                          CustomButton(
-                            color: darkAccent,
-                            height: resp.hp(5),
-                            style: TextStyles.w800(14, Colors.white),
-                            width: resp.wp(40),
-                            text: 'Join',
-                            onTap: () => Get.toNamed('/loginPage'),
-                          ),
-                        ],
+                    ? CustomButton(
+                        color: darkAccent,
+                        height: resp.hp(5),
+                        style: TextStyles.w800(14, Colors.white),
+                        width: resp.wp(40),
+                        text: 'Next',
+                        onTap: () => _pageController.animateToPage(
+                          _currentPage + 1,
+                          duration: const Duration(milliseconds: 250),
+                          curve: Curves.ease,
+                        ),
+                      )
+                    : CustomButton(
+                        color: darkAccent,
+                        height: resp.hp(5),
+                        style: TextStyles.w800(14, Colors.white),
+                        width: resp.wp(40),
+                        text: 'Join',
+                        onTap: () => Get.toNamed('/loginPage'),
                       ),
-              )
-            : Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const CustomCircularProgress(),
-                    SizedBox(height: resp.hp(2)),
-                    Text(
-                      'Loading announcements',
-                      style: TextStyles.w800(16, Colors.white),
-                    ),
-                  ],
-                ),
               );
-      },
-    );
+            },
+          )
+        : Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const CustomCircularProgress(color: accent),
+                SizedBox(height: resp.hp(2)),
+                Text(
+                  'Loading announcements',
+                  style: TextStyles.w800(16),
+                ),
+              ],
+            ),
+          );
   }
 }

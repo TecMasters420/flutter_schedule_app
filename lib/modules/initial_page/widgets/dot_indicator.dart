@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/app/config/constants.dart';
 
 import '../../../app/utils/responsive_util.dart';
 
@@ -24,7 +25,7 @@ class DotIndicator extends StatelessWidget {
         width: isCurrentPage ? 24 : 12,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(isCurrentPage ? 20 : 100),
-          color: isCurrentPage ? Colors.white : Colors.white.withOpacity(0.5),
+          color: isCurrentPage ? accent : accent.withOpacity(0.25),
         ),
       ),
     );
