@@ -16,7 +16,7 @@ class App extends StatelessWidget {
       getPages: appPages,
       home: const InitialInformationPage(),
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xfffcfbff),
+        scaffoldBackgroundColor: backgroundColor,
         colorScheme: ColorScheme.fromSwatch().copyWith(primary: accent),
       ),
     );

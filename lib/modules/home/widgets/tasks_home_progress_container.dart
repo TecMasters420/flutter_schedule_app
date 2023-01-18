@@ -47,8 +47,9 @@ class TasksHomeProgressContainer extends StatelessWidget {
                       height: 10,
                       width: 10,
                       decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
                         color: clampledColors[x],
-                        shape: BoxShape.circle,
+                        borderRadius: BorderRadius.circular(2.5),
                       ),
                     ),
                     SizedBox(width: resp.wp(2.5)),

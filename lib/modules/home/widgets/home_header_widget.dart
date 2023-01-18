@@ -25,6 +25,7 @@ class HomeHeaderWidget extends StatelessWidget {
                 UserProfilePicture(
                   height: resp.hp(4),
                   width: resp.wp(10),
+                  redirectToProfile: true,
                   userImage: '',
                 ),
                 SizedBox(width: resp.wp(2)),
@@ -45,13 +46,32 @@ class HomeHeaderWidget extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            IconButton(
-              style: IconButton.styleFrom(
-                padding: EdgeInsets.zero,
-                alignment: Alignment.topCenter,
+            GestureDetector(
+              onTap: () => Get.toNamed('/notificationsPage'),
+              child: Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.topLeft,
+                children: [
+                  const Icon(Icons.notifications_none_rounded, size: 30),
+                  Positioned(
+                    top: -3,
+                    left: 12,
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 3, vertical: 3),
+                      decoration: const BoxDecoration(
+                        color: red,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        '10+',
+                        style: TextStyles.w700(10, Colors.white),
+                      ),
+                    ),
+                  )
+                ],
               ),
-              icon: const Icon(Icons.notifications_none_rounded, size: 30),
-              onPressed: () => Get.toNamed('/notificationsPage'),
             ),
           ],
         ),

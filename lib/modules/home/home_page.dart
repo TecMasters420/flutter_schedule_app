@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:schedulemanager/app/config/app_constants.dart';
+import 'package:schedulemanager/widgets/custom_nav_bar_widget.dart';
 import '../../app/config/constants.dart';
 import 'controllers/home_controller.dart';
 import 'widgets/home_header_widget.dart';
@@ -19,15 +21,12 @@ class HomePage extends GetView {
     final HomeController home = Get.find();
 
     return Scaffold(
+      bottomNavigationBar: const CustomNavBarWidget(),
       body: SingleChildScrollView(
+        clipBehavior: Clip.none,
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.only(
-            left: 32,
-            right: 32,
-            top: 50,
-            bottom: 20,
-          ),
+          padding: AppConstants.bodyPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

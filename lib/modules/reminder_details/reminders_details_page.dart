@@ -213,7 +213,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                         color: accent,
                         height: resp.hp(4),
                         width: resp.wp(25),
-                        style: TextStyles.w500(14, Colors.white),
+                        style: TextStyles.w700(14, Colors.white),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -238,7 +238,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                   color: accent,
                   height: resp.hp(4),
                   width: resp.wp(20),
-                  style: TextStyles.w500(14, Colors.white),
+                  style: TextStyles.w700(14, Colors.white),
                   onTap: () {},
                 ),
                 extra: TagsList(
@@ -273,7 +273,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                   color: accent,
                   height: resp.hp(4),
                   width: resp.wp(20),
-                  style: TextStyles.w500(14, Colors.white),
+                  style: TextStyles.w700(14, Colors.white),
                   onTap: () {
                     CustomAlertDialog(
                       resp: resp,

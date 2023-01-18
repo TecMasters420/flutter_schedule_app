@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:schedulemanager/modules/navbar/controllers/navbar_controller.dart';
 import '../controllers/home_controller.dart';
 
 class HomeBindings implements Bindings {
@@ -6,5 +7,6 @@ class HomeBindings implements Bindings {
   @override
   void dependencies() {
     Get.put(HomeController(), permanent: true);
+    Get.put(NavBarController(), permanent: true);
   }
 }

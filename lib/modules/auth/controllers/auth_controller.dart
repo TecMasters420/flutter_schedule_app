@@ -62,10 +62,10 @@ class AuthController extends GetxController {
 
   Future<void> signOut() async {
     isLoading.value = true;
+    Get.offAndToNamed('/initialInformationPage');
+    _currentUser.value = null;
     await storage.delete(key: 'token');
     _accessToken.value = null;
-    _currentUser.value = null;
     isLoading.value = false;
-    Get.offAndToNamed('/initialInformationPage');
   }
 }

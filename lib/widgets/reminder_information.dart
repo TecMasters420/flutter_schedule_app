@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/app/utils/share_util.dart';
 import '../data/models/event_status_enum.dart';
 import '../data/models/reminder_model.dart';
 import '../modules/reminder_details/reminders_details_page.dart';
@@ -32,6 +33,12 @@ class ReminderInformation extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Image.asset(
+        //   'assets/images/home_logo.png',
+        //   height: resp.hp(15),
+        //   width: resp.width,
+        //   fit: BoxFit.fill,
+        // ),
         Text(
           reminder.title,
           style: TextStyles.w700(16),
@@ -143,11 +150,26 @@ class ReminderInformation extends StatelessWidget {
           children: [
             CustomButton(
               constraints: const BoxConstraints(maxWidth: 150),
-              text: 'Details',
+              text: 'Share',
               color: lightBlue,
               height: resp.hp(4),
+              hideShadows: true,
               width: resp.wp(15),
               style: TextStyles.w700(14, accent),
+              onTap: () async => await ShareUtil.generate(
+                'I invite you to the event: ${reminder.title}',
+                'I invite you to the event: ${reminder.title}',
+              ),
+            ),
+            SizedBox(width: resp.wp(2.5)),
+            CustomButton(
+              constraints: const BoxConstraints(maxWidth: 150),
+              text: 'Details',
+              color: accent,
+              height: resp.hp(4),
+              hideShadows: true,
+              width: resp.wp(15),
+              style: TextStyles.w700(14, Colors.white),
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(

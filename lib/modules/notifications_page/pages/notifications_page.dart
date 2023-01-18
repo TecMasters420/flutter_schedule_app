@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/app/config/app_constants.dart';
 import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/app/utils/responsive_util.dart';
 import 'package:schedulemanager/widgets/custom_header_widget.dart';
@@ -18,12 +19,7 @@ class NotificationsPage extends StatelessWidget {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.only(
-            left: 32,
-            right: 32,
-            top: 70,
-            bottom: 20,
-          ),
+          padding: AppConstants.bodyPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -32,6 +32,7 @@ class CustomHeaderWidget extends StatelessWidget {
             child: Center(
               child: Text(
                 title,
+                maxLines: 1,
                 style: TextStyles.w700(titleSize, Colors.white),
               ),
             ),
