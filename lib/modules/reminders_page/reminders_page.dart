@@ -38,7 +38,7 @@ class EventsPage extends StatelessWidget {
                   backgroundColor: accent,
                   child: const Icon(Icons.add),
                   onPressed: () => Get.to(
-                    ReminderDetailsPage(reminder: ReminderModel.empty()),
+                    () => ReminderDetailsPage(reminder: ReminderModel.empty()),
                   ),
                 ),
           body: Padding(

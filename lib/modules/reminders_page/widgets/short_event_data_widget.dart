@@ -61,7 +61,7 @@ class ShortEventDataWidget extends StatelessWidget {
       ),
       child: Material(
         child: InkWell(
-          onTap: () => Get.to(ReminderDetailsPage(reminder: event)),
+          onTap: () => Get.to(() => ReminderDetailsPage(reminder: event)),
           onLongPress: () => onLongPressCallback(event),
           borderRadius: BorderRadius.circular(10),
           splashColor: color.withOpacity(0.25),

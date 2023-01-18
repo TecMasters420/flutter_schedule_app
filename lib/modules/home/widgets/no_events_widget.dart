@@ -39,7 +39,7 @@ class NoEventsWidget extends StatelessWidget {
           width: resp.wp(25),
           style: TextStyles.w500(14, Colors.white),
           onTap: () => Get.to(
-            ReminderDetailsPage(reminder: ReminderModel.empty()),
+            () => ReminderDetailsPage(reminder: ReminderModel.empty()),
           ),
         ),
       ],

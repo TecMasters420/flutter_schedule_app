@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -118,7 +119,6 @@ class _LoginPageState extends State<LoginPage> {
                     text: 'Login',
                     onTap: () async {
                       if (_email == null || _password == null) return;
-                      Focus.of(context).unfocus();
                       await auth.logIn(_email!, _password!);
                     },
                   ),

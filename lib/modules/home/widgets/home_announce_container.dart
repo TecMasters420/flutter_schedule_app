@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import '../../../app/utils/responsive_util.dart';
 
 import '../../../app/config/constants.dart';
-import '../../../app/utils/text_styles.dart';
 
 class HomeAnnounceContainer extends StatelessWidget {
-  final String title;
+  final Widget firstWidget;
   final Widget secondWidget;
+  final int firstWidgetFlex;
+  final int secondWidgetFlex;
   const HomeAnnounceContainer({
     super.key,
-    required this.title,
+    required this.firstWidget,
     required this.secondWidget,
+    this.firstWidgetFlex = 3,
+    this.secondWidgetFlex = 2,
   });
 
   @override
@@ -28,16 +31,10 @@ class HomeAnnounceContainer extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(
-            flex: 3,
-            child: Text(
-              title,
-              style: TextStyles.w500(16),
-            ),
-          ),
+          Expanded(flex: firstWidgetFlex, child: firstWidget),
           SizedBox(width: resp.wp(2.5)),
           Expanded(
-            flex: 2,
+            flex: secondWidgetFlex,
             child: secondWidget,
           ),
         ],
