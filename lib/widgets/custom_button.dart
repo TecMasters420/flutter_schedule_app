@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/app/config/constants.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -9,16 +10,19 @@ class CustomButton extends StatelessWidget {
   final String text;
   final Widget? prefixWidget;
   final BoxConstraints? constraints;
-  const CustomButton(
-      {super.key,
-      required this.text,
-      required this.color,
-      required this.height,
-      required this.width,
-      required this.onTap,
-      required this.style,
-      this.prefixWidget,
-      this.constraints});
+  final bool hideShadows;
+  const CustomButton({
+    super.key,
+    required this.text,
+    required this.color,
+    required this.height,
+    required this.width,
+    required this.onTap,
+    required this.style,
+    this.prefixWidget,
+    this.constraints,
+    this.hideShadows = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +36,7 @@ class CustomButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(10),
+          boxShadow: hideShadows ? null : shadows,
         ),
         child: prefixWidget == null
             ? Text(text, style: style)

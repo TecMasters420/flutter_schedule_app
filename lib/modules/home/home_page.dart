@@ -33,7 +33,12 @@ class HomePage extends GetView {
             children: [
               SizedBox(height: resp.hp(5)),
               const HomeHeaderWidget(),
-              SizedBox(height: resp.hp(2)),
+              SizedBox(height: resp.hp(2.5)),
+              Text(
+                'Statistics',
+                style: TextStyles.w700(20),
+              ),
+              SizedBox(height: resp.hp(2.5)),
               SizedBox(
                 height: resp.hp(20),
                 width: resp.width,
@@ -53,7 +58,7 @@ class HomePage extends GetView {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Select the event type:',
+                            'Select the event type',
                             style: TextStyles.w700(20),
                           ),
                           SizedBox(height: resp.hp(2.5)),

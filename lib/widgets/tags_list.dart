@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../app/config/constants.dart';
@@ -22,26 +24,25 @@ class TagsList extends StatelessWidget {
       alignment: WrapAlignment.start,
       direction: Axis.horizontal,
       children: List.generate(
-        tagsList.length.clamp(0, maxTagsToShow ?? tagsList.length),
-        (index) => Padding(
-          padding: EdgeInsets.only(left: index == 0 ? 0 : 5),
+          tagsList.length.clamp(0, maxTagsToShow ?? tagsList.length), (index) {
+        final color =
+            colorsForBgs.elementAt(Random().nextInt(colorsForBgs.length));
+        return Padding(
+          padding: const EdgeInsets.only(right: 5),
           child: InkWell(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(20),
             radius: 5,
             onLongPress: () {
               if (onLongPressCallback != null) onLongPressCallback!(index);
             },
             child: Chip(
-              padding: EdgeInsets.zero,
-              backgroundColor: lightGrey.withOpacity(0.2),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              backgroundColor: color,
               label: Text(tagsList[index], style: style),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

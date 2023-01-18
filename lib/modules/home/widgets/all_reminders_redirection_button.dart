@@ -12,26 +12,31 @@ class AllEventsRedirectionButton extends StatelessWidget {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
 
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, 'remindersPage'),
-      child: Container(
+      child: SizedBox(
         height: resp.hp(10),
         width: double.infinity,
-        decoration: BoxDecoration(
-          color: lightGrey.withOpacity(0.2),
+        child: Material(
+          color: lightBlue,
           borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Press to see all reminders',
-              textAlign: TextAlign.center,
-              style: TextStyles.w600(
-                16,
-                grey.withOpacity(0.5),
-              ),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(20),
+            onTap: () => Navigator.pushNamed(context, 'remindersPage'),
+            splashColor: accent.withOpacity(0.25),
+            highlightColor: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Press to see all events',
+                  textAlign: TextAlign.center,
+                  style: TextStyles.w700(
+                    18,
+                    accent,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

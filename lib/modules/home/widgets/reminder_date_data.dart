@@ -34,7 +34,7 @@ class ReminderDateData extends StatelessWidget {
         ),
         SizedBox(height: resp.hp(1)),
         Container(
-          height: 5,
+          height: 7.5,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: dotColor,

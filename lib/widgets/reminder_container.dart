@@ -30,39 +30,36 @@ class ReminderContainer extends StatelessWidget {
 
     return Column(
       children: [
-        Padding(
+        Column(
           key: testKey,
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(flex: 8, child: leftWidget),
-                  Expanded(
-                    flex: 1,
-                    child: ValueListenableBuilder(
-                      valueListenable: height,
-                      builder: (context, value, child) {
-                        return AnimatedContainer(
-                          curve: Curves.ease,
-                          duration: const Duration(milliseconds: 400),
-                          height: height.value,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: color,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        );
-                      },
-                    ),
+          children: [
+            Row(
+              children: [
+                Expanded(flex: 8, child: leftWidget),
+                Expanded(
+                  flex: 1,
+                  child: ValueListenableBuilder(
+                    valueListenable: height,
+                    builder: (context, value, child) {
+                      return AnimatedContainer(
+                        curve: Curves.ease,
+                        duration: const Duration(milliseconds: 400),
+                        height: height.value,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: color,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      );
+                    },
                   ),
-                  SizedBox(width: resp.wp(2)),
-                  Expanded(flex: 30, child: rightWidget),
-                  SizedBox(width: resp.wp(1)),
-                ],
-              ),
-            ],
-          ),
+                ),
+                SizedBox(width: resp.wp(2)),
+                Expanded(flex: 30, child: rightWidget),
+                SizedBox(width: resp.wp(1)),
+              ],
+            ),
+          ],
         ),
         SizedBox(height: resp.hp(2.5)),
       ],

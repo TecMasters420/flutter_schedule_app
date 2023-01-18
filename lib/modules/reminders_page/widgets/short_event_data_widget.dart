@@ -54,10 +54,9 @@ class ShortEventDataWidget extends StatelessWidget {
       constraints: BoxConstraints(maxWidth: resp.wp(70), minWidth: 0),
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(5),
         color: containerBg,
         boxShadow: shadows,
-        border: Border.all(color: lightGrey.withOpacity(0.15)),
       ),
       child: Material(
         child: InkWell(
@@ -76,14 +75,10 @@ class ShortEventDataWidget extends StatelessWidget {
                   return AnimatedContainer(
                     curve: Curves.ease,
                     duration: const Duration(milliseconds: 400),
-                    height: (height.value * 0.65),
-                    width: resp.wp(1),
+                    height: height.value,
+                    width: resp.wp(2),
                     decoration: BoxDecoration(
                       color: color,
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                      ),
                     ),
                   );
                 },
@@ -101,14 +96,14 @@ class ShortEventDataWidget extends StatelessWidget {
                         children: [
                           if (event.tags.isNotEmpty) ...[
                             Chip(
-                              backgroundColor: backgroundColor,
+                              backgroundColor: accent,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               label: Text(
                                 event.tags.first.name,
                                 maxLines: 1,
-                                style: TextStyles.w500(12, grey),
+                                style: TextStyles.w700(12, Colors.white),
                               ),
                             ),
                             if (event.tags.length > 1)
@@ -141,7 +136,7 @@ class ShortEventDataWidget extends StatelessWidget {
                                   event.title,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyles.w700(20),
+                                  style: TextStyles.w700(16),
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -171,7 +166,7 @@ class ShortEventDataWidget extends StatelessWidget {
                         SizedBox(height: resp.hp(1)),
                         Text(
                           'Progress',
-                          style: TextStyles.w500(12, grey),
+                          style: TextStyles.w700(12),
                         ),
                         SizedBox(height: resp.hp(1)),
                         ProgressBar(

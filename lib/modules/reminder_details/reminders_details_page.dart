@@ -246,6 +246,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                   maxTagsToShow: _reminder.tags.length,
                   style: TextStyles.w500(
                     14,
+                    Colors.white,
                   ),
                   onLongPressCallback: (index) {
                     final TagModel selectedTag = _reminder.tags[index];

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:schedulemanager/widgets/painters/home_progress_chart_painter.dart';
 

@@ -54,11 +54,14 @@ class UserProfilePage extends GetWidget<AuthController> {
                 SizedBox(height: resp.hp(3)),
                 Container(
                   alignment: Alignment.topLeft,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 20,
+                  ),
                   decoration: BoxDecoration(
                     color: containerBg,
                     borderRadius: BorderRadius.circular(15),
+                    boxShadow: shadows,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

@@ -57,7 +57,7 @@ class ReminderInformation extends StatelessWidget {
           SizedBox(height: resp.hp(1)),
           Text(
             'End location',
-            style: TextStyles.w600(14),
+            style: TextStyles.w700(14),
           ),
           SizedBox(height: resp.hp(0.5)),
           Text(
@@ -70,7 +70,7 @@ class ReminderInformation extends StatelessWidget {
           SizedBox(height: resp.hp(1)),
           Text(
             'Start location',
-            style: TextStyles.w600(14),
+            style: TextStyles.w700(14),
           ),
           SizedBox(height: resp.hp(0.5)),
           Text(
@@ -82,19 +82,24 @@ class ReminderInformation extends StatelessWidget {
           SizedBox(height: resp.hp(1)),
           Text(
             'Tags',
-            style: TextStyles.w600(14),
+            style: TextStyles.w700(14),
           ),
           TagsList(
             tagsList: reminder.tags.map((e) => e.name).toList(),
             maxTagsToShow: 3,
-            style: TextStyles.w500(12),
+            style: TextStyles.w700(12, Colors.white),
           ),
         ],
         if (reminder.tasks.isNotEmpty) ...[
           SizedBox(height: resp.hp(1)),
           Text(
-            'Tasks progress: ${(reminder.progress.isNaN ? 0 : reminder.progress).toStringAsFixed(2)}%',
-            style: TextStyles.w600(14),
+            'Tasks progress',
+            style: TextStyles.w700(14),
+          ),
+          SizedBox(height: resp.hp(0.5)),
+          Text(
+            '${(reminder.progress.isNaN ? 0 : reminder.progress).toStringAsFixed(2)}%',
+            style: TextStyles.w500(14, grey),
           ),
           SizedBox(height: resp.hp(1)),
           ProgressBar(
@@ -102,7 +107,7 @@ class ReminderInformation extends StatelessWidget {
             height: resp.hp(1.5),
             width: resp.width,
           ),
-          SizedBox(height: resp.hp(2)),
+          // SizedBox(height: resp.hp(2)),
         ],
         SizedBox(height: resp.hp(1)),
         Row(
@@ -113,8 +118,8 @@ class ReminderInformation extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Time remaining',
-                      style: TextStyles.w600(14),
+                      'Due',
+                      style: TextStyles.w700(14),
                     ),
                     Text(
                       daysMess + hoursMess,
@@ -139,10 +144,10 @@ class ReminderInformation extends StatelessWidget {
             CustomButton(
               constraints: const BoxConstraints(maxWidth: 150),
               text: 'Details',
-              color: accent,
+              color: lightBlue,
               height: resp.hp(4),
               width: resp.wp(15),
-              style: TextStyles.w600(14, Colors.white),
+              style: TextStyles.w700(14, accent),
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../widgets/custom_text_button_widget.dart';
 import 'all_reminders_redirection_button.dart';
 import 'no_events_widget.dart';
 import '../../../data/models/reminder_model.dart';
@@ -25,6 +26,7 @@ class EventsListPerType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    print(maxEventsToShow);
     return Column(
       children: [
         SizedBox(height: resp.hp(2.5)),
@@ -36,20 +38,20 @@ class EventsListPerType extends StatelessWidget {
                 style: TextStyles.w700(16),
               ),
               const Spacer(),
-              TextButton(
-                child: Text(
-                  'See all',
-                  style: TextStyles.w700(16, accent),
-                ),
-                onPressed: () => Get.toNamed('remindersPage'),
-              )
+              CustomTextButtonWidget(
+                title: 'See all',
+                customFontSize: 16,
+                onTap: () => Get.toNamed('remindersPage'),
+              ),
             ],
           ),
           SizedBox(height: resp.hp(2.5)),
           ...List.generate(
             data.length > maxEventsToShow ? maxEventsToShow + 1 : data.length,
             (index) {
-              if (index > maxEventsToShow) const AllEventsRedirectionButton();
+              if (index >= maxEventsToShow) {
+                return const AllEventsRedirectionButton();
+              }
               final color = colors[Random().nextInt(colors.length - 1)];
               return ReminderContainer(
                 color: color,

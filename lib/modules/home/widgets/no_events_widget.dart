@@ -34,10 +34,10 @@ class NoEventsWidget extends StatelessWidget {
         SizedBox(height: resp.hp(1.5)),
         CustomButton(
           text: 'Add event',
-          color: accent,
+          color: lightBlue,
           height: resp.hp(4),
           width: resp.wp(25),
-          style: TextStyles.w500(14, Colors.white),
+          style: TextStyles.w500(14, accent),
           onTap: () => Get.to(
             () => ReminderDetailsPage(reminder: ReminderModel.empty()),
           ),

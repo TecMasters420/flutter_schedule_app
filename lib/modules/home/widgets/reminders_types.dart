@@ -85,7 +85,7 @@ class _ActivitiesTypesState extends State<ActivitiesTypes> {
           ),
           EventsListPerType(
             data: widget.eventsPerType.values.elementAt(_currentIndex),
-            maxEventsToShow: 1,
+            maxEventsToShow: 2,
           ),
         ],
       ),

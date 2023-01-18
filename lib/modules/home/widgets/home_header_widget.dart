@@ -3,6 +3,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import '../../../app/config/constants.dart';
 import '../../../app/utils/responsive_util.dart';
+import '../../../widgets/custom_text_button_widget.dart';
 import '../../../widgets/user_profile_picture.dart';
 
 import '../../../app/utils/text_styles.dart';
@@ -34,21 +35,10 @@ class HomeHeaderWidget extends StatelessWidget {
                       'Francisco Rodríguez',
                       style: TextStyles.w700(14),
                     ),
-                    SizedBox(
-                      height: resp.hp(2),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          alignment: Alignment.topLeft,
-                        ),
-                        child: Text(
-                          'View profile',
-                          style: TextStyles.w700(12, accent),
-                        ),
-                        onPressed: () {
-                          Get.toNamed('userProfilePage');
-                        },
-                      ),
+                    CustomTextButtonWidget(
+                      title: 'View profile',
+                      customFontSize: 12,
+                      onTap: () => Get.toNamed('userProfilePage'),
                     ),
                   ],
                 )
