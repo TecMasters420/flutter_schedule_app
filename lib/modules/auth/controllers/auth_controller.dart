@@ -66,5 +66,6 @@ class AuthController extends GetxController {
     _accessToken.value = null;
     _currentUser.value = null;
     isLoading.value = false;
+    Get.offAndToNamed('/initialInformationPage');
   }
 }
