@@ -30,7 +30,7 @@ class UserProfilePicture extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(1000),
           child: userImage.isEmpty
               ? Image.asset('assets/images/user.png', fit: BoxFit.fill)
               : Image.network(

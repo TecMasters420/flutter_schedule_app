@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:schedulemanager/modules/auth/models/api_response_model.dart';
 
 import '../../../data/models/user_model.dart';
@@ -13,8 +14,12 @@ class AuthRepository extends BaseRepository {
       'password': password,
     };
     final res = await base.call('auth/login', body: body);
-    if (res != null) {
-      return AuthResponseModel.fromMap(jsonDecode(res.body));
+    try {
+      if (res != null) {
+        return AuthResponseModel.fromMap(jsonDecode(res.body));
+      }
+    } on Exception catch (e) {
+      debugPrint(e.toString());
     }
     return null;
   }

@@ -10,8 +10,8 @@ class InitialAnnouncementsController extends GetxController {
   int get quantity => announces.length;
 
   @override
-  void onInit() async {
-    await getAnnouncements();
+  void onInit() {
+    getAnnouncements();
     super.onInit();
   }
 

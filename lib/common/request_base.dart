@@ -13,6 +13,7 @@ class RequestBase {
       "Content-Type": "application/json; charset=utf-8",
     };
     if (body != null) debugPrint(body.toString());
+    if (token != null) debugPrint(token);
     try {
       final url = Uri.parse('$_base/$extraEndpoint');
       debugPrint('\nURL: $url');

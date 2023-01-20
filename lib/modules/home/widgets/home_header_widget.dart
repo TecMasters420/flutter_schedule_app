@@ -10,7 +10,11 @@ import '../../../widgets/user_profile_picture.dart';
 import '../../../app/utils/text_styles.dart';
 
 class HomeHeaderWidget extends StatelessWidget {
-  const HomeHeaderWidget({super.key});
+  final String userImage;
+  const HomeHeaderWidget({
+    super.key,
+    required this.userImage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,7 @@ class HomeHeaderWidget extends StatelessWidget {
                   height: resp.hp(4),
                   width: resp.wp(10),
                   redirectToProfile: true,
-                  userImage: '',
+                  userImage: userImage,
                 ),
                 SizedBox(width: resp.wp(2)),
                 Column(

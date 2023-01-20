@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/app/config/app_constants.dart';
+import 'package:schedulemanager/modules/auth/controllers/auth_controller.dart';
 import 'package:schedulemanager/widgets/custom_nav_bar_widget.dart';
-import '../../app/config/constants.dart';
+import 'package:schedulemanager/widgets/loading_widget.dart';
 import 'controllers/home_controller.dart';
 import 'widgets/home_header_widget.dart';
-import '../../widgets/custom_circular_progress.dart';
 
 import '../../app/utils/responsive_util.dart';
 
@@ -19,6 +19,7 @@ class HomePage extends GetView {
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     final HomeController home = Get.find();
+    final AuthController auth = Get.find();
 
     return Scaffold(
       bottomNavigationBar: const CustomNavBarWidget(),
@@ -31,7 +32,7 @@ class HomePage extends GetView {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: resp.hp(5)),
-              const HomeHeaderWidget(),
+              HomeHeaderWidget(userImage: auth.currentUser!.imageUrl ?? ''),
               SizedBox(height: resp.hp(2.5)),
               Text(
                 'Statistics',
@@ -52,7 +53,7 @@ class HomePage extends GetView {
               SizedBox(height: resp.hp(2.5)),
               Obx(
                 () => home.isLoading.value
-                    ? const CustomCircularProgress(color: accent)
+                    ? const LoadingWidget()
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

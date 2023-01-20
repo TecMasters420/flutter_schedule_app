@@ -30,7 +30,8 @@ class AuthController extends GetxController {
   }
 
   Future _getPage(UserModel? user) async {
-    await Get.toNamed(user == null ? AppRoutes.initial : AppRoutes.home);
+    Get.offNamedUntil(
+        user == null ? AppRoutes.initial : AppRoutes.home, (route) => false);
   }
 
   Future<bool> loginWithJWTToken() async {
@@ -50,9 +51,6 @@ class AuthController extends GetxController {
   Future<void> logIn(String email, String password) async {
     isLoading.value = true;
 
-    final loggedWithJWT = await loginWithJWTToken();
-    if (loggedWithJWT) return;
-
     final authResponse = await _repo.logIn(email, password);
     if (authResponse != null) {
       _currentUser.value = authResponse.user;
@@ -70,7 +68,8 @@ class AuthController extends GetxController {
 
   Future<void> signOut() async {
     isLoading.value = true;
-    Get.offAndToNamed('/initialInformationPage');
+    Get.offNamedUntil(AppRoutes.initial, (route) => false);
+
     _currentUser.value = null;
     await storage.delete(key: 'token');
     _accessToken.value = null;

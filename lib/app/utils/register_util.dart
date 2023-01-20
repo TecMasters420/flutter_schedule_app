@@ -15,9 +15,6 @@ class RegisterUtil {
   }
 
   static bool passwordIsValid(String password) {
-    print(RegExp(
-            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!.,@$%^&*-]).{8,}$')
-        .hasMatch(password));
     return RegExp(
             r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!.,@$%^&*-]).{8,}$')
         .hasMatch(password);

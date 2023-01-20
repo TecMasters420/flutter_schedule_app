@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:schedulemanager/app/config/app_constants.dart';
 import 'package:schedulemanager/app/utils/register_util.dart';
 import 'package:schedulemanager/modules/auth/controllers/register_controller.dart';
