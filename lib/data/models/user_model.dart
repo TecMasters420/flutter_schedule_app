@@ -20,14 +20,13 @@ class UserModel {
   });
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    return {
       'name': name,
       'lastName': lastName,
-      'userName': userName,
+      'username': email,
       'phone': phone,
       'email': email,
       'imageUrl': imageUrl,
-      'createdAt': createdAt,
     };
   }
 

@@ -12,7 +12,7 @@ class EventsPageRepository extends BaseRepository {
     final res = await base.call('events/perDate/date?end=$formatDate',
         token: auth.token);
     if (res != null) {
-      final json = jsonDecode(res);
+      final json = jsonDecode(res.body);
       return List.from(json).map((e) => ReminderModel.fromMap(e)).toList();
     }
     return [];
@@ -22,7 +22,7 @@ class EventsPageRepository extends BaseRepository {
     final AuthController auth = Get.find();
     final res = await base.call('events/getDates', token: auth.token);
     if (res != null) {
-      final List<dynamic> json = jsonDecode(res);
+      final List<dynamic> json = jsonDecode(res.body);
       return json.map((e) => DatesWithEventsModel.fromMap(e)).toList();
     }
     return null;

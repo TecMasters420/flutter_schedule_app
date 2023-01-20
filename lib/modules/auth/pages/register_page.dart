@@ -4,8 +4,10 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:schedulemanager/app/config/app_constants.dart';
+import 'package:schedulemanager/app/utils/register_util.dart';
 import 'package:schedulemanager/modules/auth/controllers/register_controller.dart';
 import 'package:schedulemanager/modules/auth/widgets/password_validator_helper_widget.dart';
+import 'package:schedulemanager/routes/app_routes.dart';
 import 'package:schedulemanager/widgets/required_textformfield_widget.dart';
 
 import '../../../app/config/constants.dart';
@@ -142,14 +144,30 @@ class RegisterPage extends StatelessWidget {
                       hideShadows: true,
                       text: 'Register',
                       onTap: () async {
-                        // if (_email.isEmpty || _password.isEmpty) return;
+                        final user = register.user.value;
+                        final pass = register.pass.value;
+                        if (!RegisterUtil.isValidToRegister(user, pass)) {
+                          CustomAlertDialog(
+                            resp: resp,
+                            dismissible: true,
+                            context: context,
+                            onAcceptCallback: () {},
+                            showButtons: false,
+                            title: 'Invalid data',
+                            customBody: Text(
+                              'Please check the data you have entered.',
+                              style: TextStyles.w500(16),
+                            ),
+                          );
+                          return;
+                        }
                         CustomAlertDialog(
                           resp: resp,
                           dismissible: false,
                           context: context,
                           onAcceptCallback: () {},
                           showButtons: false,
-                          title: 'Logging in...',
+                          title: 'Registering...',
                           customBody: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -158,13 +176,36 @@ class RegisterPage extends StatelessWidget {
                               ),
                               SizedBox(height: resp.hp(2)),
                               Text(
-                                'Wait a bit while it logs in',
+                                'Please wait a while while registering',
                                 style: TextStyles.w500(16),
                               )
                             ],
                           ),
                         );
-                        // await auth.logIn(_email, _password);
+                        final registered = await auth.register(user, pass);
+                        if (!registered) {
+                          Get.back(closeOverlays: true);
+                          CustomAlertDialog(
+                            resp: resp,
+                            dismissible: true,
+                            context: context,
+                            onAcceptCallback: () {},
+                            showButtons: false,
+                            customBody: const SizedBox(),
+                            title: 'Failed to register user',
+                          );
+                          return;
+                        }
+                        Get.offAllNamed(AppRoutes.login);
+                        CustomAlertDialog(
+                          resp: resp,
+                          dismissible: true,
+                          context: context,
+                          onAcceptCallback: () {},
+                          showButtons: false,
+                          customBody: const SizedBox(),
+                          title: 'User has registered!',
+                        );
                       },
                     ),
                   ],

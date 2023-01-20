@@ -12,7 +12,7 @@ class HomeRepository {
     final AuthController auth = Get.find();
     final res = await base.call('events', token: auth.token);
     if (res != null) {
-      final json = jsonDecode(res);
+      final json = jsonDecode(res.body);
       return FilteredEventsModel.fromMap(json);
     }
     return null;

@@ -76,4 +76,11 @@ class AuthController extends GetxController {
     _accessToken.value = null;
     isLoading.value = false;
   }
+
+  Future<bool> register(UserModel userReg, String pass) async {
+    isLoading.value = true;
+    final registered = await _repo.register(userReg, pass);
+    isLoading.value = false;
+    return registered != null;
+  }
 }

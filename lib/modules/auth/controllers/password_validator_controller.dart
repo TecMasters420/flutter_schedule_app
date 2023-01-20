@@ -21,7 +21,7 @@ class PasswordValidatorController extends GetxController {
       ),
       PasswordValidatorElementModel(
         name: 'At least one special character',
-        regx: RegExp(r'(?=.*?[#?!@$%^&*.,-])'),
+        regx: RegExp(r'(?=.*?[#?!.,@$%^&*-])'),
       ),
       PasswordValidatorElementModel(
         name: 'At least 8 characters',

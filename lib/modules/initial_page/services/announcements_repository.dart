@@ -7,7 +7,7 @@ class AnnouncementsRepository extends BaseRepository {
   Future<List<InitialAnnouncementModel>?> getAll() async {
     final res = await base.call('announcements');
     if (res != null) {
-      final List<dynamic> json = jsonDecode(res);
+      final List<dynamic> json = jsonDecode(res.body);
       return json.map((e) => InitialAnnouncementModel.fromMap(e)).toList();
     }
     return null;
