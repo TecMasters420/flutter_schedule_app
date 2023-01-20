@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
+import 'package:schedulemanager/modules/auth/bindings/login_bindings.dart';
+import 'package:schedulemanager/modules/auth/bindings/register_bindings.dart';
 import 'package:schedulemanager/modules/notifications_page/pages/notifications_page.dart';
+import 'package:schedulemanager/routes/app_routes.dart';
 import '../modules/home/bindings/home_bindings.dart';
 import '../modules/reminders_page/bindings/events_page_bindings.dart';
 import '../modules/initial_page/bindings/initial_information_bindings.dart';
@@ -15,42 +18,44 @@ import '../modules/user_profile/user_profile_page.dart';
 
 final List<GetPage> appPages = [
   GetPage(
-    name: '/initialInformationPage',
+    name: AppRoutes.initial,
     page: () => const InitialInformationPage(),
     binding: const InitialInformationBindings(),
   ),
   GetPage(
-    name: '/loginPage',
+    name: AppRoutes.login,
+    binding: const LoginBindings(),
     page: () => const LoginPage(),
   ),
   GetPage(
-    name: '/homePage',
+    name: AppRoutes.home,
     page: () => const HomePage(),
     binding: const HomeBindings(),
   ),
   GetPage(
-    name: '/registerPage',
+    name: AppRoutes.register,
+    binding: const RegisterBindings(),
     page: () => const RegisterPage(),
   ),
   GetPage(
-    name: '/reminderDetailsPage',
+    name: AppRoutes.eventDetails,
     page: () => const ReminderDetailsPage(reminder: null),
   ),
   GetPage(
-    name: '/remindersPage',
+    name: AppRoutes.events,
     page: () => const EventsPage(),
     binding: const EventsPageBindings(),
   ),
   GetPage(
-    name: '/userProfilePage',
+    name: AppRoutes.profile,
     page: () => const UserProfilePage(),
   ),
   GetPage(
-    name: '/mapPage',
+    name: AppRoutes.mapPage,
     page: () => const MapPage(),
   ),
   GetPage(
-    name: '/notificationsPage',
+    name: AppRoutes.notifications,
     page: () => const NotificationsPage(),
   ),
 ];

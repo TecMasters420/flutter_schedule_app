@@ -5,8 +5,6 @@ import '../app/utils/text_styles.dart';
 
 class CustomFormField extends StatelessWidget {
   final void Function(String value) onChanged;
-  final String labelText;
-  final String hintText;
   final IconData icon;
   final bool obscure;
   final TextEditingController? controller;
@@ -14,8 +12,6 @@ class CustomFormField extends StatelessWidget {
 
   const CustomFormField({
     super.key,
-    required this.labelText,
-    required this.hintText,
     required this.icon,
     required this.onChanged,
     this.obscure = false,
@@ -31,7 +27,6 @@ class CustomFormField extends StatelessWidget {
       obscureText: obscure,
       onChanged: onChanged,
       decoration: InputDecoration(
-        hintText: hintText,
         hintStyle: TextStyles.w400(14, grey),
         labelStyle: TextStyles.w400(14, grey),
         floatingLabelStyle: TextStyles.w400(16, accent),

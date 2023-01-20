@@ -286,8 +286,6 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                         });
                       },
                       customBody: CustomFormField(
-                        labelText: 'Name',
-                        hintText: 'Name',
                         icon: Icons.abc,
                         onChanged: (value) {
                           setState(() {

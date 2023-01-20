@@ -22,14 +22,6 @@ class ProgressBar extends StatelessWidget {
             : percent <= 50
                 ? orange
                 : green;
-    final Color bgColor = (percent == 0
-            ? lightGrey
-            : percent <= 50
-                ? orange
-                : percent < 25
-                    ? red
-                    : green)
-        .withOpacity(0.25);
 
     return Container(
       height: height,

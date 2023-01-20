@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:schedulemanager/modules/auth/controllers/login_controller.dart';
+import 'package:schedulemanager/routes/app_routes.dart';
+import 'package:schedulemanager/widgets/custom_text_button_widget.dart';
 
+import '../../../app/config/app_constants.dart';
 import '../../../app/config/constants.dart';
 
 import '../../../app/utils/responsive_util.dart';
@@ -8,32 +12,24 @@ import '../../../app/utils/text_styles.dart';
 import '../../../widgets/custom_alert_dialog.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_circular_progress.dart';
-import '../../../widgets/custom_form_field.dart';
+import '../../../widgets/required_textformfield_widget.dart';
 import '../controllers/auth_controller.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  String? _email;
-  String? _password;
 
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     final AuthController auth = Get.find();
+    final LoginController login = Get.find();
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: backgroundColor,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 50),
+          padding: AppConstants.bodyPadding,
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -57,66 +53,33 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyles.w500(14, grey),
                 ),
                 SizedBox(height: resp.hp(3)),
-                Row(
-                  children: [
-                    Text(
-                      'Email',
-                      style: TextStyles.w700(14),
-                    ),
-                    Text(
-                      ' *',
-                      style: TextStyles.w700(14, Colors.red),
-                    ),
-                  ],
-                ),
-                SizedBox(height: resp.hp(1)),
-                CustomFormField(
-                  labelText: 'Email',
-                  hintText: 'email@gmail.com',
-                  icon: Icons.alternate_email_rounded,
-                  onChanged: (value) {
-                    setState(() {
-                      _email = value;
-                    });
+                RequiredTextFormFieldWidget(
+                  title: 'Email',
+                  suffixIcon: Icons.alternate_email_rounded,
+                  onChangeCallback: (value) {
+                    login.email.value = value;
                   },
                 ),
                 SizedBox(height: resp.hp(1)),
-                Row(
-                  children: [
-                    Text(
-                      'Password',
-                      style: TextStyles.w700(14),
-                    ),
-                    Text(
-                      ' *',
-                      style: TextStyles.w700(14, Colors.red),
-                    ),
-                  ],
-                ),
-                SizedBox(height: resp.hp(1)),
-                CustomFormField(
+                RequiredTextFormFieldWidget(
+                  title: 'Password',
                   obscure: true,
-                  labelText: 'Password',
-                  hintText: '************',
-                  icon: Icons.lock_outline_rounded,
-                  onChanged: (value) {
-                    setState(() {
-                      _password = value;
-                    });
+                  suffixIcon: Icons.lock_outline_rounded,
+                  onChangeCallback: (value) {
+                    login.password.value = value;
                   },
                 ),
+                SizedBox(height: resp.hp(1)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    TextButton(
-                      child: Text(
-                        'Forget password?',
-                        style: TextStyles.w700(14, accent),
-                      ),
-                      onPressed: () {},
+                    CustomTextButtonWidget(
+                      title: 'Forget password?',
+                      onTap: () {},
                     )
                   ],
                 ),
+                SizedBox(height: resp.hp(1)),
                 Column(
                   children: [
                     SizedBox(height: resp.hp(1)),
@@ -125,9 +88,13 @@ class _LoginPageState extends State<LoginPage> {
                       height: resp.hp(5),
                       style: TextStyles.w800(16, Colors.white),
                       width: resp.wp(30),
-                      text: 'Login',
+                      text: login.email.value.isNotEmpty ? 'Login' : 'Login',
                       onTap: () async {
-                        if (_email == null || _password == null) return;
+                        final email = login.email.value;
+                        final password = login.password.value;
+                        if (email.isEmpty || password.isEmpty) {
+                          return;
+                        }
                         CustomAlertDialog(
                           resp: resp,
                           dismissible: false,
@@ -149,69 +116,111 @@ class _LoginPageState extends State<LoginPage> {
                             ],
                           ),
                         );
-                        await auth.logIn(_email!, _password!);
+                        await auth.logIn(
+                          login.email.value,
+                          login.password.value,
+                        );
                       },
+                    ),
+                    SizedBox(height: resp.hp(1)),
+                    Text(
+                      'Or',
+                      style: TextStyles.w500(14, grey),
+                      textAlign: TextAlign.center,
                     ),
                     SizedBox(height: resp.hp(1)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'Not registered yet? ',
+                        CustomButton(
+                          color: containerBg,
+                          height: resp.hp(5),
                           style: TextStyles.w700(14),
+                          width: resp.wp(30),
+                          text: 'Google',
+                          prefixWidget: Image.asset(
+                            'assets/images/google.png',
+                            height: resp.hp(5),
+                            width: resp.wp(5),
+                          ),
+                          onTap: () async {
+                            CustomAlertDialog(
+                              resp: resp,
+                              dismissible: false,
+                              context: context,
+                              onAcceptCallback: () {},
+                              showButtons: false,
+                              title: 'Logging in...',
+                              customBody: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const CustomCircularProgress(
+                                    color: accent,
+                                  ),
+                                  SizedBox(height: resp.hp(2)),
+                                  Text(
+                                    'Wait a bit while it logs in',
+                                    style: TextStyles.w500(16),
+                                  )
+                                ],
+                              ),
+                            );
+                            await auth.googleLogin();
+                          },
                         ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.zero,
+                        SizedBox(width: resp.wp(5)),
+                        CustomButton(
+                          color: accent,
+                          height: resp.hp(5),
+                          style: TextStyles.w700(14, Colors.white),
+                          width: resp.wp(30),
+                          text: 'Facebook',
+                          hideShadows: true,
+                          prefixWidget: Image.asset(
+                            'assets/images/facebook.png',
+                            height: resp.hp(5),
+                            width: resp.wp(5),
                           ),
-                          child: Text(
-                            'Create an account',
-                            style: TextStyles.w700(14, accent),
-                          ),
-                          onPressed: () {},
+                          onTap: () async {
+                            CustomAlertDialog(
+                              resp: resp,
+                              dismissible: false,
+                              context: context,
+                              onAcceptCallback: () {},
+                              showButtons: false,
+                              title: 'Logging in...',
+                              customBody: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const CustomCircularProgress(
+                                    color: accent,
+                                  ),
+                                  SizedBox(height: resp.hp(2)),
+                                  Text(
+                                    'Wait a bit while it logs in',
+                                    style: TextStyles.w500(16),
+                                  )
+                                ],
+                              ),
+                            );
+                            await auth.googleLogin();
+                          },
                         ),
                       ],
                     ),
-                    Text(
-                      'Or',
-                      style: TextStyles.w500(14, lightGrey),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: resp.hp(1)),
-                    CustomButton(
-                      color: containerBg,
-                      height: resp.hp(5),
-                      style: TextStyles.w500(14),
-                      width: resp.wp(40),
-                      text: 'Login with Google',
-                      prefixWidget: Image.asset(
-                        'assets/images/google.png',
-                        height: resp.hp(5),
-                        width: resp.wp(5),
-                      ),
-                      onTap: () async {
-                        CustomAlertDialog(
-                          resp: resp,
-                          dismissible: false,
-                          context: context,
-                          onAcceptCallback: () {},
-                          showButtons: false,
-                          title: 'Logging in...',
-                          customBody: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const CustomCircularProgress(
-                                color: accent,
-                              ),
-                              SizedBox(height: resp.hp(2)),
-                              Text(
-                                'Wait a bit while it logs in',
-                                style: TextStyles.w500(16),
-                              )
-                            ],
-                          ),
-                        );
-                      },
+                    SizedBox(height: resp.hp(2.5)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Don't have an account? ",
+                          style: TextStyles.w500(14, grey),
+                        ),
+                        CustomTextButtonWidget(
+                          title: 'Create an account',
+                          onTap: () => Get.toNamed(AppRoutes.register),
+                        )
+                      ],
                     ),
                   ],
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:schedulemanager/routes/app_routes.dart';
 import '../app/config/constants.dart';
 import '../modules/initial_page/bindings/initial_information_bindings.dart';
 import '../modules/initial_page/initial_information_page.dart';
@@ -11,7 +12,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/initialInformationPage',
+      initialRoute: AppRoutes.initial,
       initialBinding: const InitialInformationBindings(),
       getPages: appPages,
       home: const InitialInformationPage(),

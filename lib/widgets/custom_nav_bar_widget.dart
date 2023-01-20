@@ -24,7 +24,7 @@ class CustomNavBarWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: containerBg,
           boxShadow: shadows,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Obx(
           () => Row(

@@ -5,6 +5,7 @@ import '../../../app/utils/responsive_util.dart';
 import '../../../app/config/constants.dart';
 import '../../../data/models/initial_announcement_model.dart';
 import '../../../app/utils/text_styles.dart';
+import '../../../routes/app_routes.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_circular_progress.dart';
 import 'initial_page_information.dart';
@@ -94,7 +95,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                         style: TextStyles.w800(14, Colors.white),
                         width: resp.wp(40),
                         text: 'Join',
-                        onTap: () => Get.toNamed('/loginPage'),
+                        onTap: () => Get.toNamed(AppRoutes.login),
                       ),
               );
             },

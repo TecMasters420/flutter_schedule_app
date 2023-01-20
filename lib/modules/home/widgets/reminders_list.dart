@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../routes/app_routes.dart';
 import '../../../widgets/custom_text_button_widget.dart';
 import 'all_reminders_redirection_button.dart';
 import 'no_events_widget.dart';
@@ -26,7 +27,6 @@ class EventsListPerType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    print(maxEventsToShow);
     return Column(
       children: [
         SizedBox(height: resp.hp(2.5)),
@@ -41,7 +41,7 @@ class EventsListPerType extends StatelessWidget {
               CustomTextButtonWidget(
                 title: 'See all',
                 customFontSize: 16,
-                onTap: () => Get.toNamed('remindersPage'),
+                onTap: () => Get.toNamed(AppRoutes.events),
               ),
             ],
           ),

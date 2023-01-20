@@ -3,6 +3,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import '../../../app/config/constants.dart';
 import '../../../app/utils/responsive_util.dart';
+import '../../../routes/app_routes.dart';
 import '../../../widgets/custom_text_button_widget.dart';
 import '../../../widgets/user_profile_picture.dart';
 
@@ -39,7 +40,7 @@ class HomeHeaderWidget extends StatelessWidget {
                     CustomTextButtonWidget(
                       title: 'View profile',
                       customFontSize: 12,
-                      onTap: () => Get.toNamed('userProfilePage'),
+                      onTap: () => Get.toNamed(AppRoutes.profile),
                     ),
                   ],
                 )
@@ -47,7 +48,7 @@ class HomeHeaderWidget extends StatelessWidget {
             ),
             const Spacer(),
             GestureDetector(
-              onTap: () => Get.toNamed('/notificationsPage'),
+              onTap: () => Get.toNamed(AppRoutes.notifications),
               child: Stack(
                 clipBehavior: Clip.none,
                 alignment: Alignment.topLeft,

@@ -10,6 +10,8 @@ import 'app/services/flutter_notification.dart';
 
 import 'firebase_options.dart';
 
+const devMode = true;
+
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 

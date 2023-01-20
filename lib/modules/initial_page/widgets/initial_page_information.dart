@@ -4,7 +4,6 @@ import '../../../app/utils/responsive_util.dart';
 
 import '../../../app/config/constants.dart';
 import '../../../app/utils/text_styles.dart';
-import '../../../widgets/custom_circular_progress.dart';
 
 class LoginPageInformation extends StatelessWidget {
   final double scale;

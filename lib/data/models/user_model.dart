@@ -1,22 +1,22 @@
 class UserModel {
   final int id;
-  final String name;
-  final String lastName;
-  final String userName;
-  final String? phone;
-  final String email;
-  final String? imageUrl;
-  final DateTime createdAt;
+  String name;
+  String lastName;
+  String userName;
+  String? phone;
+  String email;
+  String? imageUrl;
+  DateTime createdAt;
 
   UserModel({
     required this.id,
     required this.name,
     required this.lastName,
     required this.userName,
-    required this.phone,
     required this.email,
-    required this.imageUrl,
     required this.createdAt,
+    this.imageUrl,
+    this.phone,
   });
 
   Map<String, dynamic> toMap() {

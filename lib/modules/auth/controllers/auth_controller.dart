@@ -4,6 +4,8 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_rx/src/rx_workers/rx_workers.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:schedulemanager/app/utils/auth_util.dart';
+import 'package:schedulemanager/routes/app_routes.dart';
 import '../../../data/models/user_model.dart';
 import '../services/auth_repository.dart';
 
@@ -28,7 +30,7 @@ class AuthController extends GetxController {
   }
 
   Future _getPage(UserModel? user) async {
-    await Get.toNamed(user == null ? '/initialInformationPage' : '/homePage');
+    await Get.toNamed(user == null ? AppRoutes.initial : AppRoutes.home);
   }
 
   Future<bool> loginWithJWTToken() async {
@@ -57,6 +59,12 @@ class AuthController extends GetxController {
       _accessToken.value = authResponse.accessToken;
       await storage.write(key: 'token', value: _accessToken.value);
     }
+    isLoading.value = false;
+  }
+
+  Future<void> googleLogin() async {
+    isLoading.value = true;
+    await AuthUtil.googleSignIn();
     isLoading.value = false;
   }
 

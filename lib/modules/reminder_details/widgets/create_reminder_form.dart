@@ -37,8 +37,6 @@ class CreateReminderForm extends StatelessWidget {
         SizedBox(height: resp.hp(1)),
         CustomFormField(
           controller: _titleController,
-          labelText: 'Title',
-          hintText: 'My title',
           icon: Icons.my_library_books_outlined,
           onChanged: (value) {
             reminder.title = value;
@@ -52,8 +50,6 @@ class CreateReminderForm extends StatelessWidget {
         SizedBox(height: resp.hp(1)),
         CustomFormField(
           controller: _desController,
-          labelText: 'Description',
-          hintText: 'My description',
           icon: Icons.mode_edit_outline_outlined,
           onChanged: (value) {
             reminder.description = value;
