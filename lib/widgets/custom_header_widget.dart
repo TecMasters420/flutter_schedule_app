@@ -23,7 +23,7 @@ class CustomHeaderWidget extends StatelessWidget {
         Expanded(
           flex: 8,
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             decoration: BoxDecoration(
               color: accent,
               borderRadius: BorderRadius.circular(15),
@@ -33,6 +33,7 @@ class CustomHeaderWidget extends StatelessWidget {
               child: Text(
                 title,
                 maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyles.w700(titleSize, Colors.white),
               ),
             ),

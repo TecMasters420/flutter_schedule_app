@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthUtil {
-  static Future<void> googleSignIn() async {
+  static Future<String?> googleSignIn() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     final GoogleSignIn googleSignIn = GoogleSignIn();
     final gAccount = await googleSignIn.signIn();
@@ -18,10 +18,11 @@ class AuthUtil {
       try {
         final userCred = await auth.signInWithCredential(credentials);
         final user = userCred.user;
-        debugPrint((await user!.getIdToken()).substring(1100, 1188));
+        return await user!.getIdToken(true);
       } on FirebaseAuthException catch (e) {
         debugPrint('Error in Auth: ${e.code}');
       }
     }
+    return null;
   }
 }

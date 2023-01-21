@@ -1,11 +1,11 @@
-import 'package:schedulemanager/data/models/user_model.dart';
+import 'package:schedulemanager/data/models/auth_user_model.dart';
 
 class RegisterUtil {
-  static bool isValidToRegister(UserModel user, String pass) {
+  static bool isValidToRegister(AuthUserModel user, String pass) {
     return emailIsValid(user.email) &&
         passwordIsValid(pass) &&
-        nameIsValid(user.name) &&
-        lastNameIsValid(user.lastName);
+        nameIsValid(user.data.name) &&
+        lastNameIsValid(user.data.lastName);
   }
 
   static bool emailIsValid(String email) {

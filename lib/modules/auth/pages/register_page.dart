@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/app/config/app_constants.dart';
+import 'package:schedulemanager/app/utils/alert_dialogs_util.dart';
 import 'package:schedulemanager/app/utils/register_util.dart';
 import 'package:schedulemanager/modules/auth/controllers/register_controller.dart';
 import 'package:schedulemanager/modules/auth/widgets/password_validator_helper_widget.dart';
@@ -11,9 +12,7 @@ import '../../../app/config/constants.dart';
 
 import '../../../app/utils/responsive_util.dart';
 import '../../../app/utils/text_styles.dart';
-import '../../../widgets/custom_alert_dialog.dart';
 import '../../../widgets/custom_button.dart';
-import '../../../widgets/custom_circular_progress.dart';
 import '../../../widgets/custom_form_field.dart';
 import '../controllers/auth_controller.dart';
 
@@ -84,7 +83,7 @@ class RegisterPage extends StatelessWidget {
                         title: 'Name',
                         suffixIcon: Icons.face,
                         onChangeCallback: (value) {
-                          register.user.value.name = value;
+                          register.user.value.data.name = value;
                         },
                       ),
                     ),
@@ -94,7 +93,7 @@ class RegisterPage extends StatelessWidget {
                         title: 'Lastname',
                         suffixIcon: Icons.text_snippet_outlined,
                         onChangeCallback: (value) {
-                          register.user.value.lastName = value;
+                          register.user.value.data.lastName = value;
                         },
                       ),
                     ),
@@ -112,7 +111,7 @@ class RegisterPage extends StatelessWidget {
                       child: CustomFormField(
                         icon: Icons.phone_enabled_outlined,
                         onChanged: (value) {
-                          register.user.value.phone = value;
+                          register.user.value.data.phone = value;
                         },
                       ),
                     ),
@@ -144,64 +143,23 @@ class RegisterPage extends StatelessWidget {
                         final user = register.user.value;
                         final pass = register.pass.value;
                         if (!RegisterUtil.isValidToRegister(user, pass)) {
-                          CustomAlertDialog(
-                            resp: resp,
-                            dismissible: true,
-                            context: context,
-                            onAcceptCallback: () {},
-                            showButtons: false,
-                            title: 'Invalid data',
-                            customBody: Text(
-                              'Please check the data you have entered.',
-                              style: TextStyles.w500(16),
-                            ),
+                          AlertDialogsUtil.error(
+                            customBodyMessage: [
+                              'Please check the data you have entered'
+                            ],
                           );
                           return;
                         }
-                        CustomAlertDialog(
-                          resp: resp,
-                          dismissible: false,
-                          context: context,
-                          onAcceptCallback: () {},
-                          showButtons: false,
-                          title: 'Registering...',
-                          customBody: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const CustomCircularProgress(
-                                color: accent,
-                              ),
-                              SizedBox(height: resp.hp(2)),
-                              Text(
-                                'Please wait a while while registering',
-                                style: TextStyles.w500(16),
-                              )
-                            ],
-                          ),
-                        );
+                        AlertDialogsUtil.loading(customBodyMessage: [
+                          'Please wait a while while registering'
+                        ]);
                         final registered = await auth.register(user, pass);
                         if (!registered) {
-                          Get.back(closeOverlays: true);
-                          CustomAlertDialog(
-                            resp: resp,
-                            dismissible: true,
-                            context: context,
-                            onAcceptCallback: () {},
-                            showButtons: false,
-                            customBody: const SizedBox(),
-                            title: 'Failed to register user',
-                          );
                           return;
                         }
                         Get.offAllNamed(AppRoutes.login);
-                        CustomAlertDialog(
-                          resp: resp,
-                          dismissible: true,
-                          context: context,
-                          onAcceptCallback: () {},
-                          showButtons: false,
-                          customBody: const SizedBox(),
-                          title: 'User has registered!',
+                        AlertDialogsUtil.check(
+                          customBodyMessage: ['User has registered'],
                         );
                       },
                     ),

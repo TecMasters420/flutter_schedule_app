@@ -1,7 +1,7 @@
-import '../../../data/models/user_model.dart';
+import '../../../data/models/auth_user_model.dart';
 
 class AuthResponseModel {
-  final UserModel? user;
+  final AuthUserModel? user;
   final String? accessToken;
 
   const AuthResponseModel({
@@ -18,7 +18,7 @@ class AuthResponseModel {
 
   factory AuthResponseModel.fromMap(Map<String, dynamic> map) {
     return AuthResponseModel(
-      user: UserModel.fromMap(map['user']),
+      user: AuthUserModel.fromMap(map['user']),
       accessToken: map['access_token'],
     );
   }

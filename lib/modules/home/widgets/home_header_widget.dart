@@ -11,9 +11,11 @@ import '../../../app/utils/text_styles.dart';
 
 class HomeHeaderWidget extends StatelessWidget {
   final String userImage;
+  final String name;
   const HomeHeaderWidget({
     super.key,
     required this.userImage,
+    required this.name,
   });
 
   @override
@@ -38,7 +40,7 @@ class HomeHeaderWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Francisco Rodríguez',
+                      name,
                       style: TextStyles.w700(14),
                     ),
                     CustomTextButtonWidget(

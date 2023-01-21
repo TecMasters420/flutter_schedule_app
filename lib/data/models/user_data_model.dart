@@ -1,20 +1,18 @@
-class UserModel {
-  final int id;
+class UserDataModel {
+  final String id;
   String name;
   String lastName;
-  String userName;
   String? phone;
-  String email;
   String? imageUrl;
-  DateTime createdAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
-  UserModel({
+  UserDataModel({
     required this.id,
     required this.name,
     required this.lastName,
-    required this.userName,
-    required this.email,
     required this.createdAt,
+    required this.updatedAt,
     this.imageUrl,
     this.phone,
   });
@@ -23,28 +21,25 @@ class UserModel {
     return {
       'name': name,
       'lastName': lastName,
-      'username': email,
       'phone': phone,
-      'email': email,
       'imageUrl': imageUrl,
     };
   }
 
-  factory UserModel.fromMap(Map<String, dynamic> map) {
-    return UserModel(
+  factory UserDataModel.fromMap(Map<String, dynamic> map) {
+    return UserDataModel(
       id: map['id'],
       name: map['name'],
       lastName: map['lastName'],
-      userName: map['username'],
       phone: map['phone'],
-      email: map['email'],
       imageUrl: map['imageUrl'],
       createdAt: DateTime.parse(map['createdAt']),
+      updatedAt: DateTime.parse(map['updatedAt']),
     );
   }
 
   @override
   String toString() {
-    return 'UserModel(email: $email, createdAt: $createdAt, name: $name,)';
+    return 'UserModel(email: $lastName, createdAt: $createdAt, name: $name,)';
   }
 }

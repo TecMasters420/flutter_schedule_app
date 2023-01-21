@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:schedulemanager/app/utils/alert_dialogs_util.dart';
 import 'package:schedulemanager/modules/auth/controllers/login_controller.dart';
 import 'package:schedulemanager/routes/app_routes.dart';
 import 'package:schedulemanager/widgets/custom_text_button_widget.dart';
@@ -9,9 +10,7 @@ import '../../../app/config/constants.dart';
 
 import '../../../app/utils/responsive_util.dart';
 import '../../../app/utils/text_styles.dart';
-import '../../../widgets/custom_alert_dialog.dart';
 import '../../../widgets/custom_button.dart';
-import '../../../widgets/custom_circular_progress.dart';
 import '../../../widgets/required_textformfield_widget.dart';
 import '../controllers/auth_controller.dart';
 
@@ -27,6 +26,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
+        clipBehavior: Clip.none,
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: AppConstants.bodyPadding,
@@ -93,28 +93,15 @@ class LoginPage extends StatelessWidget {
                         final email = login.email.value;
                         final password = login.password.value;
                         if (email.isEmpty || password.isEmpty) {
+                          AlertDialogsUtil.error(
+                            customBodyMessage: [
+                              'Enter all the information requested'
+                            ],
+                          );
                           return;
                         }
-                        CustomAlertDialog(
-                          resp: resp,
-                          dismissible: false,
-                          context: context,
-                          onAcceptCallback: () {},
-                          showButtons: false,
-                          title: 'Logging in...',
-                          customBody: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const CustomCircularProgress(
-                                color: accent,
-                              ),
-                              SizedBox(height: resp.hp(2)),
-                              Text(
-                                'Wait a bit while it logs in',
-                                style: TextStyles.w500(16),
-                              )
-                            ],
-                          ),
+                        AlertDialogsUtil.loading(
+                          customBodyMessage: ['Your data is being validated'],
                         );
                         await auth.logIn(
                           login.email.value,
@@ -144,26 +131,10 @@ class LoginPage extends StatelessWidget {
                             width: resp.wp(5),
                           ),
                           onTap: () async {
-                            CustomAlertDialog(
-                              resp: resp,
-                              dismissible: false,
-                              context: context,
-                              onAcceptCallback: () {},
-                              showButtons: false,
-                              title: 'Logging in...',
-                              customBody: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const CustomCircularProgress(
-                                    color: accent,
-                                  ),
-                                  SizedBox(height: resp.hp(2)),
-                                  Text(
-                                    'Wait a bit while it logs in',
-                                    style: TextStyles.w500(16),
-                                  )
-                                ],
-                              ),
+                            AlertDialogsUtil.loading(
+                              customBodyMessage: [
+                                'Your data is being validated'
+                              ],
                             );
                             await auth.googleLogin();
                           },
@@ -182,28 +153,9 @@ class LoginPage extends StatelessWidget {
                             width: resp.wp(5),
                           ),
                           onTap: () async {
-                            CustomAlertDialog(
-                              resp: resp,
-                              dismissible: false,
-                              context: context,
-                              onAcceptCallback: () {},
-                              showButtons: false,
-                              title: 'Logging in...',
-                              customBody: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const CustomCircularProgress(
-                                    color: accent,
-                                  ),
-                                  SizedBox(height: resp.hp(2)),
-                                  Text(
-                                    'Wait a bit while it logs in',
-                                    style: TextStyles.w500(16),
-                                  )
-                                ],
-                              ),
+                            AlertDialogsUtil.warning(
+                              customBodyMessage: ['Not yet available'],
                             );
-                            await auth.googleLogin();
                           },
                         ),
                       ],

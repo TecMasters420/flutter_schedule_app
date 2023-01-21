@@ -34,7 +34,7 @@ class UserProfilePage extends GetWidget<AuthController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomHeaderWidget(
-                        title: '${controller.currentUser!.name} Profile',
+                        title: '${controller.currentUser!.data.name} Profile',
                       ),
                       SizedBox(height: resp.hp(2.5)),
                       Stack(
@@ -59,7 +59,8 @@ class UserProfilePage extends GetWidget<AuthController> {
                             child: UserProfilePicture(
                               height: resp.hp(20),
                               width: resp.wp(42.5),
-                              userImage: controller.currentUser!.imageUrl ?? '',
+                              userImage:
+                                  controller.currentUser!.data.imageUrl ?? '',
                             ),
                           ),
                         ],
@@ -89,7 +90,7 @@ class UserProfilePage extends GetWidget<AuthController> {
                               style: TextStyles.w700(16),
                             ),
                             Text(
-                              controller.currentUser!.name,
+                              controller.currentUser!.data.name,
                               style: TextStyles.w400(14),
                             ),
                             SizedBox(height: resp.hp(2)),
@@ -98,7 +99,7 @@ class UserProfilePage extends GetWidget<AuthController> {
                               style: TextStyles.w700(16),
                             ),
                             Text(
-                              controller.currentUser!.lastName,
+                              controller.currentUser!.data.lastName,
                               style: TextStyles.w400(14),
                             ),
                             SizedBox(height: resp.hp(2)),
@@ -116,7 +117,7 @@ class UserProfilePage extends GetWidget<AuthController> {
                               style: TextStyles.w700(16),
                             ),
                             Text(
-                              controller.currentUser!.phone ?? 'No Number',
+                              controller.currentUser!.data.phone ?? 'No Number',
                               style: TextStyles.w400(14),
                             ),
                             SizedBox(height: resp.hp(2)),

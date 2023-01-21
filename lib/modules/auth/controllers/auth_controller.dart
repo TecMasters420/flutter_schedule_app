@@ -5,19 +5,20 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_rx/src/rx_workers/rx_workers.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:schedulemanager/app/utils/auth_util.dart';
+import 'package:schedulemanager/data/models/auth_user_model.dart';
+import 'package:schedulemanager/modules/auth/models/auth_response_model.dart';
 import 'package:schedulemanager/routes/app_routes.dart';
-import '../../../data/models/user_model.dart';
 import '../services/auth_repository.dart';
 
 class AuthController extends GetxController {
   final storage = const FlutterSecureStorage(
       aOptions: AndroidOptions(encryptedSharedPreferences: true));
   final AuthRepository _repo = AuthRepository();
-  final Rx<UserModel?> _currentUser = Rx(null);
+  final Rx<AuthUserModel?> _currentUser = Rx(null);
   final Rx<String?> _accessToken = Rx(null);
   Rx<bool> isLoading = Rx(false);
 
-  UserModel? get currentUser => _currentUser.value;
+  AuthUserModel? get currentUser => _currentUser.value;
   String? get token => _accessToken.value;
 
   @override
@@ -29,7 +30,7 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
-  Future _getPage(UserModel? user) async {
+  Future _getPage(AuthUserModel? user) async {
     Get.offNamedUntil(
         user == null ? AppRoutes.initial : AppRoutes.home, (route) => false);
   }
@@ -48,21 +49,28 @@ class AuthController extends GetxController {
     return false;
   }
 
-  Future<void> logIn(String email, String password) async {
-    isLoading.value = true;
-
-    final authResponse = await _repo.logIn(email, password);
+  Future<void> checkAndSaveCredentials(AuthResponseModel? authResponse) async {
     if (authResponse != null) {
       _currentUser.value = authResponse.user;
       _accessToken.value = authResponse.accessToken;
       await storage.write(key: 'token', value: _accessToken.value);
     }
+  }
+
+  Future<void> logIn(String email, String password) async {
+    isLoading.value = true;
+    final authResponse = await _repo.logIn(email, password);
+    checkAndSaveCredentials(authResponse);
     isLoading.value = false;
   }
 
   Future<void> googleLogin() async {
     isLoading.value = true;
-    await AuthUtil.googleSignIn();
+    final token = await AuthUtil.googleSignIn();
+    if (token != null) {
+      final authResponse = await _repo.googleLogin(token);
+      checkAndSaveCredentials(authResponse);
+    }
     isLoading.value = false;
   }
 
@@ -76,7 +84,7 @@ class AuthController extends GetxController {
     isLoading.value = false;
   }
 
-  Future<bool> register(UserModel userReg, String pass) async {
+  Future<bool> register(AuthUserModel userReg, String pass) async {
     isLoading.value = true;
     final registered = await _repo.register(userReg, pass);
     isLoading.value = false;

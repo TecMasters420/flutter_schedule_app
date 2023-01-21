@@ -32,7 +32,11 @@ class HomePage extends GetView {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: resp.hp(5)),
-              HomeHeaderWidget(userImage: auth.currentUser!.imageUrl ?? ''),
+              HomeHeaderWidget(
+                name:
+                    '${auth.currentUser!.data.name} ${auth.currentUser!.data.lastName}',
+                userImage: auth.currentUser!.data.imageUrl ?? '',
+              ),
               SizedBox(height: resp.hp(2.5)),
               Text(
                 'Statistics',
