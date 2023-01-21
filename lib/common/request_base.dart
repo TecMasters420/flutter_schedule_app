@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:schedulemanager/app/utils/alert_dialogs_util.dart';
 import 'package:schedulemanager/modules/auth/models/api_response_model.dart';
 
-// const String _base = 'https://scheduleappback-374905.wl.r.appspot.com/api/v1';
-const String _base = 'http://192.168.1.29:8080/api/v1';
+const String _base = 'https://scheduleappback-374905.wl.r.appspot.com/api/v1';
+// const String _base = 'http://192.168.1.29:8080/api/v1';
 
 class RequestBase {
   Future<ApiResponseModel?> call(final String extraEndpoint,
@@ -45,9 +45,11 @@ class RequestBase {
       if (Get.isOverlaysOpen) {
         Get.back();
       }
-      AlertDialogsUtil.error(
-        customBodyMessage: response.messages,
-      );
+      if (extraEndpoint != 'users/me') {
+        AlertDialogsUtil.error(
+          customBodyMessage: response.messages,
+        );
+      }
       return response;
     } catch (e) {
       debugPrint('Error $e');
