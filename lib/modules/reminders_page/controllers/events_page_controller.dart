@@ -29,7 +29,7 @@ class EventsPageController extends GetxController {
   Future<void> getDatesWithEvents() async {
     isLoading.value = true;
     final res = await _repo.getDatesWithEvents();
-    if (res != null) {
+    if (res != null && res.isNotEmpty) {
       datesWithEvents.value = res;
       final year = res.first.year;
       final month = res.first.dates.first.month;
@@ -43,8 +43,10 @@ class EventsPageController extends GetxController {
   }
 
   void _setValues() {
-    sameYear =
-        datesWithEvents.firstWhere((e) => e.year == selectedDate.value!.year);
+    final year = datesWithEvents
+        .firstWhereOrNull((e) => e.year == selectedDate.value!.year);
+    if (year == null) return;
+    sameYear = year;
     months.value = sameYear.dates.map((e) => e.month).toList();
     sameMonth = sameYear.dates
         .firstWhereOrNull((e) => e.month == selectedDate.value!.month);

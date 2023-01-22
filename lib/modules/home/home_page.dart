@@ -55,26 +55,28 @@ class HomePage extends GetView {
               // const GroupEventsListWidget(),
               SizedBox(height: resp.hp(2.5)),
               Obx(
-                () => home.isLoading.value
-                    ? const LoadingWidget()
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Select the event type',
-                            style: TextStyles.w700(20),
-                          ),
-                          SizedBox(height: resp.hp(2.5)),
-                          ActivitiesTypes(
-                            initialTabIndex: 1,
-                            eventsPerType: {
-                              'Expired': home.expiredEvents,
-                              'Today': home.currentEvents,
-                              'Upcoming': home.nextEvents,
-                            },
-                          ),
-                        ],
-                      ),
+                () => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Select the event type',
+                      style: TextStyles.w700(20),
+                    ),
+                    SizedBox(height: resp.hp(2.5)),
+                    ActivitiesTypes(
+                      initialTabIndex: 1,
+                      isLoading: home.isLoading.value,
+                      eventsPerType: {
+                        'Expired': home.expiredEvents,
+                        'Today': home.currentEvents,
+                        'Upcoming': home.nextEvents,
+                      },
+                      onTapNew: () async {
+                        await home.getFilteredEvents();
+                      },
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

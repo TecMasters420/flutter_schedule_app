@@ -80,7 +80,7 @@ class TasksHomeProgressContainer extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyles.w600(12, grey),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
