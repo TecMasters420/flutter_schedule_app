@@ -12,6 +12,7 @@ class CustomButton extends StatelessWidget {
   final bool hideShadows;
   final EdgeInsets? padding;
   final bool expand;
+  final bool center;
   const CustomButton({
     super.key,
     required this.text,
@@ -21,6 +22,7 @@ class CustomButton extends StatelessWidget {
     this.prefixWidget,
     this.constraints,
     this.padding,
+    this.center = false,
     this.expand = false,
     this.hideShadows = false,
   });
@@ -46,6 +48,8 @@ class CustomButton extends StatelessWidget {
             ? Text(text, style: style)
             : Row(
                 mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment:
+                    center ? MainAxisAlignment.center : MainAxisAlignment.start,
                 children: [
                   prefixWidget!,
                   const SizedBox(width: 5),

@@ -125,40 +125,45 @@ class LoginPage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              CustomButton(
-                                color: containerBg,
-                                style: TextStyles.w700(14),
-                                text: 'Google',
-                                prefixWidget: Image.asset(
-                                  'assets/images/google.png',
-                                  height: 14,
-                                  width: 14,
+                              Expanded(
+                                child: CustomButton(
+                                  color: containerBg,
+                                  style: TextStyles.w700(14),
+                                  text: 'Google',
+                                  center: true,
+                                  prefixWidget: Image.asset(
+                                    'assets/images/google.png',
+                                    height: 14,
+                                    width: 14,
+                                  ),
+                                  onTap: () async {
+                                    AlertDialogsUtil.loading(
+                                      customBodyMessage: [
+                                        'Your data is being validated'
+                                      ],
+                                    );
+                                    await auth.googleLogin();
+                                  },
                                 ),
-                                onTap: () async {
-                                  AlertDialogsUtil.loading(
-                                    customBodyMessage: [
-                                      'Your data is being validated'
-                                    ],
-                                  );
-                                  await auth.googleLogin();
-                                },
                               ),
                               SizedBox(width: resp.wp(5)),
-                              CustomButton(
-                                color: accent,
-                                style: TextStyles.w700(14, Colors.white),
-                                text: 'Facebook',
-                                hideShadows: true,
-                                prefixWidget: Image.asset(
-                                  'assets/images/facebook.png',
-                                  height: 14,
-                                  width: 14,
+                              Expanded(
+                                child: CustomButton(
+                                  color: accent,
+                                  style: TextStyles.w700(14, Colors.white),
+                                  text: 'Facebook',
+                                  center: true,
+                                  prefixWidget: Image.asset(
+                                    'assets/images/facebook.png',
+                                    height: 14,
+                                    width: 14,
+                                  ),
+                                  onTap: () async {
+                                    AlertDialogsUtil.warning(
+                                      customBodyMessage: ['Not yet available'],
+                                    );
+                                  },
                                 ),
-                                onTap: () async {
-                                  AlertDialogsUtil.warning(
-                                    customBodyMessage: ['Not yet available'],
-                                  );
-                                },
                               ),
                             ],
                           ),
