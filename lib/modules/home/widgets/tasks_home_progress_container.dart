@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/app/utils/responsive_util.dart';
 import 'package:schedulemanager/app/utils/text_styles.dart';
+import 'package:schedulemanager/modules/home/models/user_progress_model.dart';
 
 import 'animated_progress_chart_widget.dart';
 import 'home_announce_container.dart';
@@ -14,7 +17,15 @@ class TasksHomeProgressContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    final percents = [23, 50, 21, 100];
+
+    final percentsName = ['All Tasks', 'Expired Tasks', 'Next Tasks'];
+    final percents = List.generate(
+      percentsName.length,
+      (x) => UserProgressModel(
+        percent: Random().nextDouble() * 100,
+        name: percentsName[x],
+      ),
+    ).toList();
     final clampledPercentages = percents.take(maxProgressBar).toList();
     final clampledColors = colors.take(maxProgressBar).toList();
     return HomeAnnounceContainer(
@@ -55,15 +66,20 @@ class TasksHomeProgressContainer extends StatelessWidget {
                     SizedBox(width: resp.wp(2.5)),
                     Expanded(
                       child: Text(
-                        'All Tasks',
+                        clampledPercentages[x].name,
                         maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyles.w700(14),
                       ),
                     ),
                     SizedBox(width: resp.wp(2.5)),
-                    Text(
-                      '${clampledPercentages[x].toString()}%',
-                      style: TextStyles.w600(12, grey),
+                    Expanded(
+                      child: Text(
+                        '${clampledPercentages[x].percent.toStringAsFixed(2)}%',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyles.w600(12, grey),
+                      ),
                     )
                   ],
                 ),

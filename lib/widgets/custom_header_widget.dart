@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 
 import '../app/config/constants.dart';
 import '../app/utils/text_styles.dart';
@@ -22,13 +23,9 @@ class CustomHeaderWidget extends StatelessWidget {
         const Expanded(child: CustomBackButton()),
         Expanded(
           flex: 8,
-          child: Container(
+          child: ResponsiveContainerWidget(
+            customColor: accent,
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            decoration: BoxDecoration(
-              color: accent,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: shadows,
-            ),
             child: Center(
               child: Text(
                 title,

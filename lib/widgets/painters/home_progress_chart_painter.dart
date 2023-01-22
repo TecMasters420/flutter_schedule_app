@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class HomeProgressChart extends CustomPainter {
-  final List<int> percents;
+  final List<double> percents;
   final List<Color> colors;
   double animationValue;
   HomeProgressChart({

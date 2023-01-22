@@ -4,10 +4,12 @@ import 'package:schedulemanager/app/config/constants.dart';
 class ResponsiveContainerWidget extends StatelessWidget {
   final Widget child;
   final EdgeInsets? padding;
+  final Color customColor;
   const ResponsiveContainerWidget({
     super.key,
     required this.child,
     this.padding,
+    this.customColor = containerBg,
   });
 
   @override
@@ -19,8 +21,8 @@ class ResponsiveContainerWidget extends StatelessWidget {
             horizontal: 20,
           ),
       decoration: BoxDecoration(
-        color: containerBg,
-        borderRadius: BorderRadius.circular(20),
+        color: customColor,
+        borderRadius: BorderRadius.circular(30),
         boxShadow: shadows,
       ),
       child: child,

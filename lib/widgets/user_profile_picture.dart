@@ -37,12 +37,14 @@ class UserProfilePicture extends StatelessWidget {
                   userImage,
                   fit: BoxFit.fill,
                   errorBuilder: (context, error, stackTrace) {
-                    return Image.asset('assets/images/user.png',
-                        fit: BoxFit.fill);
+                    return Image.asset(
+                      'assets/images/user.png',
+                      fit: BoxFit.fill,
+                    );
                   },
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress != null) {
-                      return const CustomCircularProgress();
+                      return const CustomCircularProgress(color: accent);
                     }
                     return child;
                   },

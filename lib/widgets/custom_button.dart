@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:schedulemanager/app/config/constants.dart';
-import 'package:schedulemanager/app/utils/responsive_util.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onTap;

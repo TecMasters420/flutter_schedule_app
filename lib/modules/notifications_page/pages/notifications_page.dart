@@ -4,10 +4,10 @@ import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/app/utils/responsive_util.dart';
 import 'package:schedulemanager/widgets/custom_header_widget.dart';
 import 'package:schedulemanager/widgets/custom_text_button_widget.dart';
+import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 
 import '../../../app/utils/text_styles.dart';
 import '../../../widgets/custom_button.dart';
-import '../../../widgets/user_profile_picture.dart';
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});
@@ -30,22 +30,20 @@ class NotificationsPage extends StatelessWidget {
                 style: TextStyles.w700(20),
               ),
               SizedBox(height: resp.hp(2.5)),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                alignment: Alignment.topLeft,
-                decoration: BoxDecoration(
-                  color: containerBg,
-                  boxShadow: shadows,
-                  borderRadius: BorderRadius.circular(15),
+              ResponsiveContainerWidget(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 15,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    UserProfilePicture(
-                      height: resp.hp(4),
-                      width: resp.wp(10),
-                      userImage: 'assets/images/user.png',
+                    CircleAvatar(
+                      radius: 18,
+                      child: Image.asset(
+                        'assets/images/user.png',
+                        fit: BoxFit.fill,
+                      ),
                     ),
                     SizedBox(width: resp.wp(2.5)),
                     Expanded(
@@ -80,22 +78,15 @@ class NotificationsPage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
+                              CustomTextButtonWidget(
+                                title: 'Deny',
+                                onTap: () {},
+                              ),
+                              SizedBox(width: resp.wp(5)),
                               CustomButton(
-                                constraints:
-                                    const BoxConstraints(maxWidth: 150),
                                 text: 'Accept',
                                 color: accent,
                                 style: TextStyles.w700(14, Colors.white),
-                                hideShadows: true,
-                                onTap: () {},
-                              ),
-                              SizedBox(width: resp.wp(2.5)),
-                              CustomButton(
-                                constraints:
-                                    const BoxConstraints(maxWidth: 150),
-                                text: 'Deny',
-                                color: lightBlue,
-                                style: TextStyles.w700(14, accent),
                                 hideShadows: true,
                                 onTap: () {},
                               ),
@@ -113,32 +104,19 @@ class NotificationsPage extends StatelessWidget {
                 style: TextStyles.w700(20),
               ),
               SizedBox(height: resp.hp(2.5)),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                alignment: Alignment.topLeft,
-                decoration: BoxDecoration(
-                  color: containerBg,
-                  boxShadow: shadows,
-                  borderRadius: BorderRadius.circular(15),
+              ResponsiveContainerWidget(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 15,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      height: resp.hp(4.5),
-                      width: resp.wp(10),
-                      decoration: BoxDecoration(
-                        color: containerBg,
-                        boxShadow: shadows,
-                        shape: BoxShape.circle,
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          'assets/images/calendar.png',
-                          fit: BoxFit.fill,
-                        ),
+                    CircleAvatar(
+                      radius: 18,
+                      child: Image.asset(
+                        'assets/images/calendar.png',
+                        fit: BoxFit.fill,
                       ),
                     ),
                     SizedBox(width: resp.wp(2.5)),
@@ -171,8 +149,6 @@ class NotificationsPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               CustomButton(
-                                constraints:
-                                    const BoxConstraints(maxWidth: 150),
                                 text: 'Details',
                                 color: accent,
                                 style: TextStyles.w700(14, Colors.white),
@@ -198,22 +174,20 @@ class NotificationsPage extends StatelessWidget {
                 (x) {
                   return Padding(
                     padding: EdgeInsets.only(bottom: x < 4 ? 20 : 0),
-                    child: Container(
+                    child: ResponsiveContainerWidget(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 15),
-                      alignment: Alignment.topLeft,
-                      decoration: BoxDecoration(
-                        color: containerBg,
-                        boxShadow: shadows,
-                        borderRadius: BorderRadius.circular(15),
+                        horizontal: 20,
+                        vertical: 15,
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          UserProfilePicture(
-                            height: resp.hp(4),
-                            width: resp.wp(10),
-                            userImage: 'assets/images/user.png',
+                          CircleAvatar(
+                            radius: 18,
+                            child: Image.asset(
+                              'assets/images/user.png',
+                              fit: BoxFit.fill,
+                            ),
                           ),
                           SizedBox(width: resp.wp(2.5)),
                           Expanded(

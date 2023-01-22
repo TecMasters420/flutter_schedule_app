@@ -31,7 +31,6 @@ class HomePage extends GetView {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: resp.hp(5)),
               HomeHeaderWidget(
                 name:
                     '${auth.currentUser!.data.name} ${auth.currentUser!.data.lastName}',

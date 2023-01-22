@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:schedulemanager/widgets/painters/home_progress_chart_painter.dart';
 
+import '../models/user_progress_model.dart';
+
 class AnimatedProgressChartWidget extends StatefulWidget {
   final List<Color> progressColors;
-  final List<int> percents;
+  final List<UserProgressModel> percents;
   const AnimatedProgressChartWidget({
     super.key,
     required this.progressColors,
@@ -50,7 +52,7 @@ class _AnimatedProgressChartWidgetState
     return CustomPaint(
       isComplex: true,
       painter: HomeProgressChart(
-        percents: widget.percents,
+        percents: widget.percents.map((e) => e.percent).toList(),
         animationValue:
             _controller.status == AnimationStatus.forward ? value : -value,
         colors: widget.progressColors,

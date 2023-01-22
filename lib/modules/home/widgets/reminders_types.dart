@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 import 'reminders_list.dart';
 import '../../../data/models/reminder_model.dart';
 import '../../../app/utils/responsive_util.dart';
@@ -34,13 +35,8 @@ class _ActivitiesTypesState extends State<ActivitiesTypes> {
     final int eventsQuantity =
         widget.eventsPerType.values.elementAt(_currentIndex).length;
 
-    return Container(
+    return ResponsiveContainerWidget(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      decoration: BoxDecoration(
-        color: containerBg,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: shadows,
-      ),
       child: Column(
         children: [
           Row(

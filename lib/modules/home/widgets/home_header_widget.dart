@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 import '../../../app/config/constants.dart';
 import '../../../app/utils/responsive_util.dart';
 import '../../../routes/app_routes.dart';
@@ -31,7 +32,7 @@ class HomeHeaderWidget extends StatelessWidget {
               children: [
                 UserProfilePicture(
                   height: resp.hp(4),
-                  width: resp.wp(10),
+                  width: resp.hp(4),
                   redirectToProfile: true,
                   userImage: userImage,
                 ),
@@ -83,13 +84,9 @@ class HomeHeaderWidget extends StatelessWidget {
           ],
         ),
         SizedBox(height: resp.hp(2.5)),
-        Container(
-          height: resp.hp(10),
-          width: resp.width,
-          decoration: BoxDecoration(
-            gradient: accentGradient,
-            borderRadius: BorderRadius.circular(20),
-          ),
+        ResponsiveContainerWidget(
+          customColor: accent,
+          padding: const EdgeInsets.symmetric(vertical: 30),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

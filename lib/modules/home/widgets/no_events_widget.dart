@@ -35,6 +35,7 @@ class NoEventsWidget extends StatelessWidget {
         CustomButton(
           text: 'Add event',
           color: lightBlue,
+          hideShadows: true,
           style: TextStyles.w500(14, accent),
           onTap: () => Get.to(
             () => ReminderDetailsPage(reminder: ReminderModel.empty()),

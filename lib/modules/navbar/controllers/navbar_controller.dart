@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/modules/navbar/models/navbar_element_model.dart';
+import 'package:schedulemanager/routes/app_routes.dart';
 
 class NavBarController extends GetxController {
   final RxList<NavBarElementModel> elements = RxList([]);
@@ -13,17 +14,17 @@ class NavBarController extends GetxController {
       NavBarElementModel(name: 'Home', route: 'homePage', icon: Icons.home),
       NavBarElementModel(
         name: 'Notifications',
-        route: 'notificationsPage',
+        route: AppRoutes.notifications,
         icon: Icons.notifications,
       ),
       NavBarElementModel(
         name: 'Events',
-        route: 'eventsPage',
+        route: AppRoutes.events,
         icon: Icons.calendar_month,
       ),
       NavBarElementModel(
         name: 'Profile',
-        route: 'profilePage',
+        route: AppRoutes.profile,
         icon: Icons.supervised_user_circle_rounded,
       ),
     ];
@@ -32,5 +33,6 @@ class NavBarController extends GetxController {
 
   void onNewSelection(NavBarElementModel element) {
     currentElement.value = element;
+    Get.toNamed(element.route);
   }
 }

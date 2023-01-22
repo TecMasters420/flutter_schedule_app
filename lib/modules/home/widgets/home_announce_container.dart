@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 import '../../../app/utils/responsive_util.dart';
-
-import '../../../app/config/constants.dart';
 
 class HomeAnnounceContainer extends StatelessWidget {
   final Widget firstWidget;
@@ -19,15 +18,10 @@ class HomeAnnounceContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    return Container(
+    return ResponsiveContainerWidget(
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
         vertical: 20,
-      ),
-      decoration: BoxDecoration(
-        color: containerBg,
-        boxShadow: shadows,
-        borderRadius: BorderRadius.circular(30),
       ),
       child: Row(
         children: [
