@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:schedulemanager/modules/auth/bindings/login_bindings.dart';
 import 'package:schedulemanager/modules/auth/bindings/register_bindings.dart';
 import 'package:schedulemanager/modules/notifications_page/pages/notifications_page.dart';
 import 'package:schedulemanager/routes/app_routes.dart';
@@ -24,8 +23,7 @@ final List<GetPage> appPages = [
   ),
   GetPage(
     name: AppRoutes.login,
-    binding: const LoginBindings(),
-    page: () => const LoginPage(),
+    page: () => LoginPage(),
   ),
   GetPage(
     name: AppRoutes.home,

@@ -68,7 +68,7 @@ class LoginPageInformation extends StatelessWidget {
 
             // Information
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
+              padding: const EdgeInsets.symmetric(horizontal: 100),
               child: Column(
                 children: [
                   SizedBox(height: resp.hp(2.5)),
@@ -85,13 +85,13 @@ class LoginPageInformation extends StatelessWidget {
                     textAlign: TextAlign.center,
                     maxLines: 2,
                   ),
+                  if (extraWidget != null) ...[
+                    SizedBox(height: resp.hp(2)),
+                    extraWidget!,
+                  ],
                 ],
               ),
             ),
-            if (extraWidget != null) ...[
-              SizedBox(height: resp.hp(2)),
-              extraWidget!,
-            ],
             SizedBox(height: resp.hp(10)),
           ],
         ),

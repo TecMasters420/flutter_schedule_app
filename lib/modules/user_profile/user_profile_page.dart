@@ -51,6 +51,8 @@ class UserProfilePage extends GetWidget<AuthController> {
                             ),
                             child: Image.asset(
                               'assets/images/home_logo.png',
+                              cacheHeight: resp.hp(20).toInt(),
+                              cacheWidth: resp.width.toInt(),
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -159,8 +161,6 @@ class UserProfilePage extends GetWidget<AuthController> {
                           CustomButton(
                             text: 'Save',
                             color: accent,
-                            height: resp.hp(5),
-                            width: resp.wp(25),
                             onTap: () {
                               Get.back();
                             },
@@ -170,8 +170,6 @@ class UserProfilePage extends GetWidget<AuthController> {
                           CustomButton(
                             text: 'Log out',
                             color: red,
-                            height: resp.hp(5),
-                            width: resp.wp(25),
                             onTap: () async {
                               await controller.signOut();
                             },

@@ -5,6 +5,7 @@ class AuthUserModel {
   final String registerType;
   final UserDataModel data;
   String email;
+  String? password;
   AuthUserModel({
     required this.id,
     required this.email,
@@ -18,6 +19,7 @@ class AuthUserModel {
       'email': email,
       'registerType': registerType,
       'data': data.toMap(),
+      'password': password,
     };
   }
 

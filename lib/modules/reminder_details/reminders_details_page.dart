@@ -211,8 +211,6 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                       CustomButton(
                         text: 'Add location',
                         color: accent,
-                        height: resp.hp(4),
-                        width: resp.wp(25),
                         style: TextStyles.w700(14, Colors.white),
                         onTap: () {
                           Navigator.push(
@@ -236,8 +234,6 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                 customSuffixWidget: CustomButton(
                   text: 'Add Tag',
                   color: accent,
-                  height: resp.hp(4),
-                  width: resp.wp(20),
                   style: TextStyles.w700(14, Colors.white),
                   onTap: () {},
                 ),
@@ -271,8 +267,6 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                 customSuffixWidget: CustomButton(
                   text: 'Add Task',
                   color: accent,
-                  height: resp.hp(4),
-                  width: resp.wp(20),
                   style: TextStyles.w700(14, Colors.white),
                   onTap: () {
                     CustomAlertDialog(

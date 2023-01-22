@@ -79,10 +79,9 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                 extraWidget: !isFinalElement
                     ? CustomButton(
                         color: darkAccent,
-                        height: resp.hp(5),
-                        style: TextStyles.w800(14, Colors.white),
-                        width: resp.wp(40),
+                        style: TextStyles.w800(16, Colors.white),
                         text: 'Next',
+                        expand: true,
                         onTap: () => _pageController.animateToPage(
                           _currentPage + 1,
                           duration: const Duration(milliseconds: 250),
@@ -91,10 +90,9 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                       )
                     : CustomButton(
                         color: darkAccent,
-                        height: resp.hp(5),
-                        style: TextStyles.w800(14, Colors.white),
-                        width: resp.wp(40),
+                        style: TextStyles.w800(16, Colors.white),
                         text: 'Join',
+                        expand: true,
                         onTap: () => Get.toNamed(AppRoutes.login),
                       ),
               );

@@ -60,7 +60,7 @@ class AuthController extends GetxController {
   Future<void> logIn(String email, String password) async {
     isLoading.value = true;
     final authResponse = await _repo.logIn(email, password);
-    checkAndSaveCredentials(authResponse);
+    await checkAndSaveCredentials(authResponse);
     isLoading.value = false;
   }
 

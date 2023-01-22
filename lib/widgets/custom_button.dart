@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:schedulemanager/app/config/constants.dart';
+import 'package:schedulemanager/app/utils/responsive_util.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
   final Color color;
   final TextStyle style;
-  final double height;
-  final double width;
   final String text;
   final Widget? prefixWidget;
   final BoxConstraints? constraints;
   final bool hideShadows;
+  final EdgeInsets? padding;
+  final bool expand;
   const CustomButton({
     super.key,
     required this.text,
     required this.color,
-    required this.height,
-    required this.width,
     required this.onTap,
     required this.style,
     this.prefixWidget,
     this.constraints,
+    this.padding,
+    this.expand = false,
     this.hideShadows = false,
   });
 
@@ -30,9 +31,12 @@ class CustomButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         constraints: constraints ?? const BoxConstraints(),
-        height: height,
-        width: width,
-        alignment: Alignment.center,
+        padding: padding ??
+            const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 10,
+            ),
+        alignment: expand ? Alignment.center : null,
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(10),
@@ -41,8 +45,7 @@ class CustomButton extends StatelessWidget {
         child: prefixWidget == null
             ? Text(text, style: style)
             : Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   prefixWidget!,
                   const SizedBox(width: 5),

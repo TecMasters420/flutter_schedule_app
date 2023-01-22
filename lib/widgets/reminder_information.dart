@@ -152,9 +152,7 @@ class ReminderInformation extends StatelessWidget {
               constraints: const BoxConstraints(maxWidth: 150),
               text: 'Share',
               color: lightBlue,
-              height: resp.hp(4),
               hideShadows: true,
-              width: resp.wp(15),
               style: TextStyles.w700(14, accent),
               onTap: () async => await ShareUtil.generate(
                 'I invite you to the event: ${reminder.title}',
@@ -166,9 +164,7 @@ class ReminderInformation extends StatelessWidget {
               constraints: const BoxConstraints(maxWidth: 150),
               text: 'Details',
               color: accent,
-              height: resp.hp(4),
               hideShadows: true,
-              width: resp.wp(15),
               style: TextStyles.w700(14, Colors.white),
               onTap: () => Navigator.push(
                 context,

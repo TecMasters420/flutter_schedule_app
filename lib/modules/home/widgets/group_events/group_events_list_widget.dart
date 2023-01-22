@@ -144,8 +144,6 @@ class GroupEventsListWidget extends StatelessWidget {
                         CustomButton(
                           text: 'Details',
                           color: accent,
-                          height: resp.hp(3.5),
-                          width: resp.wp(15),
                           style: TextStyles.w500(12, Colors.white),
                           onTap: () {},
                         ),

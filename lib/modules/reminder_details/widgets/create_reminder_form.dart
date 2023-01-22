@@ -59,8 +59,6 @@ class CreateReminderForm extends StatelessWidget {
         CustomButton(
           text: 'Accept',
           color: accent,
-          height: resp.hp(5),
-          width: resp.width,
           style: TextStyles.w600(16, Colors.white),
           onTap: () {
             if (reminder.description.isEmpty || reminder.title.isEmpty) {

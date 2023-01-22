@@ -26,6 +26,8 @@ class CustomTextButtonWidget extends StatelessWidget {
       onPressed: onTap,
       child: Text(
         title,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
         style: TextStyles.w700(customFontSize, accent),
       ),
     );

@@ -43,7 +43,7 @@ class AuthRepository extends BaseRepository {
   Future<AuthUserModel?> getUserFromToken(String token) async {
     final res = await base.call('users/me', token: token);
     if (res != null) {
-      if (res.code == 201) return AuthUserModel.fromMap(jsonDecode(res.body));
+      if (res.code == 200) return AuthUserModel.fromMap(jsonDecode(res.body));
     }
     return null;
   }

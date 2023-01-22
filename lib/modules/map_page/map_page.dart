@@ -146,8 +146,6 @@ class _MapPageState extends State<MapPage> {
                                     child: CustomButton(
                                       text: 'Start point',
                                       color: accent,
-                                      height: resp.hp(5),
-                                      width: resp.width,
                                       style: TextStyles.w600(14, Colors.white),
                                       onTap: () async {
                                         Navigator.pop(context);
@@ -175,8 +173,6 @@ class _MapPageState extends State<MapPage> {
                                     child: CustomButton(
                                       text: 'End point',
                                       color: lightGrey.withOpacity(0.25),
-                                      height: resp.hp(5),
-                                      width: resp.width,
                                       style: TextStyles.w600(14),
                                       onTap: () async {
                                         Navigator.pop(context);
@@ -274,8 +270,6 @@ class _MapPageState extends State<MapPage> {
                 CustomButton(
                   text: 'Search locations',
                   color: Colors.white,
-                  height: resp.hp(7),
-                  width: resp.wp(80),
                   style: TextStyles.w700(16, accent),
                   onTap: () {
                     CustomAlertDialog(
@@ -299,8 +293,6 @@ class _MapPageState extends State<MapPage> {
                               CustomButton(
                                 text: 'Current location',
                                 color: accent,
-                                height: resp.hp(5),
-                                width: resp.wp(35),
                                 style: TextStyles.w600(14, Colors.white),
                                 onTap: () async {
                                   Navigator.pop(context);
@@ -320,8 +312,6 @@ class _MapPageState extends State<MapPage> {
                               CustomButton(
                                 text: 'Search',
                                 color: lightGrey.withOpacity(0.25),
-                                height: resp.hp(5),
-                                width: resp.wp(25),
                                 style: TextStyles.w600(14, accent),
                                 onTap: () async {
                                   final res = await showSearch(
@@ -354,8 +344,6 @@ class _MapPageState extends State<MapPage> {
                               CustomButton(
                                 text: 'Current location',
                                 color: accent,
-                                height: resp.hp(5),
-                                width: resp.wp(35),
                                 style: TextStyles.w600(14, Colors.white),
                                 onTap: () async {
                                   Navigator.pop(context);
@@ -375,8 +363,6 @@ class _MapPageState extends State<MapPage> {
                               CustomButton(
                                 text: 'Search',
                                 color: lightGrey.withOpacity(0.25),
-                                height: resp.hp(5),
-                                width: resp.wp(25),
                                 style: TextStyles.w600(14, accent),
                                 onTap: () async {
                                   final res = await showSearch(
@@ -405,8 +391,6 @@ class _MapPageState extends State<MapPage> {
                 CustomButton(
                   text: 'Accept locations',
                   color: accent,
-                  height: resp.hp(7),
-                  width: resp.wp(80),
                   style: TextStyles.w700(16, Colors.white),
                   onTap: () {
                     if (_endPos != null && _startPos != null) {

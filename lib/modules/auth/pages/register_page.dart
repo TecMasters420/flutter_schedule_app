@@ -5,7 +5,6 @@ import 'package:schedulemanager/app/utils/alert_dialogs_util.dart';
 import 'package:schedulemanager/app/utils/register_util.dart';
 import 'package:schedulemanager/modules/auth/controllers/register_controller.dart';
 import 'package:schedulemanager/modules/auth/widgets/password_validator_helper_widget.dart';
-import 'package:schedulemanager/routes/app_routes.dart';
 import 'package:schedulemanager/widgets/required_textformfield_widget.dart';
 
 import '../../../app/config/constants.dart';
@@ -124,19 +123,15 @@ class RegisterPage extends StatelessWidget {
                   children: [
                     CustomButton(
                       color: lightBlue,
-                      height: resp.hp(5),
                       style: TextStyles.w800(16, darkAccent),
                       hideShadows: true,
-                      width: resp.wp(30),
                       text: 'Cancel',
                       onTap: () => Get.back(),
                     ),
                     SizedBox(width: resp.wp(2.5)),
                     CustomButton(
                       color: darkAccent,
-                      height: resp.hp(5),
                       style: TextStyles.w800(16, Colors.white),
-                      width: resp.wp(30),
                       hideShadows: true,
                       text: 'Register',
                       onTap: () async {
@@ -157,7 +152,7 @@ class RegisterPage extends StatelessWidget {
                         if (!registered) {
                           return;
                         }
-                        Get.offAllNamed(AppRoutes.login);
+                        Get.back(closeOverlays: true);
                         AlertDialogsUtil.check(
                           customBodyMessage: ['User has registered'],
                         );
