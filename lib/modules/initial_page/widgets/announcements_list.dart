@@ -78,7 +78,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                 description: announce.description,
                 extraWidget: !isFinalElement
                     ? CustomButton(
-                        color: darkAccent,
+                        color: accent,
                         style: TextStyles.w800(16, Colors.white),
                         text: 'Next',
                         expand: true,
@@ -89,7 +89,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                         ),
                       )
                     : CustomButton(
-                        color: darkAccent,
+                        color: accent,
                         style: TextStyles.w800(16, Colors.white),
                         text: 'Join',
                         expand: true,

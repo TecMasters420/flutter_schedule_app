@@ -11,6 +11,17 @@ class PasswordValidatorHelperWidget extends StatelessWidget {
     required this.pass,
   });
 
+  Widget _getDot(final Color color) {
+    return Container(
+      height: 7,
+      width: 7,
+      decoration: BoxDecoration(
+        color: color,
+        shape: BoxShape.circle,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(PasswordValidatorController());
@@ -19,35 +30,51 @@ class PasswordValidatorHelperWidget extends StatelessWidget {
       () {
         return Column(
           children: [
-            ...controller.elements.map((e) {
-              final color = e.isCompleted ? green : lightGrey;
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 250),
-                    height: 7,
-                    width: 7,
-                    decoration: BoxDecoration(
-                      color: color,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      e.name,
-                      style: e.isCompleted
-                          ? TextStyles.w500(14, color).copyWith(
-                              decoration: TextDecoration.lineThrough,
-                              decorationColor: color,
+            ...controller.elements.map(
+              (e) {
+                return AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 250),
+                  child: e.isCompleted
+                      ? Row(
+                          key: Key(true.toString()),
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            _getDot(green),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                e.name,
+                                style: TextStyles.w700(14, green).copyWith(
+                                  decoration: TextDecoration.lineThrough,
+                                  decorationColor: green,
+                                ),
+                              ),
                             )
-                          : TextStyles.w500(14, color),
-                    ),
-                  )
-                ],
-              );
-            }),
+                          ],
+                        )
+                      : Row(
+                          key: Key(false.toString()),
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            _getDot(lightGrey),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                e.name,
+                                style: TextStyles.w500(14, lightGrey),
+                              ),
+                            )
+                          ],
+                        ),
+                  transitionBuilder: (child, animation) {
+                    return ScaleTransition(
+                      scale: animation,
+                      child: child,
+                    );
+                  },
+                );
+              },
+            ),
           ],
         );
       },

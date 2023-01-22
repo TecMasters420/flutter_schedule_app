@@ -94,7 +94,7 @@ class LoginPage extends StatelessWidget {
                         children: [
                           SizedBox(height: resp.hp(1)),
                           CustomButton(
-                            color: darkAccent,
+                            color: accent,
                             style: TextStyles.w800(16, Colors.white),
                             text: 'Login',
                             expand: true,
