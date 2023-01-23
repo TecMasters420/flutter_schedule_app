@@ -1,9 +1,11 @@
+import 'package:equatable/equatable.dart';
+
 import 'event_location_model.dart';
 import 'event_status_enum.dart';
 import 'tag_model.dart';
 import 'task_model.dart';
 
-class ReminderModel {
+class EventModel extends Equatable {
   final int id;
   String title;
   String description;
@@ -18,7 +20,7 @@ class ReminderModel {
   DateTime createdAt;
   DateTime updatedAt;
 
-  ReminderModel({
+  EventModel({
     required this.id,
     required this.createdAt,
     required this.description,
@@ -37,12 +39,10 @@ class ReminderModel {
       (tasks.where((t) => t.isCompleted).length / tasks.length) * 100;
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'creationDate': createdAt,
+    return {
       'description': description,
-      'startDate': startDate,
-      'endDate': endDate,
+      'startDate': startDate.toString(),
+      'endDate': endDate.toString(),
       'title': title,
       'startLocation': startLocation,
       'endLocation': endLocation,
@@ -51,10 +51,10 @@ class ReminderModel {
     };
   }
 
-  factory ReminderModel.fromMap(final Map<String, dynamic> map) {
+  factory EventModel.fromMap(final Map<String, dynamic> map) {
     final tasks = List.generate(map['tasks'].length, (x) => map['tasks'][x]);
     final tags = List.generate(map['tags'].length, (x) => map['tags'][x]);
-    return ReminderModel(
+    return EventModel(
       id: map['id'],
       createdAt: DateTime.parse(map['createdAt']),
       description: map['description'],
@@ -76,8 +76,8 @@ class ReminderModel {
     );
   }
 
-  factory ReminderModel.empty() {
-    return ReminderModel(
+  factory EventModel.empty() {
+    return EventModel(
       id: 0,
       createdAt: DateTime.now(),
       description: '',
@@ -121,4 +121,20 @@ class ReminderModel {
     final finalLabel = time.abs() > 1 ? '${label}s' : label;
     return '$time $finalLabel ';
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        title,
+        description,
+        startDate,
+        endDate,
+        currentStatus,
+        startLocation,
+        endLocation,
+        tasks,
+        tags,
+        createdAt,
+        updatedAt,
+      ];
 }

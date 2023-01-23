@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:schedulemanager/modules/reminder_details/widgets/weather_container.dart';
+import 'package:schedulemanager/modules/event_details_creation/controller/events_details_creation_controller.dart';
+import 'package:schedulemanager/modules/event_details_creation/widgets/weather_container.dart';
 import 'package:schedulemanager/widgets/custom_header_widget.dart';
 import 'package:schedulemanager/widgets/custom_text_button_widget.dart';
 import 'package:schedulemanager/widgets/responsive_container_widget.dart';
@@ -23,33 +25,31 @@ import '../../widgets/tags_list.dart';
 
 import '../../app/utils/text_styles.dart';
 
-class ReminderDetailsPage extends StatefulWidget {
-  final ReminderModel? reminder;
-  const ReminderDetailsPage({
-    super.key,
-    required this.reminder,
-  });
+class EventDetailsCreationPage extends StatefulWidget {
+  const EventDetailsCreationPage({super.key});
 
   @override
-  State<ReminderDetailsPage> createState() => _ReminderDetailsPageState();
+  State<EventDetailsCreationPage> createState() =>
+      _EventDetailsCreationPageState();
 }
 
-class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
-  late final ReminderModel _reminder;
+class _EventDetailsCreationPageState extends State<EventDetailsCreationPage> {
+  late final EventModel _event;
   late TagModel tag;
   late TaskModel task;
   late String? address;
   late DateTime? _selectedStartDate;
   late DateTime? _selectedEndDate;
+  late final EventsDetailsCreationController controller;
 
   @override
   void initState() {
     super.initState();
-    _reminder = widget.reminder!;
-    if (widget.reminder!.endDate != null &&
-        widget.reminder!.startDate != null) {
-      _selectedEndDate = widget.reminder!.endDate;
-      _selectedStartDate = widget.reminder!.startDate;
+    controller = Get.find();
+    _event = controller.event.value!;
+    if (_event.endDate != null && _event.startDate != null) {
+      _selectedEndDate = _event.endDate;
+      _selectedStartDate = _event.startDate;
     } else {
       _selectedEndDate = null;
       _selectedStartDate = null;
@@ -68,9 +68,9 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
   void _onLocationChanged(final LatLng start, final String? startAddress,
       final LatLng end, final String? endAddress, List<LatLng>? points) {
     setState(() {
-      _reminder.startLocation = EventLocation(
+      _event.startLocation = EventLocation(
           id: 0, address: '', lat: start.latitude, lng: start.longitude);
-      _reminder.endLocation = EventLocation(
+      _event.endLocation = EventLocation(
           id: 0, address: '', lat: start.latitude, lng: start.longitude);
     });
   }
@@ -79,9 +79,9 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     final bool isSameDay =
-        _reminder.startDate!.difference(_reminder.endDate!).inDays == 0;
-    final double progress = _reminder.progress.isNaN ? 0 : _reminder.progress;
-    final Duration timeRemaining = _reminder.timeLeft(DateTime.now());
+        _event.startDate!.difference(_event.endDate!).inDays == 0;
+    final double progress = _event.progress.isNaN ? 0 : _event.progress;
+    final Duration timeRemaining = _event.timeLeft(DateTime.now());
     final String daysMess =
         timeRemaining.inDays == 0 ? '' : '${timeRemaining.inDays} day/s, ';
     final String hoursMess =
@@ -110,8 +110,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CustomHeaderWidget(
-                title:
-                    _reminder.title.isEmpty ? 'Insert title' : _reminder.title,
+                title: _event.title.isEmpty ? 'Insert title' : _event.title,
                 suffixWidget: IconButton(
                   icon: const Icon(
                     Icons.edit,
@@ -136,9 +135,9 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                     ReminderInformationWidget(
                       icon: Icons.description_outlined,
                       title: 'Description',
-                      value: _reminder.description.isEmpty
+                      value: _event.description.isEmpty
                           ? 'No description'
-                          : _reminder.description,
+                          : _event.description,
                       showSuffixWidget: true,
                       onTapEditCallback: () {},
                     ),
@@ -151,14 +150,14 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                         onTap: () {},
                       ),
                       extra: TagsList(
-                        tagsList: _reminder.tags.map((e) => e.name).toList(),
-                        maxTagsToShow: _reminder.tags.length,
+                        tagsList: _event.tags,
+                        maxTagsToShow: _event.tags.length,
                         style: TextStyles.w500(
                           14,
                           Colors.white,
                         ),
                         onLongPressCallback: (index) {
-                          final TagModel selectedTag = _reminder.tags[index];
+                          final TagModel selectedTag = _event.tags[index];
 
                           CustomAlertDialog(
                             resp: resp,
@@ -167,7 +166,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                                 'Do you want to delete "${selectedTag.name}" tag?',
                             onAcceptCallback: () {
                               setState(() {
-                                _reminder.tags.removeAt(index);
+                                _event.tags.removeAt(index);
                               });
                             },
                           );
@@ -187,7 +186,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                             title: 'Create new Task',
                             onAcceptCallback: () {
                               setState(() {
-                                _reminder.tasks.add(task);
+                                _event.tasks.add(task);
                                 task = TaskModel(name: '', isCompleted: false);
                               });
                             },
@@ -204,9 +203,9 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                       ),
                       extra: Column(
                         children: List.generate(
-                          _reminder.tasks.length,
+                          _event.tasks.length,
                           (index) {
-                            final TaskModel task = _reminder.tasks[index];
+                            final TaskModel task = _event.tasks[index];
                             return Row(
                               children: [
                                 Checkbox(
@@ -217,8 +216,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                                   value: task.isCompleted,
                                   onChanged: (value) {
                                     setState(() {
-                                      _reminder.tasks[index].isCompleted =
-                                          value!;
+                                      _event.tasks[index].isCompleted = value!;
                                     });
                                   },
                                 ),
@@ -228,7 +226,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                                     style: TextStyles.w500(14, grey).copyWith(
                                       decorationColor: grey,
                                       decoration:
-                                          _reminder.tasks[index].isCompleted
+                                          _event.tasks[index].isCompleted
                                               ? TextDecoration.lineThrough
                                               : null,
                                     ),
@@ -244,7 +242,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                                     size: 25,
                                   ),
                                   onPressed: () {
-                                    final selectedTask = _reminder.tasks[index];
+                                    final selectedTask = _event.tasks[index];
                                     final name = selectedTask.name;
                                     CustomAlertDialog(
                                       resp: resp,
@@ -253,7 +251,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                                           'Do you want to delete "$name" task?',
                                       onAcceptCallback: () {
                                         setState(() {
-                                          _reminder.tasks.removeAt(index);
+                                          _event.tasks.removeAt(index);
                                         });
                                       },
                                     );
@@ -361,36 +359,36 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                       value: address,
                       extra: Column(
                         children: [
-                          if (_reminder.startLocation != null &&
-                              _reminder.startLocation!.address != null)
+                          if (_event.startLocation != null &&
+                              _event.startLocation!.address != null)
                             ReminderInformationWidget(
                               icon: Icons.location_pin,
                               title: 'Start location',
-                              value: _reminder.startLocation!.address,
+                              value: _event.startLocation!.address,
                             ),
-                          if (_reminder.endLocation != null &&
-                              _reminder.endLocation!.address != null)
+                          if (_event.endLocation != null &&
+                              _event.endLocation!.address != null)
                             ReminderInformationWidget(
                               icon: Icons.location_searching_rounded,
                               title: 'End location',
-                              value: _reminder.endLocation!.address,
+                              value: _event.endLocation!.address,
                             ),
-                          if (_reminder.endLocation != null ||
-                              _reminder.startLocation != null) ...[
+                          if (_event.endLocation != null ||
+                              _event.startLocation != null) ...[
                             MapPreview(
                               height: resp.hp(20),
                               width: resp.width,
-                              initialPoint: _reminder.startLocation != null
-                                  ? GeoPoint(_reminder.startLocation!.lat,
-                                      _reminder.startLocation!.lng)
+                              initialPoint: _event.startLocation != null
+                                  ? GeoPoint(_event.startLocation!.lat,
+                                      _event.startLocation!.lng)
                                   : const GeoPoint(0, 0),
-                              endPoint: _reminder.endLocation != null
-                                  ? GeoPoint(_reminder.endLocation!.lat,
-                                      _reminder.endLocation!.lng)
+                              endPoint: _event.endLocation != null
+                                  ? GeoPoint(_event.endLocation!.lat,
+                                      _event.endLocation!.lng)
                                   : const GeoPoint(0, 0),
                               onAcceptCallback: _onLocationChanged,
-                              startAddress: _reminder.startLocation!.address,
-                              endAddress: _reminder.endLocation!.address,
+                              startAddress: _event.startLocation!.address,
+                              endAddress: _event.endLocation!.address,
                             ),
                           ] else ...[
                             CustomButton(

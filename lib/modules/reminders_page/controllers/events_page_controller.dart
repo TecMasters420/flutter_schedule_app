@@ -7,7 +7,7 @@ import '../services/events_page_service.dart';
 class EventsPageController extends GetxController {
   final EventsPageRepository _repo = EventsPageRepository();
   RxList<DatesWithEventsModel> datesWithEvents = RxList([]);
-  RxList<ReminderModel> eventsInDate = RxList([]);
+  RxList<EventModel> eventsInDate = RxList([]);
   RxBool isLoading = RxBool(false);
   RxBool gettingEventsList = RxBool(false);
   Rx<DateTime?> selectedDate = Rx(null);

@@ -1,9 +1,9 @@
 import '../../../data/models/reminder_model.dart';
 
 class FilteredEventsModel {
-  final List<ReminderModel> expired;
-  final List<ReminderModel> next;
-  final List<ReminderModel> current;
+  final List<EventModel> expired;
+  final List<EventModel> next;
+  final List<EventModel> current;
 
   const FilteredEventsModel({
     required this.expired,
@@ -19,9 +19,9 @@ class FilteredEventsModel {
     final tempCurrent =
         map['currentEvents'] == null ? [] : List.from(map['currentEvents']);
     return FilteredEventsModel(
-      expired: tempExpired.map((e) => ReminderModel.fromMap(e)).toList(),
-      next: tempNext.map((e) => ReminderModel.fromMap(e)).toList(),
-      current: tempCurrent.map((e) => ReminderModel.fromMap(e)).toList(),
+      expired: tempExpired.map((e) => EventModel.fromMap(e)).toList(),
+      next: tempNext.map((e) => EventModel.fromMap(e)).toList(),
+      current: tempCurrent.map((e) => EventModel.fromMap(e)).toList(),
     );
   }
 }

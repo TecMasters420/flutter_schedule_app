@@ -4,9 +4,9 @@ import '../services/home_services.dart';
 
 class HomeController extends GetxController {
   final HomeRepository _repo = HomeRepository();
-  RxList<ReminderModel> currentEvents = RxList([]);
-  RxList<ReminderModel> expiredEvents = RxList([]);
-  RxList<ReminderModel> nextEvents = RxList([]);
+  RxList<EventModel> currentEvents = RxList([]);
+  RxList<EventModel> expiredEvents = RxList([]);
+  RxList<EventModel> nextEvents = RxList([]);
 
   RxBool isLoading = RxBool(false);
 

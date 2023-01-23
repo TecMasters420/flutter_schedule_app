@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:schedulemanager/widgets/loading_widget.dart';
 import 'package:schedulemanager/widgets/responsive_container_widget.dart';
-import 'reminders_list.dart';
+import 'events_list_per_type_widget.dart';
 import '../../../data/models/reminder_model.dart';
 import '../../../app/utils/responsive_util.dart';
 import '../../../app/utils/text_styles.dart';
 
 import '../../../app/config/constants.dart';
 
-class ActivitiesTypes extends StatefulWidget {
-  final Map<String, List<ReminderModel>> eventsPerType;
+class EventsTypesWidget extends StatefulWidget {
+  final Map<String, List<EventModel>> eventsPerType;
   final int initialTabIndex;
   final bool isLoading;
   final VoidCallback onTapNew;
-  const ActivitiesTypes({
+  const EventsTypesWidget({
     super.key,
     required this.eventsPerType,
     required this.initialTabIndex,
@@ -22,10 +22,10 @@ class ActivitiesTypes extends StatefulWidget {
   });
 
   @override
-  State<ActivitiesTypes> createState() => _ActivitiesTypesState();
+  State<EventsTypesWidget> createState() => _EventsTypesWidgetState();
 }
 
-class _ActivitiesTypesState extends State<ActivitiesTypes> {
+class _EventsTypesWidgetState extends State<EventsTypesWidget> {
   late int _currentIndex;
   @override
   void initState() {

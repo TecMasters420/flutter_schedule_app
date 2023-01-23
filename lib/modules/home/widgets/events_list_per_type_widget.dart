@@ -3,11 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/modules/filtered_events/pages/filtered_events_page.dart';
-import 'package:schedulemanager/widgets/custom_button.dart';
 import 'package:schedulemanager/widgets/responsive_container_widget.dart';
-import '../../../routes/app_routes.dart';
 import '../../../widgets/custom_text_button_widget.dart';
-import 'all_reminders_redirection_button.dart';
 import 'no_events_widget.dart';
 import '../../../data/models/reminder_model.dart';
 import 'reminder_date_data.dart';
@@ -16,10 +13,10 @@ import '../../../app/utils/responsive_util.dart';
 import '../../../app/config/constants.dart';
 import '../../../app/utils/text_styles.dart';
 import '../../../widgets/reminder_container.dart';
-import '../../../widgets/reminder_information.dart';
+import '../../../widgets/event_information.dart';
 
 class EventsListPerType extends StatelessWidget {
-  final List<ReminderModel> data;
+  final List<EventModel> data;
   final int maxEventsToShow;
   final String type;
   const EventsListPerType({
@@ -58,7 +55,9 @@ class EventsListPerType extends StatelessWidget {
             (index) {
               if (index >= maxEventsToShow) {
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () => Get.to(
+                    () => FilteredEventsPage(events: data, title: type),
+                  ),
                   child: ResponsiveContainerWidget(
                     customColor: lightBlue,
                     padding: const EdgeInsets.symmetric(vertical: 30),
@@ -83,7 +82,7 @@ class EventsListPerType extends StatelessWidget {
                   timeRemaining: data[index].timeLeft(DateTime.now()),
                   dotColor: color,
                 ),
-                rightWidget: ReminderInformation(
+                rightWidget: EventInforamtion(
                   event: data[index],
                 ),
               );

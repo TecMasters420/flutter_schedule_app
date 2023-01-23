@@ -10,12 +10,12 @@ import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 
 import '../../../app/utils/text_styles.dart';
 import '../../../widgets/reminder_container.dart';
-import '../../../widgets/reminder_information.dart';
+import '../../../widgets/event_information.dart';
 import '../../home/widgets/reminder_date_data.dart';
 
 class FilteredEventsPage extends StatelessWidget {
   final String title;
-  final List<ReminderModel> events;
+  final List<EventModel> events;
   const FilteredEventsPage({
     super.key,
     required this.events,
@@ -41,21 +41,27 @@ class FilteredEventsPage extends StatelessWidget {
               ),
               SizedBox(height: resp.hp(2.5)),
               ResponsiveContainerWidget(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 30,
+                  horizontal: 20,
+                ),
                 child: Column(
-                  children: events.map((e) {
-                    final color = colors[Random().nextInt(colors.length - 1)];
-                    return ReminderContainer(
-                      color: color,
-                      leftWidget: ReminderDateData(
-                        endDate: e.endDate!,
-                        timeRemaining: e.timeLeft(DateTime.now()),
-                        dotColor: color,
-                      ),
-                      rightWidget: ReminderInformation(
-                        event: e,
-                      ),
-                    );
-                  }).toList(),
+                  children: events.map(
+                    (e) {
+                      final color = colors[Random().nextInt(colors.length - 1)];
+                      return ReminderContainer(
+                        color: color,
+                        leftWidget: ReminderDateData(
+                          endDate: e.endDate!,
+                          timeRemaining: e.timeLeft(DateTime.now()),
+                          dotColor: color,
+                        ),
+                        rightWidget: EventInforamtion(
+                          event: e,
+                        ),
+                      );
+                    },
+                  ).toList(),
                 ),
               ),
             ],

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:schedulemanager/app/utils/share_util.dart';
+import 'package:schedulemanager/routes/app_routes.dart';
 import '../data/models/event_status_enum.dart';
 import '../data/models/reminder_model.dart';
-import '../modules/reminder_details/reminders_details_page.dart';
 import '../app/utils/responsive_util.dart';
 import 'progress_bar.dart';
 import 'tags_list.dart';
@@ -11,9 +12,9 @@ import '../app/config/constants.dart';
 import '../app/utils/text_styles.dart';
 import 'custom_button.dart';
 
-class ReminderInformation extends StatelessWidget {
-  final ReminderModel event;
-  const ReminderInformation({
+class EventInforamtion extends StatelessWidget {
+  final EventModel event;
+  const EventInforamtion({
     super.key,
     required this.event,
   });
@@ -85,7 +86,7 @@ class ReminderInformation extends StatelessWidget {
             style: TextStyles.w700(14),
           ),
           TagsList(
-            tagsList: event.tags.map((e) => e.name).toList(),
+            tagsList: event.tags,
             maxTagsToShow: 3,
             style: TextStyles.w700(12, Colors.white),
           ),
@@ -158,13 +159,8 @@ class ReminderInformation extends StatelessWidget {
               color: accent,
               hideShadows: true,
               style: TextStyles.w700(14, Colors.white),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      ReminderDetailsPage(reminder: event),
-                ),
-              ),
+              onTap: () =>
+                  Get.toNamed(AppRoutes.eventDetails, arguments: event.id),
             ),
           ],
         )

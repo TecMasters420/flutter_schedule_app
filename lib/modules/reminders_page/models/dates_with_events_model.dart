@@ -4,7 +4,7 @@ import 'events_date_model.dart';
 class DatesWithEventsModel {
   final int year;
   final List<EventsDateModel> dates;
-  final List<ReminderModel> events;
+  final List<EventModel> events;
 
   const DatesWithEventsModel({
     required this.year,
@@ -18,9 +18,8 @@ class DatesWithEventsModel {
       dates: List.from(map['date'])
           .map((e) => EventsDateModel.fromMap(e))
           .toList(),
-      events: List.from(map['events'])
-          .map((e) => ReminderModel.fromMap(e))
-          .toList(),
+      events:
+          List.from(map['events']).map((e) => EventModel.fromMap(e)).toList(),
     );
   }
 

@@ -12,20 +12,21 @@ class RequestBase {
   final String _base = dotenv.env['APIURL']!;
 
   Future<ApiResponseModel?> call(final String extraEndpoint,
-      {String? token, Map<String, dynamic>? body}) async {
-    const Map<String, String> headers = {
+      {String? token, Map<String, dynamic>? body, bool edit = false}) async {
+    final Map<String, String> headers = {
       "Content-Type": "application/json; charset=utf-8",
     };
+    if (token != null) headers.addAll({'Authorization': 'Bearer $token'});
     if (body != null) debugPrint(body.toString());
     if (token != null) debugPrint(token);
     try {
       final url = Uri.parse('$_base/$extraEndpoint');
       debugPrint('\nURL: $url');
-      final http.Response res = body == null
-          ? await http.get(url,
-              headers:
-                  token != null ? {'Authorization': 'Bearer $token'} : null)
-          : await http.post(url, body: jsonEncode(body), headers: headers);
+      final http.Response res = edit
+          ? await http.put(url, body: jsonEncode(body), headers: headers)
+          : body == null
+              ? await http.get(url, headers: headers)
+              : await http.post(url, body: jsonEncode(body), headers: headers);
       debugPrint(res.body.toString());
       if (res.statusCode < 300 && res.statusCode >= 200) {
         return ApiResponseModel(code: res.statusCode, body: res.body);

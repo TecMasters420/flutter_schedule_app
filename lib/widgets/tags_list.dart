@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/data/models/tag_model.dart';
 
 import '../app/config/constants.dart';
 
@@ -8,7 +7,7 @@ class TagsList extends StatelessWidget {
   final void Function(int index)? onLongPressCallback;
 
   final TextStyle style;
-  final List<String> tagsList;
+  final List<TagModel> tagsList;
   final int? maxTagsToShow;
   const TagsList({
     super.key,
@@ -42,7 +41,7 @@ class TagsList extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 5),
               backgroundColor: accent,
               label: Text(
-                '#${tagsList[index].replaceAll(RegExp(r'\s+'), '')}',
+                '#${tagsList[index].name.replaceAll(RegExp(r'\s+'), '')}',
                 style: style,
               ),
             ),

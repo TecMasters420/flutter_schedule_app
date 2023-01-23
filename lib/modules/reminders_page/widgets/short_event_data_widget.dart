@@ -6,13 +6,13 @@ import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/app/utils/responsive_util.dart';
 import 'package:schedulemanager/app/utils/text_styles.dart';
 import 'package:schedulemanager/data/models/reminder_model.dart';
-import 'package:schedulemanager/modules/reminder_details/reminders_details_page.dart';
+import 'package:schedulemanager/routes/app_routes.dart';
 import 'package:schedulemanager/widgets/progress_bar.dart';
 
 class ShortEventDataWidget extends StatelessWidget {
-  final ReminderModel event;
+  final EventModel event;
   final Color color;
-  final void Function(ReminderModel event) onLongPressCallback;
+  final void Function(EventModel event) onLongPressCallback;
 
   final ValueNotifier<double> height = ValueNotifier(0);
   final GlobalKey testKey = GlobalKey();
@@ -60,7 +60,7 @@ class ShortEventDataWidget extends StatelessWidget {
       ),
       child: Material(
         child: InkWell(
-          onTap: () => Get.to(() => ReminderDetailsPage(reminder: event)),
+          onTap: () => Get.toNamed(AppRoutes.eventDetails),
           onLongPress: () => onLongPressCallback(event),
           borderRadius: BorderRadius.circular(10),
           splashColor: color.withOpacity(0.25),

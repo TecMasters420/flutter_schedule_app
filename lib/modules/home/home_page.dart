@@ -62,7 +62,7 @@ class HomePage extends GetView {
                       style: TextStyles.w700(20),
                     ),
                     SizedBox(height: resp.hp(2.5)),
-                    ActivitiesTypes(
+                    EventsTypesWidget(
                       initialTabIndex: 1,
                       isLoading: home.isLoading.value,
                       eventsPerType: {

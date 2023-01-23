@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:schedulemanager/routes/app_routes.dart';
 import '../../../app/config/constants.dart';
 import '../../../app/utils/responsive_util.dart';
-import '../../../data/models/reminder_model.dart';
 import '../../../widgets/custom_button.dart';
 
 import '../../../app/utils/text_styles.dart';
-import '../../reminder_details/reminders_details_page.dart';
 
 class NoEventsWidget extends StatelessWidget {
   const NoEventsWidget({super.key});
@@ -37,9 +36,7 @@ class NoEventsWidget extends StatelessWidget {
           color: lightBlue,
           hideShadows: true,
           style: TextStyles.w500(14, accent),
-          onTap: () => Get.to(
-            () => ReminderDetailsPage(reminder: ReminderModel.empty()),
-          ),
+          onTap: () => Get.toNamed(AppRoutes.eventDetails),
         ),
       ],
     );
