@@ -11,7 +11,7 @@ const Color lightGrey = Color(0xffb9bfce);
 const Color lightBlue = Color(0xffebf2ff);
 const Color darkBlue = Color(0xff84acfa);
 
-const Color red = Colors.red;
+const Color red = Color(0xfff15556);
 const Color orange = Color(0xfffb9b10);
 const Color green = Color.fromARGB(255, 76, 192, 112);
 

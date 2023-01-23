@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get/route_manager.dart';
 import '../../../app/utils/responsive_util.dart';
 
@@ -66,12 +67,13 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                       description: 'Press button to join!',
                       imageUrl: '',
                     );
-              final double scale = (x - _pageProgress).abs() < 0.2 ? 1 : 0.9;
-              final double opacity = (x - _pageProgress).abs() < 0.2 ? 1 : 0.25;
+              final progress = (_pageProgress - x).abs();
+              final quantity = 1 - progress;
+              final opacity = progress < 0.10 ? 1.0 : 0.05;
 
               return LoginPageInformation(
                 withImage: !isFinalElement,
-                scale: scale,
+                scale: quantity,
                 opacity: opacity,
                 imageUrl: announce.imageUrl,
                 title: announce.title,

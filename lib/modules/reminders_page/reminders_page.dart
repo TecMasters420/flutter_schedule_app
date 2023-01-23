@@ -3,9 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:schedulemanager/app/config/app_constants.dart';
 import 'package:schedulemanager/modules/home/widgets/no_events_widget.dart';
 import 'package:schedulemanager/modules/reminders_page/widgets/short_event_data_widget.dart';
 import 'package:schedulemanager/widgets/custom_header_widget.dart';
+import 'package:schedulemanager/widgets/custom_nav_bar_widget.dart';
 import 'package:schedulemanager/widgets/custom_timeline_reminder_object_widget.dart';
 import 'package:schedulemanager/widgets/loading_widget.dart';
 import 'package:schedulemanager/widgets/responsive_container_widget.dart';
@@ -33,22 +35,9 @@ class EventsPage extends StatelessWidget {
     return Obx(
       () {
         return Scaffold(
-          floatingActionButton: events.isLoading.value
-              ? null
-              : FloatingActionButton(
-                  backgroundColor: accent,
-                  child: const Icon(Icons.add),
-                  onPressed: () => Get.to(
-                    () => ReminderDetailsPage(reminder: ReminderModel.empty()),
-                  ),
-                ),
+          bottomNavigationBar: const CustomNavBarWidget(),
           body: Padding(
-            padding: const EdgeInsets.only(
-              left: 32,
-              right: 32,
-              top: 70,
-              bottom: 20,
-            ),
+            padding: AppConstants.bodyPadding,
             child: events.isLoading.value
                 ? const LoadingWidget()
                 : SingleChildScrollView(

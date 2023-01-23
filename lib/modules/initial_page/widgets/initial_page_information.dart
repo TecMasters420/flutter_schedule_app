@@ -26,8 +26,7 @@ class LoginPageInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    return AnimatedScale(
-      duration: const Duration(milliseconds: 250),
+    return Transform.scale(
       scale: scale,
       child: AnimatedOpacity(
         duration: const Duration(milliseconds: 250),

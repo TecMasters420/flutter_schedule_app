@@ -21,22 +21,13 @@ class CustomNavBarWidget extends StatelessWidget {
       child: ResponsiveContainerWidget(
         padding: const EdgeInsets.symmetric(
           horizontal: 15,
-          vertical: 15,
+          vertical: 20,
         ),
         child: Obx(
           () {
             return Row(
               children: navBar.elements.map(
                 (e) {
-                  if (navBar.currentElement.value != null &&
-                      navBar.currentElement.value!.route != Get.currentRoute) {
-                    final elementFound = navBar.elements.firstWhereOrNull(
-                        (route) => '/${route.route}' == Get.currentRoute);
-                    if (elementFound != null) {
-                      navBar.currentElement.value = elementFound;
-                      // navBar.onNewSelection(elementFound);
-                    }
-                  }
                   final isSelected = navBar.currentElement.value != null &&
                       e.name == navBar.currentElement.value!.name &&
                       '/${navBar.currentElement.value!.route}' ==
@@ -74,10 +65,10 @@ class CustomNavBarWidget extends StatelessWidget {
                                   key: Key(false.toString()),
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Icon(e.icon, size: 20, color: grey),
+                                    Icon(e.icon, size: 20, color: black),
                                     Text(
                                       e.name,
-                                      style: TextStyles.w500(10, grey),
+                                      style: TextStyles.w500(12, grey),
                                     ),
                                   ],
                                 ),
