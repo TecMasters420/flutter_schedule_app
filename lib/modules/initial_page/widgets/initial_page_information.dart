@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/widgets/custom_cache_image_widget.dart';
 import 'package:schedulemanager/widgets/loading_widget.dart';
 import '../../../app/utils/responsive_util.dart';
 
@@ -45,20 +46,9 @@ class LoginPageInformation extends StatelessWidget {
                     child: withImage && imageUrl != null && imageUrl != ''
                         ? imageUrl!.contains('assets/images')
                             ? Image.asset(imageUrl!)
-                            : Image.network(
-                                imageUrl!,
-                                loadingBuilder:
-                                    (context, child, loadingProgress) {
-                                  if (loadingProgress == null) return child;
-                                  return const LoadingWidget();
-                                },
-                                errorBuilder: (context, error, stackTrace) {
-                                  debugPrint('Error loading image');
-                                  return Text(
-                                    'Error loading image',
-                                    style: TextStyles.w600(16, Colors.white),
-                                  );
-                                },
+                            : CustomCacheImageWidget(
+                                imageUrl: imageUrl!,
+                                fit: BoxFit.contain,
                               )
                         : null,
                   ),

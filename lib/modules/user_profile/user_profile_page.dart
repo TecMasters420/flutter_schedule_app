@@ -40,32 +40,39 @@ class UserProfilePage extends GetWidget<AuthController> {
                           title: '${controller.currentUser!.data.name} Profile',
                         ),
                         SizedBox(height: resp.hp(2.5)),
-                        Stack(
-                          clipBehavior: Clip.none,
-                          alignment: Alignment.center,
-                          children: [
-                            ResponsiveContainerWidget(
-                              padding: EdgeInsets.zero,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(30),
-                                child: Image.asset(
-                                  'assets/images/home_logo.png',
-                                  fit: BoxFit.fill,
+                        SizedBox(
+                          width: resp.width,
+                          height: resp.hp(20),
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            alignment: Alignment.center,
+                            children: [
+                              ResponsiveContainerWidget(
+                                padding: EdgeInsets.zero,
+                                child: Center(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(30),
+                                    child: Image.asset(
+                                      'assets/images/home_logo.png',
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              top: resp.hp(5),
-                              child: UserProfilePicture(
-                                height: resp.hp(20),
-                                width: resp.wp(42.5),
-                                userImage:
-                                    controller.currentUser!.data.imageUrl ?? '',
+                              Positioned(
+                                top: resp.hp(5),
+                                child: UserProfilePicture(
+                                  height: resp.hp(20),
+                                  width: resp.wp(42.5),
+                                  userImage:
+                                      controller.currentUser!.data.imageUrl ??
+                                          '',
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                        SizedBox(height: resp.hp(4)),
+                        SizedBox(height: resp.hp(8)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

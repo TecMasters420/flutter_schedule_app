@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schedulemanager/app/config/constants.dart';
+import 'package:schedulemanager/widgets/custom_cache_image_widget.dart';
 import 'custom_circular_progress.dart';
 
 class UserProfilePicture extends StatelessWidget {
@@ -33,22 +34,7 @@ class UserProfilePicture extends StatelessWidget {
           borderRadius: BorderRadius.circular(1000),
           child: userImage.isEmpty
               ? Image.asset('assets/images/user.png', fit: BoxFit.fill)
-              : Image.network(
-                  userImage,
-                  fit: BoxFit.fill,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Image.asset(
-                      'assets/images/user.png',
-                      fit: BoxFit.fill,
-                    );
-                  },
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress != null) {
-                      return const CustomCircularProgress(color: accent);
-                    }
-                    return child;
-                  },
-                ),
+              : CustomCacheImageWidget(imageUrl: userImage),
         ),
       ),
     );

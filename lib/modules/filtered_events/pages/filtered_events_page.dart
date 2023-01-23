@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:schedulemanager/app/config/app_constants.dart';
 import 'package:schedulemanager/app/config/constants.dart';
@@ -40,21 +42,20 @@ class FilteredEventsPage extends StatelessWidget {
               SizedBox(height: resp.hp(2.5)),
               ResponsiveContainerWidget(
                 child: Column(
-                  children: events
-                      .map(
-                        (e) => ReminderContainer(
-                          color: accent,
-                          leftWidget: ReminderDateData(
-                            endDate: e.endDate!,
-                            timeRemaining: e.timeLeft(DateTime.now()),
-                            dotColor: accent,
-                          ),
-                          rightWidget: ReminderInformation(
-                            event: e,
-                          ),
-                        ),
-                      )
-                      .toList(),
+                  children: events.map((e) {
+                    final color = colors[Random().nextInt(colors.length - 1)];
+                    return ReminderContainer(
+                      color: color,
+                      leftWidget: ReminderDateData(
+                        endDate: e.endDate!,
+                        timeRemaining: e.timeLeft(DateTime.now()),
+                        dotColor: color,
+                      ),
+                      rightWidget: ReminderInformation(
+                        event: e,
+                      ),
+                    );
+                  }).toList(),
                 ),
               ),
             ],

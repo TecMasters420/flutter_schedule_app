@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/modules/filtered_events/pages/filtered_events_page.dart';
+import 'package:schedulemanager/widgets/custom_button.dart';
+import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 import '../../../routes/app_routes.dart';
 import '../../../widgets/custom_text_button_widget.dart';
 import 'all_reminders_redirection_button.dart';
@@ -55,7 +57,23 @@ class EventsListPerType extends StatelessWidget {
             data.length > maxEventsToShow ? maxEventsToShow + 1 : data.length,
             (index) {
               if (index >= maxEventsToShow) {
-                return const AllEventsRedirectionButton();
+                return GestureDetector(
+                  onTap: () {},
+                  child: ResponsiveContainerWidget(
+                    customColor: lightBlue,
+                    padding: const EdgeInsets.symmetric(vertical: 30),
+                    child: Center(
+                      child: Text(
+                        'Press to see all events',
+                        textAlign: TextAlign.center,
+                        style: TextStyles.w700(
+                          18,
+                          accent,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
               }
               final color = colors[Random().nextInt(colors.length - 1)];
               return ReminderContainer(
