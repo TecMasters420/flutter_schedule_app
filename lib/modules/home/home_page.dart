@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:schedulemanager/app/config/app_constants.dart';
 import 'package:schedulemanager/modules/auth/controllers/auth_controller.dart';
 import 'package:schedulemanager/widgets/custom_nav_bar_widget.dart';
-import 'package:schedulemanager/widgets/loading_widget.dart';
 import 'controllers/home_controller.dart';
 import 'widgets/home_header_widget.dart';
 

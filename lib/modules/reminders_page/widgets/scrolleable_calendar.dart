@@ -60,7 +60,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
           'Select your events by dates',
           style: TextStyles.w500(14, grey),
         ),
-        SizedBox(height: resp.hp(2.5)),
+        SizedBox(height: resp.hp(1.5)),
         CustomDateContainer(
           data: List.generate(12, (index) => index + 1),
           initialElementIndex: currentMonthIndex < 0 ? 0 : currentMonthIndex,
@@ -108,79 +108,81 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
             );
           },
         ),
-        SizedBox(height: resp.hp(4)),
+        if (widget.days.isNotEmpty) ...[
+          SizedBox(height: resp.hp(4)),
 
-        // ? DAYS LIST
-        CustomDateContainer(
-          data: widget.days,
-          selectableValues: widget.days,
-          initialElementIndex: currentDayIndex < 0 ? 0 : currentDayIndex,
-          onPressElement: (itemPressed, index) {
-            setState(() {
-              _selectedDay = itemPressed;
-              widget.onSelectedNewDay(itemPressed);
-            });
-          },
-          widgetBuild: (currentElement, isSelected, index) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 15,
+          // ? DAYS LIST
+          CustomDateContainer(
+            data: widget.days,
+            selectableValues: widget.days,
+            initialElementIndex: currentDayIndex < 0 ? 0 : currentDayIndex,
+            onPressElement: (itemPressed, index) {
+              setState(() {
+                _selectedDay = itemPressed;
+                widget.onSelectedNewDay(itemPressed);
+              });
+            },
+            widgetBuild: (currentElement, isSelected, index) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 15,
+                      ),
+                      decoration: BoxDecoration(
+                        color: isSelected ? accent : containerBg,
+                        boxShadow: isSelected ? null : shadows,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            DateFormat('EEEE')
+                                .format(
+                                  DateTime(
+                                    DateTime.now().year,
+                                    _selectedMonth!,
+                                    currentElement,
+                                  ),
+                                )
+                                .substring(0, 3)
+                                .toUpperCase(),
+                            style: TextStyles.w500(
+                              14,
+                              isSelected ? Colors.white : grey,
+                            ),
+                          ),
+                          Text(
+                            widget.days[index].toString().length == 1
+                                ? '0${widget.days[index]}'
+                                : widget.days[index].toString(),
+                            style: TextStyles.w700(
+                              25,
+                              isSelected ? Colors.white : black,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
+                  ),
+                  SizedBox(height: resp.hp(0.5)),
+                  Container(
+                    height: resp.hp(0.75),
+                    width: resp.wp(2.5),
                     decoration: BoxDecoration(
                       color: isSelected ? accent : containerBg,
                       boxShadow: isSelected ? null : shadows,
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
-                    child: Column(
-                      children: [
-                        Text(
-                          DateFormat('EEEE')
-                              .format(
-                                DateTime(
-                                  DateTime.now().year,
-                                  _selectedMonth!,
-                                  currentElement,
-                                ),
-                              )
-                              .substring(0, 3)
-                              .toUpperCase(),
-                          style: TextStyles.w500(
-                            14,
-                            isSelected ? Colors.white : grey,
-                          ),
-                        ),
-                        Text(
-                          widget.days[index].toString().length == 1
-                              ? '0${widget.days[index]}'
-                              : widget.days[index].toString(),
-                          style: TextStyles.w700(
-                            25,
-                            isSelected ? Colors.white : black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: resp.hp(0.5)),
-                Container(
-                  height: resp.hp(0.75),
-                  width: resp.wp(2.5),
-                  decoration: BoxDecoration(
-                    color: isSelected ? accent : containerBg,
-                    boxShadow: isSelected ? null : shadows,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  ),
-                )
-              ],
-            );
-          },
-        ),
+                  )
+                ],
+              );
+            },
+          ),
+        ],
       ],
     );
   }

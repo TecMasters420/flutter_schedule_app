@@ -13,7 +13,7 @@ const Color darkBlue = Color(0xff84acfa);
 
 const Color red = Colors.red;
 const Color orange = Color(0xfffb9b10);
-const Color green = Color(0xff74bca6);
+const Color green = Color.fromARGB(255, 76, 192, 112);
 
 const LinearGradient accentGradient = LinearGradient(
   colors: [accent, darkAccent],

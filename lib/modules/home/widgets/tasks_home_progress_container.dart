@@ -65,6 +65,7 @@ class TasksHomeProgressContainer extends StatelessWidget {
                     ),
                     SizedBox(width: resp.wp(2.5)),
                     Expanded(
+                      flex: 2,
                       child: Text(
                         clampledPercentages[x].name,
                         maxLines: 1,

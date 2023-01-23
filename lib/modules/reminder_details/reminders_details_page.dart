@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:schedulemanager/modules/reminder_details/widgets/weather_container.dart';
 import 'package:schedulemanager/widgets/custom_header_widget.dart';
+import 'package:schedulemanager/widgets/custom_text_button_widget.dart';
+import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 import '../../data/models/event_location_model.dart';
 import '../map_page/map_page.dart';
 import '../../app/config/constants.dart';
@@ -100,6 +102,7 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
           bottom: 20,
         ),
         child: SingleChildScrollView(
+          clipBehavior: Clip.none,
           physics: const BouncingScrollPhysics(),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -120,252 +123,298 @@ class _ReminderDetailsPageState extends State<ReminderDetailsPage> {
                   onPressed: () {},
                 ),
               ),
-              SizedBox(height: resp.hp(5)),
+              SizedBox(height: resp.hp(2.5)),
               Text(
                 'Event information',
                 style: TextStyles.w800(20),
               ),
               SizedBox(height: resp.hp(2.5)),
-              ReminderInformationWidget(
-                icon: Icons.description_outlined,
-                title: 'Description',
-                value: _reminder.description.isEmpty
-                    ? 'No description'
-                    : _reminder.description,
-                showSuffixWidget: true,
-                onTapEditCallback: () {},
-              ),
-              ReminderInformationWidget(
-                icon: Icons.calendar_today_rounded,
-                title: 'Start Date',
-                value: _selectedStartDate == null
-                    ? 'No date'
-                    : '${isSameDay ? 'Today' : getDateFormatted(_selectedStartDate!)} at ${DateFormat('hh:mm a').format(_selectedStartDate!)}',
-                showSuffixWidget: true,
-                onTapEditCallback: () {},
-              ),
-              if (_selectedEndDate != null) ...[
-                ReminderInformationWidget(
-                  icon: Icons.calendar_month_outlined,
-                  title: 'End Date',
-                  value: _selectedEndDate == null
-                      ? 'No date'
-                      : '${isSameDay ? 'Today' : getDateFormatted(_selectedEndDate!)} at ${DateFormat('hh:mm a').format(_selectedEndDate!)}',
-                  showSuffixWidget: true,
-                  onTapEditCallback: () {},
-                ),
-              ],
-              ReminderInformationWidget(
-                icon: Icons.timer_outlined,
-                title: 'Time remaining',
-                value: _selectedEndDate == null || _selectedStartDate == null
-                    ? 'No date'
-                    : '${timeRemaining.isNegative ? 'Expired ' : ''}$daysMess$hoursMess ${timeRemaining.isNegative ? 'ago' : ''}',
-              ),
-              // if (reminder.expectedTemp != null)
-              const ReminderInformationWidget(
-                icon: Icons.water_drop_outlined,
-                title: 'Expected weather',
-                extra: WeatherContainer(
-                  temp: 30,
-                ),
-              ),
-              ReminderInformationWidget(
-                icon: Icons.location_on_outlined,
-                title: 'Location',
-                value: address ?? '',
-                extra: Column(
+              ResponsiveContainerWidget(
+                child: Column(
                   children: [
-                    if (_reminder.startLocation != null &&
-                        _reminder.startLocation!.address != null)
-                      ReminderInformationWidget(
-                        icon: Icons.location_pin,
-                        title: 'Start location',
-                        value: _reminder.startLocation!.address,
+                    SizedBox(height: resp.hp(2.5)),
+                    ReminderInformationWidget(
+                      icon: Icons.description_outlined,
+                      title: 'Description',
+                      value: _reminder.description.isEmpty
+                          ? 'No description'
+                          : _reminder.description,
+                      showSuffixWidget: true,
+                      onTapEditCallback: () {},
+                    ),
+                    ReminderInformationWidget(
+                      icon: Icons.tag_rounded,
+                      title: 'Tags',
+                      showSuffixWidget: true,
+                      customSuffixWidget: CustomTextButtonWidget(
+                        title: 'Add',
+                        onTap: () {},
                       ),
-                    if (_reminder.endLocation != null &&
-                        _reminder.endLocation!.address != null)
-                      ReminderInformationWidget(
-                        icon: Icons.location_searching_rounded,
-                        title: 'End location',
-                        value: _reminder.endLocation!.address,
+                      extra: TagsList(
+                        tagsList: _reminder.tags.map((e) => e.name).toList(),
+                        maxTagsToShow: _reminder.tags.length,
+                        style: TextStyles.w500(
+                          14,
+                          Colors.white,
+                        ),
+                        onLongPressCallback: (index) {
+                          final TagModel selectedTag = _reminder.tags[index];
+
+                          CustomAlertDialog(
+                            resp: resp,
+                            context: context,
+                            title:
+                                'Do you want to delete "${selectedTag.name}" tag?',
+                            onAcceptCallback: () {
+                              setState(() {
+                                _reminder.tags.removeAt(index);
+                              });
+                            },
+                          );
+                        },
                       ),
-                    if (_reminder.endLocation != null ||
-                        _reminder.startLocation != null) ...[
-                      MapPreview(
-                        height: resp.hp(20),
-                        width: resp.width,
-                        initialPoint: _reminder.startLocation != null
-                            ? GeoPoint(_reminder.startLocation!.lat,
-                                _reminder.startLocation!.lng)
-                            : const GeoPoint(0, 0),
-                        endPoint: _reminder.endLocation != null
-                            ? GeoPoint(_reminder.endLocation!.lat,
-                                _reminder.endLocation!.lng)
-                            : const GeoPoint(0, 0),
-                        onAcceptCallback: _onLocationChanged,
-                        startAddress: _reminder.startLocation!.address,
-                        endAddress: _reminder.endLocation!.address,
-                      ),
-                    ] else ...[
-                      CustomButton(
-                        text: 'Add location',
-                        color: accent,
-                        style: TextStyles.w700(14, Colors.white),
+                    ),
+                    ReminderInformationWidget(
+                      icon: Icons.list_alt_rounded,
+                      title: 'Tasks',
+                      showSuffixWidget: true,
+                      customSuffixWidget: CustomTextButtonWidget(
+                        title: 'Add',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MapPage(
-                                onAcceptCallback: _onLocationChanged,
-                              ),
+                          CustomAlertDialog(
+                            resp: resp,
+                            context: context,
+                            title: 'Create new Task',
+                            onAcceptCallback: () {
+                              setState(() {
+                                _reminder.tasks.add(task);
+                                task = TaskModel(name: '', isCompleted: false);
+                              });
+                            },
+                            customBody: CustomFormField(
+                              icon: Icons.abc,
+                              onChanged: (value) {
+                                setState(() {
+                                  task.name = value;
+                                });
+                              },
                             ),
                           );
                         },
-                      )
-                    ]
-                  ],
-                ),
-              ),
-              ReminderInformationWidget(
-                icon: Icons.tag_rounded,
-                title: 'Tags',
-                showSuffixWidget: true,
-                customSuffixWidget: CustomButton(
-                  text: 'Add Tag',
-                  color: accent,
-                  style: TextStyles.w700(14, Colors.white),
-                  onTap: () {},
-                ),
-                extra: TagsList(
-                  tagsList: _reminder.tags.map((e) => e.name).toList(),
-                  maxTagsToShow: _reminder.tags.length,
-                  style: TextStyles.w500(
-                    14,
-                    Colors.white,
-                  ),
-                  onLongPressCallback: (index) {
-                    final TagModel selectedTag = _reminder.tags[index];
-
-                    CustomAlertDialog(
-                      resp: resp,
-                      context: context,
-                      title: 'Do you want to delete "${selectedTag.name}" tag?',
-                      onAcceptCallback: () {
-                        setState(() {
-                          _reminder.tags.removeAt(index);
-                        });
-                      },
-                    );
-                  },
-                ),
-              ),
-              ReminderInformationWidget(
-                icon: Icons.list_alt_rounded,
-                title: 'Tasks',
-                showSuffixWidget: true,
-                customSuffixWidget: CustomButton(
-                  text: 'Add Task',
-                  color: accent,
-                  style: TextStyles.w700(14, Colors.white),
-                  onTap: () {
-                    CustomAlertDialog(
-                      resp: resp,
-                      context: context,
-                      title: 'Create new Task',
-                      onAcceptCallback: () {
-                        setState(() {
-                          _reminder.tasks.add(task);
-                          task = TaskModel(name: '', isCompleted: false);
-                        });
-                      },
-                      customBody: CustomFormField(
-                        icon: Icons.abc,
-                        onChanged: (value) {
-                          setState(() {
-                            task.name = value;
-                          });
-                        },
                       ),
-                    );
-                  },
-                ),
-                extra: Column(
-                  children: List.generate(
-                    _reminder.tasks.length,
-                    (index) {
-                      final TaskModel task = _reminder.tasks[index];
-                      return Row(
+                      extra: Column(
+                        children: List.generate(
+                          _reminder.tasks.length,
+                          (index) {
+                            final TaskModel task = _reminder.tasks[index];
+                            return Row(
+                              children: [
+                                Checkbox(
+                                  activeColor: accent,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  value: task.isCompleted,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _reminder.tasks[index].isCompleted =
+                                          value!;
+                                    });
+                                  },
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    task.name,
+                                    style: TextStyles.w500(14, grey).copyWith(
+                                      decorationColor: grey,
+                                      decoration:
+                                          _reminder.tasks[index].isCompleted
+                                              ? TextDecoration.lineThrough
+                                              : null,
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  splashRadius: 20,
+                                  splashColor: red.withOpacity(0.1),
+                                  highlightColor: red.withOpacity(0.1),
+                                  icon: const Icon(
+                                    Icons.remove_circle_outline,
+                                    color: lightGrey,
+                                    size: 25,
+                                  ),
+                                  onPressed: () {
+                                    final selectedTask = _reminder.tasks[index];
+                                    final name = selectedTask.name;
+                                    CustomAlertDialog(
+                                      resp: resp,
+                                      context: context,
+                                      title:
+                                          'Do you want to delete "$name" task?',
+                                      onAcceptCallback: () {
+                                        setState(() {
+                                          _reminder.tasks.removeAt(index);
+                                        });
+                                      },
+                                    );
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    ReminderInformationWidget(
+                      icon: Icons.bar_chart_rounded,
+                      title: 'Progress',
+                      value: '${progress.toStringAsFixed(2)}%',
+                      extra: Column(
                         children: [
-                          Checkbox(
-                            activeColor: accent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            value: task.isCompleted,
-                            onChanged: (value) {
-                              setState(() {
-                                _reminder.tasks[index].isCompleted = value!;
-                              });
-                            },
-                          ),
-                          Expanded(
-                            child: Text(
-                              task.name,
-                              style: TextStyles.w500(14, grey).copyWith(
-                                decorationColor: grey,
-                                decoration: _reminder.tasks[index].isCompleted
-                                    ? TextDecoration.lineThrough
-                                    : null,
-                              ),
-                            ),
-                          ),
-                          IconButton(
-                            splashRadius: 20,
-                            splashColor: red.withOpacity(0.1),
-                            highlightColor: red.withOpacity(0.1),
-                            icon: const Icon(
-                              Icons.remove_circle_outline,
-                              color: lightGrey,
-                              size: 25,
-                            ),
-                            onPressed: () {
-                              final selectedTask = _reminder.tasks[index];
-                              final name = selectedTask.name;
-                              CustomAlertDialog(
-                                resp: resp,
-                                context: context,
-                                title: 'Do you want to delete "$name" task?',
-                                onAcceptCallback: () {
-                                  setState(() {
-                                    _reminder.tasks.removeAt(index);
-                                  });
-                                },
-                              );
-                            },
+                          SizedBox(height: resp.hp(1)),
+                          ProgressBar(
+                            percent: progress,
+                            height: resp.hp(2.5),
+                            width: resp.wp(70),
                           ),
                         ],
-                      );
-                    },
-                  ),
-                ),
-              ),
-              ReminderInformationWidget(
-                icon: Icons.bar_chart_rounded,
-                title: 'Progress',
-                value: '${progress.toStringAsFixed(2)}%',
-                extra: Column(
-                  children: [
-                    SizedBox(height: resp.hp(1)),
-                    ProgressBar(
-                      percent: progress,
-                      height: resp.hp(2.5),
-                      width: resp.wp(70),
+                      ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: resp.hp(5)),
+              SizedBox(height: resp.hp(2.5)),
+              Text(
+                'Event Date',
+                style: TextStyles.w800(18),
+              ),
+              SizedBox(height: resp.hp(2.5)),
+              ResponsiveContainerWidget(
+                child: Column(
+                  children: [
+                    SizedBox(height: resp.hp(2.5)),
+                    ReminderInformationWidget(
+                      icon: Icons.calendar_today_rounded,
+                      title: 'Start Date',
+                      value: _selectedStartDate == null
+                          ? 'No date'
+                          : '${isSameDay ? 'Today' : getDateFormatted(_selectedStartDate!)} at ${DateFormat('hh:mm a').format(_selectedStartDate!)}',
+                      showSuffixWidget: true,
+                      onTapEditCallback: () {},
+                    ),
+                    if (_selectedEndDate != null) ...[
+                      ReminderInformationWidget(
+                        icon: Icons.calendar_month_outlined,
+                        title: 'End Date',
+                        value: _selectedEndDate == null
+                            ? 'No date'
+                            : '${isSameDay ? 'Today' : getDateFormatted(_selectedEndDate!)} at ${DateFormat('hh:mm a').format(_selectedEndDate!)}',
+                        showSuffixWidget: true,
+                        onTapEditCallback: () {},
+                      ),
+                    ],
+                    ReminderInformationWidget(
+                      icon: Icons.timer_outlined,
+                      title: 'Time remaining',
+                      value: _selectedEndDate == null ||
+                              _selectedStartDate == null
+                          ? 'No date'
+                          : '${timeRemaining.isNegative ? 'Expired ' : ''}$daysMess$hoursMess ${timeRemaining.isNegative ? 'ago' : ''}',
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: resp.hp(2.5)),
+              Text(
+                'Event Weather',
+                style: TextStyles.w800(18),
+              ),
+              SizedBox(height: resp.hp(2.5)),
+              // if (reminder.expectedTemp != null)
+              ResponsiveContainerWidget(
+                child: Column(
+                  children: [
+                    SizedBox(height: resp.hp(2.5)),
+                    const ReminderInformationWidget(
+                      icon: Icons.water_drop_outlined,
+                      title: 'Expected weather',
+                      extra: WeatherContainer(
+                        temp: 30,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: resp.hp(2.5)),
+              Text(
+                'Event Location',
+                style: TextStyles.w800(18),
+              ),
+              SizedBox(height: resp.hp(2.5)),
+              ResponsiveContainerWidget(
+                child: Column(
+                  children: [
+                    SizedBox(height: resp.hp(2.5)),
+                    ReminderInformationWidget(
+                      icon: Icons.location_on_outlined,
+                      title: 'Location',
+                      value: address,
+                      extra: Column(
+                        children: [
+                          if (_reminder.startLocation != null &&
+                              _reminder.startLocation!.address != null)
+                            ReminderInformationWidget(
+                              icon: Icons.location_pin,
+                              title: 'Start location',
+                              value: _reminder.startLocation!.address,
+                            ),
+                          if (_reminder.endLocation != null &&
+                              _reminder.endLocation!.address != null)
+                            ReminderInformationWidget(
+                              icon: Icons.location_searching_rounded,
+                              title: 'End location',
+                              value: _reminder.endLocation!.address,
+                            ),
+                          if (_reminder.endLocation != null ||
+                              _reminder.startLocation != null) ...[
+                            MapPreview(
+                              height: resp.hp(20),
+                              width: resp.width,
+                              initialPoint: _reminder.startLocation != null
+                                  ? GeoPoint(_reminder.startLocation!.lat,
+                                      _reminder.startLocation!.lng)
+                                  : const GeoPoint(0, 0),
+                              endPoint: _reminder.endLocation != null
+                                  ? GeoPoint(_reminder.endLocation!.lat,
+                                      _reminder.endLocation!.lng)
+                                  : const GeoPoint(0, 0),
+                              onAcceptCallback: _onLocationChanged,
+                              startAddress: _reminder.startLocation!.address,
+                              endAddress: _reminder.endLocation!.address,
+                            ),
+                          ] else ...[
+                            CustomButton(
+                              text: 'Add location',
+                              color: accent,
+                              style: TextStyles.w700(14, Colors.white),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MapPage(
+                                      onAcceptCallback: _onLocationChanged,
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                          ]
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

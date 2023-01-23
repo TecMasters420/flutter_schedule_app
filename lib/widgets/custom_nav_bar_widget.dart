@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:schedulemanager/app/config/app_constants.dart';
 import 'package:schedulemanager/app/utils/text_styles.dart';
 import 'package:schedulemanager/modules/navbar/controllers/navbar_controller.dart';
@@ -34,7 +33,6 @@ class CustomNavBarWidget extends StatelessWidget {
                     final elementFound = navBar.elements.firstWhereOrNull(
                         (route) => '/${route.route}' == Get.currentRoute);
                     if (elementFound != null) {
-                      print('Setting ${elementFound.name}');
                       navBar.currentElement.value = elementFound;
                       // navBar.onNewSelection(elementFound);
                     }

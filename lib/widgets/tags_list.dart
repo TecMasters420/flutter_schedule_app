@@ -38,7 +38,7 @@ class TagsList extends StatelessWidget {
             child: Chip(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               backgroundColor: color,
-              label: Text(tagsList[index], style: style),
+              label: Text('#${tagsList[index]}', style: style),
             ),
           ),
         );

@@ -8,6 +8,7 @@ import 'package:schedulemanager/modules/reminders_page/widgets/short_event_data_
 import 'package:schedulemanager/widgets/custom_header_widget.dart';
 import 'package:schedulemanager/widgets/custom_timeline_reminder_object_widget.dart';
 import 'package:schedulemanager/widgets/loading_widget.dart';
+import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 import '../../data/models/reminder_model.dart';
 import 'controllers/events_page_controller.dart';
 
@@ -63,52 +64,72 @@ class EventsPage extends StatelessWidget {
                         SizedBox(height: resp.hp(3)),
                         if (!events.isLoading.value) ...[
                           SizedBox(height: resp.hp(2.5)),
-                          ScrolleableCalendar(
-                            initialDay:
-                                events.days.isEmpty ? 0 : events.days.first,
-                            days: events.days,
-                            initialMonth:
-                                events.months.isEmpty ? 0 : events.months.first,
-                            months: events.months,
-                            onSelectedNewMonth: (selectedMonth) {
-                              final DateTime current =
-                                  events.selectedDate.value ?? DateTime.now();
-                              events.setDate(
-                                DateTime(
-                                  current.year,
-                                  selectedMonth,
-                                ),
-                                genDay: true,
-                              );
-                            },
-                            onSelectedNewDay: (newDay) {
-                              final current =
-                                  events.selectedDate.value ?? DateTime.now();
-                              events.setDate(
-                                DateTime(
-                                  current.year,
-                                  current.month,
-                                  newDay,
-                                ),
-                              );
-                            },
+                          ResponsiveContainerWidget(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 20,
+                            ),
+                            child: ScrolleableCalendar(
+                              initialDay:
+                                  events.days.isEmpty ? 0 : events.days.first,
+                              days: events.days,
+                              initialMonth: events.months.isEmpty
+                                  ? 0
+                                  : events.months.first,
+                              months: events.months,
+                              onSelectedNewMonth: (selectedMonth) {
+                                final DateTime current =
+                                    events.selectedDate.value ?? DateTime.now();
+                                events.setDate(
+                                  DateTime(
+                                    current.year,
+                                    selectedMonth,
+                                  ),
+                                  genDay: true,
+                                );
+                              },
+                              onSelectedNewDay: (newDay) {
+                                final current =
+                                    events.selectedDate.value ?? DateTime.now();
+                                events.setDate(
+                                  DateTime(
+                                    current.year,
+                                    current.month,
+                                    newDay,
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ],
                         SizedBox(height: resp.hp(3)),
-                        if (events.gettingEventsList.value)
-                          Column(
-                            children: [
-                              SizedBox(height: resp.hp(15)),
-                              const LoadingWidget(),
-                            ],
-                          )
-                        else if (!events.hasEvents)
-                          Column(
-                            children: [
-                              SizedBox(height: resp.hp(15)),
-                              const NoEventsWidget(),
-                            ],
-                          )
+                        if (events.gettingEventsList.value || !events.hasEvents)
+                          ResponsiveContainerWidget(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 20,
+                              ),
+                              child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 250),
+                                transitionBuilder: (child, animation) {
+                                  return ScaleTransition(
+                                    scale: animation,
+                                    child: child,
+                                  );
+                                },
+                                child: events.gettingEventsList.value
+                                    ? SizedBox(
+                                        height: resp.hp(28.5),
+                                        child: Center(
+                                          child: LoadingWidget(
+                                            key: Key(true.toString()),
+                                          ),
+                                        ),
+                                      )
+                                    : NoEventsWidget(
+                                        key: Key(false.toString()),
+                                      ),
+                              ))
                         else ...[
                           Text('Timeline', style: TextStyles.w700(20)),
                           Text(

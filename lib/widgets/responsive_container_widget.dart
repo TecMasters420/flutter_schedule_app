@@ -15,6 +15,7 @@ class ResponsiveContainerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.hardEdge,
       padding: padding ??
           const EdgeInsets.symmetric(
             vertical: 10,

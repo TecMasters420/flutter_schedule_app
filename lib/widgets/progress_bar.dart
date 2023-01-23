@@ -41,7 +41,7 @@ class ProgressBar extends StatelessWidget {
               width: constraints.maxWidth * (percent / 100),
               decoration: BoxDecoration(
                 color: progressColor,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(15),
               ),
             ),
           ],
