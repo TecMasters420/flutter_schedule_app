@@ -70,7 +70,6 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
           final progress = event.progress.isNaN ? 0.0 : event.progress;
           final isSameDay =
               event.startDate!.difference(event.endDate!).inDays == 0;
-          final timeRemaining = event.timeLeft(DateTime.now());
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Padding(
@@ -275,9 +274,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                         ReminderInformationWidget(
                           icon: Icons.timer_outlined,
                           title: 'Time remaining',
-                          value: event.endDate == null || event.endDate == null
-                              ? 'No date'
-                              : '${timeRemaining.isNegative ? 'Expired ' : ''}${event.getExpirationTime()} ${timeRemaining.isNegative ? 'ago' : ''}',
+                          value: event.getExpirationTime(),
                         ),
                       ],
                     ),

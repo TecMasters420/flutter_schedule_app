@@ -1,4 +1,4 @@
-import '../../../data/models/reminder_model.dart';
+import '../../../data/models/event_model.dart';
 import 'events_date_model.dart';
 
 class DatesWithEventsModel {

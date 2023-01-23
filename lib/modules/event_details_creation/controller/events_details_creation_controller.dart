@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:schedulemanager/data/models/reminder_model.dart';
+import 'package:schedulemanager/data/models/event_model.dart';
 
 import '../../reminders_page/services/events_page_service.dart';
 

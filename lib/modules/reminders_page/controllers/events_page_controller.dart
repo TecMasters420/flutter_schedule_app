@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '../../../data/models/reminder_model.dart';
+import '../../../data/models/event_model.dart';
 import '../models/dates_with_events_model.dart';
 import '../models/events_date_model.dart';
 import '../services/events_page_service.dart';

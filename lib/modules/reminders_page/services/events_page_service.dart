@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:get/instance_manager.dart';
 import '../../../app/services/base_repository.dart';
-import '../../../data/models/reminder_model.dart';
+import '../../../data/models/event_model.dart';
 import '../../auth/controllers/auth_controller.dart';
 import '../models/dates_with_events_model.dart';
 

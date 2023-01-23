@@ -1,11 +1,9 @@
-import 'package:equatable/equatable.dart';
-
 import 'event_location_model.dart';
 import 'event_status_enum.dart';
 import 'tag_model.dart';
 import 'task_model.dart';
 
-class EventModel extends Equatable {
+class EventModel {
   final int id;
   String title;
   String description;
@@ -84,8 +82,8 @@ class EventModel extends Equatable {
       startDate: DateTime.now(),
       endDate: DateTime.now(),
       title: '',
-      tasks: [],
-      tags: [],
+      tasks: const [],
+      tags: const [],
       currentStatus: EventStatus.none,
       updatedAt: DateTime.now(),
       endLocation: null,
@@ -109,11 +107,13 @@ class EventModel extends Equatable {
   String getExpirationTime() {
     if (endDate == null) return 'No date';
     final difference = endDate!.difference(DateTime.now());
-    final days = difference.inDays;
-    final hours = difference.inHours - difference.inDays * 24;
-    final minutes = difference.inMinutes - difference.inHours * 60;
+    final absDuration = difference.abs();
+    final isExpired = difference < const Duration(milliseconds: 0);
+    final days = absDuration.inDays;
+    final hours = absDuration.inHours - absDuration.inDays * 24;
+    final minutes = absDuration.inMinutes - absDuration.inHours * 60;
 
-    return '${_checkTime(days, 'day')}${_checkTime(hours, 'hour')}${_checkTime(minutes, 'minute')}';
+    return '${isExpired ? 'Expired ' : ''}${_checkTime(days, 'day')}${_checkTime(hours, 'hour')}${_checkTime(minutes, 'minute')}${isExpired ? 'ago' : ''}';
   }
 
   String _checkTime(int time, String label) {
@@ -121,20 +121,4 @@ class EventModel extends Equatable {
     final finalLabel = time.abs() > 1 ? '${label}s' : label;
     return '$time $finalLabel ';
   }
-
-  @override
-  List<Object?> get props => [
-        id,
-        title,
-        description,
-        startDate,
-        endDate,
-        currentStatus,
-        startLocation,
-        endLocation,
-        tasks,
-        tags,
-        createdAt,
-        updatedAt,
-      ];
 }

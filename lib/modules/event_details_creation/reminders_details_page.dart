@@ -10,7 +10,7 @@ import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 import '../../data/models/event_location_model.dart';
 import '../map_page/map_page.dart';
 import '../../app/config/constants.dart';
-import '../../data/models/reminder_model.dart';
+import '../../data/models/event_model.dart';
 import '../../data/models/tag_model.dart';
 import '../../data/models/task_model.dart';
 import '../../app/services/base_repository.dart';

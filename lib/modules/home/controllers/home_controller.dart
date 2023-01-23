@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '../../../data/models/reminder_model.dart';
+import '../../../data/models/event_model.dart';
 import '../services/home_services.dart';
 
 class HomeController extends GetxController {

@@ -1,4 +1,4 @@
-import '../../../data/models/reminder_model.dart';
+import '../../../data/models/event_model.dart';
 
 class FilteredEventsModel {
   final List<EventModel> expired;

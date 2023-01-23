@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:schedulemanager/app/config/app_constants.dart';
 import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/app/utils/responsive_util.dart';
-import 'package:schedulemanager/data/models/reminder_model.dart';
+import 'package:schedulemanager/data/models/event_model.dart';
 import 'package:schedulemanager/widgets/custom_header_widget.dart';
 import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 

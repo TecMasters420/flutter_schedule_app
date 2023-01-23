@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:schedulemanager/widgets/loading_widget.dart';
 import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 import 'events_list_per_type_widget.dart';
-import '../../../data/models/reminder_model.dart';
+import '../../../data/models/event_model.dart';
 import '../../../app/utils/responsive_util.dart';
 import '../../../app/utils/text_styles.dart';
 

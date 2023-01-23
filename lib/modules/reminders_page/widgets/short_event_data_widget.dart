@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/app/utils/responsive_util.dart';
 import 'package:schedulemanager/app/utils/text_styles.dart';
-import 'package:schedulemanager/data/models/reminder_model.dart';
+import 'package:schedulemanager/data/models/event_model.dart';
 import 'package:schedulemanager/routes/app_routes.dart';
 import 'package:schedulemanager/widgets/progress_bar.dart';
 

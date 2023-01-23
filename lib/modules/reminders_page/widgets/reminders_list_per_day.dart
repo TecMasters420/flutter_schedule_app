@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../app/config/constants.dart';
-import '../../../data/models/reminder_model.dart';
+import '../../../data/models/event_model.dart';
 import '../../../widgets/reminder_container.dart';
 import '../../../widgets/event_information.dart';
 import 'reminder_hour.dart';

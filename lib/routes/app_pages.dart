@@ -14,7 +14,6 @@ import '../modules/auth/pages/login_page.dart';
 import '../modules/initial_page/initial_information_page.dart';
 import '../modules/map_page/map_page.dart';
 import '../modules/auth/pages/register_page.dart';
-import '../modules/event_details_creation/reminders_details_page.dart';
 import '../modules/reminders_page/events_page.dart';
 import '../modules/user_profile/user_profile_page.dart';
 

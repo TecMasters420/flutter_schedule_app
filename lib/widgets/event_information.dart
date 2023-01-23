@@ -3,7 +3,7 @@ import 'package:get/route_manager.dart';
 import 'package:schedulemanager/app/utils/share_util.dart';
 import 'package:schedulemanager/routes/app_routes.dart';
 import '../data/models/event_status_enum.dart';
-import '../data/models/reminder_model.dart';
+import '../data/models/event_model.dart';
 import '../app/utils/responsive_util.dart';
 import 'progress_bar.dart';
 import 'tags_list.dart';
@@ -122,16 +122,10 @@ class EventInforamtion extends StatelessWidget {
                     style: TextStyles.w700(14),
                   ),
                   SizedBox(height: resp.hp(0.5)),
-                  if (event.currentStatus != EventStatus.expired)
-                    Text(
-                      event.getExpirationTime(),
-                      style: TextStyles.w500(14, grey),
-                    )
-                  else
-                    Text(
-                      'Expired',
-                      style: TextStyles.w500(14, Colors.red[200]!),
-                    ),
+                  Text(
+                    event.getExpirationTime(),
+                    style: TextStyles.w500(14, grey),
+                  )
                 ],
               ),
             ),

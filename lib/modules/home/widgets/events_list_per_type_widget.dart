@@ -6,7 +6,7 @@ import 'package:schedulemanager/modules/filtered_events/pages/filtered_events_pa
 import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 import '../../../widgets/custom_text_button_widget.dart';
 import 'no_events_widget.dart';
-import '../../../data/models/reminder_model.dart';
+import '../../../data/models/event_model.dart';
 import 'reminder_date_data.dart';
 import '../../../app/utils/responsive_util.dart';
 
