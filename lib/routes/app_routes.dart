@@ -8,4 +8,5 @@ class AppRoutes {
   static const String profile = '/userProfilePage';
   static const String mapPage = '/mapPage';
   static const String notifications = '/notificationsPage';
+  static const String filteredEvents = '/filteredEventsPage';
 }

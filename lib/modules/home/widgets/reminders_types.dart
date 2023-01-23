@@ -41,7 +41,6 @@ class _ActivitiesTypesState extends State<ActivitiesTypes> {
         widget.eventsPerType.values.elementAt(_currentIndex).length;
 
     return ResponsiveContainerWidget(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Column(
         children: [
           Row(
@@ -105,6 +104,7 @@ class _ActivitiesTypesState extends State<ActivitiesTypes> {
                     key: Key(false.toString()),
                     data: widget.eventsPerType.values.elementAt(_currentIndex),
                     maxEventsToShow: 2,
+                    type: eventsTabs[_currentIndex],
                   ),
           )
         ],

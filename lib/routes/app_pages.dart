@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:schedulemanager/modules/auth/bindings/register_bindings.dart';
+import 'package:schedulemanager/modules/filtered_events/pages/filtered_events_page.dart';
 import 'package:schedulemanager/modules/notifications_page/pages/notifications_page.dart';
 import 'package:schedulemanager/routes/app_routes.dart';
 import '../modules/home/bindings/home_bindings.dart';
@@ -20,6 +21,10 @@ final List<GetPage> appPages = [
     name: AppRoutes.initial,
     page: () => const InitialInformationPage(),
     binding: const InitialInformationBindings(),
+  ),
+  GetPage(
+    name: AppRoutes.filteredEvents,
+    page: () => const FilteredEventsPage(events: [], title: ''),
   ),
   GetPage(
     name: AppRoutes.login,

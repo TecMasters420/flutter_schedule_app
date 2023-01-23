@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:schedulemanager/modules/filtered_events/pages/filtered_events_page.dart';
 import '../../../routes/app_routes.dart';
 import '../../../widgets/custom_text_button_widget.dart';
 import 'all_reminders_redirection_button.dart';
@@ -18,10 +19,12 @@ import '../../../widgets/reminder_information.dart';
 class EventsListPerType extends StatelessWidget {
   final List<ReminderModel> data;
   final int maxEventsToShow;
+  final String type;
   const EventsListPerType({
     super.key,
     required this.data,
     required this.maxEventsToShow,
+    required this.type,
   });
 
   @override
@@ -41,7 +44,9 @@ class EventsListPerType extends StatelessWidget {
               CustomTextButtonWidget(
                 title: 'See all',
                 customFontSize: 16,
-                onTap: () => Get.toNamed(AppRoutes.events),
+                onTap: () => Get.to(
+                  () => FilteredEventsPage(events: data, title: type),
+                ),
               ),
             ],
           ),

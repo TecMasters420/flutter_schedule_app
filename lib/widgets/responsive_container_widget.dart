@@ -18,7 +18,7 @@ class ResponsiveContainerWidget extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       padding: padding ??
           const EdgeInsets.symmetric(
-            vertical: 10,
+            vertical: 15,
             horizontal: 20,
           ),
       decoration: BoxDecoration(
