@@ -61,7 +61,7 @@ class EventsListPerType extends StatelessWidget {
                   dotColor: color,
                 ),
                 rightWidget: ReminderInformation(
-                  reminder: data[index],
+                  event: data[index],
                 ),
               );
             },

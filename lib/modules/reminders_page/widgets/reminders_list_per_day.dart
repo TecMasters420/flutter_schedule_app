@@ -40,7 +40,7 @@ class EventsListPerDay extends StatelessWidget {
               color: color,
               leftWidget: ReminderHour(dates: [startDate, endDate]),
               rightWidget: ReminderInformation(
-                reminder: remider,
+                event: remider,
               ),
             ),
           );

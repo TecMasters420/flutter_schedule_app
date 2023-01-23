@@ -11,12 +11,8 @@ import 'package:schedulemanager/widgets/custom_nav_bar_widget.dart';
 import 'package:schedulemanager/widgets/custom_timeline_reminder_object_widget.dart';
 import 'package:schedulemanager/widgets/loading_widget.dart';
 import 'package:schedulemanager/widgets/responsive_container_widget.dart';
-import '../../data/models/reminder_model.dart';
 import 'controllers/events_page_controller.dart';
-
-import '../reminder_details/reminders_details_page.dart';
 import '../../app/utils/responsive_util.dart';
-
 import '../../app/config/constants.dart';
 import '../../app/utils/text_styles.dart';
 import 'widgets/widgets.dart';
@@ -92,93 +88,103 @@ class EventsPage extends StatelessWidget {
                           ),
                         ],
                         SizedBox(height: resp.hp(3)),
-                        if (events.gettingEventsList.value || !events.hasEvents)
-                          ResponsiveContainerWidget(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 20,
-                              ),
-                              child: AnimatedSwitcher(
-                                duration: const Duration(milliseconds: 250),
-                                transitionBuilder: (child, animation) {
-                                  return ScaleTransition(
-                                    scale: animation,
-                                    child: child,
-                                  );
-                                },
-                                child: events.gettingEventsList.value
-                                    ? SizedBox(
-                                        height: resp.hp(28.5),
-                                        child: Center(
-                                          child: LoadingWidget(
-                                            key: Key(true.toString()),
-                                          ),
-                                        ),
-                                      )
-                                    : NoEventsWidget(
-                                        key: Key(false.toString()),
-                                      ),
-                              ))
-                        else ...[
-                          Text('Timeline', style: TextStyles.w700(20)),
-                          Text(
-                            '${events.eventsInDate.length} ${events.eventsInDate.length == 1 ? 'Event' : 'Events'} in this day',
-                            style: TextStyles.w500(14, grey),
+                        ResponsiveContainerWidget(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 20,
                           ),
-                          SizedBox(height: resp.hp(2.5)),
-                          Column(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: List.generate(
-                              24,
-                              (h) {
-                                final hour = h + 1;
-                                final tempHour = DateTime(0, 0, 0, hour);
-                                final time =
-                                    DateFormat('hh a').format(tempHour);
-                                final eventsInHour = events.eventsInDate
-                                    .where((e) =>
-                                        e.endDate != null &&
-                                        e.endDate!.hour == hour)
-                                    .toList();
-                                return CustomTimeLineReminderObjectWidget(
-                                  title: time,
-                                  titleStyle: eventsInHour.isNotEmpty
-                                      ? TextStyles.w700(14)
-                                      : TextStyles.w500(14, lightGrey),
-                                  suffixWidget: eventsInHour.isEmpty
-                                      ? null
-                                      : Row(
-                                          children: [
-                                            ...List.generate(
-                                              eventsInHour.length,
-                                              (x) {
-                                                final isFinalElement =
-                                                    x == 5 - 1;
-                                                return Padding(
-                                                  padding: EdgeInsets.only(
-                                                    right: !isFinalElement
-                                                        ? 20
-                                                        : 0,
-                                                  ),
-                                                  child: ShortEventDataWidget(
-                                                    event: eventsInHour[x],
-                                                    color:
-                                                        colors[Random().nextInt(
-                                                      colors.length - 1,
-                                                    )],
-                                                    onLongPressCallback:
-                                                        (event) {},
-                                                  ),
-                                                );
-                                              },
-                                            )
-                                          ],
+                            children: [
+                              if (events.gettingEventsList.value ||
+                                  !events.hasEvents)
+                                AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 250),
+                                  transitionBuilder: (child, animation) {
+                                    return ScaleTransition(
+                                      scale: animation,
+                                      child: child,
+                                    );
+                                  },
+                                  child: events.gettingEventsList.value
+                                      ? SizedBox(
+                                          height: resp.hp(28.5),
+                                          child: Center(
+                                            child: LoadingWidget(
+                                              key: Key(true.toString()),
+                                            ),
+                                          ),
+                                        )
+                                      : NoEventsWidget(
+                                          key: Key(false.toString()),
                                         ),
-                                );
-                              },
-                            ),
-                          )
-                        ]
+                                )
+                              else ...[
+                                Text('Timeline', style: TextStyles.w700(20)),
+                                Text(
+                                  '${events.eventsInDate.length} ${events.eventsInDate.length == 1 ? 'Event' : 'Events'} in this day',
+                                  style: TextStyles.w500(14, grey),
+                                ),
+                                SizedBox(height: resp.hp(2.5)),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: List.generate(
+                                    24,
+                                    (h) {
+                                      final hour = h + 1;
+                                      final tempHour = DateTime(0, 0, 0, hour);
+                                      final time =
+                                          DateFormat('hh a').format(tempHour);
+                                      final eventsInHour = events.eventsInDate
+                                          .where((e) =>
+                                              e.endDate != null &&
+                                              e.endDate!.hour == hour)
+                                          .toList();
+                                      return CustomTimeLineReminderObjectWidget(
+                                        title: time,
+                                        titleStyle: eventsInHour.isNotEmpty
+                                            ? TextStyles.w700(14)
+                                            : TextStyles.w500(14, grey),
+                                        suffixWidget: eventsInHour.isEmpty
+                                            ? null
+                                            : Row(
+                                                children: [
+                                                  ...List.generate(
+                                                    eventsInHour.length,
+                                                    (x) {
+                                                      final isFinalElement =
+                                                          x == 5 - 1;
+                                                      return Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                          right: !isFinalElement
+                                                              ? 20
+                                                              : 0,
+                                                        ),
+                                                        child:
+                                                            ShortEventDataWidget(
+                                                          event:
+                                                              eventsInHour[x],
+                                                          color: colors[
+                                                              Random().nextInt(
+                                                            colors.length - 1,
+                                                          )],
+                                                          onLongPressCallback:
+                                                              (event) {},
+                                                        ),
+                                                      );
+                                                    },
+                                                  )
+                                                ],
+                                              ),
+                                      );
+                                    },
+                                  ),
+                                )
+                              ]
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),

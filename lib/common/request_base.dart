@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/rendering.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:http/http.dart' as http;
 import 'package:schedulemanager/app/utils/alert_dialogs_util.dart';
 import 'package:schedulemanager/modules/auth/models/api_response_model.dart';
 
-const String _base = 'https://scheduleappback-374905.wl.r.appspot.com/api/v1';
-// const String _base = 'http://192.168.1.29:8080/api/v1';
-
 class RequestBase {
+  final String _base = dotenv.env['APIURL']!;
+
   Future<ApiResponseModel?> call(final String extraEndpoint,
       {String? token, Map<String, dynamic>? body}) async {
     const Map<String, String> headers = {

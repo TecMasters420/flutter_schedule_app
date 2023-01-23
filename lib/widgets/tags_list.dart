@@ -25,20 +25,26 @@ class TagsList extends StatelessWidget {
       direction: Axis.horizontal,
       children: List.generate(
           tagsList.length.clamp(0, maxTagsToShow ?? tagsList.length), (index) {
-        final color =
-            colorsForBgs.elementAt(Random().nextInt(colorsForBgs.length));
+        // final color =
+        //     colorsForBgs.elementAt(Random().nextInt(colorsForBgs.length));
         return Padding(
           padding: const EdgeInsets.only(right: 5),
           child: InkWell(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(30),
             radius: 5,
             onLongPress: () {
               if (onLongPressCallback != null) onLongPressCallback!(index);
             },
             child: Chip(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
               padding: const EdgeInsets.symmetric(horizontal: 5),
-              backgroundColor: color,
-              label: Text('#${tagsList[index]}', style: style),
+              backgroundColor: accent,
+              label: Text(
+                '#${tagsList[index].replaceAll(RegExp(r'\s+'), '')}',
+                style: style,
+              ),
             ),
           ),
         );

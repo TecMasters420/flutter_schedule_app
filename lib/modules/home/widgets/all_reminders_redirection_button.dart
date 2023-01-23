@@ -14,7 +14,7 @@ class AllEventsRedirectionButton extends StatelessWidget {
     return GestureDetector(
       child: SizedBox(
         height: resp.hp(10),
-        width: double.infinity,
+        width: resp.width,
         child: Material(
           color: lightBlue,
           borderRadius: BorderRadius.circular(20),

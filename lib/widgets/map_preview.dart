@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 import '../domain/map_api.dart';
 import '../modules/map_page/map_page.dart';
 import 'animated_marker.dart';
@@ -86,87 +87,84 @@ class _MapPreviewState extends State<MapPreview> {
     );
 
     return GestureDetector(
-      child: Container(
+      child: SizedBox(
         height: widget.height,
-        width: widget.width,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: lightGrey.withOpacity(0.25),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: FlutterMap(
-            mapController: _controller,
-            options: MapOptions(
-              interactiveFlags: InteractiveFlag.none,
-              enableMultiFingerGestureRace: false,
-              keepAlive: false,
-              // minZoom: 13,
-              maxZoom: 15,
-              zoom: 10,
-              minZoom: 1,
-              onTap: (tapPosition, point) {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) {
-                    return MapPage(
-                      startPos: startlPos,
-                      endPost: endPos,
-                      startAddress: widget.startAddress,
-                      endAddress: widget.endAddress,
-                      onAcceptCallback:
-                          (start, startAddress, end, endAddress, points) {
-                        setState(() {
-                          _points = points!;
-                        });
-                        if (widget.onAcceptCallback != null) {
-                          widget.onAcceptCallback!(
-                              start, startAddress, end, endAddress, points);
-                        }
-                      },
-                    );
-                  },
-                ));
-              },
-              center: LatLng(
-                widget.initialPoint.latitude,
-                widget.initialPoint.longitude,
-              ),
-            ),
-            children: [
-              TileLayer(
-                backgroundColor: Colors.white,
-                urlTemplate:
-                    "https://api.mapbox.com/styles/v1/frankrdz/{styleId}/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
-                additionalOptions: {
-                  'styleId': 'clarc1scl000314lfyzx582dm',
-                  'accessToken': dotenv.env['MAPBOX_ACCESSTOKEN']!,
-                },
-              ),
-              PolylineLayer(
-                polylines: [
-                  Polyline(
-                    color: accent.withOpacity(0.8),
-                    borderColor: accent.withOpacity(0.8),
-                    borderStrokeWidth: 5,
-                    strokeCap: StrokeCap.round,
-                    points: _points,
-                  ),
-                ],
-              ),
-              MarkerLayer(
-                markers: [widget.initialPoint, widget.endPoint]
-                    .map(
-                      (e) => Marker(
-                        point: LatLng(e.latitude, e.longitude),
-                        builder: (context) {
-                          return const AnimatedMarker();
+        child: ResponsiveContainerWidget(
+          padding: EdgeInsets.zero,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: FlutterMap(
+              mapController: _controller,
+              options: MapOptions(
+                interactiveFlags: InteractiveFlag.none,
+                enableMultiFingerGestureRace: false,
+                keepAlive: false,
+                // minZoom: 13,
+                maxZoom: 15,
+                zoom: 10,
+                minZoom: 1,
+                onTap: (tapPosition, point) {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return MapPage(
+                        startPos: startlPos,
+                        endPost: endPos,
+                        startAddress: widget.startAddress,
+                        endAddress: widget.endAddress,
+                        onAcceptCallback:
+                            (start, startAddress, end, endAddress, points) {
+                          setState(() {
+                            _points = points!;
+                          });
+                          if (widget.onAcceptCallback != null) {
+                            widget.onAcceptCallback!(
+                                start, startAddress, end, endAddress, points);
+                          }
                         },
-                      ),
-                    )
-                    .toList(),
-              )
-            ],
+                      );
+                    },
+                  ));
+                },
+                center: LatLng(
+                  widget.initialPoint.latitude,
+                  widget.initialPoint.longitude,
+                ),
+              ),
+              children: [
+                TileLayer(
+                  backgroundColor: Colors.white,
+                  urlTemplate:
+                      "https://api.mapbox.com/styles/v1/frankrdz/{styleId}/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
+                  additionalOptions: {
+                    'styleId': 'clarc1scl000314lfyzx582dm',
+                    'accessToken': dotenv.env['MAPBOX_ACCESSTOKEN']!,
+                  },
+                ),
+                PolylineLayer(
+                  polylines: [
+                    Polyline(
+                      color: accent.withOpacity(0.8),
+                      borderColor: accent.withOpacity(0.8),
+                      borderStrokeWidth: 5,
+                      strokeCap: StrokeCap.round,
+                      points: _points,
+                    ),
+                  ],
+                ),
+                MarkerLayer(
+                  markers: [widget.initialPoint, widget.endPoint]
+                      .map(
+                        (e) => Marker(
+                          point: LatLng(e.latitude, e.longitude),
+                          builder: (context) {
+                            return const AnimatedMarker();
+                          },
+                        ),
+                      )
+                      .toList(),
+                )
+              ],
+            ),
           ),
         ),
       ),

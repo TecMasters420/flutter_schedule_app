@@ -36,10 +36,11 @@ class CustomTimeLineReminderObjectWidget extends StatelessWidget {
               ),
               SizedBox(width: resp.wp(5)),
               Expanded(
-                  child: Container(
-                height: 1,
-                color: lightGrey.withOpacity(0.25),
-              ))
+                child: Container(
+                  height: 1,
+                  color: lightGrey.withOpacity(0.25),
+                ),
+              )
             ],
           ),
         ),
@@ -75,7 +76,7 @@ class CustomTimeLineReminderObjectWidget extends StatelessWidget {
                   child: suffixWidget == null
                       ? Container(
                           height: 1,
-                          color: lightBlue.withOpacity(0.25),
+                          color: lightGrey,
                         )
                       : SingleChildScrollView(
                           controller: scroll.controller,

@@ -54,7 +54,7 @@ class ShortEventDataWidget extends StatelessWidget {
       constraints: BoxConstraints(maxWidth: resp.wp(70), minWidth: 0),
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(10),
         color: containerBg,
         boxShadow: shadows,
       ),

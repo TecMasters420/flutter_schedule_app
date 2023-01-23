@@ -45,7 +45,7 @@ class ReminderContainer extends StatelessWidget {
                         curve: Curves.ease,
                         duration: const Duration(milliseconds: 400),
                         height: height.value,
-                        width: double.infinity,
+                        width: resp.width,
                         decoration: BoxDecoration(
                           color: color,
                           borderRadius: BorderRadius.circular(20),

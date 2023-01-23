@@ -12,22 +12,15 @@ import '../app/utils/text_styles.dart';
 import 'custom_button.dart';
 
 class ReminderInformation extends StatelessWidget {
-  final ReminderModel reminder;
+  final ReminderModel event;
   const ReminderInformation({
     super.key,
-    required this.reminder,
+    required this.event,
   });
 
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-
-    final remainingTime = reminder.timeLeft(DateTime.now());
-
-    final String daysMess =
-        remainingTime.inDays == 0 ? '' : '${remainingTime.inDays} day/s, ';
-    final String hoursMess =
-        '${remainingTime.inHours - (remainingTime.inDays * 24)} hours';
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +33,7 @@ class ReminderInformation extends StatelessWidget {
         //   fit: BoxFit.fill,
         // ),
         Text(
-          reminder.title,
+          event.title,
           style: TextStyles.w700(16),
           textAlign: TextAlign.start,
           maxLines: 2,
@@ -48,7 +41,7 @@ class ReminderInformation extends StatelessWidget {
         ),
         SizedBox(height: resp.hp(0.5)),
         Text(
-          reminder.description,
+          event.description,
           style: TextStyles.w400(14, grey),
           textAlign: TextAlign.start,
           maxLines: 3,
@@ -59,8 +52,8 @@ class ReminderInformation extends StatelessWidget {
           'Event Information',
           style: TextStyles.w700(16),
         ),
-        if (reminder.endLocation != null &&
-            reminder.endLocation!.address != null) ...[
+        if (event.endLocation != null &&
+            event.endLocation!.address != null) ...[
           SizedBox(height: resp.hp(1)),
           Text(
             'End location',
@@ -68,12 +61,12 @@ class ReminderInformation extends StatelessWidget {
           ),
           SizedBox(height: resp.hp(0.5)),
           Text(
-            reminder.endLocation!.address.toString(),
+            event.endLocation!.address.toString(),
             style: TextStyles.w500(14, grey),
           ),
         ],
-        if (reminder.startLocation != null &&
-            reminder.startLocation!.address != null) ...[
+        if (event.startLocation != null &&
+            event.startLocation!.address != null) ...[
           SizedBox(height: resp.hp(1)),
           Text(
             'Start location',
@@ -81,23 +74,23 @@ class ReminderInformation extends StatelessWidget {
           ),
           SizedBox(height: resp.hp(0.5)),
           Text(
-            reminder.startLocation!.address.toString(),
+            event.startLocation!.address.toString(),
             style: TextStyles.w500(14, grey),
           ),
         ],
-        if (reminder.tags.isNotEmpty) ...[
+        if (event.tags.isNotEmpty) ...[
           SizedBox(height: resp.hp(1)),
           Text(
             'Tags',
             style: TextStyles.w700(14),
           ),
           TagsList(
-            tagsList: reminder.tags.map((e) => e.name).toList(),
+            tagsList: event.tags.map((e) => e.name).toList(),
             maxTagsToShow: 3,
             style: TextStyles.w700(12, Colors.white),
           ),
         ],
-        if (reminder.tasks.isNotEmpty) ...[
+        if (event.tasks.isNotEmpty) ...[
           SizedBox(height: resp.hp(1)),
           Text(
             'Tasks progress',
@@ -105,12 +98,12 @@ class ReminderInformation extends StatelessWidget {
           ),
           SizedBox(height: resp.hp(0.5)),
           Text(
-            '${(reminder.progress.isNaN ? 0 : reminder.progress).toStringAsFixed(2)}%',
+            '${(event.progress.isNaN ? 0 : event.progress).toStringAsFixed(2)}%',
             style: TextStyles.w500(14, grey),
           ),
           SizedBox(height: resp.hp(1)),
           ProgressBar(
-            percent: reminder.progress,
+            percent: event.progress,
             height: resp.hp(1.5),
             width: resp.width,
           ),
@@ -119,29 +112,28 @@ class ReminderInformation extends StatelessWidget {
         SizedBox(height: resp.hp(1)),
         Row(
           children: [
-            if (reminder.currentStatus != EventStatus.expired) ...[
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Due',
+                    style: TextStyles.w700(14),
+                  ),
+                  SizedBox(height: resp.hp(0.5)),
+                  if (event.currentStatus != EventStatus.expired)
                     Text(
-                      'Due',
-                      style: TextStyles.w700(14),
-                    ),
-                    Text(
-                      daysMess + hoursMess,
+                      event.getExpirationTime(),
                       style: TextStyles.w500(14, grey),
+                    )
+                  else
+                    Text(
+                      'Expired',
+                      style: TextStyles.w500(14, Colors.red[200]!),
                     ),
-                  ],
-                ),
+                ],
               ),
-            ] else
-              Expanded(
-                child: Text(
-                  'Expired',
-                  style: TextStyles.w500(14, Colors.red[200]!),
-                ),
-              ),
+            ),
           ],
         ),
         SizedBox(height: resp.hp(1)),
@@ -155,8 +147,8 @@ class ReminderInformation extends StatelessWidget {
               hideShadows: true,
               style: TextStyles.w700(14, accent),
               onTap: () async => await ShareUtil.generate(
-                'I invite you to the event: ${reminder.title}',
-                'I invite you to the event: ${reminder.title}',
+                'I invite you to the event: ${event.title}',
+                'I invite you to the event: ${event.title}',
               ),
             ),
             SizedBox(width: resp.wp(2.5)),
@@ -170,7 +162,7 @@ class ReminderInformation extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (BuildContext context) =>
-                      ReminderDetailsPage(reminder: reminder),
+                      ReminderDetailsPage(reminder: event),
                 ),
               ),
             ),
