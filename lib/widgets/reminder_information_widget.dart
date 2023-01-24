@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/widgets/custom_icon_buttton_widget.dart';
 
 import '../app/config/constants.dart';
 import '../app/utils/responsive_util.dart';
@@ -69,18 +70,11 @@ class EventDetailsWidget extends StatelessWidget {
             ),
             if (showSuffixWidget)
               customSuffixWidget ??
-                  IconButton(
-                    style: IconButton.styleFrom(padding: EdgeInsets.zero),
-                    splashRadius: 20,
-                    splashColor: accent.withOpacity(0.3),
-                    highlightColor: accent.withOpacity(0.25),
-                    icon: const Icon(
-                      Icons.mode,
-                      color: accent,
-                      size: 25,
-                    ),
-                    onPressed: onTapEditCallback,
-                  ),
+                  CustomIconButtonWidget(
+                    color: accent,
+                    icon: Icons.edit,
+                    onTapCallback: onTapEditCallback ?? () {},
+                  )
           ],
         ),
         SizedBox(height: resp.hp(2.5)),
