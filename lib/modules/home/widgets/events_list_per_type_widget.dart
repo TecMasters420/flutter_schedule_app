@@ -78,7 +78,7 @@ class EventsListPerType extends StatelessWidget {
               return ReminderContainer(
                 color: color,
                 leftWidget: ReminderDateData(
-                  endDate: data[index].endDate!,
+                  endDate: data[index].endDate,
                   timeRemaining: data[index].timeLeft(DateTime.now()),
                   dotColor: color,
                 ),

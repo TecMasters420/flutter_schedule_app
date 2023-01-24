@@ -4,7 +4,7 @@ import '../app/config/constants.dart';
 import '../app/utils/responsive_util.dart';
 import '../app/utils/text_styles.dart';
 
-class ReminderInformationWidget extends StatelessWidget {
+class EventDetailsWidget extends StatelessWidget {
   final IconData icon;
   final String title;
   final String? value;
@@ -12,7 +12,7 @@ class ReminderInformationWidget extends StatelessWidget {
   final bool showSuffixWidget;
   final VoidCallback? onTapEditCallback;
   final Widget? customSuffixWidget;
-  const ReminderInformationWidget({
+  const EventDetailsWidget({
     super.key,
     required this.icon,
     required this.title,

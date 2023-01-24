@@ -136,9 +136,7 @@ class EventsPage extends StatelessWidget {
                                       final time =
                                           DateFormat('hh a').format(tempHour);
                                       final eventsInHour = events.eventsInDate
-                                          .where((e) =>
-                                              e.endDate != null &&
-                                              e.endDate!.hour == hour)
+                                          .where((e) => e.endDate.hour == hour)
                                           .toList();
                                       return CustomTimeLineReminderObjectWidget(
                                         title: time,

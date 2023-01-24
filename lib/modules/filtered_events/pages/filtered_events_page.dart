@@ -52,7 +52,7 @@ class FilteredEventsPage extends StatelessWidget {
                       return ReminderContainer(
                         color: color,
                         leftWidget: ReminderDateData(
-                          endDate: e.endDate!,
+                          endDate: e.endDate,
                           timeRemaining: e.timeLeft(DateTime.now()),
                           dotColor: color,
                         ),

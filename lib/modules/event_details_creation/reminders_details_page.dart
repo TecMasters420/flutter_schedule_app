@@ -47,13 +47,6 @@ class _EventDetailsCreationPageState extends State<EventDetailsCreationPage> {
     super.initState();
     controller = Get.find();
     _event = controller.event.value!;
-    if (_event.endDate != null && _event.startDate != null) {
-      _selectedEndDate = _event.endDate;
-      _selectedStartDate = _event.startDate;
-    } else {
-      _selectedEndDate = null;
-      _selectedStartDate = null;
-    }
     address = null;
     tag = TagModel(name: '');
     task = TaskModel(name: '', isCompleted: false);
@@ -79,7 +72,7 @@ class _EventDetailsCreationPageState extends State<EventDetailsCreationPage> {
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
     final bool isSameDay =
-        _event.startDate!.difference(_event.endDate!).inDays == 0;
+        _event.startDate.difference(_event.endDate).inDays == 0;
     final double progress = _event.progress.isNaN ? 0 : _event.progress;
     final Duration timeRemaining = _event.timeLeft(DateTime.now());
     final String daysMess =
@@ -132,7 +125,7 @@ class _EventDetailsCreationPageState extends State<EventDetailsCreationPage> {
                 child: Column(
                   children: [
                     SizedBox(height: resp.hp(2.5)),
-                    ReminderInformationWidget(
+                    EventDetailsWidget(
                       icon: Icons.description_outlined,
                       title: 'Description',
                       value: _event.description.isEmpty
@@ -141,7 +134,7 @@ class _EventDetailsCreationPageState extends State<EventDetailsCreationPage> {
                       showSuffixWidget: true,
                       onTapEditCallback: () {},
                     ),
-                    ReminderInformationWidget(
+                    EventDetailsWidget(
                       icon: Icons.tag_rounded,
                       title: 'Tags',
                       showSuffixWidget: true,
@@ -173,7 +166,7 @@ class _EventDetailsCreationPageState extends State<EventDetailsCreationPage> {
                         },
                       ),
                     ),
-                    ReminderInformationWidget(
+                    EventDetailsWidget(
                       icon: Icons.list_alt_rounded,
                       title: 'Tasks',
                       showSuffixWidget: true,
@@ -263,7 +256,7 @@ class _EventDetailsCreationPageState extends State<EventDetailsCreationPage> {
                         ),
                       ),
                     ),
-                    ReminderInformationWidget(
+                    EventDetailsWidget(
                       icon: Icons.bar_chart_rounded,
                       title: 'Progress',
                       value: '${progress.toStringAsFixed(2)}%',
@@ -291,7 +284,7 @@ class _EventDetailsCreationPageState extends State<EventDetailsCreationPage> {
                 child: Column(
                   children: [
                     SizedBox(height: resp.hp(2.5)),
-                    ReminderInformationWidget(
+                    EventDetailsWidget(
                       icon: Icons.calendar_today_rounded,
                       title: 'Start Date',
                       value: _selectedStartDate == null
@@ -301,7 +294,7 @@ class _EventDetailsCreationPageState extends State<EventDetailsCreationPage> {
                       onTapEditCallback: () {},
                     ),
                     if (_selectedEndDate != null) ...[
-                      ReminderInformationWidget(
+                      EventDetailsWidget(
                         icon: Icons.calendar_month_outlined,
                         title: 'End Date',
                         value: _selectedEndDate == null
@@ -311,7 +304,7 @@ class _EventDetailsCreationPageState extends State<EventDetailsCreationPage> {
                         onTapEditCallback: () {},
                       ),
                     ],
-                    ReminderInformationWidget(
+                    EventDetailsWidget(
                       icon: Icons.timer_outlined,
                       title: 'Time remaining',
                       value: _selectedEndDate == null ||
@@ -333,7 +326,7 @@ class _EventDetailsCreationPageState extends State<EventDetailsCreationPage> {
                 child: Column(
                   children: [
                     SizedBox(height: resp.hp(2.5)),
-                    const ReminderInformationWidget(
+                    const EventDetailsWidget(
                       icon: Icons.water_drop_outlined,
                       title: 'Expected weather',
                       extra: WeatherContainer(
@@ -353,7 +346,7 @@ class _EventDetailsCreationPageState extends State<EventDetailsCreationPage> {
                 child: Column(
                   children: [
                     SizedBox(height: resp.hp(2.5)),
-                    ReminderInformationWidget(
+                    EventDetailsWidget(
                       icon: Icons.location_on_outlined,
                       title: 'Location',
                       value: address,
@@ -361,14 +354,14 @@ class _EventDetailsCreationPageState extends State<EventDetailsCreationPage> {
                         children: [
                           if (_event.startLocation != null &&
                               _event.startLocation!.address != null)
-                            ReminderInformationWidget(
+                            EventDetailsWidget(
                               icon: Icons.location_pin,
                               title: 'Start location',
                               value: _event.startLocation!.address,
                             ),
                           if (_event.endLocation != null &&
                               _event.endLocation!.address != null)
-                            ReminderInformationWidget(
+                            EventDetailsWidget(
                               icon: Icons.location_searching_rounded,
                               title: 'End location',
                               value: _event.endLocation!.address,

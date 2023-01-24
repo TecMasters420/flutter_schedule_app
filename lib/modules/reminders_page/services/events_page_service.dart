@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:get/instance_manager.dart';
 import '../../../app/services/base_repository.dart';
 import '../../../data/models/event_model.dart';
@@ -39,7 +40,7 @@ class EventsPageRepository extends BaseRepository {
     );
     if (res != null) {
       // final json = jsonDecode(res.body);
-      print(res.body);
+      debugPrint(res.body);
     }
   }
 

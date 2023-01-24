@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:schedulemanager/app/utils/share_util.dart';
 import 'package:schedulemanager/routes/app_routes.dart';
-import '../data/models/event_status_enum.dart';
 import '../data/models/event_model.dart';
 import '../app/utils/responsive_util.dart';
 import 'progress_bar.dart';

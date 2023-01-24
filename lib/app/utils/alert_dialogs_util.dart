@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/app/utils/text_styles.dart';
+import 'package:schedulemanager/widgets/custom_button.dart';
+import 'package:schedulemanager/widgets/custom_text_button_widget.dart';
+
+import '../../modules/event_details_creation/widgets/custom_text_form_field_widget.dart';
 
 class AlertDialogsUtil {
   static void forStatusBase(
@@ -11,6 +15,8 @@ class AlertDialogsUtil {
     bool showLoadingIndicator = false,
     String image = '',
     Color titleColor = black,
+    bool showActions = false,
+    VoidCallback? onAccept,
   }) {
     Get.defaultDialog(
       title: '',
@@ -32,7 +38,11 @@ class AlertDialogsUtil {
                 if (image.isNotEmpty) const SizedBox(height: 60),
                 Column(
                   children: [
-                    Text(title, style: TextStyles.w700(20, titleColor)),
+                    Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: TextStyles.w700(20, titleColor),
+                    ),
                     const SizedBox(height: 5),
                     ...bodyText.map(
                       (e) => Column(
@@ -49,7 +59,31 @@ class AlertDialogsUtil {
                     if (showLoadingIndicator) ...[
                       const SizedBox(height: 20),
                       const CircularProgressIndicator(),
-                    ]
+                    ],
+                    if (showActions) ...[
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          CustomButton(
+                            text: 'Accept',
+                            color: accent,
+                            onTap: onAccept ?? () {},
+                            style: TextStyles.w700(
+                              14,
+                              Colors.white,
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          CustomTextButtonWidget(
+                            title: 'Cancel',
+                            onTap: () {
+                              Get.back();
+                            },
+                          ),
+                        ],
+                      )
+                    ],
                   ],
                 ),
               ],
@@ -117,6 +151,52 @@ class AlertDialogsUtil {
       customBodyMessage ?? [],
       image: 'assets/images/checked.png',
       dimissible: true,
+    );
+  }
+
+  static void remove({
+    required List<String>? customBodyMessage,
+    required VoidCallback onAcceptCallback,
+  }) {
+    forStatusBase(
+      'Delete this item?',
+      titleColor: red,
+      customBodyMessage ?? [],
+      image: 'assets/images/cancel.png',
+      dimissible: true,
+      showActions: true,
+      onAccept: onAcceptCallback,
+    );
+  }
+
+  static Future<void> withTextField({
+    required String title,
+    required String initialText,
+    required int maxLines,
+    void Function(String)? onSummitCallback,
+  }) {
+    return Get.defaultDialog(
+      titlePadding: const EdgeInsets.only(top: 20),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+      title: 'Set $title',
+      radius: 30,
+      titleStyle: TextStyles.w700(18),
+      content: Column(
+        children: [
+          const SizedBox(height: 20),
+          CustomTextFormFieldWidget(
+            initialText: initialText,
+            label: title,
+            maxLines: maxLines,
+            onAcceptCallback: (value) {
+              Get.back();
+              if (onSummitCallback != null) {
+                onSummitCallback(value);
+              }
+            },
+          )
+        ],
+      ),
     );
   }
 }

@@ -26,8 +26,8 @@ class EventsListPerDay extends StatelessWidget {
         (x) {
           final EventModel remider = reminders[x];
           final String startDate =
-              DateFormat('MM-dd').format(remider.startDate!);
-          final String endDate = DateFormat('MM-dd').format(remider.endDate!);
+              DateFormat('MM-dd').format(remider.startDate);
+          final String endDate = DateFormat('MM-dd').format(remider.endDate);
 
           final Color color = colors[Random().nextInt(colors.length - 1)];
 

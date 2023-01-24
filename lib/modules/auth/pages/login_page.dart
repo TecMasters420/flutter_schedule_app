@@ -14,6 +14,7 @@ import '../../../widgets/custom_button.dart';
 import '../../../widgets/required_textformfield_widget.dart';
 import '../controllers/auth_controller.dart';
 
+// ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
   String _email = '';
   String _password = '';

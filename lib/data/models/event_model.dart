@@ -7,8 +7,8 @@ class EventModel {
   final int id;
   String title;
   String description;
-  DateTime? startDate;
-  DateTime? endDate;
+  DateTime startDate;
+  DateTime endDate;
   EventStatus currentStatus;
   EventLocation? startLocation;
   EventLocation? endLocation;
@@ -29,8 +29,8 @@ class EventModel {
     required this.updatedAt,
     required this.endLocation,
     required this.startLocation,
-    this.endDate,
-    this.startDate,
+    required this.endDate,
+    required this.startDate,
   });
 
   double get progress =>
@@ -97,16 +97,15 @@ class EventModel {
   }
 
   Duration timeLeft(final DateTime date) {
-    return endDate!.difference(date);
+    return endDate.difference(date);
   }
 
   bool hasExpired(final DateTime date) {
-    return date.isAfter(endDate!);
+    return date.isAfter(endDate);
   }
 
   String getExpirationTime() {
-    if (endDate == null) return 'No date';
-    final difference = endDate!.difference(DateTime.now());
+    final difference = endDate.difference(DateTime.now());
     final absDuration = difference.abs();
     final isExpired = difference < const Duration(milliseconds: 0);
     final days = absDuration.inDays;

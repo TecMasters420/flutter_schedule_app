@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CustomDateContainer extends StatefulWidget {
-  final List<dynamic> data;
-  final List<dynamic>? selectableValues;
-  final void Function(dynamic itemPressed, int index) onPressElement;
+  final List<int> data;
+  final List<int>? selectableValues;
+  final void Function(int itemPressed, int index) onPressElement;
   final Widget Function(int currentElement, bool isSelected, int index)
       widgetBuild;
   final int initialElementIndex;

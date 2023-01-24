@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:schedulemanager/app/config/app_constants.dart';
+import 'package:schedulemanager/app/utils/alert_dialogs_util.dart';
 import 'package:schedulemanager/app/utils/responsive_util.dart';
+import 'package:schedulemanager/data/models/tag_model.dart';
+import 'package:schedulemanager/data/models/task_model.dart';
 import 'package:schedulemanager/modules/event_details_creation/controller/events_details_creation_controller.dart';
+import 'package:schedulemanager/modules/event_details_creation/widgets/custom_alert_with_calendart.dart';
+import 'package:schedulemanager/modules/event_details_creation/widgets/event_expandible_details_widget.dart';
 import 'package:schedulemanager/modules/event_details_creation/widgets/weather_container.dart';
 import 'package:schedulemanager/modules/home/widgets/no_events_widget.dart';
 
@@ -69,7 +74,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
           final event = controller.event.value!;
           final progress = event.progress.isNaN ? 0.0 : event.progress;
           final isSameDay =
-              event.startDate!.difference(event.endDate!).inDays == 0;
+              event.startDate.difference(event.endDate).inDays == 0;
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Padding(
@@ -87,7 +92,16 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                       splashRadius: 20,
                       alignment: Alignment.centerRight,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () async {
+                        await AlertDialogsUtil.withTextField(
+                          title: 'Title',
+                          initialText: event.title,
+                          maxLines: 2,
+                          onSummitCallback: (value) {
+                            event.title = value;
+                          },
+                        );
+                      },
                     ),
                   ),
                   SizedBox(height: resp.hp(2.5)),
@@ -100,22 +114,42 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                     child: Column(
                       children: [
                         SizedBox(height: resp.hp(2.5)),
-                        ReminderInformationWidget(
+                        EventDetailsWidget(
                           icon: Icons.description_outlined,
                           title: 'Description',
                           value: event.description.isEmpty
                               ? 'No description'
                               : event.description,
                           showSuffixWidget: true,
-                          onTapEditCallback: () {},
+                          onTapEditCallback: () async {
+                            await AlertDialogsUtil.withTextField(
+                              title: 'Description',
+                              initialText: event.description,
+                              maxLines: 2,
+                              onSummitCallback: (value) {
+                                event.description = value;
+                              },
+                            );
+                          },
                         ),
-                        ReminderInformationWidget(
+                        EventDetailsWidget(
                           icon: Icons.tag_rounded,
                           title: 'Tags',
                           showSuffixWidget: true,
                           customSuffixWidget: CustomTextButtonWidget(
                             title: 'Add',
-                            onTap: () {},
+                            onTap: () async {
+                              await AlertDialogsUtil.withTextField(
+                                title: 'Tags',
+                                initialText: '',
+                                maxLines: 2,
+                                onSummitCallback: (value) {
+                                  if (value.isEmpty) return;
+                                  final tag = TagModel(name: value);
+                                  event.tags = [...event.tags, tag];
+                                },
+                              );
+                            },
                           ),
                           extra: TagsList(
                             tagsList: event.tags,
@@ -124,42 +158,42 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                               14,
                               Colors.white,
                             ),
-                            onLongPressCallback: (index) {
-                              final selectedTag = event.tags[index];
-
-                              CustomAlertDialog(
-                                resp: resp,
-                                context: context,
-                                title:
-                                    'Do you want to delete "${selectedTag.name}" tag?',
+                            onLongPressCallback: (index) async {
+                              AlertDialogsUtil.remove(
+                                customBodyMessage: [
+                                  'It will be removed from the tag list'
+                                ],
                                 onAcceptCallback: () {
-                                  event.tags.removeAt(index);
+                                  event.tags = event.tags
+                                      .where((t) =>
+                                          t.name != event.tags[index].name)
+                                      .toList();
+                                  Get.back();
+                                  controller.event.refresh();
                                 },
                               );
                             },
                           ),
                         ),
-                        ReminderInformationWidget(
+                        EventDetailsWidget(
                           icon: Icons.list_alt_rounded,
                           title: 'Tasks',
                           showSuffixWidget: true,
                           customSuffixWidget: CustomTextButtonWidget(
                             title: 'Add',
-                            onTap: () {
-                              CustomAlertDialog(
-                                resp: resp,
-                                context: context,
-                                title: 'Create new Task',
-                                onAcceptCallback: () {
-                                  // _event.tasks.add(task);
-                                  // task = TaskModel(name: '', isCompleted: false);
+                            onTap: () async {
+                              await AlertDialogsUtil.withTextField(
+                                title: 'Tasks',
+                                initialText: '',
+                                maxLines: 2,
+                                onSummitCallback: (value) {
+                                  if (value.isEmpty) return;
+                                  final task = TaskModel(
+                                    isCompleted: false,
+                                    name: value,
+                                  );
+                                  event.tasks = [...event.tasks, task];
                                 },
-                                customBody: CustomFormField(
-                                  icon: Icons.abc,
-                                  onChanged: (value) {
-                                    // task.name = value;
-                                  },
-                                ),
                               );
                             },
                           ),
@@ -178,6 +212,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                                       value: task.isCompleted,
                                       onChanged: (value) {
                                         event.tasks[index].isCompleted = value!;
+                                        controller.event.refresh();
                                       },
                                     ),
                                     Expanded(
@@ -203,15 +238,17 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                                         size: 25,
                                       ),
                                       onPressed: () {
-                                        final selectedTask = event.tasks[index];
-                                        final name = selectedTask.name;
-                                        CustomAlertDialog(
-                                          resp: resp,
-                                          context: context,
-                                          title:
-                                              'Do you want to delete "$name" task?',
+                                        AlertDialogsUtil.remove(
+                                          customBodyMessage: [
+                                            'It will be removed from the tasks list'
+                                          ],
                                           onAcceptCallback: () {
-                                            event.tasks.removeAt(index);
+                                            event.tasks = event.tasks
+                                                .where((t) =>
+                                                    t.name !=
+                                                    event.tasks[index].name)
+                                                .toList();
+                                            Get.back();
                                             controller.event.refresh();
                                           },
                                         );
@@ -223,7 +260,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        ReminderInformationWidget(
+                        EventDetailsWidget(
                           icon: Icons.bar_chart_rounded,
                           title: 'Progress',
                           value: '${progress.toStringAsFixed(2)}%',
@@ -250,28 +287,36 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                   ResponsiveContainerWidget(
                     child: Column(
                       children: [
-                        SizedBox(height: resp.hp(2.5)),
-                        ReminderInformationWidget(
+                        EventExpandibleDetailsWidget(
                           icon: Icons.calendar_today_rounded,
                           title: 'Start Date',
-                          value: event.startDate == null
-                              ? 'No date'
-                              : '${isSameDay ? 'Today' : getDateFormatted(event.startDate!)} at ${DateFormat('hh:mm a').format(event.startDate!)}',
-                          showSuffixWidget: true,
-                          onTapEditCallback: () {},
-                        ),
-                        if (event.endDate != null) ...[
-                          ReminderInformationWidget(
-                            icon: Icons.calendar_month_outlined,
-                            title: 'End Date',
-                            value: event.endDate == null
-                                ? 'No date'
-                                : '${isSameDay ? 'Today' : getDateFormatted(event.endDate!)} at ${DateFormat('hh:mm a').format(event.endDate!)}',
-                            showSuffixWidget: true,
-                            onTapEditCallback: () {},
+                          value:
+                              '${isSameDay ? 'Today' : getDateFormatted(event.startDate)} at ${DateFormat('hh:mm a').format(event.startDate)}',
+                          body: ScrolleableCalendarWithHour(
+                            endDate: DateTime(2020),
+                            firstDate: DateTime.now(),
+                            onChangesInDate: (date) {
+                              event.startDate = date;
+                              controller.event.refresh();
+                            },
                           ),
-                        ],
-                        ReminderInformationWidget(
+                        ),
+                        EventExpandibleDetailsWidget(
+                          icon: Icons.calendar_today_rounded,
+                          title: 'End Date',
+                          value:
+                              '${isSameDay ? 'Today' : getDateFormatted(event.endDate)} at ${DateFormat('hh:mm a').format(event.endDate)}',
+                          body: ScrolleableCalendarWithHour(
+                            endDate: DateTime(2020),
+                            firstDate: DateTime.now(),
+                            onChangesInDate: (date) {
+                              event.endDate = date;
+                              controller.event.refresh();
+                            },
+                          ),
+                        ),
+                        SizedBox(height: resp.hp(1)),
+                        EventDetailsWidget(
                           icon: Icons.timer_outlined,
                           title: 'Time remaining',
                           value: event.getExpirationTime(),
@@ -290,7 +335,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                     child: Column(
                       children: [
                         SizedBox(height: resp.hp(2.5)),
-                        const ReminderInformationWidget(
+                        const EventDetailsWidget(
                           icon: Icons.water_drop_outlined,
                           title: 'Expected weather',
                           extra: WeatherContainer(
@@ -310,7 +355,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                     child: Column(
                       children: [
                         SizedBox(height: resp.hp(2.5)),
-                        ReminderInformationWidget(
+                        EventDetailsWidget(
                           icon: Icons.location_on_outlined,
                           title: 'Location',
                           value: null,
@@ -318,14 +363,14 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                             children: [
                               if (event.startLocation != null &&
                                   event.startLocation!.address != null)
-                                ReminderInformationWidget(
+                                EventDetailsWidget(
                                   icon: Icons.location_pin,
                                   title: 'Start location',
                                   value: event.startLocation!.address,
                                 ),
                               if (event.endLocation != null &&
                                   event.endLocation!.address != null)
-                                ReminderInformationWidget(
+                                EventDetailsWidget(
                                   icon: Icons.location_searching_rounded,
                                   title: 'End location',
                                   value: event.endLocation!.address,

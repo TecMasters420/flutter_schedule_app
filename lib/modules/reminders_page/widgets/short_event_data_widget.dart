@@ -101,7 +101,7 @@ class ShortEventDataWidget extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               label: Text(
-                                event.tags.first.name,
+                                '#${event.tags.first.name.trim()}',
                                 maxLines: 1,
                                 style: TextStyles.w700(12, Colors.white),
                               ),
@@ -147,7 +147,7 @@ class ShortEventDataWidget extends StatelessWidget {
                                       size: 15,
                                     ),
                                     Text(
-                                      'Due ${DateFormat('hh:mm a').format(event.endDate!)} ',
+                                      'Due ${DateFormat('hh:mm a').format(event.endDate)} ',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyles.w500(12, grey),
