@@ -106,22 +106,7 @@ class _MapPreviewState extends State<MapPreview> {
                 onTap: (tapPosition, point) {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return MapPage(
-                        startPos: startlPos,
-                        endPost: endPos,
-                        startAddress: widget.startAddress,
-                        endAddress: widget.endAddress,
-                        onAcceptCallback:
-                            (start, startAddress, end, endAddress, points) {
-                          setState(() {
-                            _points = points!;
-                          });
-                          if (widget.onAcceptCallback != null) {
-                            widget.onAcceptCallback!(
-                                start, startAddress, end, endAddress, points);
-                          }
-                        },
-                      );
+                      return MapPage();
                     },
                   ));
                 },

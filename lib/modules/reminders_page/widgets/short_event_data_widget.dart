@@ -60,7 +60,7 @@ class ShortEventDataWidget extends StatelessWidget {
       ),
       child: Material(
         child: InkWell(
-          onTap: () => Get.toNamed(AppRoutes.eventDetails),
+          onTap: () => Get.toNamed(AppRoutes.eventDetails, arguments: event.id),
           onLongPress: () => onLongPressCallback(event),
           borderRadius: BorderRadius.circular(10),
           splashColor: color.withOpacity(0.25),

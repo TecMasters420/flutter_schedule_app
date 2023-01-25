@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:schedulemanager/modules/auth/bindings/register_bindings.dart';
 import 'package:schedulemanager/modules/event_details_creation/new_events_details_creation_page.dart';
 import 'package:schedulemanager/modules/filtered_events/pages/filtered_events_page.dart';
+import 'package:schedulemanager/modules/map_page/bindings/map_page_bindings.dart';
 import 'package:schedulemanager/modules/notifications_page/pages/notifications_page.dart';
 import 'package:schedulemanager/modules/event_details_creation/bindings/events_details_creation_bindings.dart';
 import 'package:schedulemanager/routes/app_routes.dart';
@@ -57,7 +58,8 @@ final List<GetPage> appPages = [
   ),
   GetPage(
     name: AppRoutes.mapPage,
-    page: () => const MapPage(),
+    page: () => MapPage(),
+    binding: const MapPageBindings(),
   ),
   GetPage(
     name: AppRoutes.notifications,

@@ -10,8 +10,8 @@ class EventModel {
   DateTime startDate;
   DateTime endDate;
   EventStatus currentStatus;
-  EventLocation? startLocation;
-  EventLocation? endLocation;
+  EventLocationModel? startLocation;
+  EventLocationModel? endLocation;
   List<TaskModel> tasks;
   List<TagModel> tags;
 
@@ -60,10 +60,10 @@ class EventModel {
       endDate: DateTime.parse(map['EndDate']),
       title: map['title'],
       endLocation: map['endLocation'] != null
-          ? EventLocation.fromMap(map['endLocation'])
+          ? EventLocationModel.fromMap(map['endLocation'])
           : null,
       startLocation: map['startLocation'] != null
-          ? EventLocation.fromMap(map['startLocation'])
+          ? EventLocationModel.fromMap(map['startLocation'])
           : null,
       tasks: tasks.map((e) => TaskModel.fromMap(e)).toList(),
       tags: tags.map((e) => TagModel.fromMap(e)).toList(),

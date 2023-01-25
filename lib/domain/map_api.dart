@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
-import '../data/models/address_model.dart';
+import 'package:schedulemanager/data/models/event_location_model.dart';
 
 class MapApi with ChangeNotifier {
   static const String _apiURL = 'https://api.mapbox.com';
@@ -18,8 +18,8 @@ class MapApi with ChangeNotifier {
       'access_token=${dotenv.env['GEOCODING_ACCESSTOKEN']!}';
 
   String _lastQuery = '';
-  List<AddressModel> _address = [];
-  List<AddressModel> get address => _address;
+  List<EventLocationModel> _address = [];
+  List<EventLocationModel> get address => _address;
 
   Future<Map<String, dynamic>?> _baseRequest(final String url) async {
     try {
@@ -60,7 +60,8 @@ class MapApi with ChangeNotifier {
     return null;
   }
 
-  Future<List<AddressModel>?> getNearbyDirections(final String query) async {
+  Future<List<EventLocationModel>?> getNearbyDirections(
+      final String query) async {
     if (_lastQuery == query) return [];
     try {
       final res = await _baseRequest(
@@ -68,10 +69,11 @@ class MapApi with ChangeNotifier {
       if (res == null) return null;
       final List<dynamic>? features = res['features'];
       _address = features!
-          .map((e) => AddressModel(
+          .map((e) => EventLocationModel(
+              id: -1,
               address: e['place_name'],
-              latitude: e['center'][1].toDouble(),
-              longitud: e['center'][0].toDouble()))
+              lat: e['center'][1].toDouble(),
+              lng: e['center'][0].toDouble()))
           .toList();
       _lastQuery = query;
       notifyListeners();

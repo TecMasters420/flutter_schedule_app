@@ -30,22 +30,24 @@ class LoginPage extends StatelessWidget {
       body: SingleChildScrollView(
         clipBehavior: Clip.none,
         physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: AppConstants.bodyPadding,
-          child: Center(
+        child: SizedBox(
+          height: resp.height,
+          child: Padding(
+            padding: AppConstants.bodyPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Center(
-                  child: CircleAvatar(
-                    backgroundImage: const AssetImage(
-                      'assets/images/calendar.png',
-                    ),
-                    maxRadius: resp.wp(30),
-                  ),
-                ),
-                SizedBox(height: resp.hp(2.5)),
+                // Center(
+                //   child: CircleAvatar(
+                //     backgroundImage: const AssetImage(
+                //       'assets/images/calendar.png',
+                //     ),
+                //     maxRadius: resp.wp(30),
+                //   ),
+                // ),
+                // SizedBox(height: resp.hp(2.5)),
                 ResponsiveContainerWidget(
                   padding: EdgeInsets.symmetric(
                     vertical: resp.hp(2.5),

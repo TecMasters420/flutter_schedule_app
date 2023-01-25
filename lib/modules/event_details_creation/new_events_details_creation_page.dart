@@ -11,13 +11,12 @@ import 'package:schedulemanager/modules/event_details_creation/widgets/custom_al
 import 'package:schedulemanager/modules/event_details_creation/widgets/event_expandible_details_widget.dart';
 import 'package:schedulemanager/modules/event_details_creation/widgets/weather_container.dart';
 import 'package:schedulemanager/modules/home/widgets/no_events_widget.dart';
+import 'package:schedulemanager/routes/app_routes.dart';
 
 import '../../app/config/constants.dart';
 import '../../app/services/base_repository.dart';
 import '../../app/utils/text_styles.dart';
-import '../../widgets/custom_alert_dialog.dart';
 import '../../widgets/custom_button.dart';
-import '../../widgets/custom_form_field.dart';
 import '../../widgets/custom_header_widget.dart';
 import '../../widgets/custom_text_button_widget.dart';
 import '../../widgets/loading_widget.dart';
@@ -398,16 +397,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                                   text: 'Add location',
                                   color: accent,
                                   style: TextStyles.w700(14, Colors.white),
-                                  onTap: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) => MapPage(
-                                    //       onAcceptCallback: _onLocationChanged,
-                                    //     ),
-                                    //   ),
-                                    // );
-                                  },
+                                  onTap: () => Get.toNamed(AppRoutes.mapPage),
                                 )
                               ]
                             ],

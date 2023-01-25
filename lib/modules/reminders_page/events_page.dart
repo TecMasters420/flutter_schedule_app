@@ -131,12 +131,11 @@ class EventsPage extends StatelessWidget {
                                   children: List.generate(
                                     24,
                                     (h) {
-                                      final hour = h + 1;
-                                      final tempHour = DateTime(0, 0, 0, hour);
+                                      final tempHour = DateTime(0, 0, 0, h);
                                       final time =
                                           DateFormat('hh a').format(tempHour);
                                       final eventsInHour = events.eventsInDate
-                                          .where((e) => e.endDate.hour == hour)
+                                          .where((e) => e.endDate.hour == h)
                                           .toList();
                                       return CustomTimeLineReminderObjectWidget(
                                         title: time,
