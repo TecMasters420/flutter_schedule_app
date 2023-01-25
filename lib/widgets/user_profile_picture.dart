@@ -27,10 +27,10 @@ class UserProfilePicture extends StatelessWidget {
         decoration: BoxDecoration(
           color: containerBg,
           boxShadow: shadows,
-          shape: BoxShape.circle,
+          borderRadius: BorderRadius.circular(30),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(1000),
+          borderRadius: BorderRadius.circular(30),
           child: userImage.isEmpty
               ? Image.asset('assets/images/user.png', fit: BoxFit.fill)
               : CustomCacheImageWidget(imageUrl: userImage),

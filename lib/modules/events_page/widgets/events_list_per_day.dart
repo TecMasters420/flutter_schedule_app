@@ -7,7 +7,7 @@ import '../../../app/config/constants.dart';
 import '../../../data/models/event_model.dart';
 import '../../../widgets/reminder_container.dart';
 import '../../../widgets/event_information.dart';
-import 'reminder_hour.dart';
+import 'event_hour.dart';
 
 class EventsListPerDay extends StatelessWidget {
   final void Function(EventModel reminder) onLongPressCallback;

@@ -55,6 +55,7 @@ class UserProfilePage extends GetWidget<AuthController> {
                                     child: Image.asset(
                                       'assets/images/home_logo.png',
                                       fit: BoxFit.fill,
+                                      width: resp.width,
                                     ),
                                   ),
                                 ),

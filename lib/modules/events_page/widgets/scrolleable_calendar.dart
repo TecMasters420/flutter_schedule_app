@@ -109,7 +109,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
           },
         ),
         if (widget.days.isNotEmpty) ...[
-          SizedBox(height: resp.hp(4)),
+          SizedBox(height: resp.hp(2)),
 
           // ? DAYS LIST
           CustomDateContainer(
@@ -130,11 +130,10 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 15,
-                        vertical: 15,
+                        vertical: 10,
                       ),
                       decoration: BoxDecoration(
                         color: isSelected ? accent : containerBg,
-                        boxShadow: isSelected ? null : shadows,
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Column(
@@ -173,8 +172,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                     height: resp.hp(0.75),
                     width: resp.wp(2.5),
                     decoration: BoxDecoration(
-                      color: isSelected ? accent : containerBg,
-                      boxShadow: isSelected ? null : shadows,
+                      color: isSelected ? accent : null,
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
                   )

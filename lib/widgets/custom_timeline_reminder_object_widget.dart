@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/app/utils/responsive_util.dart';
-import 'package:schedulemanager/modules/reminders_page/controllers/events_page_scroll_controller.dart';
+import 'package:schedulemanager/modules/events_page/controllers/events_page_scroll_controller.dart';
 
 import '../app/config/constants.dart';
 import '../app/utils/text_styles.dart';

@@ -6,6 +6,7 @@ import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/app/utils/responsive_util.dart';
 import 'package:schedulemanager/data/models/event_model.dart';
 import 'package:schedulemanager/widgets/custom_header_widget.dart';
+import 'package:schedulemanager/widgets/custom_text_button_widget.dart';
 import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 
 import '../../../app/utils/text_styles.dart';
@@ -34,11 +35,6 @@ class FilteredEventsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomHeaderWidget(title: '$title Events'),
-              SizedBox(height: resp.hp(5)),
-              Text(
-                'Events List',
-                style: TextStyles.w700(20),
-              ),
               SizedBox(height: resp.hp(2.5)),
               ResponsiveContainerWidget(
                 padding: const EdgeInsets.symmetric(
@@ -46,22 +42,41 @@ class FilteredEventsPage extends StatelessWidget {
                   horizontal: 20,
                 ),
                 child: Column(
-                  children: events.map(
-                    (e) {
-                      final color = colors[Random().nextInt(colors.length - 1)];
-                      return ReminderContainer(
-                        color: color,
-                        leftWidget: ReminderDateData(
-                          endDate: e.endDate,
-                          timeRemaining: e.timeLeft(DateTime.now()),
-                          dotColor: color,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Events List',
+                            style: TextStyles.w700(20),
+                          ),
                         ),
-                        rightWidget: EventInforamtion(
-                          event: e,
-                        ),
-                      );
-                    },
-                  ).toList(),
+                        CustomTextButtonWidget(
+                          title: 'Add Event',
+                          onTap: () {},
+                        )
+                      ],
+                    ),
+                    SizedBox(height: resp.hp(2.5)),
+                    ...events.map(
+                      (e) {
+                        final color =
+                            colors[Random().nextInt(colors.length - 1)];
+                        return ReminderContainer(
+                          color: color,
+                          leftWidget: ReminderDateData(
+                            endDate: e.endDate,
+                            timeRemaining: e.timeLeft(DateTime.now()),
+                            dotColor: color,
+                          ),
+                          rightWidget: EventInforamtion(
+                            event: e,
+                          ),
+                        );
+                      },
+                    ).toList(),
+                  ],
                 ),
               ),
             ],

@@ -7,7 +7,7 @@ import 'package:schedulemanager/modules/notifications_page/pages/notifications_p
 import 'package:schedulemanager/modules/event_details_creation/bindings/events_details_creation_bindings.dart';
 import 'package:schedulemanager/routes/app_routes.dart';
 import '../modules/home/bindings/home_bindings.dart';
-import '../modules/reminders_page/bindings/events_page_bindings.dart';
+import '../modules/events_page/bindings/events_page_bindings.dart';
 import '../modules/initial_page/bindings/initial_information_bindings.dart';
 import '../modules/home/home_page.dart';
 import '../modules/auth/pages/login_page.dart';
@@ -15,7 +15,7 @@ import '../modules/auth/pages/login_page.dart';
 import '../modules/initial_page/initial_information_page.dart';
 import '../modules/map_page/map_page.dart';
 import '../modules/auth/pages/register_page.dart';
-import '../modules/reminders_page/events_page.dart';
+import '../modules/events_page/events_page.dart';
 import '../modules/user_profile/user_profile_page.dart';
 
 final List<GetPage> appPages = [

@@ -24,19 +24,17 @@ class TagsList extends StatelessWidget {
       direction: Axis.horizontal,
       children: List.generate(
           tagsList.length.clamp(0, maxTagsToShow ?? tagsList.length), (index) {
-        // final color =
-        //     colorsForBgs.elementAt(Random().nextInt(colorsForBgs.length));
         return Padding(
           padding: const EdgeInsets.only(right: 5),
           child: InkWell(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(12.5),
             radius: 5,
             onLongPress: () {
               if (onLongPressCallback != null) onLongPressCallback!(index);
             },
             child: Chip(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(12.5),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 5),
               backgroundColor: accent,

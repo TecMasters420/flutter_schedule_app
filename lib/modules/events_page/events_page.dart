@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:schedulemanager/app/config/app_constants.dart';
 import 'package:schedulemanager/modules/home/widgets/no_events_widget.dart';
-import 'package:schedulemanager/modules/reminders_page/widgets/short_event_data_widget.dart';
+import 'package:schedulemanager/modules/events_page/widgets/short_event_data_widget.dart';
+import 'package:schedulemanager/routes/app_routes.dart';
 import 'package:schedulemanager/widgets/custom_header_widget.dart';
 import 'package:schedulemanager/widgets/custom_nav_bar_widget.dart';
+import 'package:schedulemanager/widgets/custom_text_button_widget.dart';
 import 'package:schedulemanager/widgets/custom_timeline_reminder_object_widget.dart';
 import 'package:schedulemanager/widgets/loading_widget.dart';
 import 'package:schedulemanager/widgets/responsive_container_widget.dart';
@@ -48,7 +50,6 @@ class EventsPage extends StatelessWidget {
                         ),
                         SizedBox(height: resp.hp(3)),
                         if (!events.isLoading.value) ...[
-                          SizedBox(height: resp.hp(2.5)),
                           ResponsiveContainerWidget(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 20,
@@ -120,10 +121,31 @@ class EventsPage extends StatelessWidget {
                                         ),
                                 )
                               else ...[
-                                Text('Timeline', style: TextStyles.w700(20)),
-                                Text(
-                                  '${events.eventsInDate.length} ${events.eventsInDate.length == 1 ? 'Event' : 'Events'} in this day',
-                                  style: TextStyles.w500(14, grey),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Timeline',
+                                            style: TextStyles.w700(20),
+                                          ),
+                                          Text(
+                                            '${events.eventsInDate.length} ${events.eventsInDate.length == 1 ? 'Event' : 'Events'} in this day',
+                                            style: TextStyles.w500(14, grey),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    CustomTextButtonWidget(
+                                      title: 'Add event',
+                                      onTap: () =>
+                                          Get.toNamed(AppRoutes.eventDetails),
+                                    )
+                                  ],
                                 ),
                                 SizedBox(height: resp.hp(2.5)),
                                 Column(

@@ -23,7 +23,7 @@ class ResponsiveContainerWidget extends StatelessWidget {
           ),
       decoration: BoxDecoration(
         color: customColor,
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(25),
         boxShadow: shadows,
       ),
       child: child,

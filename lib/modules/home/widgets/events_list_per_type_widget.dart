@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/modules/filtered_events/pages/filtered_events_page.dart';
+import 'package:schedulemanager/widgets/custom_button.dart';
 import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 import '../../../widgets/custom_text_button_widget.dart';
 import 'no_events_widget.dart';
@@ -41,7 +42,7 @@ class EventsListPerType extends StatelessWidget {
               ),
               const Spacer(),
               CustomTextButtonWidget(
-                title: 'See all',
+                title: 'Show all',
                 customFontSize: 16,
                 onTap: () => Get.to(
                   () => FilteredEventsPage(events: data, title: type),
@@ -55,21 +56,19 @@ class EventsListPerType extends StatelessWidget {
             (index) {
               if (index >= maxEventsToShow) {
                 return GestureDetector(
-                  onTap: () => Get.to(
-                    () => FilteredEventsPage(events: data, title: type),
-                  ),
-                  child: ResponsiveContainerWidget(
-                    customColor: lightBlue,
+                  child: CustomButton(
                     padding: const EdgeInsets.symmetric(vertical: 30),
-                    child: Center(
-                      child: Text(
-                        'Press to see all events',
-                        textAlign: TextAlign.center,
-                        style: TextStyles.w700(
-                          18,
-                          accent,
-                        ),
-                      ),
+                    text: 'Press to see all events',
+                    color: lightBlue,
+                    expand: true,
+                    onTap: () {
+                      Get.to(
+                        () => FilteredEventsPage(events: data, title: type),
+                      );
+                    },
+                    style: TextStyles.w700(
+                      18,
+                      accent,
                     ),
                   ),
                 );
