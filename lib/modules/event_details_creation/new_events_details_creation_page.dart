@@ -363,14 +363,14 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                               if (event.startLocation != null &&
                                   event.startLocation!.address != null)
                                 EventDetailsWidget(
-                                  icon: Icons.location_pin,
+                                  icon: Icons.east_rounded,
                                   title: 'Start location',
                                   value: event.startLocation!.address,
                                 ),
                               if (event.endLocation != null &&
                                   event.endLocation!.address != null)
                                 EventDetailsWidget(
-                                  icon: Icons.location_searching_rounded,
+                                  icon: Icons.west,
                                   title: 'End location',
                                   value: event.endLocation!.address,
                                 ),

@@ -40,7 +40,7 @@ class CustomButton extends StatelessWidget {
         alignment: expand ? Alignment.center : null,
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
           boxShadow: hideShadows ? null : shadows,
         ),
         child: prefixWidget == null

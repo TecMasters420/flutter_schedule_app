@@ -32,6 +32,17 @@ class EventInforamtion extends StatelessWidget {
         //   width: resp.width,
         //   fit: BoxFit.fill,
         // ),
+        if (event.tags.isNotEmpty) ...[
+          TagsList(
+            tagsList: event.tags,
+            maxTagsToShow: event.tags.length,
+            style: TextStyles.w800(
+              14,
+              Colors.white,
+            ),
+            onLongPressCallback: (index) async {},
+          ),
+        ],
         Text(
           event.title,
           style: TextStyles.w700(16),
@@ -78,18 +89,7 @@ class EventInforamtion extends StatelessWidget {
             style: TextStyles.w500(14, grey),
           ),
         ],
-        if (event.tags.isNotEmpty) ...[
-          SizedBox(height: resp.hp(1)),
-          Text(
-            'Tags',
-            style: TextStyles.w700(14),
-          ),
-          TagsList(
-            tagsList: event.tags,
-            maxTagsToShow: 3,
-            style: TextStyles.w700(12, Colors.white),
-          ),
-        ],
+
         if (event.tasks.isNotEmpty) ...[
           SizedBox(height: resp.hp(1)),
           Text(

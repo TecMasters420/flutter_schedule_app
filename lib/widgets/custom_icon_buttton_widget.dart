@@ -21,7 +21,7 @@ class CustomIconButtonWidget extends StatelessWidget {
       padding: EdgeInsets.zero,
       constraints: const BoxConstraints(),
       icon: Icon(
-        Icons.mode,
+        icon,
         color: color,
         size: 25,
       ),

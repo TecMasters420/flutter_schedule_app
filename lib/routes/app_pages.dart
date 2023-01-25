@@ -58,7 +58,7 @@ final List<GetPage> appPages = [
   ),
   GetPage(
     name: AppRoutes.mapPage,
-    page: () => MapPage(),
+    page: () => const MapPage(),
     binding: const MapPageBindings(),
   ),
   GetPage(

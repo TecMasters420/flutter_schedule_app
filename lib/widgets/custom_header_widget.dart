@@ -20,7 +20,12 @@ class CustomHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Expanded(child: CustomBackButton()),
+        const Expanded(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: CustomBackButton(),
+          ),
+        ),
         Expanded(
           flex: 8,
           child: ResponsiveContainerWidget(
