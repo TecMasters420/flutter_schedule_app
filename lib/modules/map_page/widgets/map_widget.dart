@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:schedulemanager/app/config/app_constants.dart';
 import 'package:schedulemanager/app/utils/responsive_util.dart';
 import 'package:schedulemanager/modules/map_page/controller/map_page_controller.dart';
 
@@ -10,13 +12,46 @@ import '../../../app/config/constants.dart';
 import '../../../data/models/event_location_model.dart';
 import 'custom_marker_with_information.dart';
 
-class MapWidget extends StatelessWidget {
+class MapWidget extends StatefulWidget {
   const MapWidget({super.key});
+
+  @override
+  State<MapWidget> createState() => _MapWidgetState();
+}
+
+class _MapWidgetState extends State<MapWidget> {
+  late final MapController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = MapController();
+  }
 
   @override
   Widget build(BuildContext context) {
     final MapPageController map = Get.find();
+    map.getPoints();
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+
+    SchedulerBinding.instance.addPostFrameCallback(
+      (_) async {
+        final start = map.startLoc.value;
+        final end = map.endLoc.value;
+        if (start != null && end != null) {
+          _controller.fitBounds(
+            LatLngBounds(start.coords, end.coords),
+            options: const FitBoundsOptions(
+              padding: EdgeInsets.symmetric(
+                vertical: 100,
+                horizontal: 100,
+              ),
+            ),
+          );
+        }
+      },
+    );
+
     return Obx(
       () {
         final actualPos = map.currentLoc.value.coords;
@@ -37,16 +72,18 @@ class MapWidget extends StatelessWidget {
           startCoords = startLoc!.coords;
           startAddress = startLoc.address;
         }
+
         return Stack(
           children: [
             FlutterMap(
+              mapController: _controller,
               options: MapOptions(
                 enableMultiFingerGestureRace: false,
                 keepAlive: false,
-                minZoom: 10,
+                minZoom: 5,
                 maxZoom: 18,
                 zoom: 13,
-                center: map.currentLoc.value.coords,
+                center: startCoords ?? map.currentLoc.value.coords,
                 onLongPress: (tapPosition, point) {},
               ),
               children: [
@@ -55,7 +92,7 @@ class MapWidget extends StatelessWidget {
                   urlTemplate:
                       "https://api.mapbox.com/styles/v1/frankrdz/{styleId}/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
                   additionalOptions: {
-                    'styleId': 'clarc1scl000314lfyzx582dm',
+                    'styleId': AppConstants.mapStyleId,
                     'accessToken': dotenv.env['MAPBOX_ACCESSTOKEN']!,
                   },
                 ),

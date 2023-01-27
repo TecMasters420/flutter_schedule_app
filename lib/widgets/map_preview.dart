@@ -4,8 +4,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:schedulemanager/routes/app_routes.dart';
+import 'package:schedulemanager/data/models/event_location_model.dart';
+import 'package:schedulemanager/modules/map_page/map_page.dart';
 import '../domain/map_api.dart';
+import '../modules/map_page/controller/map_page_controller.dart';
 import 'animated_marker.dart';
 import '../app/config/constants.dart';
 import '../app/services/base_repository.dart';
@@ -13,6 +15,8 @@ import '../app/services/base_repository.dart';
 class MapPreview extends StatefulWidget {
   final void Function(LatLng start, String? startAddress, LatLng end,
       String? endAddress, List<LatLng>? points)? onAcceptCallback;
+  final EventLocationModel startLoc;
+  final EventLocationModel endLoc;
   final double height;
   final double width;
   final GeoPoint initialPoint;
@@ -27,6 +31,8 @@ class MapPreview extends StatefulWidget {
     required this.initialPoint,
     required this.endPoint,
     required this.onAcceptCallback,
+    required this.endLoc,
+    required this.startLoc,
     this.startAddress,
     this.endAddress,
   });
@@ -102,7 +108,11 @@ class _MapPreviewState extends State<MapPreview> {
               zoom: 10,
               minZoom: 1,
               onTap: (tapPosition, point) {
-                Get.toNamed(AppRoutes.mapPage);
+                Get.put(MapPageController());
+                Get.to(() => MapPage(
+                      startLoc: widget.startLoc,
+                      endLoc: widget.endLoc,
+                    ));
               },
               center: LatLng(
                 widget.initialPoint.latitude,

@@ -46,4 +46,16 @@ class MapPageController extends GetxController {
     currentLoc.refresh();
     isLoading.value = false;
   }
+
+  Future<void> getPoints() async {
+    if (startLoc.value == null || endLoc.value == null) return;
+    final res = await MapApi()
+        .getPolyline(startLoc.value!.coords, endLoc.value!.coords);
+    points.value = res ?? [];
+  }
+
+  void setLocations(EventLocationModel? start, EventLocationModel? end) {
+    startLoc.value = start;
+    endLoc.value = end;
+  }
 }

@@ -15,7 +15,7 @@ class MapApi with ChangeNotifier {
 
   static const String _jsonLimit = '.json?limit';
   final String _accessToken =
-      'access_token=${dotenv.env['GEOCODING_ACCESSTOKEN']!}';
+      'access_token=${dotenv.env['MAPBOX_ACCESSTOKEN']!}';
 
   String _lastQuery = '';
   List<EventLocationModel> _address = [];

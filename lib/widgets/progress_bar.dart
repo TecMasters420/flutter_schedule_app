@@ -27,26 +27,21 @@ class ProgressBar extends StatelessWidget {
       height: height,
       width: width,
       clipBehavior: Clip.hardEdge,
+      alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
         color: const Color(0xffeaebf0),
         borderRadius: BorderRadius.circular(15),
       ),
-      child: LayoutBuilder(builder: (context, constraints) {
-        return Stack(
-          children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 250),
-              curve: Curves.easeInOut,
-              height: height,
-              width: constraints.maxWidth * (percent / 100),
-              decoration: BoxDecoration(
-                color: progressColor,
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-          ],
-        );
-      }),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
+        height: height,
+        width: width * (percent / 100),
+        decoration: BoxDecoration(
+          color: progressColor,
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
     );
   }
 }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/modules/filtered_events/pages/filtered_events_page.dart';
 import 'package:schedulemanager/widgets/custom_button.dart';
-import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 import '../../../widgets/custom_text_button_widget.dart';
 import 'no_events_widget.dart';
 import '../../../data/models/event_model.dart';

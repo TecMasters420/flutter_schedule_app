@@ -11,7 +11,7 @@ import 'package:schedulemanager/modules/event_details_creation/widgets/custom_al
 import 'package:schedulemanager/modules/event_details_creation/widgets/event_expandible_details_widget.dart';
 import 'package:schedulemanager/modules/event_details_creation/widgets/weather_container.dart';
 import 'package:schedulemanager/modules/home/widgets/no_events_widget.dart';
-import 'package:schedulemanager/routes/app_routes.dart';
+import 'package:schedulemanager/modules/map_page/map_page.dart';
 
 import '../../app/config/constants.dart';
 import '../../app/services/base_repository.dart';
@@ -379,6 +379,8 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                                 MapPreview(
                                   height: resp.hp(20),
                                   width: resp.width,
+                                  endLoc: event.endLocation!,
+                                  startLoc: event.startLocation!,
                                   initialPoint: event.startLocation != null
                                       ? GeoPoint(event.startLocation!.lat,
                                           event.startLocation!.lng)
@@ -397,7 +399,12 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                                   text: 'Add location',
                                   color: accent,
                                   style: TextStyles.w700(14, Colors.white),
-                                  onTap: () => Get.toNamed(AppRoutes.mapPage),
+                                  onTap: () => Get.to(
+                                    () => MapPage(
+                                      startLoc: event.startLocation,
+                                      endLoc: event.endLocation,
+                                    ),
+                                  ),
                                 )
                               ]
                             ],
