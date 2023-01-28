@@ -26,6 +26,7 @@ class LoginPageInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     return Transform.scale(
       scale: scale,
       child: AnimatedOpacity(
@@ -62,14 +63,14 @@ class LoginPageInformation extends StatelessWidget {
                   SizedBox(height: resp.hp(2.5)),
                   Text(
                     title,
-                    style: TextStyles.w800(30),
+                    style: styles.w800(30),
                     textAlign: TextAlign.center,
                     maxLines: 2,
                   ),
                   const SizedBox(height: 5),
                   Text(
                     description,
-                    style: TextStyles.w500(16, grey),
+                    style: styles.w500(16, grey),
                     textAlign: TextAlign.center,
                     maxLines: 2,
                   ),

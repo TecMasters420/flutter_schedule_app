@@ -16,6 +16,8 @@ class CustomTextButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styles = TextStyles.of(context);
+
     return TextButton(
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,
@@ -28,7 +30,7 @@ class CustomTextButtonWidget extends StatelessWidget {
         title,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: TextStyles.w700(customFontSize, blueAccent),
+        style: styles.w700(customFontSize, blueAccent),
       ),
     );
   }

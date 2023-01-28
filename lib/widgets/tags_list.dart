@@ -18,6 +18,7 @@ class TagsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styles = TextStyles.of(context);
     if (tagsList.isEmpty) return const SizedBox();
     return Wrap(
       alignment: WrapAlignment.start,
@@ -40,7 +41,7 @@ class TagsList extends StatelessWidget {
               backgroundColor: darkAccent,
               label: Text(
                 '#${tagsList[index].name.replaceAll(RegExp(r'\s+'), '')}',
-                style: TextStyles.w700(14, Colors.white),
+                style: styles.w700(14, Colors.white),
               ),
             ),
           ),

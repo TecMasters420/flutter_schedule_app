@@ -10,12 +10,13 @@ class WeatherContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styles = TextStyles.of(context);
     return Stack(
       alignment: Alignment.center,
       children: [
         Text(
           '$temp° C',
-          style: TextStyles.w600(30),
+          style: styles.w600(30),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),

@@ -15,6 +15,8 @@ class CustomAlertDialog {
     final bool dismissible = true,
     final Widget? customBody,
   }) {
+    final styles = TextStyles.of(context);
+
     final AlertDialog alert = AlertDialog(
       actionsAlignment: MainAxisAlignment.center,
       shape: RoundedRectangleBorder(
@@ -22,13 +24,13 @@ class CustomAlertDialog {
       ),
       title: Text(
         title,
-        style: TextStyles.w500(25),
+        style: styles.w500(25),
         textAlign: TextAlign.center,
       ),
       content: customBody ??
           Text(
             'Select an option',
-            style: TextStyles.w500(16, grey),
+            style: styles.w500(16, grey),
             textAlign: TextAlign.center,
           ),
       actions: [
@@ -37,7 +39,7 @@ class CustomAlertDialog {
             text: 'No',
             color: lightGrey.withOpacity(0.25),
             onTap: () => Navigator.pop(context),
-            style: TextStyles.w500(16),
+            style: styles.w500(16),
           ),
           CustomButton(
             text: 'Yes',
@@ -46,7 +48,7 @@ class CustomAlertDialog {
               Navigator.pop(context);
               onAcceptCallback();
             },
-            style: TextStyles.w500(16, Colors.white),
+            style: styles.w500(16, Colors.white),
           ),
         ]
       ],

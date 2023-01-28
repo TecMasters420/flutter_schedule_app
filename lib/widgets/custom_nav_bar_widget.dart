@@ -12,6 +12,8 @@ class CustomNavBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styles = TextStyles.of(context);
+
     final NavBarController navBar = Get.find();
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -57,7 +59,7 @@ class CustomNavBarWidget extends StatelessWidget {
                                     Icon(e.icon, size: 25, color: blueAccent),
                                     Text(
                                       e.name,
-                                      style: TextStyles.w500(12, blueAccent),
+                                      style: styles.w500(12, blueAccent),
                                     ),
                                   ],
                                 )
@@ -68,7 +70,7 @@ class CustomNavBarWidget extends StatelessWidget {
                                     Icon(e.icon, size: 20, color: black),
                                     Text(
                                       e.name,
-                                      style: TextStyles.w500(12, grey),
+                                      style: styles.w500(12, grey),
                                     ),
                                   ],
                                 ),

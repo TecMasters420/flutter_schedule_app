@@ -12,6 +12,7 @@ class ReminderHour extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styles = TextStyles.of(context);
     return Column(
       children: [
         ...List.generate(
@@ -20,7 +21,7 @@ class ReminderHour extends StatelessWidget {
             children: [
               Text(
                 dates[x],
-                style: TextStyles.w500(14, lightGrey),
+                style: styles.w500(14, lightGrey),
               ),
               if (x < dates.length - 1)
                 const Divider(color: lightGrey, thickness: 0.25),

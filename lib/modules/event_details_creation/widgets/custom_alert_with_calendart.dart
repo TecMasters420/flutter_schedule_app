@@ -22,6 +22,7 @@ class ScrolleableCalendarWithHour extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     int selectedMonth = firstDate.month;
     int selectedDay = firstDate.day;
 
@@ -35,7 +36,7 @@ class ScrolleableCalendarWithHour extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Text('Select your date', style: TextStyles.w700(16)),
+        // Text('Select your date', style: styles.w700(16)),
         // SizedBox(height: resp.hp(1)),
         CustomDateContainer(
           data: List.generate(12, (index) => index + 1),
@@ -56,8 +57,8 @@ class ScrolleableCalendarWithHour extends StatelessWidget {
                     currentElement,
                   )),
                   style: isSelected
-                      ? TextStyles.w700(14)
-                      : TextStyles.w500(
+                      ? styles.w700(14)
+                      : styles.w500(
                           14,
                           grey,
                         ),
@@ -111,7 +112,7 @@ class ScrolleableCalendarWithHour extends StatelessWidget {
                           daysToShow[index].toString().length == 1
                               ? '0${daysToShow[index]}'
                               : daysToShow[index].toString(),
-                          style: TextStyles.w700(
+                          style: styles.w700(
                             14,
                             isSelected ? Colors.white : black,
                           ),
@@ -127,7 +128,7 @@ class ScrolleableCalendarWithHour extends StatelessWidget {
                               )
                               .substring(0, 3)
                               .toUpperCase(),
-                          style: TextStyles.w500(
+                          style: styles.w500(
                             12,
                             isSelected ? Colors.white : grey,
                           ),

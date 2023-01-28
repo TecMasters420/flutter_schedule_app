@@ -24,23 +24,10 @@ class ShortEventDataWidget extends StatelessWidget {
     required this.onLongPressCallback,
   });
 
-  Widget _getStatus() {
-    return Chip(
-      backgroundColor: red.withOpacity(0.15),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      label: Text(
-        'High',
-        maxLines: 1,
-        style: TextStyles.w700(12, red),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     SchedulerBinding.instance.addPostFrameCallback((_) {
       final RenderObject? renderBoxRed =
           testKey.currentContext?.findRenderObject();
@@ -49,6 +36,20 @@ class ShortEventDataWidget extends StatelessWidget {
     });
 
     final double tasksProgress = event.progress.isNaN ? 0 : event.progress;
+
+    Widget _getStatus() {
+      return Chip(
+        backgroundColor: red.withOpacity(0.15),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        label: Text(
+          'High',
+          maxLines: 1,
+          style: styles.w700(12, red),
+        ),
+      );
+    }
 
     return Container(
       constraints: BoxConstraints(maxWidth: resp.wp(70), minWidth: 0),
@@ -103,7 +104,7 @@ class ShortEventDataWidget extends StatelessWidget {
                               label: Text(
                                 '#${event.tags.first.name.trim()}',
                                 maxLines: 1,
-                                style: TextStyles.w700(12, Colors.white),
+                                style: styles.w700(12, Colors.white),
                               ),
                             ),
                             if (event.tags.length > 1)
@@ -118,7 +119,7 @@ class ShortEventDataWidget extends StatelessWidget {
                                 ),
                                 child: Text(
                                   '${(event.tags.length - 1).toString()}+',
-                                  style: TextStyles.w700(10, Colors.white),
+                                  style: styles.w700(10, Colors.white),
                                 ),
                               ),
                             const Spacer(),
@@ -136,7 +137,7 @@ class ShortEventDataWidget extends StatelessWidget {
                                   event.title,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyles.w700(16),
+                                  style: styles.w700(16),
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -150,7 +151,7 @@ class ShortEventDataWidget extends StatelessWidget {
                                       'Due ${DateFormat('hh:mm a').format(event.endDate)} ',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: TextStyles.w500(12, grey),
+                                      style: styles.w500(12, grey),
                                     ),
                                   ],
                                 )
@@ -166,7 +167,7 @@ class ShortEventDataWidget extends StatelessWidget {
                         SizedBox(height: resp.hp(1)),
                         Text(
                           'Progress',
-                          style: TextStyles.w700(12),
+                          style: styles.w700(12),
                         ),
                         SizedBox(height: resp.hp(1)),
                         ProgressBar(

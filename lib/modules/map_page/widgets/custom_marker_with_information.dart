@@ -48,6 +48,7 @@ class _CustomMarkerWithInformationState
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -81,7 +82,7 @@ class _CustomMarkerWithInformationState
                 ),
                 child: Text(
                   widget.label,
-                  style: TextStyles.w500(14),
+                  style: styles.w500(14),
                   textAlign: TextAlign.center,
                 ),
               ),

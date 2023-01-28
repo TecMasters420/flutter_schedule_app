@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../config/constants.dart';
-
 class TextStyles {
+  static final TextStyles _styles = TextStyles._internal();
+
+  late Color? _defaultColor;
+
+  factory TextStyles.of(final BuildContext context) {
+    _styles._defaultColor = Theme.of(context).textTheme.titleLarge!.color;
+    return _styles;
+  }
+  TextStyles._internal();
+
   static TextStyle _getCopy(
     final double size,
     final FontWeight weight,
@@ -16,39 +24,27 @@ class TextStyles {
     );
   }
 
-  static TextStyle w100(final double size, [final Color color = black]) {
-    return _getCopy(size, FontWeight.w100, color);
+  TextStyle w400(final double size, [final Color? color]) {
+    return _getCopy(size, FontWeight.w400, color ?? _styles._defaultColor!);
   }
 
-  static TextStyle w200(final double size, [final Color color = black]) {
-    return _getCopy(size, FontWeight.w200, color);
+  TextStyle w500(final double size, [final Color? color]) {
+    return _getCopy(size, FontWeight.w500, color ?? _styles._defaultColor!);
   }
 
-  static TextStyle w300(final double size, [final Color color = black]) {
-    return _getCopy(size, FontWeight.w300, color);
+  TextStyle w600(final double size, [final Color? color]) {
+    return _getCopy(size, FontWeight.w600, color ?? _styles._defaultColor!);
   }
 
-  static TextStyle w400(final double size, [final Color color = black]) {
-    return _getCopy(size, FontWeight.w400, color);
+  TextStyle w700(final double size, [final Color? color]) {
+    return _getCopy(size, FontWeight.w700, color ?? _styles._defaultColor!);
   }
 
-  static TextStyle w500(final double size, [final Color color = black]) {
-    return _getCopy(size, FontWeight.w500, color);
+  TextStyle w800(final double size, [final Color? color]) {
+    return _getCopy(size, FontWeight.w800, color ?? _styles._defaultColor!);
   }
 
-  static TextStyle w600(final double size, [final Color color = black]) {
-    return _getCopy(size, FontWeight.w600, color);
-  }
-
-  static TextStyle w700(final double size, [final Color color = black]) {
-    return _getCopy(size, FontWeight.w700, color);
-  }
-
-  static TextStyle w800(final double size, [final Color color = black]) {
-    return _getCopy(size, FontWeight.w800, color);
-  }
-
-  static TextStyle w900(final double size, [final Color color = black]) {
-    return _getCopy(size, FontWeight.w900, color);
+  TextStyle w900(final double size, [final Color? color]) {
+    return _getCopy(size, FontWeight.w900, color ?? _styles._defaultColor!);
   }
 }

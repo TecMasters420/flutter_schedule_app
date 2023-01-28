@@ -18,6 +18,8 @@ class CustomHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styles = TextStyles.of(context);
+
     return Row(
       children: [
         const Expanded(
@@ -36,7 +38,7 @@ class CustomHeaderWidget extends StatelessWidget {
                 title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyles.w700(titleSize, Colors.white),
+                style: styles.w700(titleSize, Colors.white),
               ),
             ),
           ),

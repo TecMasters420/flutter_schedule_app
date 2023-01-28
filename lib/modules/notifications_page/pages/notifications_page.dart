@@ -15,6 +15,7 @@ class NotificationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -27,7 +28,7 @@ class NotificationsPage extends StatelessWidget {
               SizedBox(height: resp.hp(2.5)),
               Text(
                 'Invitations',
-                style: TextStyles.w700(20),
+                style: styles.w700(20),
               ),
               SizedBox(height: resp.hp(2.5)),
               ResponsiveContainerWidget(
@@ -53,22 +54,22 @@ class NotificationsPage extends StatelessWidget {
                           RichText(
                             text: TextSpan(
                               text: 'Francisco Rodríguez 2 ',
-                              style: TextStyles.w700(14),
+                              style: styles.w700(14),
                               children: [
                                 TextSpan(
                                   text: 'has invited you to event: ',
-                                  style: TextStyles.w500(14),
+                                  style: styles.w500(14),
                                 ),
                                 TextSpan(
                                   text: 'Create application',
-                                  style: TextStyles.w700(14, blueAccent),
+                                  style: styles.w700(14, blueAccent),
                                 ),
                               ],
                             ),
                           ),
                           Text(
                             '5 minutes ago',
-                            style: TextStyles.w500(14, grey),
+                            style: styles.w500(14, grey),
                           ),
                           CustomTextButtonWidget(
                             title: 'See details',
@@ -86,7 +87,7 @@ class NotificationsPage extends StatelessWidget {
                               CustomButton(
                                 text: 'Accept',
                                 color: blueAccent,
-                                style: TextStyles.w700(14, Colors.white),
+                                style: styles.w700(14, Colors.white),
                                 hideShadows: true,
                                 onTap: () {},
                               ),
@@ -101,7 +102,7 @@ class NotificationsPage extends StatelessWidget {
               SizedBox(height: resp.hp(2.5)),
               Text(
                 'Events',
-                style: TextStyles.w700(20),
+                style: styles.w700(20),
               ),
               SizedBox(height: resp.hp(2.5)),
               ResponsiveContainerWidget(
@@ -127,22 +128,22 @@ class NotificationsPage extends StatelessWidget {
                           RichText(
                             text: TextSpan(
                               text: '2 months ',
-                              style: TextStyles.w700(14),
+                              style: styles.w700(14),
                               children: [
                                 TextSpan(
                                   text: 'left until the end of the event: ',
-                                  style: TextStyles.w500(14),
+                                  style: styles.w500(14),
                                 ),
                                 TextSpan(
                                   text: 'Create application',
-                                  style: TextStyles.w700(14, blueAccent),
+                                  style: styles.w700(14, blueAccent),
                                 ),
                               ],
                             ),
                           ),
                           Text(
                             '5 minutes ago',
-                            style: TextStyles.w500(14, grey),
+                            style: styles.w500(14, grey),
                           ),
                           SizedBox(height: resp.hp(2)),
                           Row(
@@ -151,7 +152,7 @@ class NotificationsPage extends StatelessWidget {
                               CustomButton(
                                 text: 'Details',
                                 color: blueAccent,
-                                style: TextStyles.w700(14, Colors.white),
+                                style: styles.w700(14, Colors.white),
                                 hideShadows: true,
                                 onTap: () {},
                               ),
@@ -166,7 +167,7 @@ class NotificationsPage extends StatelessWidget {
               SizedBox(height: resp.hp(2.5)),
               Text(
                 'Group Events',
-                style: TextStyles.w700(20),
+                style: styles.w700(20),
               ),
               SizedBox(height: resp.hp(2.5)),
               ...List.generate(
@@ -197,15 +198,15 @@ class NotificationsPage extends StatelessWidget {
                                 RichText(
                                   text: TextSpan(
                                     text: 'Carlos Catalan ',
-                                    style: TextStyles.w700(14),
+                                    style: styles.w700(14),
                                     children: [
                                       TextSpan(
                                         text: 'has modified the event ',
-                                        style: TextStyles.w500(14),
+                                        style: styles.w500(14),
                                       ),
                                       TextSpan(
                                         text: 'Finish Home Page',
-                                        style: TextStyles.w700(14, blueAccent),
+                                        style: styles.w700(14, blueAccent),
                                       ),
                                     ],
                                   ),
@@ -213,7 +214,7 @@ class NotificationsPage extends StatelessWidget {
                                 SizedBox(height: resp.hp(1)),
                                 Text(
                                   'Changes',
-                                  style: TextStyles.w700(14),
+                                  style: styles.w700(14),
                                 ),
                                 ...['Animations in the statistics'].map(
                                   (e) => Row(
@@ -229,7 +230,7 @@ class NotificationsPage extends StatelessWidget {
                                       const SizedBox(width: 5),
                                       Text(
                                         e,
-                                        style: TextStyles.w500(14),
+                                        style: styles.w500(14),
                                       ),
                                     ],
                                   ),
@@ -237,7 +238,7 @@ class NotificationsPage extends StatelessWidget {
                                 SizedBox(height: resp.hp(1)),
                                 Text(
                                   '5 minutes ago',
-                                  style: TextStyles.w500(14, grey),
+                                  style: styles.w500(14, grey),
                                 ),
                                 SizedBox(height: resp.hp(2)),
                                 Row(
@@ -248,7 +249,7 @@ class NotificationsPage extends StatelessWidget {
                                           const BoxConstraints(maxWidth: 150),
                                       text: 'Details',
                                       color: blueAccent,
-                                      style: TextStyles.w700(14, Colors.white),
+                                      style: styles.w700(14, Colors.white),
                                       hideShadows: true,
                                       onTap: () {},
                                     ),

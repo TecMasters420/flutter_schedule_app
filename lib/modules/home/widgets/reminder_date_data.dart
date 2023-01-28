@@ -18,19 +18,20 @@ class ReminderDateData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     return Column(
       children: [
         Text(
           endDate.day.toString(),
-          style: TextStyles.w800(18),
+          style: styles.w800(18),
         ),
         Text(
           DateFormat('EEEE').format(endDate).substring(0, 3),
-          style: TextStyles.w500(16),
+          style: styles.w500(16),
         ),
         Text(
           DateFormat('MMMM').format(endDate).substring(0, 3),
-          style: TextStyles.w500(16),
+          style: styles.w500(16),
         ),
         SizedBox(height: resp.hp(1)),
         Container(

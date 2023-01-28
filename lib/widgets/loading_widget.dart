@@ -8,13 +8,14 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const CircularProgressIndicator(),
           SizedBox(height: resp.hp(2.5)),
-          Text('Loading...', style: TextStyles.w700(16)),
+          Text('Loading...', style: styles.w700(16)),
         ],
       ),
     );

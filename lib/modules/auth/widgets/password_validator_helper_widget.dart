@@ -24,6 +24,7 @@ class PasswordValidatorHelperWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styles = TextStyles.of(context);
     final controller = Get.put(PasswordValidatorController());
     controller.validate(pass);
     return Obx(
@@ -44,10 +45,10 @@ class PasswordValidatorHelperWidget extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 e.name,
-                                style: TextStyles.w700(14, green).copyWith(
-                                  decoration: TextDecoration.lineThrough,
-                                  decorationColor: green,
-                                ),
+                                style: styles.w700(14, green).copyWith(
+                                      decoration: TextDecoration.lineThrough,
+                                      decorationColor: green,
+                                    ),
                               ),
                             )
                           ],
@@ -61,7 +62,7 @@ class PasswordValidatorHelperWidget extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 e.name,
-                                style: TextStyles.w500(14, lightGrey),
+                                style: styles.w500(14, lightGrey),
                               ),
                             )
                           ],

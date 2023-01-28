@@ -12,6 +12,7 @@ class GroupEventsListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     const int containers = 10;
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -52,7 +53,7 @@ class GroupEventsListWidget extends StatelessWidget {
                             flex: 15,
                             child: Text(
                               'Testing group events in schedule app',
-                              style: TextStyles.w700(14),
+                              style: styles.w700(14),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -106,7 +107,7 @@ class GroupEventsListWidget extends StatelessWidget {
                                     Expanded(
                                       child: Text(
                                         'BC, México (400km).',
-                                        style: TextStyles.w500(12, lightGrey),
+                                        style: styles.w500(12, lightGrey),
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
@@ -126,7 +127,7 @@ class GroupEventsListWidget extends StatelessWidget {
                                     Expanded(
                                       child: Text(
                                         'In 14 minutes',
-                                        style: TextStyles.w500(12, lightGrey),
+                                        style: styles.w500(12, lightGrey),
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
@@ -144,7 +145,7 @@ class GroupEventsListWidget extends StatelessWidget {
                         CustomButton(
                           text: 'Details',
                           color: blueAccent,
-                          style: TextStyles.w500(12, Colors.white),
+                          style: styles.w500(12, Colors.white),
                           onTap: () {},
                         ),
                       ],

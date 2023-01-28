@@ -14,6 +14,8 @@ class CustomCacheImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styles = TextStyles.of(context);
+
     return Image.network(
       imageUrl.trim(),
       fit: fit,
@@ -27,7 +29,7 @@ class CustomCacheImageWidget extends StatelessWidget {
         debugPrint('Error loading image');
         return Text(
           'Error loading image',
-          style: TextStyles.w600(16, Colors.white),
+          style: styles.w600(16, Colors.white),
         );
       },
     );

@@ -13,6 +13,7 @@ class NoEventsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     return Column(
       children: [
         SizedBox(height: resp.hp(1)),
@@ -25,17 +26,17 @@ class NoEventsWidget extends StatelessWidget {
           ),
         ),
         SizedBox(height: resp.hp(2.5)),
-        Text('No events found', style: TextStyles.w700(16)),
+        Text('No events found', style: styles.w700(16)),
         Text(
           'You can click on the button to add an event.',
-          style: TextStyles.w500(14),
+          style: styles.w500(14),
         ),
         SizedBox(height: resp.hp(1.5)),
         CustomButton(
           text: 'Add event',
           color: lightBlue,
           hideShadows: true,
-          style: TextStyles.w500(14, blueAccent),
+          style: styles.w500(14, blueAccent),
           onTap: () => Get.toNamed(AppRoutes.eventDetails),
         ),
       ],

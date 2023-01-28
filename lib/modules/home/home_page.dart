@@ -19,6 +19,8 @@ class HomePage extends GetView {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
+
     final HomeController home = Get.find();
     final AuthController auth = Get.find();
 
@@ -40,7 +42,7 @@ class HomePage extends GetView {
               SizedBox(height: resp.hp(2.5)),
               Text(
                 'Statistics',
-                style: TextStyles.w700(20),
+                style: styles.w700(20),
               ),
               SizedBox(height: resp.hp(2.5)),
               SizedBox(
@@ -50,7 +52,7 @@ class HomePage extends GetView {
               ),
               // Text(
               //   'Group events:',
-              //   style: TextStyles.w700(20),
+              //   style: styles.w700(20),
               // ),
               // SizedBox(height: resp.hp(2.5)),
               // const GroupEventsListWidget(),
@@ -61,7 +63,7 @@ class HomePage extends GetView {
                   children: [
                     Text(
                       'Select the event type',
-                      style: TextStyles.w700(20),
+                      style: styles.w700(20),
                     ),
                     SizedBox(height: resp.hp(2.5)),
                     EventsTypesWidget(

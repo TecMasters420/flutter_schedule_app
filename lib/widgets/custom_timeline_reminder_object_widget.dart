@@ -21,6 +21,7 @@ class CustomTimeLineReminderObjectWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
 
     if (suffixWidget == null) {
       return Padding(
@@ -32,7 +33,7 @@ class CustomTimeLineReminderObjectWidget extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: titleStyle ?? TextStyles.w600(14, black),
+                style: titleStyle ?? styles.w600(14, black),
               ),
               SizedBox(width: resp.wp(5)),
               Expanded(
@@ -67,7 +68,7 @@ class CustomTimeLineReminderObjectWidget extends StatelessWidget {
                     opacity: 1 - opacity,
                     child: Text(
                       title,
-                      style: titleStyle ?? TextStyles.w600(14, black),
+                      style: titleStyle ?? styles.w600(14, black),
                     ),
                   );
                 }),

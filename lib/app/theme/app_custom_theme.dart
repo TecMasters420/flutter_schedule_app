@@ -20,6 +20,9 @@ class AppCustomTheme {
       onSurface: backgroundColor,
       onPrimary: Color(0xFF0A0E21),
     ),
+    textTheme: const TextTheme(
+      titleLarge: TextStyle(color: black),
+    ),
     scaffoldBackgroundColor: backgroundColor,
   );
 
@@ -28,6 +31,9 @@ class AppCustomTheme {
     colorScheme: lightMode.colorScheme.copyWith(
       surface: containerBgDark,
       brightness: Brightness.dark,
+    ),
+    textTheme: const TextTheme(
+      titleLarge: TextStyle(color: Colors.white),
     ),
   );
 }

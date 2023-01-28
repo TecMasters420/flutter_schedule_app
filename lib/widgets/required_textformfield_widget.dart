@@ -20,17 +20,18 @@ class RequiredTextFormFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     return Column(
       children: [
         Row(
           children: [
             Text(
               title,
-              style: TextStyles.w700(14),
+              style: styles.w700(14),
             ),
             Text(
               ' *',
-              style: TextStyles.w700(14, Colors.red),
+              style: styles.w700(14, Colors.red),
             ),
           ],
         ),

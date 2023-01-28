@@ -42,6 +42,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     if (!widget.days.contains(_selectedDay)) {
       _selectedDay = widget.days.isEmpty ? 0 : widget.days[0];
     }
@@ -55,10 +56,10 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Date', style: TextStyles.w700(20)),
+        Text('Date', style: styles.w700(20)),
         Text(
           'Select your events by dates',
-          style: TextStyles.w500(14, grey),
+          style: styles.w500(14, grey),
         ),
         SizedBox(height: resp.hp(1.5)),
         CustomDateContainer(
@@ -82,8 +83,8 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                     currentElement,
                   )),
                   style: isSelected
-                      ? TextStyles.w700(16)
-                      : TextStyles.w500(
+                      ? styles.w700(16)
+                      : styles.w500(
                           16,
                           grey,
                         ),
@@ -150,7 +151,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                                 )
                                 .substring(0, 3)
                                 .toUpperCase(),
-                            style: TextStyles.w500(
+                            style: styles.w500(
                               12,
                               isSelected ? Colors.white : grey,
                             ),
@@ -159,7 +160,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                             widget.days[index].toString().length == 1
                                 ? '0${widget.days[index]}'
                                 : widget.days[index].toString(),
-                            style: TextStyles.w700(
+                            style: styles.w700(
                               25,
                               isSelected ? Colors.white : black,
                             ),

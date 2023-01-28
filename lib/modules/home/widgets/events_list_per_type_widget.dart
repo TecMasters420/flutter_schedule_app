@@ -25,6 +25,7 @@ class EventsListPerType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     final lenght = eventsType.events.length;
     final isEmpty = eventsType.events.isEmpty;
     return Column(
@@ -35,7 +36,7 @@ class EventsListPerType extends StatelessWidget {
             children: [
               Text(
                 '$lenght Events',
-                style: TextStyles.w700(16),
+                style: styles.w700(16),
               ),
               const Spacer(),
               CustomTextButtonWidget(
@@ -69,7 +70,7 @@ class EventsListPerType extends StatelessWidget {
                         ),
                       );
                     },
-                    style: TextStyles.w700(
+                    style: styles.w700(
                       18,
                       Colors.white,
                     ),

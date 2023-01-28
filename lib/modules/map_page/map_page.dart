@@ -23,6 +23,7 @@ class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     final MapPageController map = Get.find();
     map.setLocations(startLoc, endLoc);
 
@@ -56,7 +57,7 @@ class MapPage extends StatelessWidget {
                       Expanded(
                         child: Text(
                           'Start address: ',
-                          style: TextStyles.w700(16),
+                          style: styles.w700(16),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -65,7 +66,7 @@ class MapPage extends StatelessWidget {
                       Flexible(
                         child: Text(
                           '150 m for you',
-                          style: TextStyles.w500(14, grey),
+                          style: styles.w500(14, grey),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -82,7 +83,7 @@ class MapPage extends StatelessWidget {
                           Icons.location_on,
                           color: Colors.white,
                         ),
-                        style: TextStyles.w800(16, Colors.white),
+                        style: styles.w800(16, Colors.white),
                         onTap: () {},
                       ),
                     ],

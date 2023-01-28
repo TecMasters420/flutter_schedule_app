@@ -39,6 +39,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     final EventsDetailsCreationController controller = Get.find();
     final int? eventId = int.tryParse(Get.arguments.toString());
     debugPrint('Event ID: $eventId');
@@ -110,7 +111,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                       children: [
                         Text(
                           'Event information',
-                          style: TextStyles.w800(20),
+                          style: styles.w800(20),
                         ),
                         SizedBox(height: resp.hp(2.5)),
                         EventDetailsWidget(
@@ -203,14 +204,14 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                                 final isCompleted =
                                     event.tasks[index].isCompleted;
                                 final style = isCompleted
-                                    ? TextStyles.w700(14, black).copyWith(
-                                        decorationColor: black,
-                                        decorationThickness: 5,
-                                        decoration: isCompleted
-                                            ? TextDecoration.lineThrough
-                                            : null,
-                                      )
-                                    : TextStyles.w500(14, grey);
+                                    ? styles.w700(14, black).copyWith(
+                                          decorationColor: black,
+                                          decorationThickness: 5,
+                                          decoration: isCompleted
+                                              ? TextDecoration.lineThrough
+                                              : null,
+                                        )
+                                    : styles.w500(14, grey);
                                 return Row(
                                   children: [
                                     Expanded(
@@ -299,7 +300,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                       children: [
                         Text(
                           'Event Date',
-                          style: TextStyles.w800(18),
+                          style: styles.w800(18),
                         ),
                         SizedBox(height: resp.hp(2.5)),
                         EventExpandibleDetailsWidget(
@@ -348,7 +349,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                       children: [
                         Text(
                           'Event Weather',
-                          style: TextStyles.w800(18),
+                          style: styles.w800(18),
                         ),
                         SizedBox(height: resp.hp(2.5)),
                         const EventDetailsWidget(
@@ -368,7 +369,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                       children: [
                         Text(
                           'Event Locations',
-                          style: TextStyles.w800(18),
+                          style: styles.w800(18),
                         ),
                         SizedBox(height: resp.hp(2.5)),
                         EventDetailsWidget(
@@ -418,7 +419,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                                 CustomButton(
                                   text: 'Add location',
                                   color: blueAccent,
-                                  style: TextStyles.w700(14, Colors.white),
+                                  style: styles.w700(14, Colors.white),
                                   onTap: () => Get.to(
                                     () => MapPage(
                                       startLoc: event.startLocation,

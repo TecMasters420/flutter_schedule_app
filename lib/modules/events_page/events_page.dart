@@ -27,6 +27,7 @@ class EventsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
 
     final EventsPageController events = Get.find();
 
@@ -131,11 +132,11 @@ class EventsPage extends StatelessWidget {
                                         children: [
                                           Text(
                                             'Timeline',
-                                            style: TextStyles.w700(20),
+                                            style: styles.w700(20),
                                           ),
                                           Text(
                                             '${events.eventsInDate.length} ${events.eventsInDate.length == 1 ? 'Event' : 'Events'} in this day',
-                                            style: TextStyles.w500(14, grey),
+                                            style: styles.w500(14, grey),
                                           ),
                                         ],
                                       ),
@@ -162,8 +163,8 @@ class EventsPage extends StatelessWidget {
                                       return CustomTimeLineReminderObjectWidget(
                                         title: time,
                                         titleStyle: eventsInHour.isNotEmpty
-                                            ? TextStyles.w700(14)
-                                            : TextStyles.w500(14, grey),
+                                            ? styles.w700(14)
+                                            : styles.w500(14, grey),
                                         suffixWidget: eventsInHour.isEmpty
                                             ? null
                                             : Row(

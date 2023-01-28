@@ -29,6 +29,7 @@ class EventDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
 
     return Column(
       children: [
@@ -63,12 +64,12 @@ class EventDetailsWidget extends StatelessWidget {
                       children: [
                         Text(
                           title,
-                          style: TextStyles.w700(14),
+                          style: styles.w700(14),
                         ),
                         if (value != null)
                           Text(
                             value!,
-                            style: TextStyles.w500(12, grey),
+                            style: styles.w500(12, grey),
                           ),
                         if (extra != null) ...[
                           SizedBox(height: resp.hp(1)),

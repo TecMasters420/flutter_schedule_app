@@ -22,6 +22,7 @@ class HomeHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
 
     return Column(
       children: [
@@ -42,7 +43,7 @@ class HomeHeaderWidget extends StatelessWidget {
                   children: [
                     Text(
                       name,
-                      style: TextStyles.w700(14),
+                      style: styles.w700(14),
                     ),
                     CustomTextButtonWidget(
                       title: 'View profile',
@@ -74,7 +75,7 @@ class HomeHeaderWidget extends StatelessWidget {
                       ),
                       child: Text(
                         '10+',
-                        style: TextStyles.w700(10, Colors.white),
+                        style: styles.w700(10, Colors.white),
                       ),
                     ),
                   )
@@ -92,7 +93,7 @@ class HomeHeaderWidget extends StatelessWidget {
             children: [
               Text(
                 'Schedule App',
-                style: TextStyles.w700(35, Colors.white),
+                style: styles.w700(35, Colors.white),
               ),
             ],
           ),

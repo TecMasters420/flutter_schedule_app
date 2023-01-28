@@ -28,6 +28,7 @@ class FilteredEventsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -51,7 +52,7 @@ class FilteredEventsPage extends StatelessWidget {
                         Expanded(
                           child: Text(
                             'Events List',
-                            style: TextStyles.w700(20),
+                            style: styles.w700(20),
                           ),
                         ),
                         CustomTextButtonWidget(

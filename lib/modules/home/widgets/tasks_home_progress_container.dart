@@ -17,6 +17,7 @@ class TasksHomeProgressContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
 
     final percentsName = ['All Tasks', 'Expired Tasks', 'Next Tasks'];
     final percents = List.generate(
@@ -45,7 +46,7 @@ class TasksHomeProgressContainer extends StatelessWidget {
               'Weekly progress',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyles.w700(18),
+              style: styles.w700(18),
             ),
             const Spacer(),
             ...List.generate(
@@ -70,7 +71,7 @@ class TasksHomeProgressContainer extends StatelessWidget {
                         clampledPercentages[x].name,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyles.w700(12),
+                        style: styles.w700(12),
                       ),
                     ),
                     SizedBox(width: resp.wp(2.5)),
@@ -79,7 +80,7 @@ class TasksHomeProgressContainer extends StatelessWidget {
                         '${clampledPercentages[x].percent.toStringAsFixed(2)}%',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyles.w600(12, grey),
+                        style: styles.w600(12, grey),
                       ),
                     ),
                   ],

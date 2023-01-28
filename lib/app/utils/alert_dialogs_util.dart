@@ -18,6 +18,8 @@ class AlertDialogsUtil {
     bool showActions = false,
     VoidCallback? onAccept,
   }) {
+    final context = Get.context!;
+    final styles = TextStyles.of(context);
     Get.defaultDialog(
       title: '',
       barrierDismissible: dimissible,
@@ -41,7 +43,7 @@ class AlertDialogsUtil {
                     Text(
                       title,
                       textAlign: TextAlign.center,
-                      style: TextStyles.w700(20, titleColor),
+                      style: styles.w700(20, titleColor),
                     ),
                     const SizedBox(height: 5),
                     ...bodyText.map(
@@ -49,7 +51,7 @@ class AlertDialogsUtil {
                         children: [
                           Text(
                             '- ${e[0].toUpperCase()}${e.substring(1)}',
-                            style: TextStyles.w500(14),
+                            style: styles.w500(14),
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 2.5),
@@ -69,7 +71,7 @@ class AlertDialogsUtil {
                             text: 'Accept',
                             color: blueAccent,
                             onTap: onAccept ?? () {},
-                            style: TextStyles.w700(
+                            style: styles.w700(
                               14,
                               Colors.white,
                             ),
@@ -175,12 +177,14 @@ class AlertDialogsUtil {
     required int maxLines,
     void Function(String)? onSummitCallback,
   }) {
+    final context = Get.context!;
+    final styles = TextStyles.of(context);
     return Get.defaultDialog(
       titlePadding: const EdgeInsets.only(top: 20),
       contentPadding: const EdgeInsets.symmetric(horizontal: 20),
       title: 'Set $title',
       radius: 30,
-      titleStyle: TextStyles.w700(18),
+      titleStyle: styles.w700(18),
       content: Column(
         children: [
           const SizedBox(height: 20),

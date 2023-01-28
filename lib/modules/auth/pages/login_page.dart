@@ -23,6 +23,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     final AuthController auth = Get.find();
 
     return Scaffold(
@@ -58,12 +59,12 @@ class LoginPage extends StatelessWidget {
                     children: [
                       Text(
                         'Login - Alpha',
-                        style: TextStyles.w800(35),
+                        style: styles.w800(35),
                       ),
                       SizedBox(height: resp.hp(0.5)),
                       Text(
                         'Enter the following information so you can organize your events!',
-                        style: TextStyles.w500(14, grey),
+                        style: styles.w500(14, grey),
                       ),
                       SizedBox(height: resp.hp(3)),
                       RequiredTextFormFieldWidget(
@@ -99,7 +100,7 @@ class LoginPage extends StatelessWidget {
                           CustomButton(
                             color: blueAccent,
                             padding: const EdgeInsets.symmetric(vertical: 15),
-                            style: TextStyles.w800(16, Colors.white),
+                            style: styles.w800(16, Colors.white),
                             text: 'Login',
                             expand: true,
                             onTap: () async {
@@ -122,7 +123,7 @@ class LoginPage extends StatelessWidget {
                           SizedBox(height: resp.hp(1)),
                           Text(
                             'Or',
-                            style: TextStyles.w500(14, grey),
+                            style: styles.w500(14, grey),
                             textAlign: TextAlign.center,
                           ),
                           SizedBox(height: resp.hp(1)),
@@ -134,7 +135,7 @@ class LoginPage extends StatelessWidget {
                                   color: containerBg,
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 15),
-                                  style: TextStyles.w700(14),
+                                  style: styles.w700(14),
                                   text: 'Google',
                                   center: true,
                                   prefixWidget: Image.asset(
@@ -156,7 +157,7 @@ class LoginPage extends StatelessWidget {
                               Expanded(
                                 child: CustomButton(
                                   color: blueAccent,
-                                  style: TextStyles.w700(14, Colors.white),
+                                  style: styles.w700(14, Colors.white),
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 15),
                                   text: 'Facebook',
@@ -181,7 +182,7 @@ class LoginPage extends StatelessWidget {
                             children: [
                               Text(
                                 "Don't have an account? ",
-                                style: TextStyles.w500(14, grey),
+                                style: styles.w500(14, grey),
                               ),
                               Expanded(
                                 child: CustomTextButtonWidget(

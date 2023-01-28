@@ -50,6 +50,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     final int announcesQuantity = widget.announcements.length;
     return widget.isLoaded
         ? PageView.builder(
@@ -82,7 +83,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                         padding: const EdgeInsets.symmetric(
                             vertical: 15, horizontal: 20),
                         color: blueAccent,
-                        style: TextStyles.w800(16, Colors.white),
+                        style: styles.w800(16, Colors.white),
                         text: 'Next',
                         expand: true,
                         onTap: () => _pageController.animateToPage(
@@ -95,7 +96,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                         padding: const EdgeInsets.symmetric(
                             vertical: 15, horizontal: 20),
                         color: blueAccent,
-                        style: TextStyles.w800(16, Colors.white),
+                        style: styles.w800(16, Colors.white),
                         text: 'Join',
                         expand: true,
                         onTap: () => Get.toNamed(AppRoutes.login),
@@ -111,7 +112,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                 SizedBox(height: resp.hp(2)),
                 Text(
                   'Loading announcements',
-                  style: TextStyles.w800(16),
+                  style: styles.w800(16),
                 ),
               ],
             ),

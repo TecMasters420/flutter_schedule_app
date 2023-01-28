@@ -23,6 +23,7 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     final AuthController auth = Get.find();
     final RegisterController register = Get.find();
 
@@ -47,12 +48,12 @@ class RegisterPage extends StatelessWidget {
                     children: [
                       Text(
                         'Register',
-                        style: TextStyles.w800(35),
+                        style: styles.w800(35),
                       ),
                       SizedBox(height: resp.hp(2)),
                       Text(
                         'Account data',
-                        style: TextStyles.w700(20),
+                        style: styles.w700(20),
                       ),
                       SizedBox(height: resp.hp(2.5)),
                       RequiredTextFormFieldWidget(
@@ -80,7 +81,7 @@ class RegisterPage extends StatelessWidget {
                       SizedBox(height: resp.hp(2.5)),
                       Text(
                         'User information',
-                        style: TextStyles.w700(20),
+                        style: styles.w700(20),
                       ),
                       SizedBox(height: resp.hp(2.5)),
                       Row(
@@ -110,7 +111,7 @@ class RegisterPage extends StatelessWidget {
                       SizedBox(height: resp.hp(1)),
                       Text(
                         'Phone',
-                        style: TextStyles.w700(14),
+                        style: styles.w700(14),
                       ),
                       SizedBox(height: resp.hp(1)),
                       Row(
@@ -138,7 +139,7 @@ class RegisterPage extends StatelessWidget {
                           SizedBox(width: resp.wp(5)),
                           CustomButton(
                             color: blueAccent,
-                            style: TextStyles.w800(16, Colors.white),
+                            style: styles.w800(16, Colors.white),
                             hideShadows: true,
                             text: 'Register',
                             onTap: () async {

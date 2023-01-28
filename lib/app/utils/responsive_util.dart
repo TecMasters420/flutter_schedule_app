@@ -31,13 +31,3 @@ class ResponsiveUtil {
   double wp(final double percent) => _width * (percent / 100);
   ResponsiveUtil._internal();
 }
-
-class Singleton {
-  static final Singleton _singleton = Singleton._internal();
-
-  factory Singleton() {
-    return _singleton;
-  }
-
-  Singleton._internal();
-}

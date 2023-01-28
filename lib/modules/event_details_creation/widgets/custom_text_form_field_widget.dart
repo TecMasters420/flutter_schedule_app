@@ -21,6 +21,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styles = TextStyles.of(context);
     return TextFormField(
       controller: controller,
       keyboardType: TextInputType.text,
@@ -62,7 +63,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
           ),
         ),
         alignLabelWithHint: true,
-        labelStyle: TextStyles.w500(14, grey),
+        labelStyle: styles.w500(14, grey),
       ),
       onFieldSubmitted: (value) {
         onAcceptCallback(value);

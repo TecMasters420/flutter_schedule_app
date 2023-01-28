@@ -32,7 +32,7 @@
 //         SizedBox(height: resp.hp(1)),
 //         Text(
 //           'Title',
-//           style: TextStyles.w600(14),
+//           style: styles.w600(14),
 //         ),
 //         SizedBox(height: resp.hp(1)),
 //         CustomFormField(
@@ -45,7 +45,7 @@
 //         SizedBox(height: resp.hp(1)),
 //         Text(
 //           'Description',
-//           style: TextStyles.w600(14),
+//           style: styles.w600(14),
 //         ),
 //         SizedBox(height: resp.hp(1)),
 //         CustomFormField(
@@ -59,7 +59,7 @@
 //         CustomButton(
 //           text: 'Accept',
 //           color: accent,
-//           style: TextStyles.w600(16, Colors.white),
+//           style: styles.w600(16, Colors.white),
 //           onTap: () {
 //             if (reminder.description.isEmpty || reminder.title.isEmpty) {
 //               return;

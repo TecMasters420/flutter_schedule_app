@@ -18,6 +18,7 @@ class UserProfilePage extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -86,7 +87,7 @@ class UserProfilePage extends GetWidget<AuthController> {
                                 onTap: () {
                                   Get.back();
                                 },
-                                style: TextStyles.w800(16, Colors.white),
+                                style: styles.w800(16, Colors.white),
                               ),
                             ),
                             SizedBox(width: resp.wp(2.5)),
@@ -99,7 +100,7 @@ class UserProfilePage extends GetWidget<AuthController> {
                                 onTap: () async {
                                   await controller.signOut();
                                 },
-                                style: TextStyles.w800(16, Colors.white),
+                                style: styles.w800(16, Colors.white),
                               ),
                             ),
                           ],
@@ -107,7 +108,7 @@ class UserProfilePage extends GetWidget<AuthController> {
                         SizedBox(height: resp.hp(4)),
                         Text(
                           'Information',
-                          style: TextStyles.w700(20),
+                          style: styles.w700(20),
                         ),
                         SizedBox(height: resp.hp(2.5)),
                         ResponsiveContainerWidget(
@@ -122,44 +123,44 @@ class UserProfilePage extends GetWidget<AuthController> {
                                 children: [
                                   Text(
                                     'Name',
-                                    style: TextStyles.w700(16),
+                                    style: styles.w700(16),
                                   ),
                                   Text(
                                     controller.currentUser!.data.name,
-                                    style: TextStyles.w400(14),
+                                    style: styles.w400(14),
                                   ),
                                   SizedBox(height: resp.hp(2)),
                                   Text(
                                     'Last name',
-                                    style: TextStyles.w700(16),
+                                    style: styles.w700(16),
                                   ),
                                   Text(
                                     controller.currentUser!.data.lastName,
-                                    style: TextStyles.w400(14),
+                                    style: styles.w400(14),
                                   ),
                                   SizedBox(height: resp.hp(2)),
                                   Text(
                                     'Email',
-                                    style: TextStyles.w700(16),
+                                    style: styles.w700(16),
                                   ),
                                   Text(
                                     controller.currentUser!.email,
-                                    style: TextStyles.w400(14),
+                                    style: styles.w400(14),
                                   ),
                                   SizedBox(height: resp.hp(2)),
                                   Text(
                                     'Phone number',
-                                    style: TextStyles.w700(16),
+                                    style: styles.w700(16),
                                   ),
                                   Text(
                                     controller.currentUser!.data.phone ??
                                         'No Number',
-                                    style: TextStyles.w400(14),
+                                    style: styles.w400(14),
                                   ),
                                   SizedBox(height: resp.hp(2)),
                                   Text(
                                     'Registered at',
-                                    style: TextStyles.w700(16),
+                                    style: styles.w700(16),
                                   ),
                                   Text(
                                     DateFormat(
@@ -167,7 +168,7 @@ class UserProfilePage extends GetWidget<AuthController> {
                                         .format(
                                       DateTime.now().toUtc(),
                                     ),
-                                    style: TextStyles.w500(14),
+                                    style: styles.w500(14),
                                   ),
                                 ],
                               ),
@@ -177,19 +178,19 @@ class UserProfilePage extends GetWidget<AuthController> {
                         SizedBox(height: resp.hp(3)),
                         Text(
                           'Groups',
-                          style: TextStyles.w700(20),
+                          style: styles.w700(20),
                         ),
                         SizedBox(height: resp.hp(2.5)),
                         SizedBox(height: resp.hp(3)),
                         Text(
                           'App Settings',
-                          style: TextStyles.w700(20),
+                          style: styles.w700(20),
                         ),
                         SizedBox(height: resp.hp(2.5)),
                         SizedBox(height: resp.hp(3)),
                         Text(
                           'More',
-                          style: TextStyles.w700(20),
+                          style: styles.w700(20),
                         ),
                         SizedBox(height: resp.hp(2.5)),
                       ],

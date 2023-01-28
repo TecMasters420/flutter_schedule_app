@@ -28,6 +28,7 @@ class LocationsSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
+    final styles = TextStyles.of(context);
     final MapApi api = MapApi();
     return Scaffold(
         body: ListView.builder(
@@ -37,7 +38,7 @@ class LocationsSearchDelegate extends SearchDelegate {
           onTap: () => close(context, []),
           title: Text(
             api.address[index].address ?? 'No address',
-            style: TextStyles.w500(12),
+            style: styles.w500(12),
           ),
         );
       },
@@ -46,6 +47,7 @@ class LocationsSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    final styles = TextStyles.of(context);
     final MapApi api = MapApi();
     api.getNearbyDirections(query);
     return ListView.builder(
@@ -55,7 +57,7 @@ class LocationsSearchDelegate extends SearchDelegate {
           onTap: () => close(context, api.address[index]),
           title: Text(
             api.address[index].address ?? 'No address',
-            style: TextStyles.w500(12),
+            style: styles.w500(12),
           ),
         );
       },

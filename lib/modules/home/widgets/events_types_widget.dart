@@ -36,6 +36,7 @@ class _EventsTypesWidgetState extends State<EventsTypesWidget> {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
     final List<String> eventsTabs = widget.events.map((e) => e.label).toList();
     final int eventsQuantity = widget.events[_currentIndex].events.length;
 
@@ -63,8 +64,8 @@ class _EventsTypesWidgetState extends State<EventsTypesWidget> {
                         child: Text(
                           '${eventsTabs[x]} ${x == _currentIndex ? '($eventsQuantity)' : ''}',
                           style: x == _currentIndex
-                              ? TextStyles.w700(16)
-                              : TextStyles.w600(16, grey),
+                              ? styles.w700(16)
+                              : styles.w600(16, grey),
                           textAlign: TextAlign.center,
                         ),
                       ),

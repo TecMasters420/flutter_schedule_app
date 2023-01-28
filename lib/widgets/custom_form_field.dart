@@ -21,15 +21,17 @@ class CustomFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styles = TextStyles.of(context);
+
     return TextFormField(
       controller: controller,
       maxLines: maxLines ?? 1,
       obscureText: obscure,
       onChanged: onChanged,
       decoration: InputDecoration(
-        hintStyle: TextStyles.w400(14, grey),
-        labelStyle: TextStyles.w400(14, grey),
-        floatingLabelStyle: TextStyles.w400(16, blueAccent),
+        hintStyle: styles.w400(14, grey),
+        labelStyle: styles.w400(14, grey),
+        floatingLabelStyle: styles.w400(16, blueAccent),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
