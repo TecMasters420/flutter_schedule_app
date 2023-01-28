@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:schedulemanager/data/models/tag_model.dart';
-
-import '../app/config/constants.dart';
 import '../app/utils/text_styles.dart';
 
 class TagsList extends StatelessWidget {

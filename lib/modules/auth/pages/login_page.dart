@@ -105,17 +105,17 @@ class LoginPage extends StatelessWidget {
                             expand: true,
                             onTap: () async {
                               if (_email.isEmpty || _password.isEmpty) {
-                                AlertDialogsUtil.error(
-                                  customBodyMessage: [
-                                    'Enter all the information requested'
-                                  ],
+                                AlertDialogsUtil.errorModal(
+                                  context: context,
+                                  title: 'Login failed',
+                                  subtitle:
+                                      'Enter all the information requested',
                                 );
                                 return;
                               }
-                              AlertDialogsUtil.loading(
-                                customBodyMessage: [
-                                  'Your data is being validated'
-                                ],
+                              AlertDialogsUtil.loadingModal(
+                                context: context,
+                                subtitle: 'Your data is being validated',
                               );
                               await auth.logIn(_email, _password);
                             },
@@ -144,10 +144,9 @@ class LoginPage extends StatelessWidget {
                                     width: 14,
                                   ),
                                   onTap: () async {
-                                    AlertDialogsUtil.loading(
-                                      customBodyMessage: [
-                                        'Your data is being validated'
-                                      ],
+                                    AlertDialogsUtil.loadingModal(
+                                      context: context,
+                                      subtitle: 'Your data is being validated',
                                     );
                                     await auth.googleLogin();
                                   },
@@ -168,8 +167,11 @@ class LoginPage extends StatelessWidget {
                                     width: 14,
                                   ),
                                   onTap: () async {
-                                    AlertDialogsUtil.warning(
-                                      customBodyMessage: ['Not yet available'],
+                                    AlertDialogsUtil.warningModal(
+                                      context: context,
+                                      title: 'Warning!',
+                                      subtitle:
+                                          'This option is not yet available',
                                     );
                                   },
                                 ),

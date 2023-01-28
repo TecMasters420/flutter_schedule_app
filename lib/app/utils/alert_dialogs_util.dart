@@ -3,11 +3,151 @@ import 'package:get/get.dart';
 import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/app/utils/text_styles.dart';
 import 'package:schedulemanager/widgets/custom_button.dart';
+import 'package:schedulemanager/widgets/custom_circular_progress.dart';
 import 'package:schedulemanager/widgets/custom_text_button_widget.dart';
 
 import '../../modules/event_details_creation/widgets/custom_text_form_field_widget.dart';
 
 class AlertDialogsUtil {
+  static void _baseModal({
+    required BuildContext context,
+    required String title,
+    required String subtitle,
+    String? image,
+    Widget? customChild,
+    bool ignoreConstraints = false,
+  }) {
+    final styles = TextStyles.of(context);
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25),
+      ),
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      enableDrag: false,
+      isDismissible: false,
+      constraints: ignoreConstraints
+          ? const BoxConstraints()
+          : BoxConstraints(
+              maxHeight: image == null && customChild == null ? 250 : 450,
+            ),
+      builder: (BuildContext context) {
+        return Padding(
+          padding: const EdgeInsets.all(30),
+          child: customChild ??
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (image != null)
+                    Center(
+                      child: Image.asset(
+                        image,
+                        height: 200,
+                      ),
+                    ),
+                  const Spacer(),
+                  Text(
+                    title,
+                    style: styles.w700(20),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    subtitle,
+                    style: styles.w500(14, grey),
+                  ),
+                  const Spacer(),
+                  CustomButton(
+                    expand: true,
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    text: 'Done',
+                    color: blueAccent,
+                    style: styles.w700(16),
+                    onTap: () {
+                      Get.back();
+                    },
+                  )
+                ],
+              ),
+        );
+      },
+    );
+  }
+
+  static void errorModal({
+    required BuildContext context,
+    required String title,
+    required String subtitle,
+  }) {
+    _baseModal(
+      context: context,
+      title: title,
+      subtitle: subtitle,
+      image: 'assets/images/cancel.png',
+    );
+  }
+
+  static void completedModal({
+    required BuildContext context,
+    required String title,
+    required String subtitle,
+  }) {
+    _baseModal(
+      context: context,
+      title: title,
+      subtitle: subtitle,
+      image: 'assets/images/checked.png',
+    );
+  }
+
+  static void warningModal({
+    required BuildContext context,
+    required String title,
+    required String subtitle,
+  }) {
+    _baseModal(
+      context: context,
+      title: title,
+      subtitle: subtitle,
+      image: 'assets/images/warning.png',
+    );
+  }
+
+  static void loadingModal({
+    required BuildContext context,
+    required String subtitle,
+  }) {
+    final styles = TextStyles.of(context);
+    _baseModal(
+      context: context,
+      title: 'Loading',
+      subtitle: subtitle,
+      ignoreConstraints: true,
+      customChild: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(
+            height: 50,
+            child: CustomCircularProgress(
+              color: blueAccent,
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            'Loading',
+            style: styles.w700(20),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            subtitle,
+            style: styles.w500(14, grey),
+          ),
+          const SizedBox(height: 5),
+        ],
+      ),
+    );
+  }
+
   static void forStatusBase(
     String title,
     List<String> bodyText, {

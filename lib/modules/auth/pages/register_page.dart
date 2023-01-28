@@ -146,24 +146,28 @@ class RegisterPage extends StatelessWidget {
                               final user = register.user.value;
                               final pass = register.pass.value;
                               if (!RegisterUtil.isValidToRegister(user, pass)) {
-                                AlertDialogsUtil.error(
-                                  customBodyMessage: [
-                                    'Please check the data you have entered'
-                                  ],
+                                AlertDialogsUtil.errorModal(
+                                  context: context,
+                                  title: 'Login failed',
+                                  subtitle:
+                                      'Enter all the information requested',
                                 );
                                 return;
                               }
-                              AlertDialogsUtil.loading(customBodyMessage: [
-                                'Please wait a while while registering'
-                              ]);
+                              AlertDialogsUtil.loadingModal(
+                                context: context,
+                                subtitle: 'Your data is being validated',
+                              );
                               final registered =
                                   await auth.register(user, pass);
                               if (!registered) {
                                 return;
                               }
                               Get.back(closeOverlays: true);
-                              AlertDialogsUtil.check(
-                                customBodyMessage: ['User has registered'],
+                              AlertDialogsUtil.completedModal(
+                                context: context,
+                                title: 'Completed!',
+                                subtitle: 'User has registered',
                               );
                             },
                           ),
