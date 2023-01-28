@@ -26,14 +26,15 @@ class CustomTextFormFieldWidget extends StatelessWidget {
       controller: controller,
       keyboardType: TextInputType.text,
       maxLines: maxLines,
+      style: styles.w500(14),
       decoration: InputDecoration(
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 10,
+          horizontal: 15,
+          vertical: 15,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(15),
         ),
         disabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
@@ -41,7 +42,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
             width: 1.0,
           ),
           borderRadius: BorderRadius.all(
-            Radius.circular(20),
+            Radius.circular(15),
           ),
         ),
         enabledBorder: const OutlineInputBorder(
@@ -50,7 +51,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
             width: 1.0,
           ),
           borderRadius: BorderRadius.all(
-            Radius.circular(20),
+            Radius.circular(15),
           ),
         ),
         focusedBorder: const OutlineInputBorder(
@@ -59,11 +60,12 @@ class CustomTextFormFieldWidget extends StatelessWidget {
             width: 1.0,
           ),
           borderRadius: BorderRadius.all(
-            Radius.circular(20),
+            Radius.circular(15),
           ),
         ),
         alignLabelWithHint: true,
         labelStyle: styles.w500(14, grey),
+        hintStyle: styles.w500(14),
       ),
       onFieldSubmitted: (value) {
         onAcceptCallback(value);

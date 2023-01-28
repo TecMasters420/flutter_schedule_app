@@ -242,7 +242,7 @@ class AlertDialogsUtil {
           CustomTextFormFieldWidget(
             initialText: initialText,
             label: fieldName,
-            maxLines: 2,
+            maxLines: 1,
             onAcceptCallback: (value) {
               Get.back();
               onAcceptCallback(value);
