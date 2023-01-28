@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../constants/constants.dart';
-import '../utils/responsive_util.dart';
-import '../utils/text_styles.dart';
+import '../app/config/constants.dart';
+import '../app/utils/text_styles.dart';
 
 class CustomFormField extends StatelessWidget {
   final void Function(String value) onChanged;
-  final String labelText;
-  final String hintText;
   final IconData icon;
   final bool obscure;
   final TextEditingController? controller;
@@ -15,8 +12,6 @@ class CustomFormField extends StatelessWidget {
 
   const CustomFormField({
     super.key,
-    required this.labelText,
-    required this.hintText,
     required this.icon,
     required this.onChanged,
     this.obscure = false,
@@ -26,21 +21,21 @@ class CustomFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
+
     return TextFormField(
       controller: controller,
       maxLines: maxLines ?? 1,
       obscureText: obscure,
       onChanged: onChanged,
       decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: TextStyles.w400(resp.sp14, grey),
-        labelStyle: TextStyles.w400(resp.sp14, grey),
-        floatingLabelStyle: TextStyles.w400(resp.sp16, accent),
+        hintStyle: styles.w400(14, grey),
+        labelStyle: styles.w400(14, grey),
+        floatingLabelStyle: styles.w400(16, blueAccent),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
-            color: accent,
+            color: blueAccent,
             width: 2,
           ),
         ),
@@ -53,8 +48,8 @@ class CustomFormField extends StatelessWidget {
         ),
         suffixIcon: Icon(
           icon,
-          size: resp.sp20,
-          color: accent,
+          size: 25,
+          color: blueAccent,
         ),
       ),
     );

@@ -2,16 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:schedulemanager/api/map_api.dart';
-import 'package:schedulemanager/screens/map_page/map_page.dart';
-import 'package:schedulemanager/widgets/animated_marker.dart';
-import '../constants/constants.dart';
-import '../services/base_service.dart';
+import 'package:schedulemanager/data/models/event_location_model.dart';
+import 'package:schedulemanager/modules/map_page/map_page.dart';
+import '../domain/map_api.dart';
+import '../modules/map_page/controller/map_page_controller.dart';
+import 'animated_marker.dart';
+import '../app/config/constants.dart';
+import '../app/services/base_repository.dart';
 
 class MapPreview extends StatefulWidget {
   final void Function(LatLng start, String? startAddress, LatLng end,
       String? endAddress, List<LatLng>? points)? onAcceptCallback;
+  final EventLocationModel startLoc;
+  final EventLocationModel endLoc;
   final double height;
   final double width;
   final GeoPoint initialPoint;
@@ -26,6 +31,8 @@ class MapPreview extends StatefulWidget {
     required this.initialPoint,
     required this.endPoint,
     required this.onAcceptCallback,
+    required this.endLoc,
+    required this.startLoc,
     this.startAddress,
     this.endAddress,
   });
@@ -43,7 +50,6 @@ class _MapPreviewState extends State<MapPreview> {
     _controller = MapController();
     _points = [];
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      print('updating');
       try {
         final start =
             LatLng(widget.initialPoint.latitude, widget.initialPoint.longitude);
@@ -86,17 +92,15 @@ class _MapPreviewState extends State<MapPreview> {
       },
     );
 
+    final theme = Theme.of(context).brightness == Brightness.dark
+        ? 'dark-v11'
+        : 'light-v11';
+
     return GestureDetector(
-      child: Container(
+      child: SizedBox(
         height: widget.height,
-        width: widget.width,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: lightGrey.withOpacity(0.25),
-        ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(30),
           child: FlutterMap(
             mapController: _controller,
             options: MapOptions(
@@ -108,26 +112,11 @@ class _MapPreviewState extends State<MapPreview> {
               zoom: 10,
               minZoom: 1,
               onTap: (tapPosition, point) {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) {
-                    return MapPage(
-                      startPos: startlPos,
-                      endPost: endPos,
-                      startAddress: widget.startAddress,
-                      endAddress: widget.endAddress,
-                      onAcceptCallback:
-                          (start, startAddress, end, endAddress, points) {
-                        setState(() {
-                          _points = points!;
-                        });
-                        if (widget.onAcceptCallback != null) {
-                          widget.onAcceptCallback!(
-                              start, startAddress, end, endAddress, points);
-                        }
-                      },
-                    );
-                  },
-                ));
+                Get.put(MapPageController());
+                Get.to(() => MapPage(
+                      startLoc: widget.startLoc,
+                      endLoc: widget.endLoc,
+                    ));
               },
               center: LatLng(
                 widget.initialPoint.latitude,
@@ -138,7 +127,7 @@ class _MapPreviewState extends State<MapPreview> {
               TileLayer(
                 backgroundColor: Colors.white,
                 urlTemplate:
-                    "https://api.mapbox.com/styles/v1/frankrdz/{styleId}/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
+                    "https://api.mapbox.com/styles/v1/mapbox/$theme/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
                 additionalOptions: {
                   'styleId': 'clarc1scl000314lfyzx582dm',
                   'accessToken': dotenv.env['MAPBOX_ACCESSTOKEN']!,
@@ -147,8 +136,8 @@ class _MapPreviewState extends State<MapPreview> {
               PolylineLayer(
                 polylines: [
                   Polyline(
-                    color: accent.withOpacity(0.8),
-                    borderColor: accent.withOpacity(0.8),
+                    color: blueAccent.withOpacity(0.8),
+                    borderColor: blueAccent.withOpacity(0.8),
                     borderStrokeWidth: 5,
                     strokeCap: StrokeCap.round,
                     points: _points,

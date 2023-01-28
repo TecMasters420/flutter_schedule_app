@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import '../../../app/utils/responsive_util.dart';
+
+import '../../../app/utils/text_styles.dart';
+
+class ReminderDateData extends StatelessWidget {
+  final DateTime endDate;
+  final Duration timeRemaining;
+  final Color dotColor;
+  const ReminderDateData({
+    super.key,
+    required this.endDate,
+    required this.timeRemaining,
+    required this.dotColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
+    return Column(
+      children: [
+        Text(
+          endDate.day.toString(),
+          style: styles.w800(18),
+        ),
+        Text(
+          DateFormat('EEEE').format(endDate).substring(0, 3),
+          style: styles.w500(16),
+        ),
+        Text(
+          DateFormat('MMMM').format(endDate).substring(0, 3),
+          style: styles.w500(16),
+        ),
+        SizedBox(height: resp.hp(1)),
+        Container(
+          height: 10,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: dotColor,
+          ),
+        ),
+      ],
+    );
+  }
+}

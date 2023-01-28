@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
-import '../constants/constants.dart';
+import 'package:schedulemanager/app/config/constants.dart';
+import 'package:schedulemanager/data/models/tag_model.dart';
+import '../app/utils/text_styles.dart';
 
 class TagsList extends StatelessWidget {
   final void Function(int index)? onLongPressCallback;
 
-  final TextStyle style;
-  final List<String> tagsList;
+  final List<TagModel> tagsList;
   final int? maxTagsToShow;
   const TagsList({
     super.key,
-    required this.style,
     required this.tagsList,
     this.maxTagsToShow,
     this.onLongPressCallback,
@@ -18,30 +17,35 @@ class TagsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styles = TextStyles.of(context);
+    if (tagsList.isEmpty) return const SizedBox();
     return Wrap(
       alignment: WrapAlignment.start,
       direction: Axis.horizontal,
       children: List.generate(
-        tagsList.length.clamp(0, maxTagsToShow ?? tagsList.length),
-        (index) => Padding(
-          padding: EdgeInsets.only(left: index == 0 ? 0 : 5),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(10),
-            radius: 5,
+          tagsList.length.clamp(0, maxTagsToShow ?? tagsList.length), (index) {
+        return Padding(
+          padding: const EdgeInsets.only(right: 5),
+          child: GestureDetector(
             onLongPress: () {
               if (onLongPressCallback != null) onLongPressCallback!(index);
             },
             child: Chip(
-              padding: EdgeInsets.zero,
-              backgroundColor: lightGrey.withOpacity(0.2),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(12.5),
+                side: const BorderSide(width: 0, color: darkAccent),
               ),
-              label: Text(tagsList[index], style: style),
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              backgroundColor: darkAccent,
+              clipBehavior: Clip.none,
+              label: Text(
+                '#${tagsList[index].name.replaceAll(RegExp(r'\s+'), '')}',
+                style: styles.w700(14, styles.chipsColor),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../utils/responsive_util.dart';
 
-import '../constants/constants.dart';
-import '../utils/text_styles.dart';
+import '../app/config/constants.dart';
+import '../app/utils/responsive_util.dart';
+import '../app/utils/text_styles.dart';
 import 'custom_button.dart';
 
 class CustomAlertDialog {
@@ -15,6 +15,8 @@ class CustomAlertDialog {
     final bool dismissible = true,
     final Widget? customBody,
   }) {
+    final styles = TextStyles.of(context);
+
     final AlertDialog alert = AlertDialog(
       actionsAlignment: MainAxisAlignment.center,
       shape: RoundedRectangleBorder(
@@ -22,13 +24,13 @@ class CustomAlertDialog {
       ),
       title: Text(
         title,
-        style: TextStyles.w500(resp.sp20),
+        style: styles.w500(25),
         textAlign: TextAlign.center,
       ),
       content: customBody ??
           Text(
             'Select an option',
-            style: TextStyles.w500(resp.sp16, grey),
+            style: styles.w500(16, grey),
             textAlign: TextAlign.center,
           ),
       actions: [
@@ -36,21 +38,17 @@ class CustomAlertDialog {
           CustomButton(
             text: 'No',
             color: lightGrey.withOpacity(0.25),
-            height: resp.hp(5),
-            width: resp.wp(25),
             onTap: () => Navigator.pop(context),
-            style: TextStyles.w500(resp.sp16),
+            style: styles.w500(16),
           ),
           CustomButton(
             text: 'Yes',
-            color: accent,
-            height: resp.hp(5),
-            width: resp.wp(25),
+            color: blueAccent,
             onTap: () {
               Navigator.pop(context);
               onAcceptCallback();
             },
-            style: TextStyles.w500(resp.sp16, Colors.white),
+            style: styles.w500(16, Colors.white),
           ),
         ]
       ],

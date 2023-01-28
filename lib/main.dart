@@ -1,11 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:provider/provider.dart';
-import 'package:schedulemanager/api/map_api.dart';
-import 'package:schedulemanager/services/flutter_notification.dart';
+import 'package:get/get.dart';
+import 'package:schedulemanager/modules/auth/controllers/auth_controller.dart';
+import 'presentation/app.dart';
+import 'presentation/bindings/app_bindings.dart';
+import 'app/services/flutter_notification.dart';
 
+<<<<<<< HEAD
 import 'screens/home_page/home_page.dart';
 import 'screens/initial_page/initial_information_page.dart';
 import 'screens/login_page/login_page.dart';
@@ -18,6 +22,9 @@ import 'services/auth_service.dart';
 import 'services/initial_announcements_service.dart';
 import 'services/reminder_service.dart';
 import 'package:flutter/services.dart';
+=======
+import 'firebase_options.dart';
+>>>>>>> dev
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
@@ -26,6 +33,7 @@ void main() async {
   await dotenv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+<<<<<<< HEAD
       // options: DefaultFirebaseOptions.currentPlatform,
       );
   SystemChrome.setSystemUIOverlayStyle(
@@ -43,10 +51,38 @@ void main() async {
     } else {
       debugPrint('has not notification');
     }
+=======
+    options: DefaultFirebaseOptions.currentPlatform,
+  ).then((value) {
+    const AppBindings().dependencies();
+>>>>>>> dev
   });
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  if (!kIsWeb) {
+    final AuthController auth = Get.find();
+    auth.fmcToken = await FirebaseMessaging.instance.getToken();
+
+    FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
+      auth.fmcToken = fcmToken;
+    }).onError((err) {
+      debugPrint('Error getting FMCToken');
+    });
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      debugPrint('Got a message whilst in the foreground!');
+      debugPrint('Message data: ${message.data}');
+
+      if (message.notification != null) {
+        sendNotification(
+            body: message.notification!.body,
+            title: message.notification!.title);
+      } else {
+        debugPrint('has not notification');
+      }
+    });
+
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  }
 
   runApp(const MyApp());
 }
@@ -56,31 +92,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<AuthService>(create: (context) => AuthService()),
-        ChangeNotifierProvider<MapApi>(create: (context) => MapApi()),
-        ChangeNotifierProvider<ReminderService>(
-            create: (context) => ReminderService()),
-        ChangeNotifierProvider<InitialAnnouncementsService>(
-            create: (context) => InitialAnnouncementsService()),
-      ],
-      child: MaterialApp(
-        title: 'Schedule Manager',
-        debugShowCheckedModeBanner: false,
-        home: const InitialInformationPage(),
-        routes: {
-          'initialInformationPage': (context) => const InitialInformationPage(),
-          'loginPage': (context) => const LoginPage(),
-          'homePage': (context) => const HomePage(),
-          'registerPage': (context) => const RegisterPage(),
-          'reminderDetailsPage': (context) =>
-              const ReminderDetailsPage(reminder: null),
-          'remindersPage': (context) => const RemindersPage(),
-          'userProfilePage': (context) => const UserProfilePage(),
-          'mapPage': (context) => const MapPage(),
-        },
-      ),
-    );
+    return const App();
   }
 }

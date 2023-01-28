@@ -1,57 +1,93 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/widgets/custom_icon_buttton_widget.dart';
 
-import '../constants/constants.dart';
-import '../utils/responsive_util.dart';
-import '../utils/text_styles.dart';
+import '../app/config/constants.dart';
+import '../app/utils/responsive_util.dart';
+import '../app/utils/text_styles.dart';
 
-class ReminderInformationWidget extends StatelessWidget {
+class EventDetailsWidget extends StatelessWidget {
   final IconData icon;
+  final Color iconColor;
   final String title;
   final String? value;
   final Widget? extra;
-  const ReminderInformationWidget({
+  final bool showSuffixWidget;
+  final VoidCallback? onTapEditCallback;
+  final Widget? customSuffixWidget;
+  const EventDetailsWidget({
     super.key,
     required this.icon,
     required this.title,
     this.value,
     this.extra,
+    this.onTapEditCallback,
+    this.customSuffixWidget,
+    this.showSuffixWidget = false,
+    this.iconColor = grey,
   });
 
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final styles = TextStyles.of(context);
 
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(
-              icon,
-              color: grey,
-              size: resp.sp20,
-            ),
-            SizedBox(width: resp.wp(5)),
             Expanded(
-              child: Column(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: TextStyles.w600(resp.sp14),
-                  ),
-                  if (value != null)
-                    Text(
-                      value!,
-                      style: TextStyles.w500(resp.sp14, grey),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 2,
+                      vertical: 2,
                     ),
-                  if (extra != null) ...[
-                    SizedBox(height: resp.hp(1)),
-                    extra!,
-                  ]
+                    decoration: BoxDecoration(
+                      color: iconColor.withOpacity(0.15),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      icon,
+                      color: iconColor,
+                      size: 25,
+                    ),
+                  ),
+                  SizedBox(width: resp.wp(5)),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: styles.w700(14),
+                        ),
+                        if (value != null)
+                          Text(
+                            value!,
+                            style: styles.w500(12, grey),
+                          ),
+                        if (extra != null) ...[
+                          SizedBox(height: resp.hp(1)),
+                          extra!,
+                        ]
+                      ],
+                    ),
+                  )
                 ],
               ),
-            )
+            ),
+            if (showSuffixWidget)
+              customSuffixWidget ??
+                  CustomIconButtonWidget(
+                    color: blueAccent,
+                    icon: Icons.edit,
+                    onTapCallback: onTapEditCallback ?? () {},
+                  )
           ],
         ),
         SizedBox(height: resp.hp(2.5)),
