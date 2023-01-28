@@ -53,10 +53,25 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
         backgroundColor: blueAccent,
         child: Icon(eventId == null ? Icons.add : Icons.check),
         onPressed: () async {
+          AlertDialogsUtil.loadingModal(
+            context: context,
+            subtitle: 'Wait a bit while your event is added',
+          );
+          bool isCorrect = false;
           if (eventId == null) {
-            await controller.createEvent();
+            isCorrect = await controller.createEvent();
           } else {
-            await controller.editEvent(eventId);
+            isCorrect = await controller.editEvent(eventId);
+          }
+          if (isCorrect) {
+            Get.back();
+            Get.close(1);
+            AlertDialogsUtil.completedModal(
+              context: context,
+              title: 'Completed!',
+              subtitle:
+                  'The event has been ${eventId == null ? 'created' : 'edited'}!',
+            );
           }
         },
       ),
@@ -94,11 +109,12 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       padding: EdgeInsets.zero,
                       onPressed: () async {
-                        await AlertDialogsUtil.withTextField(
-                          title: 'Title',
+                        AlertDialogsUtil.textFieldModal(
+                          context: context,
                           initialText: event.title,
-                          maxLines: 2,
-                          onSummitCallback: (value) {
+                          fieldName: 'Title',
+                          subtitle: 'Enter the data to set your event title',
+                          onAcceptCallback: (value) {
                             event.title = value;
                           },
                         );
@@ -123,11 +139,13 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                               : event.description,
                           showSuffixWidget: true,
                           onTapEditCallback: () async {
-                            await AlertDialogsUtil.withTextField(
-                              title: 'Description',
+                            AlertDialogsUtil.textFieldModal(
+                              context: context,
                               initialText: event.description,
-                              maxLines: 2,
-                              onSummitCallback: (value) {
+                              fieldName: 'Description',
+                              subtitle:
+                                  'Enter the data to set your event description',
+                              onAcceptCallback: (value) {
                                 event.description = value;
                               },
                             );
@@ -141,11 +159,12 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                           customSuffixWidget: CustomTextButtonWidget(
                             title: 'Add',
                             onTap: () async {
-                              await AlertDialogsUtil.withTextField(
-                                title: 'Tags',
+                              AlertDialogsUtil.textFieldModal(
+                                context: context,
                                 initialText: '',
-                                maxLines: 2,
-                                onSummitCallback: (value) {
+                                fieldName: 'Tag',
+                                subtitle: 'Enter the data to add your new tag',
+                                onAcceptCallback: (value) {
                                   if (value.isEmpty) return;
                                   final tag = TagModel(name: value);
                                   event.tags = [...event.tags, tag];
@@ -156,17 +175,16 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                           extra: TagsList(
                             tagsList: event.tags,
                             maxTagsToShow: event.tags.length,
-                            onLongPressCallback: (index) async {
-                              AlertDialogsUtil.remove(
-                                customBodyMessage: [
-                                  'It will be removed from the tag list'
-                                ],
+                            onLongPressCallback: (index) {
+                              AlertDialogsUtil.removeModal(
+                                context: context,
+                                subtitle:
+                                    'It will be removed from the tag list',
                                 onAcceptCallback: () {
                                   event.tags = event.tags
                                       .where((t) =>
                                           t.name != event.tags[index].name)
                                       .toList();
-                                  Get.back();
                                   controller.event.refresh();
                                 },
                               );
@@ -181,11 +199,13 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                           customSuffixWidget: CustomTextButtonWidget(
                             title: 'Add',
                             onTap: () async {
-                              await AlertDialogsUtil.withTextField(
-                                title: 'Tasks',
+                              AlertDialogsUtil.textFieldModal(
+                                context: context,
                                 initialText: '',
-                                maxLines: 2,
-                                onSummitCallback: (value) {
+                                fieldName: 'Task',
+                                subtitle:
+                                    'Enter the data to set your event task',
+                                onAcceptCallback: (value) {
                                   if (value.isEmpty) return;
                                   final task = TaskModel(
                                     isCompleted: false,
@@ -238,9 +258,33 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                                             ),
                                             const SizedBox(width: 10),
                                             Expanded(
-                                              child: Text(
-                                                task.name,
-                                                style: style,
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: AnimatedSwitcher(
+                                                  duration: const Duration(
+                                                    milliseconds: 250,
+                                                  ),
+                                                  transitionBuilder:
+                                                      (child, animation) {
+                                                    return ScaleTransition(
+                                                      scale: animation,
+                                                      child: child,
+                                                    );
+                                                  },
+                                                  child: !isCompleted
+                                                      ? Text(
+                                                          key: const Key(
+                                                              'false'),
+                                                          task.name,
+                                                          style: style,
+                                                        )
+                                                      : Text(
+                                                          key:
+                                                              const Key('true'),
+                                                          task.name,
+                                                          style: style,
+                                                        ),
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -253,17 +297,16 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                                       icon:
                                           Icons.remove_circle_outline_outlined,
                                       onTapCallback: () {
-                                        AlertDialogsUtil.remove(
-                                          customBodyMessage: [
-                                            'It will be removed from the tasks list'
-                                          ],
+                                        AlertDialogsUtil.removeModal(
+                                          context: context,
+                                          subtitle:
+                                              'It will be removed from the tasks list',
                                           onAcceptCallback: () {
                                             event.tasks = event.tasks
                                                 .where((t) =>
                                                     t.name !=
                                                     event.tasks[index].name)
                                                 .toList();
-                                            Get.back();
                                             controller.event.refresh();
                                           },
                                         );

@@ -31,17 +31,14 @@ class EventsPageRepository extends BaseRepository {
     return null;
   }
 
-  Future<void> createEvent(EventModel event) async {
+  Future<bool> createEvent(EventModel event) async {
     final AuthController auth = Get.find();
     final res = await base.call(
       'events/',
       token: auth.token,
       body: event.toMap(),
     );
-    if (res != null) {
-      // final json = jsonDecode(res.body);
-      debugPrint(res.body);
-    }
+    return res != null && res.code == 201;
   }
 
   Future<EventModel?> getEvent(int id) async {
@@ -58,13 +55,14 @@ class EventsPageRepository extends BaseRepository {
     return null;
   }
 
-  Future<void> editEvent(int id, EventModel event) async {
+  Future<bool> editEvent(int id, EventModel event) async {
     final AuthController auth = Get.find();
-    await base.call(
+    final res = await base.call(
       'events/$id',
       token: auth.token,
       body: event.toMap(),
       edit: true,
     );
+    return res != null && res.code == 201;
   }
 }

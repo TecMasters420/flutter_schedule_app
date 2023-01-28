@@ -14,20 +14,16 @@ class EventsDetailsCreationController extends GetxController {
     isLoading.value = false;
   }
 
-  Future<void> createEvent() async {
-    if (event.value == null) return;
-    isLoading.value = true;
-    await _repo.createEvent(event.value!);
-    isLoading.value = false;
+  Future<bool> createEvent() async {
+    if (event.value == null) return false;
+    return await _repo.createEvent(event.value!);
   }
 
   void createEmpty() {
     event.value = EventModel.empty();
   }
 
-  Future<void> editEvent(int id) async {
-    isLoading.value = true;
-    await _repo.editEvent(id, event.value!);
-    isLoading.value = false;
+  Future<bool> editEvent(int id) async {
+    return await _repo.editEvent(id, event.value!);
   }
 }

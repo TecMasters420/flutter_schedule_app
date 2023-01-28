@@ -26,6 +26,7 @@ class AlertDialogsUtil {
       backgroundColor: Theme.of(context).colorScheme.surface,
       enableDrag: false,
       isDismissible: false,
+      isScrollControlled: true,
       constraints: ignoreConstraints
           ? const BoxConstraints()
           : BoxConstraints(
@@ -33,7 +34,12 @@ class AlertDialogsUtil {
             ),
       builder: (BuildContext context) {
         return Padding(
-          padding: const EdgeInsets.all(30),
+          padding: EdgeInsets.only(
+            top: 30,
+            right: 30,
+            left: 30,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 30,
+          ),
           child: customChild ??
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +59,7 @@ class AlertDialogsUtil {
                   const SizedBox(height: 5),
                   Text(
                     subtitle,
-                    style: styles.w500(14, grey),
+                    style: styles.w500(16, grey),
                   ),
                   const Spacer(),
                   CustomButton(
@@ -61,7 +67,7 @@ class AlertDialogsUtil {
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     text: 'Done',
                     color: blueAccent,
-                    style: styles.w700(16),
+                    style: styles.w700(16, Colors.white),
                     onTap: () {
                       Get.back();
                     },
@@ -148,157 +154,101 @@ class AlertDialogsUtil {
     );
   }
 
-  static void forStatusBase(
-    String title,
-    List<String> bodyText, {
-    bool dimissible = false,
-    bool showLoadingIndicator = false,
-    String image = '',
-    Color titleColor = black,
-    bool showActions = false,
-    VoidCallback? onAccept,
+  static void removeModal({
+    required BuildContext context,
+    required String subtitle,
+    required void Function() onAcceptCallback,
   }) {
-    final context = Get.context!;
     final styles = TextStyles.of(context);
-    Get.defaultDialog(
-      title: '',
-      barrierDismissible: dimissible,
-      titlePadding: EdgeInsets.zero,
-      content: Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.topCenter,
+    _baseModal(
+      context: context,
+      title: 'Remove',
+      subtitle: subtitle,
+      customChild: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
         children: [
-          Container(
-            constraints: const BoxConstraints(
-              minWidth: 400,
-              minHeight: 150,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (image.isNotEmpty) const SizedBox(height: 60),
-                Column(
-                  children: [
-                    Text(
-                      title,
-                      textAlign: TextAlign.center,
-                      style: styles.w700(20, titleColor),
-                    ),
-                    const SizedBox(height: 5),
-                    ...bodyText.map(
-                      (e) => Column(
-                        children: [
-                          Text(
-                            '- ${e[0].toUpperCase()}${e.substring(1)}',
-                            style: styles.w500(14),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 2.5),
-                        ],
-                      ),
-                    ),
-                    if (showLoadingIndicator) ...[
-                      const SizedBox(height: 20),
-                      const CircularProgressIndicator(),
-                    ],
-                    if (showActions) ...[
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          CustomButton(
-                            text: 'Accept',
-                            color: blueAccent,
-                            onTap: onAccept ?? () {},
-                            style: styles.w700(
-                              14,
-                              Colors.white,
-                            ),
-                          ),
-                          const SizedBox(width: 20),
-                          CustomTextButtonWidget(
-                            title: 'Cancel',
-                            onTap: () {
-                              Get.back();
-                            },
-                          ),
-                        ],
-                      )
-                    ],
-                  ],
-                ),
-              ],
+          Center(
+            child: Image.asset(
+              'assets/images/cancel.png',
+              height: 200,
             ),
           ),
-          if (image.isNotEmpty)
-            Positioned(
-              top: -100,
-              // bottom: 50,
-              child: Container(
-                height: 150,
-                width: 150,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 10,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  boxShadow: shadows,
-                ),
-                child: Image.asset(image),
+          const Spacer(),
+          Text(
+            'Remove element',
+            style: styles.w700(20),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            subtitle,
+            style: styles.w500(14, grey),
+          ),
+          const Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              CustomTextButtonWidget(
+                title: 'Cancel',
+                onTap: () {
+                  Get.back();
+                },
               ),
-            ),
+              const SizedBox(width: 20),
+              CustomButton(
+                expand: true,
+                text: 'Accept',
+                color: blueAccent,
+                style: styles.w700(16, Colors.white),
+                onTap: () {
+                  Get.back();
+                  onAcceptCallback();
+                },
+              ),
+            ],
+          )
         ],
       ),
     );
   }
 
-  static void remove({
-    required List<String>? customBodyMessage,
-    required VoidCallback onAcceptCallback,
-  }) {
-    forStatusBase(
-      'Delete this item?',
-      titleColor: red,
-      customBodyMessage ?? [],
-      image: 'assets/images/cancel.png',
-      dimissible: true,
-      showActions: true,
-      onAccept: onAcceptCallback,
-    );
-  }
-
-  static Future<void> withTextField({
-    required String title,
+  static void textFieldModal({
+    required BuildContext context,
+    required String subtitle,
+    required String fieldName,
     required String initialText,
-    required int maxLines,
-    void Function(String)? onSummitCallback,
+    required void Function(String) onAcceptCallback,
   }) {
-    final context = Get.context!;
     final styles = TextStyles.of(context);
-    return Get.defaultDialog(
-      titlePadding: const EdgeInsets.only(top: 20),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-      title: 'Set $title',
-      radius: 30,
-      titleStyle: styles.w700(18),
-      content: Column(
+    _baseModal(
+      context: context,
+      title: 'Add data',
+      subtitle: subtitle,
+      ignoreConstraints: true,
+      customChild: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(height: 20),
+          Text(
+            'Data',
+            style: styles.w700(20),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            subtitle,
+            style: styles.w500(14, grey),
+          ),
+          const SizedBox(height: 10),
           CustomTextFormFieldWidget(
             initialText: initialText,
-            label: title,
-            maxLines: maxLines,
+            label: fieldName,
+            maxLines: 2,
             onAcceptCallback: (value) {
               Get.back();
-              if (onSummitCallback != null) {
-                onSummitCallback(value);
-              }
+              onAcceptCallback(value);
             },
-          )
+          ),
+          const SizedBox(height: 5),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -43,10 +44,9 @@ class RequestBase {
         status: map['status'],
         type: map['type'],
       );
-      if (Get.isOverlaysOpen) {
-        Get.back();
-      }
+
       if (extraEndpoint != 'users/me') {
+        Get.back();
         AlertDialogsUtil.errorModal(
           context: Get.context!,
           title: 'Error',

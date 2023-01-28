@@ -42,8 +42,8 @@ class EventModel {
       'startDate': startDate.toString(),
       'endDate': endDate.toString(),
       'title': title,
-      'startLocation': startLocation,
-      'endLocation': endLocation,
+      'startLocation': startLocation != null ? startLocation!.toMap() : null,
+      'endLocation': endLocation != null ? endLocation!.toMap() : null,
       'tasks': tasks.map((x) => x.toMap()).toList(),
       'tags': tags.map((x) => x.toMap()).toList(),
     };

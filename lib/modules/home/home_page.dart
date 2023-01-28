@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/app/config/app_constants.dart';
-import 'package:schedulemanager/app/utils/alert_dialogs_util.dart';
 import 'package:schedulemanager/modules/auth/controllers/auth_controller.dart';
 import 'package:schedulemanager/modules/home/models/events_type_model.dart';
 import '../../app/config/constants.dart';
