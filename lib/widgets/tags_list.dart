@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/data/models/tag_model.dart';
 import '../app/utils/text_styles.dart';
 
@@ -32,10 +33,10 @@ class TagsList extends StatelessWidget {
             child: Chip(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.5),
-                side: const BorderSide(width: 0),
+                side: const BorderSide(width: 0, color: darkAccent),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 5),
-              backgroundColor: Colors.black,
+              backgroundColor: darkAccent,
               clipBehavior: Clip.none,
               label: Text(
                 '#${tagsList[index].name.replaceAll(RegExp(r'\s+'), '')}',

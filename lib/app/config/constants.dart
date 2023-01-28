@@ -13,7 +13,7 @@ const Color containerBgDark = Color(0xff1f2123);
 const Color black = Color(0xff192252);
 const Color grey = Color(0xff9da1af);
 const Color lightGrey = Color(0xffb9bfce);
-const Color lightBlue = Color(0xffebf2ff);
+const Color lightBlue = Color.fromARGB(255, 218, 231, 255);
 const Color darkBlue = Color(0xff84acfa);
 
 const Color red = Color(0xfff15556);

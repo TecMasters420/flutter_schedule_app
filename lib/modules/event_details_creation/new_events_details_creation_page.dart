@@ -53,9 +53,10 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
         backgroundColor: blueAccent,
         child: Icon(eventId == null ? Icons.add : Icons.check),
         onPressed: () async {
+          final type = eventId == null ? 'created' : 'edited';
           AlertDialogsUtil.loadingModal(
             context: context,
-            subtitle: 'Wait a bit while your event is added',
+            subtitle: 'Wait a bit while your event is $type',
           );
           bool isCorrect = false;
           if (eventId == null) {
@@ -63,14 +64,13 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
           } else {
             isCorrect = await controller.editEvent(eventId);
           }
+          Get.back();
           if (isCorrect) {
-            Get.back();
             Get.close(1);
             AlertDialogsUtil.completedModal(
               context: context,
               title: 'Completed!',
-              subtitle:
-                  'The event has been ${eventId == null ? 'created' : 'edited'}!',
+              subtitle: 'The event has been $type!',
             );
           }
         },

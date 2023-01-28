@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:get/instance_manager.dart';
 import '../../../app/services/base_repository.dart';
 import '../../../data/models/event_model.dart';
@@ -63,6 +62,6 @@ class EventsPageRepository extends BaseRepository {
       body: event.toMap(),
       edit: true,
     );
-    return res != null && res.code == 201;
+    return res != null && res.code == 200;
   }
 }
