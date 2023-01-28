@@ -92,6 +92,10 @@ class _MapPreviewState extends State<MapPreview> {
       },
     );
 
+    final theme = Theme.of(context).brightness == Brightness.dark
+        ? 'dark-v11'
+        : 'light-v11';
+
     return GestureDetector(
       child: SizedBox(
         height: widget.height,
@@ -123,7 +127,7 @@ class _MapPreviewState extends State<MapPreview> {
               TileLayer(
                 backgroundColor: Colors.white,
                 urlTemplate:
-                    "https://api.mapbox.com/styles/v1/frankrdz/{styleId}/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
+                    "https://api.mapbox.com/styles/v1/mapbox/$theme/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
                 additionalOptions: {
                   'styleId': 'clarc1scl000314lfyzx582dm',
                   'accessToken': dotenv.env['MAPBOX_ACCESSTOKEN']!,
