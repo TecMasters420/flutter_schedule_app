@@ -4,7 +4,6 @@ import 'package:schedulemanager/app/config/app_constants.dart';
 import 'package:schedulemanager/app/utils/alert_dialogs_util.dart';
 import 'package:schedulemanager/modules/auth/controllers/auth_controller.dart';
 import 'package:schedulemanager/modules/home/models/events_type_model.dart';
-import 'package:schedulemanager/widgets/custom_button.dart';
 import '../../app/config/constants.dart';
 import '../../widgets/custom_nav_bar_widget.dart';
 import 'controllers/home_controller.dart';
@@ -28,14 +27,6 @@ class HomePage extends GetView {
 
     return Scaffold(
       bottomNavigationBar: const CustomNavBarWidget(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          AlertDialogsUtil.loadingModal(
-            context: context,
-            subtitle: 'The task has been successfully added to the list!',
-          );
-        },
-      ),
       body: SingleChildScrollView(
         clipBehavior: Clip.none,
         physics: const BouncingScrollPhysics(),

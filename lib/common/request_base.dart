@@ -47,8 +47,10 @@ class RequestBase {
         Get.back();
       }
       if (extraEndpoint != 'users/me') {
-        AlertDialogsUtil.error(
-          customBodyMessage: response.messages,
+        AlertDialogsUtil.errorModal(
+          context: Get.context!,
+          title: 'Error',
+          subtitle: 'An error has occurred',
         );
       }
       return response;

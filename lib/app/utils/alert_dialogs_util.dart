@@ -256,46 +256,6 @@ class AlertDialogsUtil {
     );
   }
 
-  static void loading({List<String>? customBodyMessage}) {
-    forStatusBase(
-      'Loading...',
-      customBodyMessage ?? [],
-      image: 'assets/images/stopwatch.png',
-      dimissible: false,
-      showLoadingIndicator: true,
-    );
-  }
-
-  static void error({List<String>? customBodyMessage}) {
-    forStatusBase(
-      'Error!',
-      titleColor: red,
-      customBodyMessage ?? [],
-      image: 'assets/images/cancel.png',
-      dimissible: true,
-    );
-  }
-
-  static void warning({List<String>? customBodyMessage}) {
-    forStatusBase(
-      'Warning!',
-      titleColor: orange,
-      customBodyMessage ?? [],
-      image: 'assets/images/warning.png',
-      dimissible: true,
-    );
-  }
-
-  static void check({List<String>? customBodyMessage}) {
-    forStatusBase(
-      'Completed!',
-      titleColor: green,
-      customBodyMessage ?? [],
-      image: 'assets/images/checked.png',
-      dimissible: true,
-    );
-  }
-
   static void remove({
     required List<String>? customBodyMessage,
     required VoidCallback onAcceptCallback,
