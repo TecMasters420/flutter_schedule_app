@@ -85,7 +85,7 @@ class HomeHeaderWidget extends StatelessWidget {
         ),
         SizedBox(height: resp.hp(2.5)),
         ResponsiveContainerWidget(
-          customColor: accent,
+          customColor: darkAccent,
           padding: const EdgeInsets.symmetric(vertical: 30),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

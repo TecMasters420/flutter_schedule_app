@@ -61,7 +61,7 @@ class NotificationsPage extends StatelessWidget {
                                 ),
                                 TextSpan(
                                   text: 'Create application',
-                                  style: TextStyles.w700(14, accent),
+                                  style: TextStyles.w700(14, blueAccent),
                                 ),
                               ],
                             ),
@@ -85,7 +85,7 @@ class NotificationsPage extends StatelessWidget {
                               SizedBox(width: resp.wp(5)),
                               CustomButton(
                                 text: 'Accept',
-                                color: accent,
+                                color: blueAccent,
                                 style: TextStyles.w700(14, Colors.white),
                                 hideShadows: true,
                                 onTap: () {},
@@ -135,7 +135,7 @@ class NotificationsPage extends StatelessWidget {
                                 ),
                                 TextSpan(
                                   text: 'Create application',
-                                  style: TextStyles.w700(14, accent),
+                                  style: TextStyles.w700(14, blueAccent),
                                 ),
                               ],
                             ),
@@ -150,7 +150,7 @@ class NotificationsPage extends StatelessWidget {
                             children: [
                               CustomButton(
                                 text: 'Details',
-                                color: accent,
+                                color: blueAccent,
                                 style: TextStyles.w700(14, Colors.white),
                                 hideShadows: true,
                                 onTap: () {},
@@ -205,7 +205,7 @@ class NotificationsPage extends StatelessWidget {
                                       ),
                                       TextSpan(
                                         text: 'Finish Home Page',
-                                        style: TextStyles.w700(14, accent),
+                                        style: TextStyles.w700(14, blueAccent),
                                       ),
                                     ],
                                   ),
@@ -222,7 +222,7 @@ class NotificationsPage extends StatelessWidget {
                                         width: 5,
                                         height: 5,
                                         decoration: const BoxDecoration(
-                                          color: accent,
+                                          color: blueAccent,
                                           shape: BoxShape.circle,
                                         ),
                                       ),
@@ -247,7 +247,7 @@ class NotificationsPage extends StatelessWidget {
                                       constraints:
                                           const BoxConstraints(maxWidth: 150),
                                       text: 'Details',
-                                      color: accent,
+                                      color: blueAccent,
                                       style: TextStyles.w700(14, Colors.white),
                                       hideShadows: true,
                                       onTap: () {},

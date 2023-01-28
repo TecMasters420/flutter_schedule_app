@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:schedulemanager/app/config/app_constants.dart';
 import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/app/utils/responsive_util.dart';
@@ -10,6 +11,7 @@ import 'package:schedulemanager/widgets/custom_text_button_widget.dart';
 import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 
 import '../../../app/utils/text_styles.dart';
+import '../../../routes/app_routes.dart';
 import '../../../widgets/reminder_container.dart';
 import '../../../widgets/event_information.dart';
 import '../../home/widgets/reminder_date_data.dart';
@@ -54,7 +56,7 @@ class FilteredEventsPage extends StatelessWidget {
                         ),
                         CustomTextButtonWidget(
                           title: 'Add Event',
-                          onTap: () {},
+                          onTap: () => Get.toNamed(AppRoutes.eventDetails),
                         )
                       ],
                     ),

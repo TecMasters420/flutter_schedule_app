@@ -36,16 +36,12 @@ class EventInforamtion extends StatelessWidget {
           TagsList(
             tagsList: event.tags,
             maxTagsToShow: event.tags.length,
-            style: TextStyles.w800(
-              14,
-              Colors.white,
-            ),
             onLongPressCallback: (index) async {},
           ),
         ],
         Text(
           event.title,
-          style: TextStyles.w700(16),
+          style: TextStyles.w800(16),
           textAlign: TextAlign.start,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
@@ -61,14 +57,14 @@ class EventInforamtion extends StatelessWidget {
         SizedBox(height: resp.hp(2)),
         Text(
           'Event Information',
-          style: TextStyles.w700(16),
+          style: TextStyles.w800(16),
         ),
         if (event.endLocation != null &&
             event.endLocation!.address != null) ...[
           SizedBox(height: resp.hp(1)),
           Text(
             'End location',
-            style: TextStyles.w700(14),
+            style: TextStyles.w800(14),
           ),
           SizedBox(height: resp.hp(0.5)),
           Text(
@@ -81,7 +77,7 @@ class EventInforamtion extends StatelessWidget {
           SizedBox(height: resp.hp(1)),
           Text(
             'Start location',
-            style: TextStyles.w700(14),
+            style: TextStyles.w800(14),
           ),
           SizedBox(height: resp.hp(0.5)),
           Text(
@@ -94,7 +90,7 @@ class EventInforamtion extends StatelessWidget {
           SizedBox(height: resp.hp(1)),
           Text(
             'Tasks progress',
-            style: TextStyles.w700(14),
+            style: TextStyles.w800(14),
           ),
           SizedBox(height: resp.hp(0.5)),
           Text(
@@ -118,7 +114,7 @@ class EventInforamtion extends StatelessWidget {
                 children: [
                   Text(
                     'Due',
-                    style: TextStyles.w700(14),
+                    style: TextStyles.w800(14),
                   ),
                   SizedBox(height: resp.hp(0.5)),
                   Text(
@@ -139,7 +135,7 @@ class EventInforamtion extends StatelessWidget {
               text: 'Share',
               color: lightBlue,
               hideShadows: true,
-              style: TextStyles.w700(14, accent),
+              style: TextStyles.w700(14, blueAccent),
               onTap: () async => await ShareUtil.generate(
                 'I invite you to the event: ${event.title}',
                 'I invite you to the event: ${event.title}',
@@ -149,7 +145,7 @@ class EventInforamtion extends StatelessWidget {
             CustomButton(
               constraints: const BoxConstraints(maxWidth: 150),
               text: 'Details',
-              color: accent,
+              color: blueAccent,
               hideShadows: true,
               style: TextStyles.w700(14, Colors.white),
               onTap: () =>

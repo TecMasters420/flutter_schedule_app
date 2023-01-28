@@ -41,7 +41,7 @@ class CustomAlertDialog {
           ),
           CustomButton(
             text: 'Yes',
-            color: accent,
+            color: blueAccent,
             onTap: () {
               Navigator.pop(context);
               onAcceptCallback();

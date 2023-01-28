@@ -7,6 +7,7 @@ import '../app/utils/text_styles.dart';
 
 class EventDetailsWidget extends StatelessWidget {
   final IconData icon;
+  final Color iconColor;
   final String title;
   final String? value;
   final Widget? extra;
@@ -19,9 +20,10 @@ class EventDetailsWidget extends StatelessWidget {
     required this.title,
     this.value,
     this.extra,
-    this.showSuffixWidget = false,
     this.onTapEditCallback,
     this.customSuffixWidget,
+    this.showSuffixWidget = false,
+    this.iconColor = grey,
   });
 
   @override
@@ -39,10 +41,20 @@ class EventDetailsWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
-                    icon,
-                    color: grey,
-                    size: 25,
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 2,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: iconColor.withOpacity(0.15),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      icon,
+                      color: iconColor,
+                      size: 25,
+                    ),
                   ),
                   SizedBox(width: resp.wp(5)),
                   Expanded(
@@ -71,7 +83,7 @@ class EventDetailsWidget extends StatelessWidget {
             if (showSuffixWidget)
               customSuffixWidget ??
                   CustomIconButtonWidget(
-                    color: accent,
+                    color: blueAccent,
                     icon: Icons.edit,
                     onTapCallback: onTapEditCallback ?? () {},
                   )

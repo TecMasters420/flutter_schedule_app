@@ -4,7 +4,7 @@ import 'package:schedulemanager/app/config/constants.dart';
 class ResponsiveContainerWidget extends StatelessWidget {
   final Widget child;
   final EdgeInsets? padding;
-  final Color customColor;
+  final Color? customColor;
   const ResponsiveContainerWidget({
     super.key,
     required this.child,
@@ -14,19 +14,24 @@ class ResponsiveContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      padding: padding ??
-          const EdgeInsets.symmetric(
-            vertical: 15,
-            horizontal: 20,
-          ),
-      decoration: BoxDecoration(
-        color: customColor,
-        borderRadius: BorderRadius.circular(25),
-        boxShadow: shadows,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(25),
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 0.8, horizontal: 0.8),
+        clipBehavior: Clip.hardEdge,
+        padding: padding ??
+            const EdgeInsets.symmetric(
+              vertical: 15,
+              horizontal: 20,
+            ),
+        decoration: BoxDecoration(
+          // color: Theme.of(context).colorScheme.surface,
+          color: customColor,
+          borderRadius: BorderRadius.circular(25),
+          boxShadow: shadows,
+        ),
+        child: child,
       ),
-      child: child,
     );
   }
 }

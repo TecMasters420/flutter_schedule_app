@@ -95,7 +95,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                   width: isSelected ? resp.wp(5) : resp.wp(2.5),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? accent
+                        ? blueAccent
                         : widget.months.contains(currentElement)
                             ? lightGrey.withOpacity(0.25)
                             : Colors.transparent,
@@ -132,9 +132,10 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                         horizontal: 15,
                         vertical: 10,
                       ),
+                      constraints: const BoxConstraints(minWidth: 65),
                       decoration: BoxDecoration(
-                        color: isSelected ? accent : containerBg,
-                        borderRadius: BorderRadius.circular(15),
+                        color: isSelected ? blueAccent : containerBg,
+                        borderRadius: BorderRadius.circular(25),
                       ),
                       child: Column(
                         children: [
@@ -150,7 +151,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                                 .substring(0, 3)
                                 .toUpperCase(),
                             style: TextStyles.w500(
-                              14,
+                              12,
                               isSelected ? Colors.white : grey,
                             ),
                           ),
@@ -169,11 +170,11 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                   ),
                   SizedBox(height: resp.hp(0.5)),
                   Container(
-                    height: resp.hp(0.75),
-                    width: resp.wp(2.5),
+                    height: 10,
+                    width: 10,
                     decoration: BoxDecoration(
-                      color: isSelected ? accent : null,
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      shape: BoxShape.circle,
+                      color: isSelected ? blueAccent : null,
                     ),
                   )
                 ],

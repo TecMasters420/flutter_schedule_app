@@ -96,7 +96,7 @@ class ShortEventDataWidget extends StatelessWidget {
                         children: [
                           if (event.tags.isNotEmpty) ...[
                             Chip(
-                              backgroundColor: accent,
+                              backgroundColor: blueAccent,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -114,7 +114,7 @@ class ShortEventDataWidget extends StatelessWidget {
                                 ),
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: accent,
+                                  color: blueAccent,
                                 ),
                                 child: Text(
                                   '${(event.tags.length - 1).toString()}+',

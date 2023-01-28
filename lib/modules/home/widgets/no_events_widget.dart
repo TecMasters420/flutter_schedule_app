@@ -35,7 +35,7 @@ class NoEventsWidget extends StatelessWidget {
           text: 'Add event',
           color: lightBlue,
           hideShadows: true,
-          style: TextStyles.w500(14, accent),
+          style: TextStyles.w500(14, blueAccent),
           onTap: () => Get.toNamed(AppRoutes.eventDetails),
         ),
       ],

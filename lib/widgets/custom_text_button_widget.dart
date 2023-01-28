@@ -28,7 +28,7 @@ class CustomTextButtonWidget extends StatelessWidget {
         title,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: TextStyles.w700(customFontSize, accent),
+        style: TextStyles.w700(customFontSize, blueAccent),
       ),
     );
   }

@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:schedulemanager/modules/home/models/events_type_model.dart';
 import 'package:schedulemanager/widgets/loading_widget.dart';
 import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 import 'events_list_per_type_widget.dart';
-import '../../../data/models/event_model.dart';
 import '../../../app/utils/responsive_util.dart';
 import '../../../app/utils/text_styles.dart';
 
 import '../../../app/config/constants.dart';
 
 class EventsTypesWidget extends StatefulWidget {
-  final Map<String, List<EventModel>> eventsPerType;
   final int initialTabIndex;
   final bool isLoading;
   final VoidCallback onTapNew;
+  final List<EventsTypeModel> events;
   const EventsTypesWidget({
     super.key,
-    required this.eventsPerType,
     required this.initialTabIndex,
     required this.isLoading,
     required this.onTapNew,
+    required this.events,
   });
 
   @override
@@ -36,9 +36,8 @@ class _EventsTypesWidgetState extends State<EventsTypesWidget> {
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
-    final List<String> eventsTabs = widget.eventsPerType.keys.toList();
-    final int eventsQuantity =
-        widget.eventsPerType.values.elementAt(_currentIndex).length;
+    final List<String> eventsTabs = widget.events.map((e) => e.label).toList();
+    final int eventsQuantity = widget.events[_currentIndex].events.length;
 
     return ResponsiveContainerWidget(
       child: Column(
@@ -74,7 +73,9 @@ class _EventsTypesWidgetState extends State<EventsTypesWidget> {
                         duration: const Duration(milliseconds: 100),
                         height: resp.hp(1),
                         decoration: BoxDecoration(
-                          gradient: _currentIndex == x ? accentGradient : null,
+                          color: _currentIndex == x
+                              ? widget.events[_currentIndex].color
+                              : null,
                           borderRadius: BorderRadius.circular(15),
                         ),
                       )
@@ -101,10 +102,9 @@ class _EventsTypesWidgetState extends State<EventsTypesWidget> {
                     ),
                   )
                 : EventsListPerType(
+                    eventsType: widget.events[_currentIndex],
                     key: Key(false.toString()),
-                    data: widget.eventsPerType.values.elementAt(_currentIndex),
                     maxEventsToShow: 2,
-                    type: eventsTabs[_currentIndex],
                   ),
           )
         ],

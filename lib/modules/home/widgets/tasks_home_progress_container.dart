@@ -47,7 +47,7 @@ class TasksHomeProgressContainer extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyles.w700(18),
             ),
-            SizedBox(height: resp.hp(1)),
+            const Spacer(),
             ...List.generate(
               clampledPercentages.length,
               (x) => Padding(
@@ -70,7 +70,7 @@ class TasksHomeProgressContainer extends StatelessWidget {
                         clampledPercentages[x].name,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyles.w700(14),
+                        style: TextStyles.w700(12),
                       ),
                     ),
                     SizedBox(width: resp.wp(2.5)),
@@ -85,7 +85,8 @@ class TasksHomeProgressContainer extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
+            const Spacer(),
           ],
         ),
       ),

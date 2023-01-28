@@ -132,8 +132,8 @@ class _MapPreviewState extends State<MapPreview> {
               PolylineLayer(
                 polylines: [
                   Polyline(
-                    color: accent.withOpacity(0.8),
-                    borderColor: accent.withOpacity(0.8),
+                    color: blueAccent.withOpacity(0.8),
+                    borderColor: blueAccent.withOpacity(0.8),
                     borderStrokeWidth: 5,
                     strokeCap: StrokeCap.round,
                     points: _points,

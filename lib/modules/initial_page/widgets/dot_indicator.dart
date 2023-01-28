@@ -22,7 +22,7 @@ class DotIndicator extends StatelessWidget {
         width: isCurrentPage ? 24 : 12,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(isCurrentPage ? 20 : 100),
-          color: isCurrentPage ? accent : accent.withOpacity(0.25),
+          color: isCurrentPage ? blueAccent : blueAccent.withOpacity(0.25),
         ),
       ),
     );

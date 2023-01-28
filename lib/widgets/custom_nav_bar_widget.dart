@@ -38,7 +38,7 @@ class CustomNavBarWidget extends StatelessWidget {
                       color: Colors.transparent,
                       child: InkWell(
                         onTap: () => navBar.onNewSelection(e),
-                        splashColor: accent.withOpacity(0.25),
+                        splashColor: blueAccent.withOpacity(0.25),
                         borderRadius: BorderRadius.circular(20),
                         highlightColor: Colors.transparent,
                         child: AnimatedSwitcher(
@@ -54,10 +54,10 @@ class CustomNavBarWidget extends StatelessWidget {
                                   key: Key(true.toString()),
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Icon(e.icon, size: 25, color: accent),
+                                    Icon(e.icon, size: 25, color: blueAccent),
                                     Text(
                                       e.name,
-                                      style: TextStyles.w500(12, accent),
+                                      style: TextStyles.w500(12, blueAccent),
                                     ),
                                   ],
                                 )

@@ -97,7 +97,8 @@ class LoginPage extends StatelessWidget {
                         children: [
                           SizedBox(height: resp.hp(1)),
                           CustomButton(
-                            color: accent,
+                            color: blueAccent,
+                            padding: const EdgeInsets.symmetric(vertical: 15),
                             style: TextStyles.w800(16, Colors.white),
                             text: 'Login',
                             expand: true,
@@ -131,6 +132,8 @@ class LoginPage extends StatelessWidget {
                               Expanded(
                                 child: CustomButton(
                                   color: containerBg,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 15),
                                   style: TextStyles.w700(14),
                                   text: 'Google',
                                   center: true,
@@ -152,8 +155,10 @@ class LoginPage extends StatelessWidget {
                               SizedBox(width: resp.wp(5)),
                               Expanded(
                                 child: CustomButton(
-                                  color: accent,
+                                  color: blueAccent,
                                   style: TextStyles.w700(14, Colors.white),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 15),
                                   text: 'Facebook',
                                   center: true,
                                   prefixWidget: Image.asset(

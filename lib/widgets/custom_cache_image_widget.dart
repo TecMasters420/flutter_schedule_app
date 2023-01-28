@@ -20,7 +20,7 @@ class CustomCacheImageWidget extends StatelessWidget {
       loadingBuilder: (context, child, loadingProgress) {
         if (loadingProgress == null) return child;
         return const CustomCircularProgress(
-          color: accent,
+          color: blueAccent,
         );
       },
       errorBuilder: (context, error, stackTrace) {

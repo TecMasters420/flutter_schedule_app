@@ -67,7 +67,7 @@ class AlertDialogsUtil {
                         children: [
                           CustomButton(
                             text: 'Accept',
-                            color: accent,
+                            color: blueAccent,
                             onTap: onAccept ?? () {},
                             style: TextStyles.w700(
                               14,

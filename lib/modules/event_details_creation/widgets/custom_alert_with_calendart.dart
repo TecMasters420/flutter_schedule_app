@@ -35,8 +35,8 @@ class ScrolleableCalendarWithHour extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('Select your date', style: TextStyles.w700(16)),
-        SizedBox(height: resp.hp(1)),
+        // Text('Select your date', style: TextStyles.w700(16)),
+        // SizedBox(height: resp.hp(1)),
         CustomDateContainer(
           data: List.generate(12, (index) => index + 1),
           initialElementIndex: 0,
@@ -68,9 +68,9 @@ class ScrolleableCalendarWithHour extends StatelessWidget {
                   height: 5,
                   width: 20,
                   decoration: BoxDecoration(
-                    color: isSelected ? accent : Colors.transparent,
+                    color: isSelected ? blueAccent : Colors.transparent,
                     borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
+                      Radius.circular(25),
                     ),
                   ),
                 )
@@ -102,7 +102,7 @@ class ScrolleableCalendarWithHour extends StatelessWidget {
                       vertical: 10,
                     ),
                     decoration: BoxDecoration(
-                      color: isSelected ? accent : containerBg,
+                      color: isSelected ? blueAccent : containerBg,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Column(
@@ -138,11 +138,11 @@ class ScrolleableCalendarWithHour extends StatelessWidget {
                 ),
                 SizedBox(height: resp.hp(0.5)),
                 Container(
-                  height: 5,
-                  width: 10,
+                  height: 7,
+                  width: 7,
                   decoration: BoxDecoration(
-                    color: isSelected ? accent : null,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    color: isSelected ? blueAccent : null,
+                    shape: BoxShape.circle,
                   ),
                 )
               ],

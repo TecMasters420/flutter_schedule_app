@@ -79,7 +79,9 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                 description: announce.description,
                 extraWidget: !isFinalElement
                     ? CustomButton(
-                        color: accent,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 20),
+                        color: blueAccent,
                         style: TextStyles.w800(16, Colors.white),
                         text: 'Next',
                         expand: true,
@@ -90,7 +92,9 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                         ),
                       )
                     : CustomButton(
-                        color: accent,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 20),
+                        color: blueAccent,
                         style: TextStyles.w800(16, Colors.white),
                         text: 'Join',
                         expand: true,
@@ -103,7 +107,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const CustomCircularProgress(color: accent),
+                const CustomCircularProgress(color: blueAccent),
                 SizedBox(height: resp.hp(2)),
                 Text(
                   'Loading announcements',

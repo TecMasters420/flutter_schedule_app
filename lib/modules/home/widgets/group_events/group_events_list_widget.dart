@@ -143,7 +143,7 @@ class GroupEventsListWidget extends StatelessWidget {
                       children: [
                         CustomButton(
                           text: 'Details',
-                          color: accent,
+                          color: blueAccent,
                           style: TextStyles.w500(12, Colors.white),
                           onTap: () {},
                         ),

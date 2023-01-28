@@ -80,7 +80,7 @@ class UserProfilePage extends GetWidget<AuthController> {
                             Expanded(
                               child: CustomButton(
                                 text: 'Save',
-                                color: accent,
+                                color: blueAccent,
                                 center: true,
                                 expand: true,
                                 onTap: () {

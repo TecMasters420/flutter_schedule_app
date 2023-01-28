@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:schedulemanager/app/theme/app_custom_theme.dart';
 import 'package:schedulemanager/routes/app_routes.dart';
-import '../app/config/constants.dart';
 import '../modules/initial_page/bindings/initial_information_bindings.dart';
 import '../modules/initial_page/initial_information_page.dart';
 import '../routes/app_pages.dart';
@@ -16,10 +16,7 @@ class App extends StatelessWidget {
       initialBinding: const InitialInformationBindings(),
       getPages: appPages,
       home: const InitialInformationPage(),
-      theme: ThemeData(
-        scaffoldBackgroundColor: backgroundColor,
-        colorScheme: ColorScheme.fromSwatch().copyWith(primary: accent),
-      ),
+      theme: AppCustomTheme.lightMode,
     );
   }
 }

@@ -29,7 +29,7 @@ class CustomHeaderWidget extends StatelessWidget {
         Expanded(
           flex: 8,
           child: ResponsiveContainerWidget(
-            customColor: accent,
+            customColor: darkAccent,
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: Center(
               child: Text(

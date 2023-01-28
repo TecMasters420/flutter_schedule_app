@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/app/config/app_constants.dart';
@@ -40,7 +38,6 @@ class MapPage extends StatelessWidget {
                 child: const LoadingWidget(),
               );
             }
-            final address = map.currentLoc.value.address ?? 'No address';
             return Column(
               children: [
                 const CustomHeaderWidget(title: 'Select locations'),
@@ -75,7 +72,7 @@ class MapPage extends StatelessWidget {
                       const Spacer(),
                       CustomButton(
                         text: 'Pin to this location',
-                        color: accent,
+                        color: blueAccent,
                         expand: true,
                         padding: const EdgeInsets.symmetric(
                           vertical: 20,

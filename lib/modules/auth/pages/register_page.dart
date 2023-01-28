@@ -137,7 +137,7 @@ class RegisterPage extends StatelessWidget {
                           ),
                           SizedBox(width: resp.wp(5)),
                           CustomButton(
-                            color: accent,
+                            color: blueAccent,
                             style: TextStyles.w800(16, Colors.white),
                             hideShadows: true,
                             text: 'Register',

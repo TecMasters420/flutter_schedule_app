@@ -1,12 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/modules/filtered_events/pages/filtered_events_page.dart';
+import 'package:schedulemanager/modules/home/models/events_type_model.dart';
 import 'package:schedulemanager/widgets/custom_button.dart';
 import '../../../widgets/custom_text_button_widget.dart';
 import 'no_events_widget.dart';
-import '../../../data/models/event_model.dart';
 import 'reminder_date_data.dart';
 import '../../../app/utils/responsive_util.dart';
 
@@ -16,27 +14,27 @@ import '../../../widgets/reminder_container.dart';
 import '../../../widgets/event_information.dart';
 
 class EventsListPerType extends StatelessWidget {
-  final List<EventModel> data;
+  final EventsTypeModel eventsType;
   final int maxEventsToShow;
-  final String type;
   const EventsListPerType({
     super.key,
-    required this.data,
     required this.maxEventsToShow,
-    required this.type,
+    required this.eventsType,
   });
 
   @override
   Widget build(BuildContext context) {
     final ResponsiveUtil resp = ResponsiveUtil.of(context);
+    final lenght = eventsType.events.length;
+    final isEmpty = eventsType.events.isEmpty;
     return Column(
       children: [
         SizedBox(height: resp.hp(2.5)),
-        if (data.isNotEmpty) ...[
+        if (!isEmpty) ...[
           Row(
             children: [
               Text(
-                '${data.length} Events',
+                '$lenght Events',
                 style: TextStyles.w700(16),
               ),
               const Spacer(),
@@ -44,44 +42,51 @@ class EventsListPerType extends StatelessWidget {
                 title: 'Show all',
                 customFontSize: 16,
                 onTap: () => Get.to(
-                  () => FilteredEventsPage(events: data, title: type),
+                  () => FilteredEventsPage(
+                    events: eventsType.events,
+                    title: eventsType.label,
+                  ),
                 ),
               ),
             ],
           ),
           SizedBox(height: resp.hp(2.5)),
           ...List.generate(
-            data.length > maxEventsToShow ? maxEventsToShow + 1 : data.length,
+            lenght > maxEventsToShow ? maxEventsToShow + 1 : lenght,
             (index) {
               if (index >= maxEventsToShow) {
                 return GestureDetector(
                   child: CustomButton(
                     padding: const EdgeInsets.symmetric(vertical: 30),
                     text: 'Press to see all events',
-                    color: lightBlue,
+                    color: darkAccent,
                     expand: true,
                     onTap: () {
                       Get.to(
-                        () => FilteredEventsPage(events: data, title: type),
+                        () => FilteredEventsPage(
+                          events: eventsType.events,
+                          title: eventsType.label,
+                        ),
                       );
                     },
                     style: TextStyles.w700(
                       18,
-                      accent,
+                      Colors.white,
                     ),
                   ),
                 );
               }
-              final color = colors[Random().nextInt(colors.length - 1)];
               return ReminderContainer(
-                color: color,
+                color: eventsType.color,
                 leftWidget: ReminderDateData(
-                  endDate: data[index].endDate,
-                  timeRemaining: data[index].timeLeft(DateTime.now()),
-                  dotColor: color,
+                  endDate: eventsType.events[index].endDate,
+                  timeRemaining: eventsType.events[index].timeLeft(
+                    DateTime.now(),
+                  ),
+                  dotColor: eventsType.color,
                 ),
                 rightWidget: EventInforamtion(
-                  event: data[index],
+                  event: eventsType.events[index],
                 ),
               );
             },

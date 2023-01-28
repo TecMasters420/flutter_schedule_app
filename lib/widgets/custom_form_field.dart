@@ -29,11 +29,11 @@ class CustomFormField extends StatelessWidget {
       decoration: InputDecoration(
         hintStyle: TextStyles.w400(14, grey),
         labelStyle: TextStyles.w400(14, grey),
-        floatingLabelStyle: TextStyles.w400(16, accent),
+        floatingLabelStyle: TextStyles.w400(16, blueAccent),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
-            color: accent,
+            color: blueAccent,
             width: 2,
           ),
         ),
@@ -47,7 +47,7 @@ class CustomFormField extends StatelessWidget {
         suffixIcon: Icon(
           icon,
           size: 25,
-          color: accent,
+          color: blueAccent,
         ),
       ),
     );

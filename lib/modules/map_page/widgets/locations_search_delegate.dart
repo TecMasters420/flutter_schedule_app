@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../app/utils/text_styles.dart';
 import '../../../domain/map_api.dart';
@@ -29,7 +28,7 @@ class LocationsSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    final MapApi api = Provider.of<MapApi>(context);
+    final MapApi api = MapApi();
     return Scaffold(
         body: ListView.builder(
       itemCount: api.address.length,
@@ -47,7 +46,7 @@ class LocationsSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final MapApi api = Provider.of<MapApi>(context);
+    final MapApi api = MapApi();
     api.getNearbyDirections(query);
     return ListView.builder(
       itemCount: api.address.length,

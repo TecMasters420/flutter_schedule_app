@@ -12,6 +12,7 @@ import 'package:schedulemanager/modules/event_details_creation/widgets/event_exp
 import 'package:schedulemanager/modules/event_details_creation/widgets/weather_container.dart';
 import 'package:schedulemanager/modules/home/widgets/no_events_widget.dart';
 import 'package:schedulemanager/modules/map_page/map_page.dart';
+import 'package:schedulemanager/widgets/custom_icon_buttton_widget.dart';
 
 import '../../app/config/constants.dart';
 import '../../app/services/base_repository.dart';
@@ -48,7 +49,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
     }
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: accent,
+        backgroundColor: blueAccent,
         child: Icon(eventId == null ? Icons.add : Icons.check),
         onPressed: () async {
           if (eventId == null) {
@@ -86,7 +87,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                     suffixWidget: IconButton(
                       icon: const Icon(
                         Icons.edit,
-                        color: accent,
+                        color: blueAccent,
                       ),
                       splashRadius: 20,
                       alignment: Alignment.centerRight,
@@ -104,16 +105,16 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: resp.hp(2.5)),
-                  Text(
-                    'Event information',
-                    style: TextStyles.w800(20),
-                  ),
-                  SizedBox(height: resp.hp(2.5)),
                   ResponsiveContainerWidget(
                     child: Column(
                       children: [
+                        Text(
+                          'Event information',
+                          style: TextStyles.w800(20),
+                        ),
                         SizedBox(height: resp.hp(2.5)),
                         EventDetailsWidget(
+                          iconColor: green,
                           icon: Icons.description_outlined,
                           title: 'Description',
                           value: event.description.isEmpty
@@ -132,6 +133,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                           },
                         ),
                         EventDetailsWidget(
+                          iconColor: red,
                           icon: Icons.tag_rounded,
                           title: 'Tags',
                           showSuffixWidget: true,
@@ -153,10 +155,6 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                           extra: TagsList(
                             tagsList: event.tags,
                             maxTagsToShow: event.tags.length,
-                            style: TextStyles.w800(
-                              14,
-                              Colors.white,
-                            ),
                             onLongPressCallback: (index) async {
                               AlertDialogsUtil.remove(
                                 customBodyMessage: [
@@ -175,6 +173,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                           ),
                         ),
                         EventDetailsWidget(
+                          iconColor: orange,
                           icon: Icons.list_alt_rounded,
                           title: 'Tasks',
                           showSuffixWidget: true,
@@ -201,42 +200,58 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                               event.tasks.length,
                               (index) {
                                 final task = event.tasks[index];
+                                final isCompleted =
+                                    event.tasks[index].isCompleted;
+                                final style = isCompleted
+                                    ? TextStyles.w700(14, black).copyWith(
+                                        decorationColor: black,
+                                        decorationThickness: 5,
+                                        decoration: isCompleted
+                                            ? TextDecoration.lineThrough
+                                            : null,
+                                      )
+                                    : TextStyles.w500(14, grey);
                                 return Row(
                                   children: [
-                                    Checkbox(
-                                      activeColor: accent,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      value: task.isCompleted,
-                                      onChanged: (value) {
-                                        event.tasks[index].isCompleted = value!;
-                                        controller.event.refresh();
-                                      },
-                                    ),
                                     Expanded(
-                                      child: Text(
-                                        task.name,
-                                        style:
-                                            TextStyles.w500(14, grey).copyWith(
-                                          decorationColor: grey,
-                                          decoration:
-                                              event.tasks[index].isCompleted
-                                                  ? TextDecoration.lineThrough
-                                                  : null,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          final isSelected = task.isCompleted;
+                                          event.tasks[index].isCompleted =
+                                              !isSelected;
+                                          controller.event.refresh();
+                                        },
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 20,
+                                              child: Checkbox(
+                                                activeColor: green,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                                value: task.isCompleted,
+                                                onChanged: (value) {},
+                                              ),
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Expanded(
+                                              child: Text(
+                                                task.name,
+                                                style: style,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
-                                    IconButton(
-                                      splashRadius: 20,
-                                      splashColor: red.withOpacity(0.1),
-                                      highlightColor: red.withOpacity(0.1),
-                                      icon: const Icon(
-                                        Icons.remove_circle_outline,
-                                        color: lightGrey,
-                                        size: 25,
-                                      ),
-                                      onPressed: () {
+                                    CustomIconButtonWidget(
+                                      color: lightGrey,
+                                      size: 20,
+                                      icon:
+                                          Icons.remove_circle_outline_outlined,
+                                      onTapCallback: () {
                                         AlertDialogsUtil.remove(
                                           customBodyMessage: [
                                             'It will be removed from the tasks list'
@@ -260,8 +275,9 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                           ),
                         ),
                         EventDetailsWidget(
+                          iconColor: blueAccent,
                           icon: Icons.bar_chart_rounded,
-                          title: 'Progress',
+                          title: 'Tasks Progress',
                           value: '${progress.toStringAsFixed(2)}%',
                           extra: Column(
                             children: [
@@ -278,16 +294,17 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: resp.hp(2.5)),
-                  Text(
-                    'Event Date',
-                    style: TextStyles.w800(18),
-                  ),
-                  SizedBox(height: resp.hp(2.5)),
                   ResponsiveContainerWidget(
                     child: Column(
                       children: [
+                        Text(
+                          'Event Date',
+                          style: TextStyles.w800(18),
+                        ),
+                        SizedBox(height: resp.hp(2.5)),
                         EventExpandibleDetailsWidget(
                           icon: Icons.calendar_today_rounded,
+                          iconColor: green,
                           title: 'Start Date',
                           value:
                               '${isSameDay ? 'Today' : getDateFormatted(event.startDate)} at ${DateFormat('hh:mm a').format(event.startDate)}',
@@ -302,6 +319,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                         ),
                         EventExpandibleDetailsWidget(
                           icon: Icons.calendar_today_rounded,
+                          iconColor: salmon,
                           title: 'End Date',
                           value:
                               '${isSameDay ? 'Today' : getDateFormatted(event.endDate)} at ${DateFormat('hh:mm a').format(event.endDate)}',
@@ -316,6 +334,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                         ),
                         SizedBox(height: resp.hp(1)),
                         EventDetailsWidget(
+                          iconColor: purple,
                           icon: Icons.timer_outlined,
                           title: 'Time remaining',
                           value: event.getExpirationTime(),
@@ -324,17 +343,16 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: resp.hp(2.5)),
-                  Text(
-                    'Event Weather',
-                    style: TextStyles.w800(18),
-                  ),
-                  SizedBox(height: resp.hp(2.5)),
-                  // if (reminder.expectedTemp != null)
                   ResponsiveContainerWidget(
                     child: Column(
                       children: [
+                        Text(
+                          'Event Weather',
+                          style: TextStyles.w800(18),
+                        ),
                         SizedBox(height: resp.hp(2.5)),
                         const EventDetailsWidget(
+                          iconColor: blueAccent,
                           icon: Icons.water_drop_outlined,
                           title: 'Expected weather',
                           extra: WeatherContainer(
@@ -345,16 +363,16 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: resp.hp(2.5)),
-                  Text(
-                    'Event Location',
-                    style: TextStyles.w800(18),
-                  ),
-                  SizedBox(height: resp.hp(2.5)),
                   ResponsiveContainerWidget(
                     child: Column(
                       children: [
+                        Text(
+                          'Event Locations',
+                          style: TextStyles.w800(18),
+                        ),
                         SizedBox(height: resp.hp(2.5)),
                         EventDetailsWidget(
+                          iconColor: purple,
                           icon: Icons.location_on_outlined,
                           title: 'Location',
                           value: null,
@@ -363,6 +381,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                               if (event.startLocation != null &&
                                   event.startLocation!.address != null)
                                 EventDetailsWidget(
+                                  iconColor: green,
                                   icon: Icons.east_rounded,
                                   title: 'Start location',
                                   value: event.startLocation!.address,
@@ -371,6 +390,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                                   event.endLocation!.address != null)
                                 EventDetailsWidget(
                                   icon: Icons.west,
+                                  iconColor: red,
                                   title: 'End location',
                                   value: event.endLocation!.address,
                                 ),
@@ -397,7 +417,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                               ] else ...[
                                 CustomButton(
                                   text: 'Add location',
-                                  color: accent,
+                                  color: blueAccent,
                                   style: TextStyles.w700(14, Colors.white),
                                   onTap: () => Get.to(
                                     () => MapPage(
@@ -413,6 +433,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                       ],
                     ),
                   ),
+                  SizedBox(height: resp.hp(7)),
                 ],
               ),
             ),

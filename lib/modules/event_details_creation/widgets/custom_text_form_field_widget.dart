@@ -36,7 +36,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
         ),
         disabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
-            color: accent,
+            color: blueAccent,
             width: 1.0,
           ),
           borderRadius: BorderRadius.all(
@@ -45,7 +45,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
         ),
         enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
-            color: accent,
+            color: blueAccent,
             width: 1.0,
           ),
           borderRadius: BorderRadius.all(
@@ -54,7 +54,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
         ),
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
-            color: accent,
+            color: blueAccent,
             width: 1.0,
           ),
           borderRadius: BorderRadius.all(

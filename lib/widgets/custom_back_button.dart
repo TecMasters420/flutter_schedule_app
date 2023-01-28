@@ -9,7 +9,7 @@ class CustomBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomIconButtonWidget(
-      color: accent,
+      color: blueAccent,
       icon: Icons.arrow_back_ios_rounded,
       onTapCallback: Get.back,
     );

@@ -42,10 +42,11 @@ class ReminderContainer extends StatelessWidget {
                     valueListenable: height,
                     builder: (context, value, child) {
                       return AnimatedContainer(
-                        curve: Curves.ease,
+                        curve: Curves.fastOutSlowIn,
                         duration: const Duration(milliseconds: 400),
                         height: height.value,
                         width: resp.width,
+                        alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: color,
                           borderRadius: BorderRadius.circular(20),

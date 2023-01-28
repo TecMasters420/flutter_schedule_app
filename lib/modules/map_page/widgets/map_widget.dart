@@ -99,8 +99,8 @@ class _MapWidgetState extends State<MapWidget> {
                 PolylineLayer(
                   polylines: [
                     Polyline(
-                      color: accent.withOpacity(0.8),
-                      borderColor: accent.withOpacity(0.8),
+                      color: blueAccent.withOpacity(0.8),
+                      borderColor: blueAccent.withOpacity(0.8),
                       borderStrokeWidth: 5,
                       strokeCap: StrokeCap.round,
                       points: map.points,
@@ -142,7 +142,7 @@ class _MapWidgetState extends State<MapWidget> {
                       padding: const EdgeInsets.all(12.5),
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        color: accent,
+                        color: blueAccent,
                       ),
                       child: const Icon(
                         Icons.location_searching_rounded,
@@ -158,7 +158,7 @@ class _MapWidgetState extends State<MapWidget> {
                       padding: const EdgeInsets.all(12.5),
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        color: accent,
+                        color: blueAccent,
                       ),
                       child: const Icon(
                         Icons.search,

@@ -11,12 +11,14 @@ class EventExpandibleDetailsWidget extends StatelessWidget {
   final String title;
   final String? value;
   final Widget body;
+  final Color iconColor;
   const EventExpandibleDetailsWidget({
     super.key,
     required this.icon,
     required this.title,
     required this.body,
     this.value,
+    this.iconColor = grey,
   });
 
   @override
@@ -43,15 +45,25 @@ class EventExpandibleDetailsWidget extends StatelessWidget {
                   minVerticalPadding: 0,
                   minLeadingWidth: 0,
                   contentPadding: EdgeInsets.zero,
-                  trailing: const Icon(Icons.edit, size: 25, color: accent),
+                  trailing: const Icon(Icons.edit, size: 25, color: blueAccent),
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
-                        icon,
-                        color: grey,
-                        size: 25,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 2,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: iconColor.withOpacity(0.15),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          icon,
+                          color: iconColor,
+                          size: 25,
+                        ),
                       ),
                       SizedBox(width: resp.wp(5)),
                       Expanded(
@@ -75,7 +87,7 @@ class EventExpandibleDetailsWidget extends StatelessWidget {
                 );
               },
               body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 45),
+                padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: body,
               ),
             ),
