@@ -135,7 +135,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                       ),
                       constraints: const BoxConstraints(minWidth: 65),
                       decoration: BoxDecoration(
-                        color: isSelected ? blueAccent : containerBg,
+                        color: isSelected ? blueAccent : null,
                         borderRadius: BorderRadius.circular(25),
                       ),
                       child: Column(
@@ -162,7 +162,7 @@ class _ScrolleableCalendarState extends State<ScrolleableCalendar> {
                                 : widget.days[index].toString(),
                             style: styles.w700(
                               25,
-                              isSelected ? Colors.white : black,
+                              isSelected ? Colors.white : null,
                             ),
                           ),
                         ],

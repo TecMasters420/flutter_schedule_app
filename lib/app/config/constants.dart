@@ -6,7 +6,7 @@ const Color darkAccent = Color(0xff1e1e1e);
 
 const Color backgroundColor = Color(0xfff9f9fb);
 const Color backgroundColorDark = Color(0xff1e1d22);
-
+const Color textTitleColor = Color.fromARGB(255, 215, 215, 219);
 const Color containerBg = Color(0xffffffff);
 const Color containerBgDark = Color(0xff1f2123);
 

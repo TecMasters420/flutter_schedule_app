@@ -204,7 +204,7 @@ class NewEventsDetailsCreationPage extends StatelessWidget {
                                 final isCompleted =
                                     event.tasks[index].isCompleted;
                                 final style = isCompleted
-                                    ? styles.w700(14, black).copyWith(
+                                    ? styles.w700(14).copyWith(
                                           decorationColor: black,
                                           decorationThickness: 5,
                                           decoration: isCompleted

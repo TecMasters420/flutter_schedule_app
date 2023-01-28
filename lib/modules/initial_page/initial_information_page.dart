@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'controllers/announcements_carrousel_controller.dart';
 import 'controllers/initial_announcements_controller.dart';
-import '../../app/config/constants.dart';
 
 import 'widgets/widgets.dart';
 import '../../app/utils/responsive_util.dart';
@@ -18,7 +17,6 @@ class InitialInformationPage extends GetWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: backgroundColor,
       body: Stack(
         children: [
           SizedBox(

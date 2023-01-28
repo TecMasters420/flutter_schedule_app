@@ -16,7 +16,9 @@ class App extends StatelessWidget {
       initialBinding: const InitialInformationBindings(),
       getPages: appPages,
       home: const InitialInformationPage(),
+      // theme: AppCustomTheme.lightMode,
       theme: AppCustomTheme.lightMode,
+      darkTheme: AppCustomTheme.darkMode,
     );
   }
 }

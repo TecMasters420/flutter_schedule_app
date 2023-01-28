@@ -52,10 +52,12 @@ class ScrolleableCalendarWithHour extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  DateFormat('MMMM').format(DateTime(
-                    DateTime.now().year,
-                    currentElement,
-                  )),
+                  DateFormat('MMMM').format(
+                    DateTime(
+                      DateTime.now().year,
+                      currentElement,
+                    ),
+                  ),
                   style: isSelected
                       ? styles.w700(14)
                       : styles.w500(
@@ -69,7 +71,7 @@ class ScrolleableCalendarWithHour extends StatelessWidget {
                   height: 5,
                   width: 20,
                   decoration: BoxDecoration(
-                    color: isSelected ? blueAccent : Colors.transparent,
+                    color: isSelected ? blueAccent : null,
                     borderRadius: const BorderRadius.all(
                       Radius.circular(25),
                     ),
@@ -103,7 +105,7 @@ class ScrolleableCalendarWithHour extends StatelessWidget {
                       vertical: 10,
                     ),
                     decoration: BoxDecoration(
-                      color: isSelected ? blueAccent : containerBg,
+                      color: isSelected ? blueAccent : null,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Column(
@@ -114,7 +116,7 @@ class ScrolleableCalendarWithHour extends StatelessWidget {
                               : daysToShow[index].toString(),
                           style: styles.w700(
                             14,
-                            isSelected ? Colors.white : black,
+                            isSelected ? Colors.white : null,
                           ),
                         ),
                         Text(

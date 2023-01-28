@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:schedulemanager/app/config/constants.dart';
 import 'package:schedulemanager/widgets/custom_circular_progress.dart';
@@ -16,16 +17,18 @@ class CustomCacheImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = TextStyles.of(context);
 
-    return Image.network(
-      imageUrl.trim(),
+    return CachedNetworkImage(
+      imageUrl: imageUrl.trim(),
       fit: fit,
-      loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) return child;
+      progressIndicatorBuilder: (context, url, progress) {
         return const CustomCircularProgress(
           color: blueAccent,
         );
       },
-      errorBuilder: (context, error, stackTrace) {
+      imageBuilder: (context, imageProvider) {
+        return Image(image: imageProvider, fit: fit);
+      },
+      errorWidget: (context, error, stackTrace) {
         debugPrint('Error loading image');
         return Text(
           'Error loading image',

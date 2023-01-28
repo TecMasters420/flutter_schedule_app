@@ -67,7 +67,7 @@ class CustomNavBarWidget extends StatelessWidget {
                                   key: Key(false.toString()),
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Icon(e.icon, size: 20, color: black),
+                                    Icon(e.icon, size: 20),
                                     Text(
                                       e.name,
                                       style: styles.w500(12, grey),

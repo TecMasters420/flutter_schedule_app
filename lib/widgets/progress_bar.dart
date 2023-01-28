@@ -29,7 +29,7 @@ class ProgressBar extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(15),
       ),
       child: AnimatedContainer(

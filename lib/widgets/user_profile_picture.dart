@@ -25,7 +25,7 @@ class UserProfilePicture extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: containerBg,
+          color: Theme.of(context).colorScheme.surface,
           boxShadow: shadows,
           borderRadius: BorderRadius.circular(30),
         ),

@@ -135,7 +135,7 @@ class LoginPage extends StatelessWidget {
                                   color: containerBg,
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 15),
-                                  style: styles.w700(14),
+                                  style: styles.w700(14, black),
                                   text: 'Google',
                                   center: true,
                                   prefixWidget: Image.asset(

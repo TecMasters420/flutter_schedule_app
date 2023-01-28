@@ -5,8 +5,13 @@ class TextStyles {
 
   late Color? _defaultColor;
 
+  late Color chipsColor;
+  late Color topTitlesColor;
+
   factory TextStyles.of(final BuildContext context) {
     _styles._defaultColor = Theme.of(context).textTheme.titleLarge!.color;
+    _styles.chipsColor = Theme.of(context).textTheme.displaySmall!.color!;
+    _styles.topTitlesColor = Theme.of(context).textTheme.headlineLarge!.color!;
     return _styles;
   }
   TextStyles._internal();

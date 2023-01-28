@@ -9,7 +9,7 @@ class ResponsiveContainerWidget extends StatelessWidget {
     super.key,
     required this.child,
     this.padding,
-    this.customColor = containerBg,
+    this.customColor,
   });
 
   @override
@@ -25,8 +25,8 @@ class ResponsiveContainerWidget extends StatelessWidget {
               horizontal: 20,
             ),
         decoration: BoxDecoration(
-          // color: Theme.of(context).colorScheme.surface,
-          color: customColor,
+          color: customColor ?? Theme.of(context).colorScheme.surface,
+          // color: customColor,
           borderRadius: BorderRadius.circular(25),
           boxShadow: shadows,
         ),

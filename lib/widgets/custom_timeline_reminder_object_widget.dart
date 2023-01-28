@@ -33,7 +33,7 @@ class CustomTimeLineReminderObjectWidget extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: titleStyle ?? styles.w600(14, black),
+                style: titleStyle ?? styles.w600(14),
               ),
               SizedBox(width: resp.wp(5)),
               Expanded(

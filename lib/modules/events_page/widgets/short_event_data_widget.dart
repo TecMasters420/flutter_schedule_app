@@ -37,7 +37,7 @@ class ShortEventDataWidget extends StatelessWidget {
 
     final double tasksProgress = event.progress.isNaN ? 0 : event.progress;
 
-    Widget _getStatus() {
+    Widget getStatus() {
       return Chip(
         backgroundColor: red.withOpacity(0.15),
         shape: RoundedRectangleBorder(
@@ -56,10 +56,10 @@ class ShortEventDataWidget extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: containerBg,
         boxShadow: shadows,
       ),
       child: Material(
+        color: Theme.of(context).colorScheme.surface,
         child: InkWell(
           onTap: () => Get.toNamed(AppRoutes.eventDetails, arguments: event.id),
           onLongPress: () => onLongPressCallback(event),
@@ -123,7 +123,7 @@ class ShortEventDataWidget extends StatelessWidget {
                                 ),
                               ),
                             const Spacer(),
-                            _getStatus(),
+                            getStatus(),
                           ],
                         ],
                       ),
@@ -159,7 +159,7 @@ class ShortEventDataWidget extends StatelessWidget {
                             ),
                           ),
                           if (event.tasks.isEmpty) ...[
-                            _getStatus(),
+                            getStatus(),
                           ]
                         ],
                       ),

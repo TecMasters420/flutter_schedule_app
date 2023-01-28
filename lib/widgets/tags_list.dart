@@ -27,22 +27,17 @@ class TagsList extends StatelessWidget {
           tagsList.length.clamp(0, maxTagsToShow ?? tagsList.length), (index) {
         return Padding(
           padding: const EdgeInsets.only(right: 5),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(12.5),
-            radius: 5,
-            onLongPress: () {
-              if (onLongPressCallback != null) onLongPressCallback!(index);
-            },
-            child: Chip(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.5),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              backgroundColor: darkAccent,
-              label: Text(
-                '#${tagsList[index].name.replaceAll(RegExp(r'\s+'), '')}',
-                style: styles.w700(14, Colors.white),
-              ),
+          child: Chip(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.5),
+              side: const BorderSide(width: 0),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            backgroundColor: Colors.black,
+            clipBehavior: Clip.none,
+            label: Text(
+              '#${tagsList[index].name.replaceAll(RegExp(r'\s+'), '')}',
+              style: styles.w700(14, styles.chipsColor),
             ),
           ),
         );

@@ -93,7 +93,7 @@ class HomeHeaderWidget extends StatelessWidget {
             children: [
               Text(
                 'Schedule App',
-                style: styles.w700(35, Colors.white),
+                style: styles.w700(35, styles.topTitlesColor),
               ),
             ],
           ),
