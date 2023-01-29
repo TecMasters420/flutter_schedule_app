@@ -54,3 +54,4 @@ google-services.json
 .flutter-plugins
 firebase_options.dart
 /lib/firebase_options.dart
+.vercel
