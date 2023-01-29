@@ -26,74 +26,79 @@ class HomePage extends GetView {
 
     return Scaffold(
       bottomNavigationBar: const CustomNavBarWidget(),
-      body: SingleChildScrollView(
-        clipBehavior: Clip.none,
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: AppConstants.bodyPadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              HomeHeaderWidget(
-                name:
-                    '${auth.currentUser!.data.name} ${auth.currentUser!.data.lastName}',
-                userImage: auth.currentUser!.data.imageUrl ?? '',
-              ),
-              SizedBox(height: resp.hp(2.5)),
-              Text(
-                'Statistics',
-                style: styles.w700(20),
-              ),
-              SizedBox(height: resp.hp(2.5)),
-              SizedBox(
-                height: resp.hp(20),
-                width: resp.width,
-                child: const HomeActivitiesShow(),
-              ),
-              // Text(
-              //   'Group events:',
-              //   style: styles.w700(20),
-              // ),
-              // SizedBox(height: resp.hp(2.5)),
-              // const GroupEventsListWidget(),
-              SizedBox(height: resp.hp(2.5)),
-              Obx(
-                () => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Select the event type',
-                      style: styles.w700(20),
-                    ),
-                    SizedBox(height: resp.hp(2.5)),
-                    EventsTypesWidget(
-                      initialTabIndex: 1,
-                      isLoading: home.isLoading.value,
-                      events: [
-                        EventsTypeModel(
-                          events: home.expiredEvents,
-                          label: 'Expired',
-                          color: red,
+      body: Center(
+        child: SingleChildScrollView(
+          clipBehavior: Clip.none,
+          physics: const BouncingScrollPhysics(),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: Padding(
+              padding: AppConstants.bodyPadding,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  HomeHeaderWidget(
+                    name:
+                        '${auth.currentUser!.data.name} ${auth.currentUser!.data.lastName}',
+                    userImage: auth.currentUser!.data.imageUrl ?? '',
+                  ),
+                  SizedBox(height: resp.hp(2.5)),
+                  Text(
+                    'Statistics',
+                    style: styles.w700(20),
+                  ),
+                  SizedBox(height: resp.hp(2.5)),
+                  SizedBox(
+                    height: resp.hp(20),
+                    width: resp.width,
+                    child: const HomeActivitiesShow(),
+                  ),
+                  // Text(
+                  //   'Group events:',
+                  //   style: styles.w700(20),
+                  // ),
+                  // SizedBox(height: resp.hp(2.5)),
+                  // const GroupEventsListWidget(),
+                  SizedBox(height: resp.hp(2.5)),
+                  Obx(
+                    () => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Select the event type',
+                          style: styles.w700(20),
                         ),
-                        EventsTypeModel(
-                          events: home.currentEvents,
-                          label: 'Today',
-                          color: blueAccent,
-                        ),
-                        EventsTypeModel(
-                          events: home.nextEvents,
-                          label: 'Upcoming',
-                          color: green,
+                        SizedBox(height: resp.hp(2.5)),
+                        EventsTypesWidget(
+                          initialTabIndex: 1,
+                          isLoading: home.isLoading.value,
+                          events: [
+                            EventsTypeModel(
+                              events: home.expiredEvents,
+                              label: 'Expired',
+                              color: red,
+                            ),
+                            EventsTypeModel(
+                              events: home.currentEvents,
+                              label: 'Today',
+                              color: blueAccent,
+                            ),
+                            EventsTypeModel(
+                              events: home.nextEvents,
+                              label: 'Upcoming',
+                              color: green,
+                            ),
+                          ],
+                          onTapNew: () async {
+                            await home.getFilteredEvents();
+                          },
                         ),
                       ],
-                      onTapNew: () async {
-                        await home.getFilteredEvents();
-                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

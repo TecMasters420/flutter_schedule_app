@@ -52,7 +52,7 @@ class ShortEventDataWidget extends StatelessWidget {
     }
 
     return Container(
-      constraints: BoxConstraints(maxWidth: resp.wp(70), minWidth: 0),
+      constraints: const BoxConstraints(maxWidth: 400),
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -76,6 +76,7 @@ class ShortEventDataWidget extends StatelessWidget {
                   return AnimatedContainer(
                     curve: Curves.ease,
                     duration: const Duration(milliseconds: 400),
+                    constraints: const BoxConstraints(maxWidth: 5),
                     height: height.value,
                     width: resp.wp(2),
                     decoration: BoxDecoration(

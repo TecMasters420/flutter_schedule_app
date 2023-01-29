@@ -9,7 +9,7 @@ import 'presentation/app.dart';
 import 'presentation/bindings/app_bindings.dart';
 import 'app/services/flutter_notification.dart';
 
-import 'firebase_options.dart';
+// import 'firebase_options.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
@@ -18,7 +18,12 @@ void main() async {
   await dotenv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+    options: FirebaseOptions(
+      apiKey: dotenv.get('FIREBASE_API_KEY'),
+      appId: dotenv.get('FIREBASE_APP_ID'),
+      messagingSenderId: dotenv.get('FIREBASE_MESSAGING_SENDER_ID'),
+      projectId: dotenv.get('FIREBAE_PROJECT_ID'),
+    ),
   ).then((value) {
     const AppBindings().dependencies();
   });

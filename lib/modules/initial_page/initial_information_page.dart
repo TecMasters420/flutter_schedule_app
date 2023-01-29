@@ -17,40 +17,47 @@ class InitialInformationPage extends GetWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: [
-          SizedBox(
-            height: resp.height,
-            width: resp.width,
-            child: Obx(
-              () => AnnouncementsList(
-                announcements: announcesController.announces,
-                isLoaded: !announcesController.isLoading.value,
-                onNewPageCallback: (newPage) =>
-                    carrouselController.setNewIndex(newPage),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: Stack(
+            children: [
+              SizedBox(
+                height: resp.height,
+                width: resp.width,
+                child: Obx(
+                  () => AnnouncementsList(
+                    announcements: announcesController.announces,
+                    isLoaded: !announcesController.isLoading.value,
+                    onNewPageCallback: (newPage) =>
+                        carrouselController.setNewIndex(newPage),
+                  ),
+                ),
               ),
-            ),
-          ),
-          // Dots
-          Positioned.fill(
-            top: resp.hp(95),
-            child: Obx(
-              () => Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(announcesController.quantity + 1, (x) {
-                  final bool isCurrentPage =
-                      x == carrouselController.currentIndex.value;
-                  final bool isFinalElement = x == announcesController.quantity;
+              // Dots
+              Positioned.fill(
+                top: resp.hp(95),
+                child: Obx(
+                  () => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:
+                        List.generate(announcesController.quantity + 1, (x) {
+                      final bool isCurrentPage =
+                          x == carrouselController.currentIndex.value;
+                      final bool isFinalElement =
+                          x == announcesController.quantity;
 
-                  return DotIndicator(
-                    isFinalElement: isFinalElement,
-                    isCurrentPage: isCurrentPage,
-                  );
-                }),
+                      return DotIndicator(
+                        isFinalElement: isFinalElement,
+                        isCurrentPage: isCurrentPage,
+                      );
+                    }),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/app/utils/alert_dialogs_util.dart';
@@ -49,154 +50,161 @@ class LoginPage extends StatelessWidget {
                 //   ),
                 // ),
                 // SizedBox(height: resp.hp(2.5)),
-                ResponsiveContainerWidget(
-                  padding: EdgeInsets.symmetric(
-                    vertical: resp.hp(2.5),
-                    horizontal: resp.wp(7),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Login - Alpha',
-                        style: styles.w800(35),
-                      ),
-                      SizedBox(height: resp.hp(0.5)),
-                      Text(
-                        'Enter the following information so you can organize your events!',
-                        style: styles.w500(14, grey),
-                      ),
-                      SizedBox(height: resp.hp(3)),
-                      RequiredTextFormFieldWidget(
-                        title: 'Email',
-                        suffixIcon: Icons.alternate_email_rounded,
-                        onChangeCallback: (value) {
-                          _email = value;
-                        },
-                      ),
-                      SizedBox(height: resp.hp(1)),
-                      RequiredTextFormFieldWidget(
-                        title: 'Password',
-                        obscure: true,
-                        suffixIcon: Icons.lock_outline_rounded,
-                        onChangeCallback: (value) {
-                          _password = value;
-                        },
-                      ),
-                      SizedBox(height: resp.hp(1)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          CustomTextButtonWidget(
-                            title: 'Forget password?',
-                            onTap: () {},
-                          )
-                        ],
-                      ),
-                      SizedBox(height: resp.hp(1)),
-                      Column(
-                        children: [
-                          SizedBox(height: resp.hp(1)),
-                          CustomButton(
-                            color: blueAccent,
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            style: styles.w800(16, Colors.white),
-                            text: 'Login',
-                            expand: true,
-                            onTap: () async {
-                              if (_email.isEmpty || _password.isEmpty) {
-                                AlertDialogsUtil.errorModal(
+                Center(
+                  child: ResponsiveContainerWidget(
+                    constraints: const BoxConstraints(maxWidth: 600),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 50,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Login - Alpha',
+                          style: styles.w800(35),
+                        ),
+                        SizedBox(height: resp.hp(0.5)),
+                        Text(
+                          'Enter the following information so you can organize your events!',
+                          style: styles.w500(14, grey),
+                        ),
+                        SizedBox(height: resp.hp(3)),
+                        RequiredTextFormFieldWidget(
+                          title: 'Email',
+                          suffixIcon: Icons.alternate_email_rounded,
+                          onChangeCallback: (value) {
+                            _email = value;
+                          },
+                        ),
+                        SizedBox(height: resp.hp(1)),
+                        RequiredTextFormFieldWidget(
+                          title: 'Password',
+                          obscure: true,
+                          suffixIcon: Icons.lock_outline_rounded,
+                          onChangeCallback: (value) {
+                            _password = value;
+                          },
+                        ),
+                        SizedBox(height: resp.hp(1)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            CustomTextButtonWidget(
+                              title: 'Forget password?',
+                              onTap: () {},
+                            )
+                          ],
+                        ),
+                        SizedBox(height: resp.hp(1)),
+                        Column(
+                          children: [
+                            SizedBox(height: resp.hp(1)),
+                            CustomButton(
+                              color: blueAccent,
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              style: styles.w800(16, Colors.white),
+                              text: 'Login',
+                              expand: true,
+                              onTap: () async {
+                                if (_email.isEmpty || _password.isEmpty) {
+                                  AlertDialogsUtil.errorModal(
+                                    context: context,
+                                    title: 'Login failed',
+                                    subtitle:
+                                        'Enter all the information requested',
+                                  );
+                                  return;
+                                }
+                                AlertDialogsUtil.loadingModal(
                                   context: context,
-                                  title: 'Login failed',
-                                  subtitle:
-                                      'Enter all the information requested',
+                                  subtitle: 'Your data is being validated',
                                 );
-                                return;
-                              }
-                              AlertDialogsUtil.loadingModal(
-                                context: context,
-                                subtitle: 'Your data is being validated',
-                              );
-                              await auth.logIn(_email, _password);
-                            },
-                          ),
-                          SizedBox(height: resp.hp(1)),
-                          Text(
-                            'Or',
-                            style: styles.w500(14, grey),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(height: resp.hp(1)),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: CustomButton(
-                                  color: containerBg,
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 15),
-                                  style: styles.w700(14, black),
-                                  text: 'Google',
-                                  center: true,
-                                  prefixWidget: Image.asset(
-                                    'assets/images/google.png',
-                                    height: 14,
-                                    width: 14,
-                                  ),
-                                  onTap: () async {
-                                    AlertDialogsUtil.loadingModal(
-                                      context: context,
-                                      subtitle: 'Your data is being validated',
-                                    );
-                                    await auth.googleLogin();
-                                  },
-                                ),
-                              ),
-                              SizedBox(width: resp.wp(5)),
-                              Expanded(
-                                child: CustomButton(
-                                  color: blueAccent,
-                                  style: styles.w700(14, Colors.white),
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 15),
-                                  text: 'Facebook',
-                                  center: true,
-                                  prefixWidget: Image.asset(
-                                    'assets/images/facebook.png',
-                                    height: 14,
-                                    width: 14,
-                                  ),
-                                  onTap: () async {
-                                    AlertDialogsUtil.warningModal(
-                                      context: context,
-                                      title: 'Warning!',
-                                      subtitle:
-                                          'This option is not yet available',
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: resp.hp(2.5)),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+                                await auth.logIn(_email, _password);
+                              },
+                            ),
+                            if (!kIsWeb) ...[
+                              SizedBox(height: resp.hp(1)),
                               Text(
-                                "Don't have an account? ",
+                                'Or',
                                 style: styles.w500(14, grey),
+                                textAlign: TextAlign.center,
                               ),
-                              Expanded(
-                                child: CustomTextButtonWidget(
-                                  title: 'Create an account',
-                                  onTap: () => Get.toNamed(AppRoutes.register),
-                                ),
-                              )
+                              SizedBox(height: resp.hp(1)),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: CustomButton(
+                                      color: containerBg,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15),
+                                      style: styles.w700(14, black),
+                                      text: 'Google',
+                                      center: true,
+                                      prefixWidget: Image.asset(
+                                        'assets/images/google.png',
+                                        height: 14,
+                                        width: 14,
+                                      ),
+                                      onTap: () async {
+                                        AlertDialogsUtil.loadingModal(
+                                          context: context,
+                                          subtitle:
+                                              'Your data is being validated',
+                                        );
+                                        await auth.googleLogin();
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(width: resp.wp(5)),
+                                  Expanded(
+                                    child: CustomButton(
+                                      color: blueAccent,
+                                      style: styles.w700(14, Colors.white),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15),
+                                      text: 'Facebook',
+                                      center: true,
+                                      prefixWidget: Image.asset(
+                                        'assets/images/facebook.png',
+                                        height: 14,
+                                        width: 14,
+                                      ),
+                                      onTap: () async {
+                                        AlertDialogsUtil.warningModal(
+                                          context: context,
+                                          title: 'Warning!',
+                                          subtitle:
+                                              'This option is not yet available',
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
-                          ),
-                        ],
-                      ),
-                    ],
+                            SizedBox(height: resp.hp(2.5)),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Don't have an account? ",
+                                  style: styles.w500(14, grey),
+                                ),
+                                Expanded(
+                                  child: CustomTextButtonWidget(
+                                    title: 'Create an account',
+                                    onTap: () =>
+                                        Get.toNamed(AppRoutes.register),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
