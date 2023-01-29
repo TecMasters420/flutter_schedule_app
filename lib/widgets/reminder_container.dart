@@ -44,6 +44,7 @@ class ReminderContainer extends StatelessWidget {
                       return AnimatedContainer(
                         curve: Curves.fastOutSlowIn,
                         duration: const Duration(milliseconds: 400),
+                        constraints: const BoxConstraints(maxWidth: 5),
                         height: height.value,
                         width: resp.width,
                         alignment: Alignment.center,

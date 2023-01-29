@@ -64,7 +64,7 @@ class TasksHomeProgressContainer extends StatelessWidget {
                         borderRadius: BorderRadius.circular(2.5),
                       ),
                     ),
-                    SizedBox(width: resp.wp(2.5)),
+                    const SizedBox(width: 10),
                     Expanded(
                       flex: 2,
                       child: Text(
@@ -74,7 +74,7 @@ class TasksHomeProgressContainer extends StatelessWidget {
                         style: styles.w700(12),
                       ),
                     ),
-                    SizedBox(width: resp.wp(2.5)),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: Text(
                         '${clampledPercentages[x].percent.toStringAsFixed(2)}%',

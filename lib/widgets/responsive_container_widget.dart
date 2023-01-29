@@ -5,11 +5,13 @@ class ResponsiveContainerWidget extends StatelessWidget {
   final Widget child;
   final EdgeInsets? padding;
   final Color? customColor;
+  final BoxConstraints? constraints;
   const ResponsiveContainerWidget({
     super.key,
     required this.child,
     this.padding,
     this.customColor,
+    this.constraints,
   });
 
   @override
@@ -17,6 +19,7 @@ class ResponsiveContainerWidget extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(25),
       child: Container(
+        constraints: constraints ?? const BoxConstraints(maxWidth: 600),
         margin: const EdgeInsets.symmetric(vertical: 0.8, horizontal: 0.8),
         clipBehavior: Clip.hardEdge,
         padding: padding ??

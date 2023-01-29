@@ -12,7 +12,7 @@ import firebase_messaging
 import flutter_local_notifications
 import flutter_secure_storage_macos
 import location
-import path_provider_macos
+import path_provider_foundation
 import share_plus
 import sqflite
 
