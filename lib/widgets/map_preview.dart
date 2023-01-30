@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:schedulemanager/data/models/event_location_model.dart';
 import 'package:schedulemanager/modules/map_page/map_page.dart';
+import '../app/config/enviorment.dart';
 import '../domain/map_api.dart';
 import '../modules/map_page/controller/map_page_controller.dart';
 import 'animated_marker.dart';
@@ -128,9 +128,9 @@ class _MapPreviewState extends State<MapPreview> {
                 backgroundColor: Colors.white,
                 urlTemplate:
                     "https://api.mapbox.com/styles/v1/mapbox/$theme/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
-                additionalOptions: {
+                additionalOptions: const {
                   'styleId': 'clarc1scl000314lfyzx582dm',
-                  'accessToken': dotenv.env['MAPBOX_ACCESSTOKEN']!,
+                  'accessToken': Enviorment.maxboxToken,
                 },
               ),
               PolylineLayer(

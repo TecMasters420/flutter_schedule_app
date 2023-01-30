@@ -2,16 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:http/http.dart' as http;
+import 'package:schedulemanager/app/config/enviorment.dart';
 import 'package:schedulemanager/app/utils/alert_dialogs_util.dart';
 import 'package:schedulemanager/modules/auth/models/api_response_model.dart';
 
-class RequestBase {
-  final String _base = dotenv.env['APIURL']!;
+const String _base = Enviorment.apiUrl;
 
+class RequestBase {
   Future<ApiResponseModel?> call(final String extraEndpoint,
       {String? token, Map<String, dynamic>? body, bool edit = false}) async {
     final Map<String, String> headers = {

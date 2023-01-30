@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
@@ -10,6 +9,7 @@ import 'package:schedulemanager/modules/map_page/controller/map_page_controller.
 import 'package:schedulemanager/widgets/responsive_container_widget.dart';
 
 import '../../../app/config/constants.dart';
+import '../../../app/config/enviorment.dart';
 import '../../../data/models/event_location_model.dart';
 import 'custom_marker_with_information.dart';
 
@@ -98,9 +98,9 @@ class _MapWidgetState extends State<MapWidget> {
                     backgroundColor: containerBg,
                     urlTemplate:
                         "https://api.mapbox.com/styles/v1/mapbox/$theme/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
-                    additionalOptions: {
+                    additionalOptions: const {
                       'styleId': AppConstants.mapStyleId,
-                      'accessToken': dotenv.env['MAPBOX_ACCESSTOKEN']!,
+                      'accessToken': Enviorment.maxboxToken,
                     },
                   ),
                   PolylineLayer(

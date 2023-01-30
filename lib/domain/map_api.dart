@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
+import 'package:schedulemanager/app/config/enviorment.dart';
 import 'package:schedulemanager/data/models/event_location_model.dart';
 
 class MapApi with ChangeNotifier {
@@ -14,8 +14,7 @@ class MapApi with ChangeNotifier {
   static const String _directions = '$_apiURL/directions/$_apiVer/driving';
 
   static const String _jsonLimit = '.json?limit';
-  final String _accessToken =
-      'access_token=${dotenv.env['MAPBOX_ACCESSTOKEN']!}';
+  final String _accessToken = 'access_token=${Enviorment.maxboxToken}';
 
   String _lastQuery = '';
   List<EventLocationModel> _address = [];
