@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedulemanager/modules/auth/controllers/auth_controller.dart';
-import 'firebase_options.dart';
+import 'app/config/enviorment.dart';
 import 'presentation/app.dart';
 import 'presentation/bindings/app_bindings.dart';
 import 'app/services/flutter_notification.dart';
@@ -18,13 +18,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   print('Testing : ${const String.fromEnvironment('TMDB_KEY')}');
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-    // options: const FirebaseOptions(
-    //   apiKey: Enviorment.fireBaseApiKey,
-    //   appId: Enviorment.fireBaseAppID,
-    //   messagingSenderId: Enviorment.fireBaseMessagingSenderId,
-    //   projectId: Enviorment.fireBaseProjectID,
-    // ),
+    // options: DefaultFirebaseOptions.currentPlatform,
+    options: const FirebaseOptions(
+      apiKey: Enviorment.fireBaseApiKey,
+      appId: Enviorment.fireBaseAppID,
+      messagingSenderId: Enviorment.fireBaseMessagingSenderId,
+      projectId: Enviorment.fireBaseProjectID,
+    ),
   ).then((value) {
     const AppBindings().dependencies();
   });
